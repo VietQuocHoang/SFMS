@@ -1234,13 +1234,13 @@
 											"showShadow": true,
 											"containerChangeable": false,
 											"containerExtending": false,
-											"left": 312,
-											"top": 565,
+											"left": 328,
+											"top": 525,
 											"width": 135.47900390625,
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "Lecture",
+											"text": "Info",
 											"horizontalAlignment": 2,
 											"verticalAlignment": 5
 										},
@@ -1272,8 +1272,8 @@
 													"showShadow": true,
 													"containerChangeable": false,
 													"containerExtending": false,
-													"left": 317,
-													"top": 588,
+													"left": 333,
+													"top": 548,
 													"width": 125.47900390625,
 													"height": 13,
 													"autoResize": false
@@ -1296,8 +1296,8 @@
 													"showShadow": true,
 													"containerChangeable": false,
 													"containerExtending": false,
-													"left": 317,
-													"top": 603,
+													"left": 333,
+													"top": 563,
 													"width": 125.47900390625,
 													"height": 13,
 													"autoResize": false
@@ -1320,8 +1320,8 @@
 													"showShadow": true,
 													"containerChangeable": false,
 													"containerExtending": false,
-													"left": 317,
-													"top": 618,
+													"left": 333,
+													"top": 578,
 													"width": 125.47900390625,
 													"height": 13,
 													"autoResize": false
@@ -1344,8 +1344,8 @@
 													"showShadow": true,
 													"containerChangeable": false,
 													"containerExtending": false,
-													"left": 317,
-													"top": 633,
+													"left": 333,
+													"top": 593,
 													"width": 125.47900390625,
 													"height": 13,
 													"autoResize": false
@@ -1360,8 +1360,8 @@
 											"showShadow": true,
 											"containerChangeable": false,
 											"containerExtending": false,
-											"left": 312,
-											"top": 583,
+											"left": 328,
+											"top": 543,
 											"width": 135.47900390625,
 											"height": 68,
 											"autoResize": false
@@ -1376,8 +1376,8 @@
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
-									"left": 312,
-									"top": 560,
+									"left": 328,
+									"top": 520,
 									"width": 135.47900390625,
 									"height": 91,
 									"autoResize": false,
@@ -2054,7 +2054,7 @@
 											"containerChangeable": false,
 											"containerExtending": false,
 											"left": 353,
-											"top": 470,
+											"top": 450,
 											"width": 0,
 											"height": 13,
 											"autoResize": false,
@@ -2084,7 +2084,7 @@
 											"containerChangeable": false,
 											"containerExtending": false,
 											"left": 353,
-											"top": 528,
+											"top": 488,
 											"width": 0,
 											"height": 13,
 											"autoResize": false,
@@ -2145,7 +2145,7 @@
 										"$ref": "AAAAAAFg962h8ZXokqg="
 									},
 									"lineStyle": 2,
-									"points": "368:560;368:395",
+									"points": "368:520;368:395",
 									"nameLabel": {
 										"$ref": "AAAAAAFg98Q5SJcMYA8="
 									},
@@ -2241,7 +2241,7 @@
 											"showShadow": true,
 											"containerChangeable": false,
 											"containerExtending": false,
-											"left": 471,
+											"left": 487,
 											"top": 600,
 											"width": 0,
 											"height": 13,
@@ -2273,7 +2273,7 @@
 										"$ref": "AAAAAAFg92hL+JUS1x8="
 									},
 									"lineStyle": 2,
-									"points": "800:355;800:592;446:592",
+									"points": "800:355;800:592;462:592",
 									"nameLabel": {
 										"$ref": "AAAAAAFg98SBbJcg4kY="
 									},
@@ -2310,7 +2310,7 @@
 											"containerChangeable": false,
 											"containerExtending": false,
 											"left": 591,
-											"top": 649,
+											"top": 566,
 											"width": 0,
 											"height": 13,
 											"autoResize": false,
@@ -2369,8 +2369,8 @@
 											"showShadow": true,
 											"containerChangeable": false,
 											"containerExtending": false,
-											"left": 471,
-											"top": 648,
+											"left": 487,
+											"top": 565,
 											"width": 0,
 											"height": 13,
 											"autoResize": false,
@@ -2401,7 +2401,7 @@
 										"$ref": "AAAAAAFg92hZrZUecI0="
 									},
 									"lineStyle": 2,
-									"points": "592:475;592:640;446:640",
+									"points": "592:475;592:557;462:557",
 									"nameLabel": {
 										"$ref": "AAAAAAFg98SSU5c0bsc="
 									},
@@ -4760,7 +4760,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFg91w+TZTYblo="
 							},
-							"name": "Lecture",
+							"name": "Info",
 							"ownedElements": [
 								{
 									"_type": "ERDRelationship",
