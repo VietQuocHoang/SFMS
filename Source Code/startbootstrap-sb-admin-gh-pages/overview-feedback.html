@@ -15,6 +15,7 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin.css" rel="stylesheet">
     <link href="css/nav-style.css" rel="stylesheet">
+    <link href="css/progressbar-feedback.css" rel="stylesheet">
     <link href="css/overview-feedback.css" rel="stylesheet">
 </head>
 
@@ -233,14 +234,95 @@
             <li class="breadcrumb-item active">Quản lí feedback</li>
             <li class="breadcrumb-item active">Tạo mới</li>
         </ol>
+        <!--Progress-Bar-->
         <ul class="nav nav-wizard">
-                <li class="active"><a href="#"><span class="badge badge-step">1</span> Chọn mẫu</a></li>
-                <li><a href="#"><span class="badge badge-step">2</span> Chọn đối tượng</a></li>
-                <li><a href="#"><span class="badge badge-step">3</span> Sửa nội dung</a></li>
-                <li><a href="#"><span class="badge badge-step">4</span> Thêm đề xuất</a></li>
-                <li><a href="#"><span class="badge badge-step">5</span> Hoàn tất</a></li>
+            <li><a href="#"><span class="badge badge-step">1</span> Chọn mẫu</a></li>
+            <li><a href="#"><span class="badge badge-step">3</span> Tùy chỉnh nội dung</a></li>
+            <li><a href="#"><span class="badge badge-step">2</span> Chọn các đối tượng</a></li>
+            <li><a href="#"><span class="badge badge-step">4</span> Thêm đề xuất</a></li>
+            <li class="active"><a href="#"><span class="badge badge-step">5</span>Hoàn tất thông tin feedback</a></li>
         </ul>
+        <!--end nav-wizard-->
+        <h5 class="overview-title">Vui lòng kiểm tra & hoàn tất những thông tin sau</h5>
+        <!--Overview content-->
+        <div class="row">
+            <!--Info part in the left-->
+            <div class="col-md-6">
+                <!--feedback target-->
+                <div class="row feedback-target">
+                    <div class="col-md-6">
+                        <label class="lb-inf">Đối tượng được feedback</label>
+                    </div>
+                    <div class="col-md-6">
+                        <button class="btn btn-sm btn-edit-target" type="button">
+                            <i class="fa fa-edit"></i> Thay đổi
+                        </button>
+                    </div>
+                    <br>
+                    <div class="col-md-8">
+                        <label class="inf-content">Môn E-Commerce - ISC301 - Kỳ Spring 2018 Giảng viên: Lại Đức
+                            Hùng</label>
+                    </div>
+                </div>
+                <!--label  for list conductors-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <label class="lb-inf">Đối tượng gửi phản hồi</label>
+                    </div>
+                </div>
+                <!--list conductor-->
+                <div class="list-conductors">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <label class="inf-content">Giảng viên: Nguyễn Huy Hùng</label>
+                        </div>
+                        <div class="col-md-5">
+                            <a class="remove-inf-item-link" href="#"><i class="fa fa-times"></i></a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <label class="inf-content">Lớp: SE1996</label>
+                        </div>
+                        <div class="col-md-5">
+                            <a class="remove-inf-item-link" href="#"><i class="fa fa-times"></i></a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <label class="inf-content">SV: Nguyễn Khuyến</label>
+                        </div>
+                        <div class="col-md-5">
+                            <a class="remove-inf-item-link" href="#"><i class="fa fa-times"></i></a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <label class="inf-content">Phòng Đào tạo</label>
+                        </div>
+                        <div class="col-md-5">
+                            <a class="remove-inf-item-link" href="#"><i class="fa fa-times"></i></a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <a class="add-inf-item-link" href="#"><i class="fa fa-plus"></i> Thêm đối tượng phản hồi mới</a>
+                        </div>
+                    </div>
+                </div>
+                <!--published at-->
+                <div class="row published-time">
+                    <div class="col-sm-5"><label class="lb-inf">Thời gian bắt đầu</label></div>
+                    <div class="col-sm-7"></div>
+                </div>
+                <!--close at-->
+                <div class="row closed-time">
 
+                </div>
+            </div>
+            <div class="col-md-6">
+            </div>
+        </div>
 
     </div>
     <!-- /.container-fluid-->
