@@ -21,13 +21,25 @@
         <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
         <script src="vendor/jquery-ui/jquery-ui.min.js"></script>
         <!-- custom script -->
-        <script src="js/view-report.js"></script>
-        <script src="http://pagination.js.org/dist/2.1.2/pagination.js"></script>
-
+        <script src="js/conduct-feedback.js"></script>
     </head>
 
     <body>
-
+        <script>
+            function openCity(evt, cityName) {
+                var i, tabcontent, tablinks;
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+                document.getElementById(cityName).style.display = "block";
+                evt.currentTarget.className += " active";
+            }
+        </script>
         <div class="container-fluid">
             <!-- div feedback content -->
             <div class="row justify-content-center">
@@ -38,8 +50,8 @@
                         Kết quả Feedbacks
                     </h3>
                     <div class="tab">
-                        <!-- <button class="tablinks" onclick="openCity(event, 'London')">Tất cả</button>
-                         <button class="tablinks" onclick="openCity(event, 'Paris')">Chưa hoàn thành</button>-->
+                        <button class="tablinks" onclick="openCity(event, 'London')">Tất cả</button>
+                        <button class="tablinks" onclick="openCity(event, 'Paris')">Chưa hoàn thành</button>
                         <div class="tablinks-div">
                             Loại Feedback 
                             <select name="">
@@ -68,22 +80,31 @@
                     <form>
                         <div class="feedback-page page-active">
                             <div class="card-outer">
+                                <div id="London" class="tabcontent">
+                                    <h3>London</h3>
+                                    <p>London is the capital city of England.</p>
+                                </div>
+
+                                <div id="Paris" class="tabcontent">
+                                    <h3>Paris</h3>
+                                    <p>Paris is the capital of France.</p> 
+                                </div>
+
+                                <div id="Tokyo" class="tabcontent">
+                                    <h3>Tokyo</h3>
+                                    <p>Tokyo is the capital of Japan.</p>
+                                </div>
                                 <br/>
                                 <div class="card-text" style="padding: 15px; text-align: left">
-                                    Kết quả mỗi trang 
-                                    <select id="option">
-                                        <option class="options" value="5">5</option>
-                                        <option class="options" value="10">10</option>
-                                        <option class="options" value="20">20</option>
-                                        <option class="options" value="50">50</option>
-                                        <option class="options" value="100">100</option>
-                                    </select>
+                                    kết quả mỗi trang
                                 </div>
-                                <table id="table-data" class="card-table">
+                                <table class="card-table">
                                     <thead>
                                         <tr class="card-header">
                                             <th>#</th>
-                                            <th>Tên</th>
+                                            <th>Môn</th>
+                                            <th>Học Kỳ</th>
+                                            <th>Giảng viên</th>
                                             <th>Tùy chọn</th>
                                         </tr>
                                     </thead>
@@ -91,92 +112,59 @@
                                         <tr>
                                             <td>1</td>
                                             <td>	
-                                                Phòng IT 
+                                                OOP111 - Object-Oriented with Java
                                             </td>
                                             <td>
-                                                <button class="tablinks-option">Xem báo cáo</button>
+                                                Spring 2018
+                                            </td>
+                                            <td>Nguyen Huy Hung</td>
+                                            <td>
+                                                 <button class="tablinks-option">Hoàn thành ngay</button>
                                             </td>
                                         </tr>
-                                        <tr>
+                                         <tr>
                                             <td>2</td>
                                             <td>	
-                                                Phòng Đào tạo
+                                                OOP111 - Object-Oriented with Java
                                             </td>
                                             <td>
-                                                <button class="tablinks-option">Xem báo cáo</button>
+                                                Fall 2017
                                             </td>
+                                            <td>Nguyen Trong Tai</td>
+                                            <td></td>
                                         </tr>
-                                        <tr>
+                                         <tr>
                                             <td>3</td>
                                             <td>	
-                                                Phòng Khảo thí
+                                                OOP111 - Object-Oriented with Java
                                             </td>
                                             <td>
-                                                <button class="tablinks-option">Xem báo cáo</button>
+                                                Summer 2017
                                             </td>
+                                            <td>Than Van Su</td>
+                                            <td></td>
                                         </tr>
                                         <tr>
                                             <td>4</td>
                                             <td>	
-                                                Phòng Tuyển sinh
+                                                OOP111 - Object-Oriented with Java
                                             </td>
                                             <td>
-                                                <button class="tablinks-option">Xem báo cáo</button>
+                                                Summer 2017
                                             </td>
+                                            <td>Kieu Trong Khanh</td>
+                                            <td></td>
                                         </tr>
                                         <tr>
                                             <td>5</td>
                                             <td>	
-                                                Phòng Công tác Sinh viên 
+                                                PRM391 - Mobile Programming
                                             </td>
                                             <td>
-                                                <button class="tablinks-option">Xem báo cáo</button>
+                                                Summer 2017
                                             </td>
-                                        </tr>
-                                        <tr>
-                                            <td>6</td>
-                                            <td>	
-                                                Phòng IT 
-                                            </td>
-                                            <td>
-                                                <button class="tablinks-option">Xem báo cáo</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>7</td>
-                                            <td>	
-                                                Phòng Đào tạo
-                                            </td>
-                                            <td>
-                                                <button class="tablinks-option">Xem báo cáo</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>8</td>
-                                            <td>	
-                                                Phòng Khảo thí
-                                            </td>
-                                            <td>
-                                                <button class="tablinks-option">Xem báo cáo</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>9</td>
-                                            <td>	
-                                                Phòng Tuyển sinh
-                                            </td>
-                                            <td>
-                                                <button class="tablinks-option">Xem báo cáo</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>10</td>
-                                            <td>	
-                                                Phòng Công tác Sinh viên 
-                                            </td>
-                                            <td>
-                                                <button class="tablinks-option">Xem báo cáo</button>
-                                            </td>
+                                            <td>Pham Cong Thanh</td>
+                                            <td></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -186,6 +174,36 @@
                 </div>
 
             </div>
+            <!-- end div feedback content -->
+            <!-- div pagination -->
+            <div class="row justify-content-around" style="margin-top: 10px">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">
+                    <button class="btn btn-pagination" value="back" disabled>
+                        <span class="fa fa-fw fa-backward"></span> Quay lại
+                    </button>
+                    <button class="btn btn-pagination" value="next">
+                        Tiếp
+                        <span class="fa fa-fw fa-forward"></span>
+                    </button>
+                </div>
+            </div>
+            <!-- end div pagination -->
+            <!-- div progress bar && submit -->
+            <div class="row justify-content-center" style="margin-top: 10px">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 btn-group text-center">
+                    <div class="col-8">
+                        <div class="progress">
+                            <div class="progress-bar"></div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <button class="btn btn-submit col-12" data-toggle="modal" data-target="#confirmModal" disabled>
+                            Tiếp theo
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- end div progress bar && submit -->
         </div>
         <!-- end div container -->
 
