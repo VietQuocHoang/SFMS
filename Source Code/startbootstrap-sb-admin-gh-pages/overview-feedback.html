@@ -15,6 +15,7 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin.css" rel="stylesheet">
     <link href="css/nav-style.css" rel="stylesheet">
+    <link href="css/conduct-feedback.css" rel="stylesheet" type="text/css">
     <link href="css/progressbar-feedback.css" rel="stylesheet">
     <link href="css/overview-feedback.css" rel="stylesheet">
 </head>
@@ -264,66 +265,456 @@
                             Hùng</label>
                     </div>
                 </div>
-                <!--label  for list conductors-->
-                <div class="row">
-                    <div class="col-md-12">
-                        <label class="lb-inf">Đối tượng gửi phản hồi</label>
+                <!--list conductors & viewers-->
+                <div class="list-obj">
+                    <div class="row list-objs">
+                        <!--list conductors-->
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="lb-inf">Đối tượng gửi phản hồi</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <label class="inf-content">Giảng viên: Nguyễn Huy Hùng</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <a class=" remove-inf-item-link" href="#"><i class="fa fa-times"></i></a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <label class="inf-content">Lớp: SE1996</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="remove-inf-item-link" href="#"><i class="fa fa-times"></i></a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <label class="inf-content">SV: Nguyễn Khuyến</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="remove-inf-item-link" href="#"><i class="fa fa-times"></i></a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <label class="inf-content">Phòng Đào tạo</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="remove-inf-item-link" href="#"><i class="fa fa-times"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--list viewers-->
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="lb-inf">Đối tượng xem báo cáo</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <label class="inf-content">Giảng viên: Nguyễn Huy Hùng</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="remove-inf-item-link" href="#"><i class="fa fa-times"></i></a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <label class="inf-content">Giảng viên: Lại Đức Hùng</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="remove-inf-item-link" href="#"><i class="fa fa-times"></i></a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <label class="inf-content">Ban Giám Hiệu</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <a class="remove-inf-item-link" href="#"><i class="fa fa-times"></i></a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <!--list conductor-->
-                <div class="list-conductors">
+                    <!--add obj links-->
                     <div class="row">
-                        <div class="col-md-7">
-                            <label class="inf-content">Giảng viên: Nguyễn Huy Hùng</label>
+                        <div class="col-md-6">
+                            <a class="add-inf-item-link" href="#"><i class="fa fa-plus"></i> Thêm đối tượng phản hồi
+                                mới
+                            </a>
                         </div>
-                        <div class="col-md-5">
-                            <a class="remove-inf-item-link" href="#"><i class="fa fa-times"></i></a>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-7">
-                            <label class="inf-content">Lớp: SE1996</label>
-                        </div>
-                        <div class="col-md-5">
-                            <a class="remove-inf-item-link" href="#"><i class="fa fa-times"></i></a>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-7">
-                            <label class="inf-content">SV: Nguyễn Khuyến</label>
-                        </div>
-                        <div class="col-md-5">
-                            <a class="remove-inf-item-link" href="#"><i class="fa fa-times"></i></a>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-7">
-                            <label class="inf-content">Phòng Đào tạo</label>
-                        </div>
-                        <div class="col-md-5">
-                            <a class="remove-inf-item-link" href="#"><i class="fa fa-times"></i></a>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-7">
-                            <a class="add-inf-item-link" href="#"><i class="fa fa-plus"></i> Thêm đối tượng phản hồi mới</a>
+                        <div class="col-md-6">
+                            <a class="add-inf-item-link" href="#"><i class="fa fa-plus"></i> Thêm đối tượng xem báo cáo
+                            </a>
                         </div>
                     </div>
                 </div>
                 <!--published at-->
-                <div class="row published-time">
-                    <div class="col-sm-5"><label class="lb-inf">Thời gian bắt đầu</label></div>
-                    <div class="col-sm-7"></div>
-                </div>
-                <!--close at-->
-                <div class="row closed-time">
-
+                <div class="row time-inf">
+                    <div class="form-group col-sm-2">
+                        <label class="lb-inf">Mở từ </label>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <input type='date' class="form-control input-group-sm input-group-addon"/>
+                    </div>
+                    <div class="col-sm-1"><label class="lb-inf">Đến</label></div>
+                    <div class="form-group col-sm-4">
+                        <input type='date' class="form-control input-group-sm input-group-addon"/>
+                    </div>
                 </div>
             </div>
             <div class="col-md-6">
+                <div class="row">
+                    <label class="lb-inf lb-content">Nội dung feedback</label>
+                    <button class="btn btn-sm btn-edit-content" type="button">
+                        <i class="fa fa-edit"></i> Chỉnh sửa
+                    </button>
+                    <button class="btn btn-sm btn-edit-suggest" type="button">
+                        <i class="fa fa-edit"></i> Đề xuất cải tiến
+                    </button>
+                </div>
+                <!-- div feedback content -->
+                <div class="row justify-content-start">
+                    <div class="col-sm-12 col-12 col-md-6 col-xl-6 col-lg-12 text-center feedback-content">
+                        <h3 class="feedback-title">Feedback cho môn học PRJ321 lớp SE1067</h3>
+                        <hr>
+                        <p>Vui lòng hoàn thành các câu hỏi </p>
+                        <form>
+                            <div class="feedback-page page-active">
+                                <div class="card">
+                                    <div class="card-header">
+                                        Câu hỏi 1
+                                    </div>
+                                    <div class="card-block">
+                                        <p class="card-text">
+                                            Tốc độ giảng dạy của giảng viên có phù hợp với bạn hay không?
+                                        <div class="form-group">
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-1"> Quá nhanh
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-1"> Nhanh
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-1"> Vừa
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-1"> Hơi chậm
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-1"> Chậm
+                                                </label>
+                                            </div>
+                                        </div>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header">
+                                        Câu hỏi 2
+                                    </div>
+                                    <div class="card-block">
+                                        <p class="card-text">
+                                            Giáo án của giáo viên có đảm bảo kiến thức môn học không?
+                                        <div class="form-group">
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-2"> Đã đầy đủ và có những kiến thức thực tế bổ ích
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-2"> Đã đầy đủ nhưng chưa có kiến thức thực tế nhiều
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-2"> Chưa đầy đủ
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-2"> Giáo viên bỏ và dạy lướt qua nhiều phần quan trọng
+                                                </label>
+                                            </div>
+                                        </div>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header">
+                                        Câu hỏi 3
+                                    </div>
+                                    <div class="card-block">
+                                        <p class="card-text">
+                                            Các giải đáp của bạn có được giải quyết vào lúc nào?
+                                        <div class="form-group">
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="checkbox"> Ngay sau khi câu hỏi được đề ra
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="checkbox"> Sau giờ học
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="checkbox"> Trước giờ học
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="checkbox"> Không được giải đáp
+                                                </label>
+                                            </div>
+                                        </div>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="feedback-page">
+                                <div class="card">
+                                    <div class="card-header">
+                                        Câu hỏi 4
+                                    </div>
+                                    <div class="card-block">
+                                        <p class="card-text">
+                                            Tốc độ giảng dạy của giảng viên có phù hợp với bạn hay không?
+                                        <div class="form-group">
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-1"> Quá nhanh
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-1"> Nhanh
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-1"> Vừa
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-1"> Hơi chậm
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-1"> Chậm
+                                                </label>
+                                            </div>
+                                        </div>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header">
+                                        Câu hỏi 5
+                                    </div>
+                                    <div class="card-block">
+                                        <p class="card-text">
+                                            Giáo án của giáo viên có đảm bảo kiến thức môn học không?
+                                        <div class="form-group">
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-2"> Đã đầy đủ và có những kiến thức thực tế bổ ích
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-2"> Đã đầy đủ nhưng chưa có kiến thức thực tế nhiều
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-2"> Chưa đầy đủ
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-2"> Giáo viên bỏ và dạy lướt qua nhiều phần quan trọng
+                                                </label>
+                                            </div>
+                                        </div>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header">
+                                        Câu hỏi 6
+                                    </div>
+                                    <div class="card-block">
+                                        <p class="card-text">
+                                            Giáo án của giáo viên có đảm bảo kiến thức môn học không?
+                                        <div class="form-group">
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-2"> Đã đầy đủ và có những kiến thức thực tế bổ ích
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-2"> Đã đầy đủ nhưng chưa có kiến thức thực tế nhiều
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-2"> Chưa đầy đủ
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-2"> Giáo viên bỏ và dạy lướt qua nhiều phần quan trọng
+                                                </label>
+                                            </div>
+                                        </div>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="feedback-page">
+                                <div class="card">
+                                    <div class="card-header">
+                                        Câu hỏi 7
+                                    </div>
+                                    <div class="card-block">
+                                        <p class="card-text">
+                                            Tốc độ giảng dạy của giảng viên có phù hợp với bạn hay không?
+                                        <div class="form-group">
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-1"> Quá nhanh
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-1"> Nhanh
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-1"> Vừa
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-1"> Hơi chậm
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-1"> Chậm
+                                                </label>
+                                            </div>
+                                        </div>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header">
+                                        Câu hỏi 8
+                                    </div>
+                                    <div class="card-block">
+                                        <p class="card-text">
+                                            Giáo án của giáo viên có đảm bảo kiến thức môn học không?
+                                        <div class="form-group">
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-2"> Đã đầy đủ và có những kiến thức thực tế bổ ích
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-2"> Đã đầy đủ nhưng chưa có kiến thức thực tế nhiều
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-2"> Chưa đầy đủ
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="radio" name="answer-2"> Giáo viên bỏ và dạy lướt qua nhiều phần quan trọng
+                                                </label>
+                                            </div>
+                                        </div>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header">
+                                        Câu hỏi 9
+                                    </div>
+                                    <div class="card-block">
+                                        <p class="card-text">
+                                            Bạn có góp ý gì thêm cho giáo viên cũng như môn học này không?
+                                        <div class="form-group">
+                                            <textarea class="form-control" placeholder="Ghi đề xuất của bạn vào đây"></textarea>
+                                        </div>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <!-- end div feedback content -->
+                <!-- div pagination -->
+                <div class="row justify-content-around" style="margin-top: 10px">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">
+                        <button class="btn btn-pagination" value="back" disabled>
+                            <span class="fa fa-fw fa-backward"></span> Quay lại
+                        </button>
+                        <button class="btn btn-pagination" value="next">
+                            Tiếp
+                            <span class="fa fa-fw fa-forward"></span>
+                        </button>
+                    </div>
+                </div>
+                <!-- end div pagination -->
             </div>
         </div>
-
+        <!--Save & publish options-->
+        <br>
+        <div class="row save-options">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <button class="btn btn-sm btn-edit-target" type="button">
+                    <i class="fa fa-save"></i> Lưu & tiến hành feedback
+                </button>
+                <button class="btn btn-sm btn-edit-target" type="button">
+                    <i class="fa fa-edit"></i> Lưu thành mẫu mới
+                </button>
+                <button class="btn btn-sm btn-edit-target" type="button">
+                    <i class="fa fa-edit"></i> Cập nhật mẫu đã chọn
+                </button>
+                <button class="btn btn-sm btn-edit-target" type="button">
+                    <i class="fa fa-edit"></i> Hủy
+                </button>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
     </div>
     <!-- /.container-fluid-->
     <footer class="sticky-footer">
@@ -364,6 +755,7 @@
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin.min.js"></script>
     <!-- /.content-wrapper-->
+    <script src="js/conduct-feedback.js"></script>
 </div>
 </body>
 
