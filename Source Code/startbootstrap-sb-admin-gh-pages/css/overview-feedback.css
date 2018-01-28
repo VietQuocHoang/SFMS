@@ -46,4 +46,8 @@ label.lb-content{
     background-color: #08AE9E;
     color: #FFFFFF;
     margin-left: 1%;
+    margin-bottom: 1%;
+}
+div.panel-body{
+max-height: 350px;overflow-y: scroll;
 }
