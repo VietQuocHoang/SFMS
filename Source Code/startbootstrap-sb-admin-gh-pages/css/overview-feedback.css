@@ -25,3 +25,25 @@ a.remove-inf-item-link{
 a.add-inf-item-link{
     color: #08ae9e;
 }
+.input-group-addon{
+    height: inherit;
+    font-size: smaller;
+}
+div.list-objs > div.col-md-6{
+    font-size: small;
+    border-right: 1px solid darkgray;
+}
+div.time-inf{
+    padding-top: 2%;
+}
+div.save-options > div.col-md-2{
+    margin-left: 1%;
+}
+label.lb-content{
+    margin-left: 1%;
+}
+.btn-edit-content, .btn-edit-suggest{
+    background-color: #08AE9E;
+    color: #FFFFFF;
+    margin-left: 1%;
+}
