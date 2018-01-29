@@ -32,6 +32,11 @@ body {
     overflow:hidden;
 }
 
+.btn-report{
+    color: #fff;
+    background-color: #F0AD4E;
+}
+
 .tablinks-div {
     padding-left: 10px;
     padding-right: 10px;
@@ -77,6 +82,9 @@ body {
     border-top: none;
 }
 
+.dataTables_filter {
+    display: none;
+}
 .feedback-title {
     color: #fff;
     background-color: #08AE9E;
@@ -108,6 +116,7 @@ body {
     background-clip: border-box;
   border: 2px solid #fff;
   border-radius: 0.25rem;
+   
 }
 
 .card-block {
@@ -118,6 +127,25 @@ body {
 /* .form-group{
     text-align: left;
 } */
+
+.form-control {
+    width: 150px;   
+}
+
+.input-group-btn {
+    align-items: center;
+    vertical-align: middle;s
+     background-color: #08AE9E;
+}
+
+.fa {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
 .card-outer {
   position: relative;
