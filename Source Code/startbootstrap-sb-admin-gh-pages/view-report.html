@@ -21,8 +21,11 @@
         <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
         <script src="vendor/jquery-ui/jquery-ui.min.js"></script>
         <!-- custom script -->
-        <script src="js/view-report.js"></script>
-        <script src="http://pagination.js.org/dist/2.1.2/pagination.js"></script>
+        <!-- <script src="js/view-report.js"></script>-->
+        <!-- dataTable -->
+        <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" type="text/css">
+        <link href="vendor/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css">
+      <!--  <script src="http://pagination.js.org/dist/2.1.2/pagination.js"></script>-->
 
     </head>
 
@@ -69,7 +72,8 @@
                         <div class="feedback-page page-active">
                             <div class="card-outer">
                                 <br/>
-                                <div class="card-text" style="padding: 15px; text-align: left">
+                                <div class="card-block">
+                            <!--    <div class="card-text" style="padding: 15px; text-align: left">
                                     Kết quả mỗi trang 
                                     <select id="option">
                                         <option class="options" value="5">5</option>
@@ -78,8 +82,9 @@
                                         <option class="options" value="50">50</option>
                                         <option class="options" value="100">100</option>
                                     </select>
-                                </div>
-                                <table id="table-data" class="card-table">
+                                </div>-->
+                                <!--  <table id="table-data" class="card-table">-->
+                                <table id="availableTemplate" class="card-table table table-responsive table-striped">
                                     <thead>
                                         <tr class="card-header">
                                             <th>#</th>
@@ -180,6 +185,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                </div>
                             </div>                           
                         </div>
                     </form>
@@ -191,5 +197,21 @@
 
 
     </body>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- dataTable -->
+    <script src="vendor/datatables/jquery.dataTables.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+    <script src="vendor/datatables/dataTables.responsive.min.js"></script>
+    <script src="vendor/datatables/responsive.bootstrap4.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin.min.js"></script>
+    <!-- Custom javascript -->
+    <script src="js/select-template.js"></script>
 
 </html>

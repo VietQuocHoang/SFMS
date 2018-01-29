@@ -24,6 +24,7 @@ body {
      background-color: #F0AD4E;
     color: #fff;
     height: 40px;
+    width: 150px;
     border-radius: 0.5em;
     font-weight: bold;
     text-align: center;
@@ -142,7 +143,7 @@ body {
     margin-right: 20px;
 }
 
-.card-table {
+.table {
      margin-top: 5px;
     margin-bottom: 20px;
     margin-left: 20px;
@@ -151,7 +152,7 @@ body {
   background-color: #fff;
 }
 
-.card-table tbody tr td {
+.table tbody tr td {
      font-size: 18px;
 }
 
