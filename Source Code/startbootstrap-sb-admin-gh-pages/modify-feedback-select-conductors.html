@@ -17,7 +17,7 @@
     <link href="css/sb-admin.css" rel="stylesheet">
     <link href="css/nav-style.css" rel="stylesheet">
     <link href="css/progressbar-feedback.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/modify-feedback-select-target.css">
+    <link rel="stylesheet" href="css/modify-feedback-select-conductors.css">
 </head>
 
 <body class="fixed-nav sticky-footer" id="page-top">
@@ -289,18 +289,21 @@
             <div class="col-sm-12">
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link" id="nav-lecturers-tab" data-toggle="tab" href="#nav-lecturers"
+                        <a class="nav-item nav-link" id="nav-classes-tab" data-toggle="tab" href="#nav-classes"
                            role="tab"
-                           aria-controls="nav-home" aria-selected="true">Giảng viên </a>
+                           aria-controls="nav-home" aria-selected="true">Lớp</a>
                         <a class="nav-item nav-link" id="nav-departments-tab" data-toggle="tab" href="#nav-departments"
                            role="tab"
                            aria-controls="nav-profile" aria-selected="false">Phòng ban</a>
-                        <a class="nav-item nav-link" id="nav-subjects-tab" data-toggle="tab" href="#nav-subjects"
+                        <a class="nav-item nav-link active" id="nav-lecturers-tab" data-toggle="tab" href="#nav-lecturers"
                            role="tab"
-                           aria-controls="nav-contact" aria-selected="false">Môn học</a>
-                        <a class="nav-item nav-link active" id="courses-tab" data-toggle="tab" href="#nav-courses"
+                           aria-controls="nav-home" aria-selected="true">Giảng viên </a>
+                        <a class="nav-item nav-link" id="nav-subjects-tab" data-toggle="tab" href="#nav-staffs"
                            role="tab"
-                           aria-controls="nav-contact" aria-selected="false">Khóa học</a>
+                           aria-controls="nav-contact" aria-selected="false">Nhân viên</a>
+                        <a class="nav-item nav-link" id="courses-tab" data-toggle="tab" href="#nav-students"
+                           role="tab"
+                           aria-controls="nav-contact" aria-selected="false">Sinh viên</a>
                     </div>
                 </nav>
             </div>
@@ -310,7 +313,7 @@
             <div class="col-lg-12">
                 <div class="tab-content" id="nav-tabContent">
                     <!--tab pane lecturers-->
-                    <div class="tab-pane fade" id="nav-lecturers" role="tabpanel"
+                    <div class="tab-pane fade show active" id="nav-lecturers" role="tabpanel"
                          aria-labelledby="nav-lecturers-tab">
                         <!--filter bar-->
                         <div class="form-row">
@@ -434,7 +437,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <<input class="btn active btn-check-target " type="button" name="target" value="Chọn"/>
+                                            <input class="btn active btn-check-target " type="button" name="target" value="Chọn"/>
                                         </td>
                                         <td>Nguyễn Trọng Tài</td>
                                         <td>SE</td>
@@ -651,7 +654,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <input class="btn active btn-check-target " type="button" name="target" value="Chọn"/>
+                                            <<input class="btn active btn-check-target " type="button" name="target" value="Chọn"/>
                                         </td>
                                         <td>Nguyễn Trọng Tài</td>
                                         <td>SE</td>
@@ -715,9 +718,9 @@
                         </div>
                         <!--end table departments-->
                     </div>
-                    <!--end tab pane department-->
-                    <!--tab pane subjects-->
-                    <div class="tab-pane fade" id="nav-subjects" role="tabpanel" aria-labelledby="nav-subjects-tab">
+                    <!--end tab pane departments-->
+                    <!--tab pane classes-->
+                    <div class="tab-pane fade" id="nav-classes" role="tabpanel" aria-labelledby="nav-classes-tab">
                         <!--filter bar-->
                         <div class="form-row">
                             <!--major-->
@@ -794,7 +797,7 @@
                         <!--table subjects-->
                         <div class="row">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="tbl-subjects" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="tbl-classes" width="100%" cellspacing="0">
                                     <thead>
                                     <tr>
                                         <th>#</th>
@@ -931,10 +934,10 @@
                         </div>
                         <!--end table subjects-->
                     </div>
-                    <!--end tab pane subject-->
-                    <!--tab pane course-->
-                    <div class="tab-pane fade show active" id="nav-courses" role="tabpanel"
-                         aria-labelledby="nav-courses-tab">
+                    <!--end tab pane classes-->
+                    <!--tab pane students-->
+                    <div class="tab-pane fade" id="nav-students" role="tabpanel"
+                         aria-labelledby="nav-students-tab">
                         <!--filter bar-->
                         <div class="form-row">
                             <!--major-->
@@ -1008,10 +1011,10 @@
                                 </select>
                             </div>
                         </div>
-                        <!--table courses-->
+                        <!--table students-->
                         <div class="row">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="tbl-courses" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="tbl-students" width="100%" cellspacing="0">
                                     <thead>
                                     <tr>
                                         <th>#</th>
@@ -1198,7 +1201,7 @@
     <script src="js/sb-admin.min.js"></script>
     <!-- Custom scripts for this page-->
     <script src="js/sb-admin-datatables.min.js"></script>
-    <script src="js/select-feedback-target.js"></script>
+    <script src="js/select-feedback-conductors.js"></script>
 </div>
 </body>
 

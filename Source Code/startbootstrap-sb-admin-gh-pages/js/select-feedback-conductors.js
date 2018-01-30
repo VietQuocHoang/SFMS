@@ -1,26 +1,25 @@
 /**
  * Created by MyPC on 29/01/2018.
  */
-var selectedtarget;
 var tmp;
 $(document).ready(function () {
-    $('#tbl-courses').DataTable();
+    $('#tbl-staffs').DataTable();
     $('#tbl-lecturers').DataTable();
     $('#tbl-departments').DataTable();
-    $('#tbl-subjects').DataTable();
+    $('#tbl-students').DataTable();
+    $('#tbl-classes').DataTable();
 });
 $(".btn-check-target").click(function () {
     tmp = $(this).val();
-    if (selectedtarget != null) {
-        selectedtarget.removeClass("btn-checked");
-        selectedtarget.addClass("btn-check-target");
-        selectedtarget.val("Chọn");
+    if (tmp == "Đã chọn") {
+        $(this).removeClass("btn-checked");
+        $(this).addClass("btn-check-target");
+        $(this).val("Chọn");
     }
     if (tmp == "Chọn") {
-        selectedtarget = $(this);
-        selectedtarget.removeClass("btn-check-target");
-        selectedtarget.addClass("btn-checked");
-        selectedtarget.val("Đã chọn");
+        $(this).removeClass("btn-check-target");
+        $(this).addClass("btn-checked");
+        $(this).val("Đã chọn");
     }
 });
 // $(".btn-checked").click(function(){
