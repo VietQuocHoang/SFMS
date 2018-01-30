@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Log in</title>
+</head>
+<body>
+<form th:action="@{/login}" method="post">
+    Email: <input type="text" id="email" name="email" autofocus="autofocus"/>
+    Username: <input type="password" id="password" name="password"/>
+    <input type="submit" value="Submit"/>
+</form>
+<h1 th:text="${#httpServletRequest.getParameter('error')}">
+</h1>
+</body>
+</html>
