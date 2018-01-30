@@ -56,3 +56,13 @@ label.lb-content{
 div.tab-content{
     margin-top: 1%;
 }
+
+.btn-check-target{
+    background-color: #08AE9E;
+    color: #FFFFFF;
+}
+
+.btn-checked{
+    background-color: #e0a800;
+    color: #FFFFFF;
+}

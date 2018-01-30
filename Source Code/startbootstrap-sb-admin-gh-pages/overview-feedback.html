@@ -236,13 +236,37 @@
             <li class="breadcrumb-item active">Tạo mới</li>
         </ol>
         <!--Progress-Bar-->
-        <ul class="nav nav-wizard">
-            <li class="progress-item"><a href="#"><span class="badge badge-step">1</span> Chọn mẫu</a></li>
-            <li class="progress-item"><a href="#"><span class="badge badge-step">3</span> Tùy chỉnh nội dung</a></li>
-            <li class="progress-item"><a href="#"><span class="badge badge-step">2</span> Chọn các đối tượng</a></li>
-            <li class="progress-item"><a href="#"><span class="badge badge-step">4</span> Thêm đề xuất</a></li>
-            <li class="progress-item active"><a href="#"><span class="badge badge-step">5</span>Hoàn tất thông tin feedback</a></li>
-        </ul>
+        <div class="modify-feedback-progressbar">
+            <div class="row">
+                <div class="col-sm-10">
+                    <!--nav wizard-->
+                    <ul class="nav nav-wizard">
+                        <li class="progress-item"><a href="#"><span class="badge badge-step">1</span> Chọn mẫu</a></li>
+                        <li class="progress-item"><a href="#"><span class="badge badge-step">3</span> Tùy chỉnh nội dung</a>
+                        </li>
+                        <li class="progress-item">
+                            <a href="#"><span class="badge badge-step">2</span> Chọn các đối tượng</a>
+                        </li>
+                        <li class="progress-item"><a href="#"><span class="badge badge-step">4</span> Thêm đề xuất</a>
+                        </li>
+                        <li class="progress-item active">
+                            <a href="#"><span class="badge badge-step">5</span>Hoàn tất thông tin feedback</a>
+                        </li>
+                    </ul>
+                    <!--end nav-wizard-->
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn btn-group-sm to-previous-step">
+                        <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+                        Trước
+                    </button>
+                    <button class="btn btn-group-sm to-next-step">
+                        Tiếp <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!--end progress bar-->
         <!--end nav-wizard-->
         <h5 class="overview-title">Vui lòng kiểm tra & hoàn tất những thông tin sau</h5>
         <!--Overview content-->
