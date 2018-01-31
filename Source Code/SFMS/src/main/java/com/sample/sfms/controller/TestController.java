@@ -13,34 +13,29 @@ public class TestController {
     @Autowired
     private UserService userService;
 
+
     @GetMapping(value = {"/", "/login"})
-    private ModelAndView init() {
+    private ModelAndView login() {
         return new ModelAndView("login");
     }
 
-    @GetMapping(value = "/roles")
-    private String role() {
-        return "role";
-    }
-
-    @GetMapping(value = "/users")
-    private String user() {
-        return "user";
-    }
-
     @GetMapping(value = "/conduct-feedback")
-    private String conductFeedback() {
-        return "conduct";
+    private ModelAndView conductFeedback() {
+        return new ModelAndView("conduct-feedback");
     }
 
-    @GetMapping(value = "/feedbacks")
-    private String feedback() {
-        return "feedback";
+    @GetMapping(value = "/overview-feedback")
+    private ModelAndView overviewFeedback() {
+        return new ModelAndView("overview-feedback");
     }
 
-    @GetMapping(value = "/home")
-    private ModelAndView home() {
-        return new ModelAndView("home");
+    @GetMapping(value = "/skeleton")
+    private ModelAndView skeleton() {
+        return new ModelAndView("skeleton");
     }
 
+    @GetMapping(value = "/nav")
+    private ModelAndView nav() {
+        return new ModelAndView("fragments/navbar-side");
+    }
 }
