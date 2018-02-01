@@ -38,4 +38,9 @@ public class TestController {
     private ModelAndView nav() {
         return new ModelAndView("fragments/navbar-side");
     }
+
+    @GetMapping(value = "/select-template")
+    private ModelAndView selectFeedback(){
+        return new ModelAndView("select-template");
+    }
 }
