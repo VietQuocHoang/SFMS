@@ -7,12 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>SB Admin - Start Bootstrap Template</title>
+    <title>Chọn template</title>
     <div th:replace="fragments/core-css"></div>
     <!-- dataTable -->
     <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" type="text/css">
     <link href="vendor/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css">
-
+    <link href="vendor/datatables/select.dataTables.min.css" rel="stylesheet" type="text/css">
     <!-- Custom style -->
     <link href="css/select-template.css" rel="stylesheet">
 </head>
@@ -32,224 +32,222 @@
             </li>
             <li class="breadcrumb-item active">Tạo mới feedback</li>
         </ol>
+        <!--div header-->
         <div class="row">
-            <div class="col-12">
-                <h1>Chọn một template có sẵn</h1>
+            <div class="col-12 text-center">
+                <h3>Tạo từ đầu</h3>
             </div>
         </div>
+        <!--end div header-->
         <!-- div content -->
-        <div class="row main-content-container">
-            <!-- table div -->
-            <div class="col-12 col-xs-12 col-md-12 col-lg-7 col-xl-7" style="border: 1px #868e96 solid ">
-                <div class="card">
-                    <h3 class="card-header">Danh sách các template có sẵn: </h3>
-                    <div class="card-block">
-                        <table id="availableTemplate" class="table table-responsive table-striped">
-                            <thead>
-                            <th>#</th>
-                            <th>Tên template</th>
-                            <th>Loại</th>
-                            <th></th>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Feedback cho môn PRJ321 lớp SE1067</td>
-                                <td>Feedback lớp học</td>
-                                <td>
-                                    <button class="btn btn-preview">Preview ></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Feedback cho môn SWD301 lớp SE1069</td>
-                                <td>Feedback lớp học</td>
-                                <td>
-                                    <button class="btn btn-preview">Preview ></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Feedback cho môn JPD111 lớp JS10123</td>
-                                <td>Feedback lớp học</td>
-                                <td>
-                                    <button class="btn btn-preview">Preview ></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Feedback cho môn SWM391 lớp SE23912</td>
-                                <td>Feedback lớp học</td>
-                                <td>
-                                    <button class="btn btn-preview">Preview ></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>Feedback cho môn ITE301 lớp SE123213</td>
-                                <td>Feedback lớp học</td>
-                                <td>
-                                    <button class="btn btn-preview">Preview ></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td>Feedback cho môn ACC101 lớp SB1067</td>
-                                <td>Feedback lớp học</td>
-                                <td>
-                                    <button class="btn btn-preview">Preview ></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>7</td>
-                                <td>Feedback cho môn MLN101 lớp SE1067</td>
-                                <td>Feedback lớp học</td>
-                                <td>
-                                    <button class="btn btn-preview">Preview ></button>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <a class="btn btn-create-new" href="#" data-toggle="modal" data-target="#modalCreateNew">Tạo mới</a>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12 text-center">
+                <h3>Chọn từ một template có sẵn</h3>
+            </div>
+            <div class="row col-12 col-sm-12 col-md-10 col-lg-10 col-xl-10 template-container">
+                <div class="col-10 col-sm-10 col-md-3 col-lg-3 col-lg-3 template-thumbnail">
+                    <div class="thumbnail-content">
+                        <b>Feedback giáo viên tiếng anh</b>
+                        <p>Feedback này dành để đánh giá các giáo viên tiếng anh về khả năng nói, etc...</p>
+                    </div>
+                    <div class="thumbnail-action ">
+                        <button class="btn btn-primary" data-target="#modalTemplate" data-toggle="modal">Xem thử</button>
+                        <button class="btn btn-select-feedback">Tiếp tục</button>
                     </div>
                 </div>
-                <div class="col-12" style="margin-top: 20px;margin-bottom:20px">
-                    <button class="btn btn-select">
-                        Tiếp tục với template đã chọn
-                    </button>
+                <div class="col-10 col-sm-10 col-md-3 col-lg-3 col-lg-3 template-thumbnail">
+                    <div class="thumbnail-content">
+                        <b>Feedback giáo viên tiếng nhật</b>
+                        <p>Feedback này dành để đánh giá các giáo viên tiếng anh về khả năng nói, etc...</p>
+                    </div>
+                    <div class="thumbnail-action ">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#modalTemplate">Xem thử</button>
+                        <button class="btn btn-select-feedback">Tiếp tục</button>
+                    </div>
+                </div>
+                <div class="col-10 col-sm-10 col-md-3 col-lg-3 col-lg-3 template-thumbnail">
+                    <div class="thumbnail-content">
+                        <b>Feedback giáo viên tiếng nhật</b>
+                        <p>Feedback này dành để đánh giá các giáo viên tiếng anh về khả năng nói, etc...</p>
+                    </div>
+                    <div class="thumbnail-action ">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#modalTemplate">Xem thử</button>
+                        <button class="btn btn-select-feedback">Tiếp tục</button>
+                    </div>
+                </div>
+                <div class="col-10 col-sm-10 col-md-3 col-lg-3 col-lg-3 template-thumbnail">
+                    <div class="thumbnail-content">
+                        <b>Feedback giáo viên tiếng nhật</b>
+                        <p>Feedback này dành để đánh giá các giáo viên tiếng anh về khả năng nói, etc...</p>
+                    </div>
+                    <div class="thumbnail-action ">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#modalTemplate">Xem thử</button>
+                        <button class="btn btn-select-feedback">Tiếp tục</button>
+                    </div>
+                </div>
+                <div class="col-10 col-sm-10 col-md-3 col-lg-3 col-lg-3 template-thumbnail">
+                    <div class="thumbnail-content">
+                        <b>Feedback giáo viên tiếng nhật</b>
+                        <p>Feedback này dành để đánh giá các giáo viên tiếng anh về khả năng nói, etc...</p>
+                    </div>
+                    <div class="thumbnail-action ">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#modalTemplate">Xem thử</button>
+                        <button class="btn btn-select-feedback">Tiếp tục</button>
+                    </div>
+                </div>
+                <div class="col-10 col-sm-10 col-md-3 col-lg-3 col-lg-3 template-thumbnail">
+                    <div class="thumbnail-content">
+                        <b>Feedback giáo viên tiếng nhật</b>
+                        <p>Feedback này dành để đánh giá các giáo viên tiếng anh về khả năng nói, etc...</p>
+                    </div>
+                    <div class="thumbnail-action ">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#modalTemplate">Xem thử</button>
+                        <button class="btn btn-select-feedback">Tiếp tục</button>
+                    </div>
+                </div>
+                <div class="col-10 col-sm-10 col-md-3 col-lg-3 col-lg-3 template-thumbnail">
+                    <div class="thumbnail-content">
+                        <b>Feedback giáo viên tiếng nhật</b>
+                        <p>Feedback này dành để đánh giá các giáo viên tiếng anh về khả năng nói, etc...</p>
+                    </div>
+                    <div class="thumbnail-action ">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#modalTemplate">Xem thử</button>
+                        <button class="btn btn-select-feedback">Tiếp tục</button>
+                    </div>
                 </div>
             </div>
-            <!-- end table div -->
-            <!-- arrow div -->
-            <div class="col-12 col-xs-12 col-md-12 col-lg-1 col-xl-1 align-self-center text-center">
-                <i class="fa fa-2x fa-arrow-right preview-arrow"></i>
+            <div class="col-12 text-center">
+                <a href="#">Xem thêm</a>
             </div>
-            <!-- end arrow div -->
-            <!-- template preview div-->
-            <div class="col-12 col-xs-12 col-md-12 col-lg-4 col-xl-4 template-preview justify-content-center">
-                <!-- div template container -->
-                <div class="template-container">
-                    <!-- div loading container -->
-                    <div class="loading-container">
-                        <img src="img/loading-gif-transparent-4.gif" style="width:20%; height:auto">
-                    </div>
-                    <!-- end div loading container -->
-                    <div class="card">
-                        <div class="card-header">
-                            Câu hỏi 1
+        </div>
+    </div>
+    <!-- end div container-fluid -->
+    <!-- Modal Create New -->
+    <div id="modalCreateNew" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label class="control-label">Tên feedback</label>
+                            <input class="form-control" placeholder="Tên feedback">
                         </div>
-                        <div class="card-block">
-                            <p class="card-text">
-                                Tốc độ giảng dạy của giảng viên có phù hợp với bạn hay không?
+                        <div class="form-group">
+                            <label class="control-label">Mô tả</label>
+                            <textarea class="form-control" placeholder="Mô tả"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <a href="#" class="btn btn-submit">Tiếp tục</a>
+                            <button class="btn btn-default" data-dismiss="modal">Đóng</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Template-->
+    <div id="modalTemplate" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#overview">Tổng quan</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#question">Câu hỏi</a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div class="tab-pane active container" id="overview">
+                            <h3>Feedback cho giáo viên tiếng anh</h3>
+                            <br>
+                            <p>Feedback này được sử dụng để dành cho các giáo viên dạy tiếng anh về chất lượng giảng dạy</p>
+                            <h4>Số lần được sử dụng: </h4>
+                            <br>
+                            <p>150</p>
+                            <h4>Số câu hỏi: </h4>
+                            <br>
+                            <p>10</p>
+                        </div>
+                        <div class="tab-pane container" id="question">
+                            <h4 class="question">1. Tốc độ giang dạy của giáo viên như thế nào?</h4>
                             <div class="form-group">
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-1"> Quá nhanh
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-1"> Nhanh
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-1"> Vừa
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-1"> Hơi chậm
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-1"> Chậm
-                                    </label>
-                                </div>
-                            </div>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            Câu hỏi 2
-                        </div>
-                        <div class="card-block">
-                            <p class="card-text">
-                                Giáo án của giáo viên có đảm bảo kiến thức môn học không?
-                            <div class="form-group">
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-2"> Đã đầy đủ và có
+                                        <input class="form-check-input" type="radio" name="answer-2"/> Đã đầy đủ và có
                                         những kiến thức thực tế bổ ích
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-2"> Đã đầy đủ nhưng
+                                        <input class="form-check-input" type="radio" name="answer-2"/> Đã đầy đủ nhưng
                                         chưa có kiến thức thực tế nhiều
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-2"> Chưa đầy đủ
+                                        <input class="form-check-input" type="radio" name="answer-2"/> Chưa đầy đủ
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-2"> Giáo viên bỏ và
+                                        <input class="form-check-input" type="radio" name="answer-2"/> Giáo viên bỏ và
                                         dạy lướt qua nhiều phần quan trọng
                                     </label>
                                 </div>
                             </div>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            Câu hỏi 3
-                        </div>
-                        <div class="card-block">
-                            <p class="card-text">
-                                Các giải đáp của bạn có được giải quyết vào lúc nào?
+                            <h4 class="question">2. Tốc độ?</h4>
                             <div class="form-group">
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox"> Ngay sau khi câu hỏi được đề ra
+                                        <input class="form-check-input" type="radio" name="answer-1"/> Quá nhanh
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox"> Sau giờ học
+                                        <input class="form-check-input" type="radio" name="answer-1"/> Nhanh
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox"> Trước giờ học
+                                        <input class="form-check-input" type="radio" name="answer-1"/> Vừa
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox"> Không được giải đáp
+                                        <input class="form-check-input" type="radio" name="answer-1"/> Hơi chậm
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" name="answer-1"/> Chậm
                                     </label>
                                 </div>
                             </div>
-                            </p>
                         </div>
                     </div>
                 </div>
-                <!-- end div template container -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-submit">Chọn template này</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                </div>
             </div>
-            <!-- end div template preview -->
-        </div>
-        <!-- end div main content -->
-        <div class="row justify-content-center" style="margin-top: 20px">
-            <div class="col-12 col-xs-12 col-md-12 col-lg-12 col-xl-12">
-                <button class="btn btn-new">... Tạo mới một feedback</button>
-            </div>
+
         </div>
     </div>
-    <!-- end div container-fluid -->
 </div>
 <!--footer-->
 <div th:replace="fragments/footer"></div>
@@ -261,6 +259,7 @@
 <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
 <script src="vendor/datatables/dataTables.responsive.min.js"></script>
 <script src="vendor/datatables/responsive.bootstrap4.min.js"></script>
+<script src="vendor/datatables/dataTables.select.min.js"></script>
 
 <!-- Custom javascript -->
 <script src="js/select-template.js"></script>

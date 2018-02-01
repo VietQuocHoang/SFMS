@@ -14,8 +14,8 @@ body {
 }
 
 .card-header {
-    background-color: #08AE9E;
-    color: #fff;
+    /*background-color: #08AE9E;*/
+    color: #08AE9E;
     text-align: left;
 }
 
@@ -37,7 +37,7 @@ body {
     display: none;
 }
 
-.page-active {
+.feedback-page.page-active {
     display: block;
 }
 
@@ -56,10 +56,11 @@ body {
 }
 
 .progress {
-    height: 40px;
-    border-radius: 20px;
+    height: 20px;
+    border-radius: 10px;
 }
 
 .progress-bar {
-    background-color: #08AE9E;
+    background-color: #08ae9e;
+    transition:  0.2s linear;
 }
