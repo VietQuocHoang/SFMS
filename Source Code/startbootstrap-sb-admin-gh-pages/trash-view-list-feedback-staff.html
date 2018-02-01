@@ -38,12 +38,18 @@
                         Kết quả Feedbacks
                     </h3>
                     <div class="tab">
-                        <button class="tablinks" onclick="openCity(event, 'all')">Tất cả</button>
-                        <button class="tablinks" onclick="openCity(event, 'undone')">Chưa hoàn thành</button>
+                       <!-- <button class="tablinks" onclick="openCity(event, 'all')">Tất cả</button>
+                        <button class="tablinks" onclick="openCity(event, 'undone')">Chưa hoàn thành</button>-->
                         <div class="tablinks-div">
                             <button style="background-color: #08AE9E; color: #fff; " class=" btn-create-feedback btn">
                                 Tạo Feedback mới
                             </button>
+                              &nbsp;&nbsp;&nbsp;                
+                            Trạng thái
+                            <select id="filter-status" style="height: 35px; border-radius: 0.25em" name="">
+                                <option value="all">Tất cả</option>
+                                <option value="undone">Chưa hoàn thành</option>
+                            </select>
                             &nbsp;&nbsp;&nbsp;                
                             Loại Feedback 
                             <select id="filter-scope" style="height: 35px; border-radius: 0.25em" name="">
