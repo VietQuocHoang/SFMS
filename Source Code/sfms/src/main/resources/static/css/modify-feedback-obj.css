@@ -13,7 +13,7 @@ label.lb-inf{
     font-weight: bold;
     font-size: 18px;
 }
-label.inf-content{
+label.label label-default inf-content{
     color: grey;}
 a.remove-inf-item-link{
     color: black;
