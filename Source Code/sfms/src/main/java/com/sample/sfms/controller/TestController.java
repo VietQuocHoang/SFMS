@@ -29,6 +29,21 @@ public class TestController {
         return new ModelAndView("overview-feedback");
     }
 
+    @GetMapping(value = "/modify-feedback-target")
+    private ModelAndView ModifyFeedbackTarget() {
+        return new ModelAndView("modify-feedback-target");
+    }
+
+    @GetMapping(value = "/modify-feedback-conductors")
+    private ModelAndView ModifyFeedbackConductor() {
+        return new ModelAndView("modify-feedback-conductor");
+    }
+
+    @GetMapping(value = "/modify-feedback-viewers")
+    private ModelAndView ModifyFeedbackViewers() {
+        return new ModelAndView("modify-feedback-viewers");
+    }
+
     @GetMapping(value = "/skeleton")
     private ModelAndView skeleton() {
         return new ModelAndView("skeleton");
