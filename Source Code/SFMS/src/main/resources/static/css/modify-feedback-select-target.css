@@ -39,8 +39,9 @@ label.lb-content{
     margin-left: 1%;
 }
 .btn-to-select-conductors, .btn-to-select-viewers{
-    background-color: #08AE9E;
-    color: #FFFFFF;
+    color: #08AE9E;
+    background-color: #FFFFFF;
+    border: 1px solid #08AE9E;
     /*margin-top: 1%;*/
     margin-bottom: 1%;
 }
@@ -58,11 +59,13 @@ div.tab-content{
 }
 
 .btn-check-target{
-    background-color: #08AE9E;
-    color: #FFFFFF;
+    color: #08AE9E;
+    background-color: #FFFFFF;
+    border: 1px solid #08AE9E;
 }
 
 .btn-checked{
-    background-color: #e0a800;
-    color: #FFFFFF;
+    color: #e0a800;
+    background-color: #FFFFFF;
+    border: 1px solid #e0a800;
 }
