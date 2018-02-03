@@ -18,7 +18,7 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name = "id")
     public int getId() {
         return id;
     }
@@ -27,7 +27,8 @@ public class Role {
         this.id = id;
     }
 
-    @Column
+    @Basic
+    @Column(name = "roleName")
     public String getRoleName() {
         return roleName;
     }
@@ -44,5 +45,25 @@ public class Role {
 
     public void setRolePrivileges(List<RolePrivilege> rolePrivileges) {
         this.rolePrivileges = rolePrivileges;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Role role = (Role) o;
+
+        if (id != role.id) return false;
+        if (roleName != null ? !roleName.equals(role.roleName) : role.roleName != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (roleName != null ? roleName.hashCode() : 0);
+        return result;
     }
 }
