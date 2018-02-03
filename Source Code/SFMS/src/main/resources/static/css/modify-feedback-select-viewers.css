@@ -38,14 +38,14 @@ div.save-options > div.col-md-2{
 label.lb-content{
     margin-left: 1%;
 }
-.btn-to-select-viewers, .btn-to-select-target{
+.btn-to-select-conductors, .btn-to-select-target{
     color: #08AE9E;
     background-color: #FFFFFF;
     border: 1px solid #08AE9E;
     /*margin-top: 1%;*/
     margin-bottom: 1%;
 }
-.btn-to-select-viewers{
+.btn-to-select-conductors{
     float: left;
 }
 .btn-to-select-target{
