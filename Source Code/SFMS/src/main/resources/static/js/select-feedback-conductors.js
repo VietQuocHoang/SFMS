@@ -1,7 +1,7 @@
 /**
  * Created by MyPC on 29/01/2018.
  */
-var tmp;
+var tmp, btn;
 $(document).ready(function () {
     $('#tbl-staffs').DataTable(
         {
@@ -20,9 +20,9 @@ $(document).ready(function () {
                 "zeroRecords": "Không tìm thấy kết quả phù hợp",
                 "paginate": {
                     "first": "Đầu",
-                    "last": "Trước",
+                    "last": "Cuối",
                     "next": "Sau",
-                    "previous": "Cuối"
+                    "previous": "Trước"
                 },
                 "aria": {
                     "sortAscending": ": kích hoạt để sắp xếp tăng dần",
@@ -48,9 +48,9 @@ $(document).ready(function () {
                 "zeroRecords": "Không tìm thấy kết quả phù hợp",
                 "paginate": {
                     "first": "Đầu",
-                    "last": "Trước",
+                    "last": "Cuối",
                     "next": "Sau",
-                    "previous": "Cuối"
+                    "previous": "Trước"
                 },
                 "aria": {
                     "sortAscending": ": kích hoạt để sắp xếp tăng dần",
@@ -76,9 +76,9 @@ $(document).ready(function () {
                 "zeroRecords": "Không tìm thấy kết quả phù hợp",
                 "paginate": {
                     "first": "Đầu",
-                    "last": "Trước",
+                    "last": "Cuối",
                     "next": "Sau",
-                    "previous": "Cuối"
+                    "previous": "Trước"
                 },
                 "aria": {
                     "sortAscending": ": kích hoạt để sắp xếp tăng dần",
@@ -104,9 +104,9 @@ $(document).ready(function () {
                 "zeroRecords": "Không tìm thấy kết quả phù hợp",
                 "paginate": {
                     "first": "Đầu",
-                    "last": "Trước",
+                    "last": "Cuối",
                     "next": "Sau",
-                    "previous": "Cuối"
+                    "previous": "Trước"
                 },
                 "aria": {
                     "sortAscending": ": kích hoạt để sắp xếp tăng dần",
@@ -132,9 +132,9 @@ $(document).ready(function () {
                 "zeroRecords": "Không tìm thấy kết quả phù hợp",
                 "paginate": {
                     "first": "Đầu",
-                    "last": "Trước",
+                    "last": "Cuối",
                     "next": "Sau",
-                    "previous": "Cuối"
+                    "previous": "Trước"
                 },
                 "aria": {
                     "sortAscending": ": kích hoạt để sắp xếp tăng dần",
@@ -144,19 +144,53 @@ $(document).ready(function () {
         }
     );
 });
-$(".btn-check-target").click(function () {
+
+$(".btn-check-all").click(function () {
     tmp = $(this).val();
+    btn = $(".btn-check-all");
+    if (tmp == "Chọn tất cả") {
+        btn.removeClass("btn-check-all");
+        btn.addClass("btn-checked-all");
+        btn.val("Bỏ chọn hết");
+        btn = $(".btn-check-target");
+        tmp = "Chọn";
+        selectObjBtn();
+    }
+    if (tmp == "Bỏ chọn hết") {
+        // alert("hihi");
+        btn.removeClass("btn-checked-all");
+        btn.addClass("btn-check-all");
+        btn.val("Chọn tất cả");
+        btn = $(".btn-checked");
+        tmp = "Đã chọn";
+        selectObjBtn();
+    }
+
+});
+
+$(".btn-check-target").click(function () {
+    btn = $(this);
+    tmp = $(this).val();
+    selectObjBtn();
+});
+
+function selectObjBtn() {
     if (tmp == "Đã chọn") {
-        $(this).removeClass("btn-checked");
-        $(this).addClass("btn-check-target");
-        $(this).val("Chọn");
+        btn.removeClass("btn-checked");
+        btn.addClass("btn-check-target");
+        btn.val("Chọn");
+        btn = $(".btn-checked-all");
+        btn.removeClass("btn-checked-all");
+        // alert("haha");
+        btn.addClass("btn-check-all");
+        btn.val("Chọn tất cả");
     }
     if (tmp == "Chọn") {
-        $(this).removeClass("btn-check-target");
-        $(this).addClass("btn-checked");
-        $(this).val("Đã chọn");
+        btn.removeClass("btn-check-target");
+        btn.addClass("btn-checked");
+        btn.val("Đã chọn");
     }
-});
+}
 // $(".btn-checked").click(function(){
 //     selectedtarget.removeClass("btn-checked");
 //     selectedtarget.addClass("btn-check-target");

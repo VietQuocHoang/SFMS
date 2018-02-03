@@ -45,10 +45,10 @@ label.lb-content{
     /*margin-top: 1%;*/
     margin-bottom: 1%;
 }
-.btn-to-select-conductors{
+.btn-to-select-target{
     float: left;
 }
-.btn-to-select-target{
+.btn-to-select-conductors{
     float: right;
 }
 .nav-link{
@@ -58,13 +58,13 @@ div.tab-content{
     margin-top: 1%;
 }
 
-.btn-check-target{
+.btn-check-target, .btn-check-all{
     color: #08AE9E;
     background-color: #FFFFFF;
     border: 1px solid #08AE9E;
 }
 
-.btn-checked{
+.btn-checked, .btn-checked-all{
     color: #e0a800;
     background-color: #FFFFFF;
     border: 1px solid #e0a800;

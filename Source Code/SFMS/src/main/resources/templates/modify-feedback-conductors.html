@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>SB Admin - Start Bootstrap Template</title>
+    <title>Modify Feedback Conductors</title>
     <!-- Bootstrap core CSS-->
     <div th:replace="fragments/core-css"></div>
     <!-- Custom styles for this template-->
@@ -64,14 +64,14 @@
         <!--title-->
         <div class="row">
             <div class="col-sm-4">
-                <button class="btn btn-to-select-viewers"><i class="fa fa-caret-left" aria-hidden="true"></i> Chọn đối tượng đánh giá của feedback
+                <button class="btn btn-to-select-target"><i class="fa fa-caret-left" aria-hidden="true"></i> Chọn đối tượng đánh giá của feedback
                 </button>
             </div>
             <div class="col-sm-4">
                 <h5 class="overview-title">Chọn những ai được gửi phản hồi</h5>
             </div>
             <div class="col-sm-4">
-                <button class="btn btn-to-select-conductors">Chọn những ai được xem báo cáo <i
+                <button class="btn btn-to-select-viewers">Chọn những ai được xem báo cáo <i
                         class="fa fa-caret-right" aria-hidden="true"></i></button>
             </div>
         </div>
@@ -170,7 +170,7 @@
                                 <table class="table table-bordered" id="tbl-lecturers" width="100%" cellspacing="0">
                                     <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th><input class="btn btn-check-all" type="button" name="target"  value="Chọn tất cả"/></th>
                                         <th>Họ & tên</th>
                                         <th>Ngành</th>
                                         <th>Phòng ban/Chuyên ngành</th>
@@ -180,7 +180,7 @@
                                     </thead>
                                     <tfoot>
                                     <tr>
-                                        <th>#</th>
+                                        <th><input class="btn btn-check-all" type="button" name="target"  value="Chọn tất cả"/></th>
                                         <th>Họ & tên</th>
                                         <th>Ngành</th>
                                         <th>Phòng ban/Chuyên ngành</th>
@@ -340,7 +340,7 @@
                                 <table class="table table-bordered" id="tbl-staffs" width="100%" cellspacing="0">
                                     <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th><input class="btn btn-check-all" type="button" name="target"  value="Chọn tất cả"/></th>
                                         <th>Họ & tên</th>
                                         <th>Phòng ban/Chuyên ngành</th>
                                         <th>Chức vụ</th>
@@ -348,7 +348,7 @@
                                     </thead>
                                     <tfoot>
                                     <tr>
-                                        <th>#</th>
+                                        <th><input class="btn btn-check-all" type="button" name="target"  value="Chọn tất cả"/></th>
                                         <th>Họ & tên</th>
                                         <th>Phòng ban/Chuyên ngành</th>
                                         <th>Chức vụ</th>
@@ -461,14 +461,14 @@
                                 <table class="table table-bordered" id="tbl-departments" width="100%" cellspacing="0">
                                     <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th><input class="btn btn-check-all" type="button" name="target"  value="Chọn tất cả"/></th>
                                         <th>Tên</th>
                                         <th>Ngành/ Chức năng</th>
                                     </tr>
                                     </thead>
                                     <tfoot>
                                     <tr>
-                                        <th>#</th>
+                                        <th><input class="btn btn-check-all" type="button" name="target"  value="Chọn tất cả"/></th>
                                         <th>Tên</th>
                                         <th>Ngành/ Chức năng</th>
                                     </tr>
@@ -597,7 +597,7 @@
                                 <table class="table table-bordered" id="tbl-classes" width="100%" cellspacing="0">
                                     <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th><input class="btn btn-check-all" type="button" name="target"  value="Chọn tất cả"/></th>
                                         <th>Tên</th>
                                         <th>Ngành</th>
                                         <th>Khóa</th>
@@ -607,7 +607,7 @@
                                     </thead>
                                     <tfoot>
                                     <tr>
-                                        <th>#</th>
+                                        <th><input class="btn btn-check-all" type="button" name="target"  value="Chọn tất cả"/></th>
                                         <th>Tên</th>
                                         <th>Ngành</th>
                                         <th>Khóa</th>
@@ -718,7 +718,7 @@
                                 <table class="table table-bordered" id="tbl-students" width="100%" cellspacing="0">
                                     <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th><input class="btn btn-check-all" type="button" name="target"  value="Chọn tất cả"/></th>
                                         <th>Họ & tên</th>
                                         <th>Ngành</th>
                                         <th>Khóa</th>
@@ -728,7 +728,7 @@
                                     </thead>
                                     <tfoot>
                                     <tr>
-                                        <th>#</th>
+                                        <th><input class="btn btn-check-all" type="button" name="target"  value="Chọn tất cả"/></th>
                                         <th>Họ & tên</th>
                                         <th>Ngành</th>
                                         <th>Khóa</th>
