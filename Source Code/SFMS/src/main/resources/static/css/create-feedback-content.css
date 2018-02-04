@@ -1,0 +1,91 @@
+.floating-menu{
+    z-index: 100;
+    position: fixed;
+    width:200px;
+    /*border: 1px black solid;*/
+    right: 15px;
+    top: 150px;
+}
+.floating-menu>ul{
+    padding:0px;
+    list-style: none;
+}
+.floating-menu>ul>li{
+    padding: 10px;
+    width:100%;
+    border: 1px lightgray solid;
+}
+.floating-menu>ul>li:active{
+    cursor: move;
+}
+.questions-container{
+    min-height:500px;
+    width:100%;
+}
+.questions-container.empty{
+    border: lightgray 3px dashed;
+}
+.questions-list{
+    list-style: none;
+    padding: 10px;
+}
+.questions-list>li:active{
+    cursor: move;
+}
+.questions-list>li:hover{
+    cursor: move;
+}
+.questions-list>li{
+    margin:10px;
+}
+.answers-panel{
+    width:100%;
+    padding:10px;
+    min-height: 200px;
+    border:1px solid lightgray;
+    list-style: none;
+}
+.answers-panel>li{
+    border:none;
+}
+.btn-add-new{
+    background-color: #08ae9e;
+    color:#fff;
+}
+.question{
+    width:100%;
+}
+
+.questions-container>ul>li>.container{
+    padding: 20px;
+    /*border: 1px solid lightgray;*/
+}
+.toggle-bar{
+    width:100%;
+    background-color:lightgray;
+}
+.field-action{
+    width:10%;
+    /*display:;*/
+    float:right;
+}
+.field-action:hover{
+    display:block;
+}
+
+.btn-edit{
+    color: lightblue;
+    border: 1px solid lightgray;
+}
+.btn-edit:hover{
+    background-color: lightblue;
+    color: #ffffff;
+}
+.btn-remove{
+    color: red;
+    border: 1px solid lightgray;
+}
+.btn-remove:hover{
+    background-color:red;
+    color:#FFFFFF;
+}
