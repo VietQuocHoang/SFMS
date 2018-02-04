@@ -384,9 +384,14 @@
                         window.open("view-report-semester.html");
                     },
                     columns: [
-                        ['Điểm', 1.2, 2.5, 3.1, 4.1, 3.8, 3, 4]
+                        ['Chất lượng', 1.2, 2.5, 3.1, 4.1, 3.8, 3, 4],
+                        ['Thái độ', 2.2, 3.1, 2.1, 3.1, 4.8, 4, 3],
+                        ['Trung bình', 1.7, 2.8, 2.6, 3.6, 4.3, 3.5, 3.5]
                     ],
-                    type: 'bar'
+                    type: 'bar',
+                    types: {
+                       'Trung bình': 'line'
+                    }
                 },
                 bar: {
                     width: {
@@ -404,9 +409,9 @@
                         categories: ['Spring 2016', 'Summer 2016', 'Fall 2016', 'Spring 2017', 'Summer 2017', 'Fall 2017', 'Spring 2018']
                     }
                 },
-                color: {
-                    pattern: ['#08AE9E']
-                }
+                /*  color: {
+                 pattern: ['#08AE9E']
+                 }*/
             });
         });
     </script>
