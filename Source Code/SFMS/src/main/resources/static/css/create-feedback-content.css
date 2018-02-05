@@ -73,19 +73,25 @@
     display:block;
 }
 
-.btn-edit{
+.btn-edit-answer{
     color: lightblue;
     border: 1px solid lightgray;
 }
-.btn-edit:hover{
+.btn-edit-answer:hover{
     background-color: lightblue;
     color: #ffffff;
 }
-.btn-remove{
+button:hover{
+    cursor: pointer;
+}
+.btn-remove-answer, .btn-remove-question{
     color: red;
     border: 1px solid lightgray;
 }
-.btn-remove:hover{
+.btn-remove-question{
+    float:right;
+}
+.btn-remove-question, .btn-remove-answer:hover{
     background-color:red;
     color:#FFFFFF;
 }

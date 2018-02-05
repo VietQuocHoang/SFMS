@@ -8,7 +8,6 @@ $(".list-widget").sortable({
     // },
     helper: (e, li)=>{
         copyHelper = li.clone().insertAfter(li);
-        console.log(li.clone());
         return li.clone();
     },
     stop: ()=>{
@@ -20,61 +19,78 @@ function initAnswersPanel(answerPanel){
     $(answerPanel).sortable({
         // connectWith: ".list-widget",
         receive: (ev, ui)=>{
+            console.log($(ev.target).find('li').length);
             copyHelper = null;
-            let id = ui.item.attr('id');
-            console.log(id);
-            switch(id){
-                case 'text-ele': {
-                    ui.item.html("<div class='form-group'>" +
-                        "<label class='control-label'>Nhập câu trả lời của bạn vào đây</label>" +
-                        "<input type='text' class='form-control'>" +
-                        "</div>");
-                    break;
-                }
-                case 'radio-ele':{
-                    ui.item.html("<div class='form-check'>" +
-                        "<label class='form-check-label'>" +
-                        "<input class='form-check-input' type='radio' checked> Đáp án 1" +
-                        "</label>" +
-                        "</div>" +
-                        "<div class='form-check'>" +
-                        "<label class='form-check-label'>" +
-                        "<input class='form-check-input' type='radio'> Đáp án 2" +
-                        "</label>" +
-                        "</div>" +
-                        "<div class='form-check'>" +
-                        "<label class='form-check-label'>" +
-                        "<input class='form-check-input' type='radio'> Đáp án 3" +
-                        "</label>" +
-                        "</div>");
-                    break;
-                }
-                case 'checkbox-ele':{
-                    ui.item.html("<div class='form-check'>" +
-                        "<label class='form-check-label'>" +
-                        "<input class='form-check-input' type='checkbox' checked> Đáp án 1" +
-                        "</label>" +
-                        "</div>");
-                    break;
-                }
-                case 'textarea-ele':{
-                    ui.item.html("<div class='form-group'>" +
-                        "<label class='control-label'>Nhập câu trả lời của bạn vào đây</label>" +
-                        "<textarea class='form-control'></textarea>" +
-                        "</div>")
+            if($(ev.target).find('li').length > 1){
+                ui.item.remove();
+            } else {
+                let id = ui.item.attr('id');
+                switch (id) {
+                    case 'text-ele': {
+                        ui.item.html("<div class='form-group'>" +
+                            "<label class='control-label'>Nhập câu trả lời của bạn vào đây</label>" +
+                            "<input type='text' class='form-control'>" +
+                            "</div>");
+                        break;
+                    }
+                    case 'radio-ele': {
+                        ui.item.html("<div class='form-check'>" +
+                            "<label class='form-check-label'>" +
+                            "<input class='form-check-input' type='radio' checked> Đáp án 1" +
+                            "</label>" +
+                            "</div>" +
+                            "<div class='form-check'>" +
+                            "<label class='form-check-label'>" +
+                            "<input class='form-check-input' type='radio'> Đáp án 2" +
+                            "</label>" +
+                            "</div>" +
+                            "<div class='form-check'>" +
+                            "<label class='form-check-label'>" +
+                            "<input class='form-check-input' type='radio'> Đáp án 3" +
+                            "</label>" +
+                            "</div>");
+                        break;
+                    }
+                    case 'checkbox-ele': {
+                        ui.item.html("<div class='form-check'>" +
+                            "<label class='form-check-label'>" +
+                            "<input class='form-check-input' type='checkbox' checked> Đáp án 1" +
+                            "</label>" +
+                            "</div>");
+                        break;
+                    }
+                    case 'textarea-ele': {
+                        ui.item.html("<div class='form-group'>" +
+                            "<label class='control-label'>Nhập câu trả lời của bạn vào đây</label>" +
+                            "<textarea class='form-control'></textarea>" +
+                            "</div>")
+                    }
                 }
             }
         },
+        over: ()=>{
+            removeIntent = false;
+        },
+        out: ()=>{
+            removeIntent = true;
+        },
+        beforeStop: (event,ui)=>{
+            if(removeIntent == true){
+                ui.item.remove();
+            }
+        }
     }).disableSelection();
 }
-$("body").droppable({
-    drop: (event, ui)=>{
-        console.log("deleted")
-        $(ui.item).remove();
-    }
-});
+
+function removeAnswer(event){
+    console.log("ahihi");
+    var answerContainer = $(event.target).closest(".answers-container");
+    console.log(answerContainer);
+    var listAnswer = $(answerContainer).find("ul>li").remove();
+}
 
 var numOfQuestion = 0;
+
 
 $(".btn-add-new").on('click', (event)=>{
     var html = "<li>" +
@@ -87,6 +103,7 @@ $(".btn-add-new").on('click', (event)=>{
         "<option>Thái độ</option>" +
         "<option>Kiến thức</option>" +
         "</select>" +
+        // "<button class='btn btn-remove-question'>Xóa</button> " +
         "</div>" +
         "<div class='question'>" +
         "<textarea class='form-control' placeholder='Nhập câu hỏi'></textarea>" +
@@ -94,19 +111,16 @@ $(".btn-add-new").on('click', (event)=>{
         "<div class='answers-container'>" +
         "<p>Kéo loại câu hỏi của bạn vào khung dưới</p>" +
         "<div class='field-action'>" +
-        "<a href='#' class='btn-edit'><i class='fa fa-fw fa-pencil'></i></a> " +
-        "<a href='#' class='btn-remove'><i class='fa fa-fw fa-remove'></i></a> " +
+        "<button class='btn-edit-answer'><i class='fa fa-fw fa-pencil'></i></button>" +
+        "<button class='btn-remove-answer' onclick='removeAnswer(event)'><i class='fa fa-fw fa-remove'></i></button>" +
         "</div>"+
         "<ul class='answers-panel'>" +
         "</ul>" +
         "</div>" +
-        "</div>" +
         "</li>";
     let domNode = jQuery.parseHTML(html);
-    console.log(domNode);
     $(".questions-list").append(domNode);
     let answerPanel = $(domNode).find(".answers-panel");
-    console.log("answerPanel");
     initAnswersPanel(answerPanel);
     numOfQuestion++;
 });
