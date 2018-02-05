@@ -9,9 +9,10 @@ import javax.persistence.Id;
  * Created by Binh Nguyen on 05-Feb-18.
  */
 @Entity
-public class Department {
+public class Studentclass {
     private int id;
-    private String name;
+    private int userId;
+    private int classId;
 
     @Id
     @Column(name = "id")
@@ -24,13 +25,23 @@ public class Department {
     }
 
     @Basic
-    @Column(name = "name")
-    public String getName() {
-        return name;
+    @Column(name = "UserID")
+    public int getUserId() {
+        return userId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    @Basic
+    @Column(name = "ClassID")
+    public int getClassId() {
+        return classId;
+    }
+
+    public void setClassId(int classId) {
+        this.classId = classId;
     }
 
     @Override
@@ -38,10 +49,11 @@ public class Department {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Department that = (Department) o;
+        Studentclass that = (Studentclass) o;
 
         if (id != that.id) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (userId != that.userId) return false;
+        if (classId != that.classId) return false;
 
         return true;
     }
@@ -49,7 +61,8 @@ public class Department {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + userId;
+        result = 31 * result + classId;
         return result;
     }
 }

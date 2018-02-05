@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import java.sql.Timestamp;
 
 /**
- * Created by Binh Nguyen on 04-Feb-18.
+ * Created by Binh Nguyen on 05-Feb-18.
  */
 @Entity
 public class Answer {

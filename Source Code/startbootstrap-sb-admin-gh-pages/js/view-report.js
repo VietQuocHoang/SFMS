@@ -1,44 +1,40 @@
-$(document).ready(function () {
-
-    
-    /*   var number =  $('#option').val();
-     pagination(number);
-     
-     $('#option').change(function () {
-     var number = this.value;
-     $("#nav").remove();
-     pagination(number);
-     $('#table-data tbody tr').css('opacity', '0.0').hide().slice(0, number).
-     css('display', 'table-row').animate({opacity: 1}, 300);
-     });
-     
-     function pagination(rowsShown) {
-     
-     $('.container-fluid').after('<div id="nav"></div>');
-     var rowsShown = rowsShown;
-     var rowsTotal = $('#table-data tbody tr').length;
-     var numPages = rowsTotal / rowsShown;
-     var div = '<div class="row justify-content-around" style="margin-top: 10px"><div id="div-button-option-number" class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center"></div></div>';
-     $('#nav').append(div);
-     for (i = 0; i < numPages; i++) {
-     var pageNum = i + 1;
-     $('#div-button-option-number')
-     .append('<button class="btn btn-pagination" value="' + i + '"><span class="fa fa-fw "></span>' + pageNum + '</button>&nbsp;');
-     }
-     $('#table-data tbody tr').hide();
-     $('#table-data tbody tr').slice(0, rowsShown).show();
-     $('#nav button:first').addClass('active');
-     $('#nav button').bind('click', function () {
-     
-     $('#nav button').removeClass('active');
-     $(this).addClass('active');
-     var currPage = $(this).attr('value');
-     var startItem = currPage * rowsShown;
-     var endItem = startItem + rowsShown;
-     $('#table-data tbody tr').css('opacity', '0.0').hide().slice(startItem, endItem).
-     css('display', 'table-row').animate({opacity: 1}, 300);
-     });
-     }*/
-
-
+$(document).ready(() => { //b�? vô document.ready để khi nào trang load xong thì sẽ bắt đầu render cái bảng
+    // Khởi tạo dataTable
+    $("#availableTemplate").DataTable({
+        // tùy chỉnh ngôn ngữ
+        "language": {
+            "lengthMenu": "_MENU_ bản ghi/trang", //Chỉnh lại chữ của cái thanh ch�?n số bản ghi hiển thị/trang
+            "emptyTable": "Không có dữ liệu nào trong bảng", // Bảng trống không có dữ liệu
+            "info": "_START_ - _END_ trên _TOTAL_ bản ghi", // dòng dưới bên trái cái bảng hiện thông tin v�? số record
+            "search": "", // cái dòng chữ bên trái thanh search
+            "zeroRecords": "Không tìm thấy bản ghi phù hợp", // Khi search k có kết quả thì sẽ trả v�? dòng này
+            "paginate": {
+                "first": "�?ầu", // nút quya lại trang đầu
+                "last": "Cuối", // nút tới trang cuối
+                "next": "Sau", // nút trang kế tiếp
+                "previous": "Trước" // nút trang trước
+            }
+        },
+        // Số record / trang
+        "lengthMenu": [[5, 10, 50, -1], [5, 10, 50, "Tất cả"]],
+        // responsive
+        "responsive": true
+    });
+});
+$(window).resize(() => {
+    if ($(window).outerWidth() < 992) {
+        $(".preview-arrow").removeClass("fa-arrow-right")
+            .addClass("fa-arrow-down");
+    } else {
+        $(".preview-arrow").removeClass("fa-arrow-down")
+            .addClass("fa-arrow-right");
+    }
+});
+$(".btn-preview").on('click', (el)=>{
+    $(".loading-container").addClass("container-active");
+    $(".template-container").addClass("container-fade");
+    setTimeout(()=>{
+        $(".loading-container").removeClass("container-active");
+        $(".template-container").removeClass("container-fade");
+    }, 3000)
 });

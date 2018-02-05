@@ -1,23 +1,19 @@
 package com.sample.sfms.entity;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-import javax.persistence.*;
-import java.util.List;
-
+/**
+ * Created by Binh Nguyen on 05-Feb-18.
+ */
 @Entity
-@Table
 public class Role {
     private int id;
     private String roleName;
-    private List<RolePrivilege> rolePrivileges;
-
-    public Role() {
-    }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     public int getId() {
         return id;
@@ -35,16 +31,6 @@ public class Role {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
-    }
-
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
-    public List<RolePrivilege> getRolePrivileges() {
-        return rolePrivileges;
-    }
-
-    public void setRolePrivileges(List<RolePrivilege> rolePrivileges) {
-        this.rolePrivileges = rolePrivileges;
     }
 
     @Override

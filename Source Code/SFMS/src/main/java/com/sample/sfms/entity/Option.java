@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 /**
- * Created by Binh Nguyen on 04-Feb-18.
+ * Created by Binh Nguyen on 05-Feb-18.
  */
 @Entity
 public class Option {

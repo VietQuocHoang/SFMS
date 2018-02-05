@@ -1,20 +1,18 @@
 package com.sample.sfms.entity;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  * Created by Binh Nguyen on 05-Feb-18.
  */
-@Entity
-public class Department {
+public class UserPK implements Serializable {
     private int id;
-    private String name;
+    private int departmentId;
 
-    @Id
     @Column(name = "id")
+    @Id
     public int getId() {
         return id;
     }
@@ -23,14 +21,14 @@ public class Department {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "name")
-    public String getName() {
-        return name;
+    @Column(name = "departmentID")
+    @Id
+    public int getDepartmentId() {
+        return departmentId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDepartmentId(int departmentId) {
+        this.departmentId = departmentId;
     }
 
     @Override
@@ -38,10 +36,10 @@ public class Department {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Department that = (Department) o;
+        UserPK userPK = (UserPK) o;
 
-        if (id != that.id) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (id != userPK.id) return false;
+        if (departmentId != userPK.departmentId) return false;
 
         return true;
     }
@@ -49,7 +47,7 @@ public class Department {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + departmentId;
         return result;
     }
 }
