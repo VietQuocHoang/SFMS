@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Tạo nội dung feedback</title>
+    <div th:replace="fragments/core-css"></div>
+    <link rel="stylesheet" href="vendor/jquery-ui/jquery-ui.css">
+    <link rel="stylesheet" href="css/create-feedback-content.css">
+</head>
+
+<body class="fixed-nav sticky-footer" id="page-top">
+<!--navigation-->
+<div th:replace="fragments/navbar-side"></div>
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="#">Quản lý feedback</a>
+            </li>
+            <li class="breadcrumb-item active">Tạo mới feedback</li>
+        </ol>
+        <!--header-->
+        <div class="row">
+            <div class="col-12">
+                <h1>Tạo nội dung cho feedback</h1>
+            </div>
+        </div>
+        <!--end div header-->
+        <!--div form builder-->
+        <div class="row">
+            <div class="col-8">
+                <div class="questions-container empty">
+                    <ul class="questions-list">
+
+                    </ul>
+                    <div class="row justify-content-center">
+                        <button class="btn btn-add-new"><i class="fa fa-fw fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+                <!--nav widget-->
+                <nav class="floating-menu">
+                    <ul class="list-widget">
+                        <li class="drag-element ui-state-default" id="text-ele"><i class="fa fa-fw fa-i-cursor"></i> Khung ghi</li>
+                        <li class="drag-element ui-state-default" id="radio-ele"><i class="fa fa-fw fa-circle"></i>Nhóm Radio</li>
+                        <li class="drag-element ui-state-default" id="checkbox-ele"><i class="fa fa-fw fa-check-circle"></i>Nhóm Checkbox</li>
+                        <li class="drag-element ui-state-default" id="textarea-ele"><i class="fa fa-fw fa-paragraph"></i> Khung ghi lớn </li>
+                    </ul>
+                </nav>
+                <!--end nav widget-->
+            </div>
+        </div>
+        <!--end div form builder-->
+    </div>
+    <!-- /.container-fluid-->
+    <!-- /.content-wrapper-->
+    <footer th:replace="fragments/footer"></footer>
+</div>
+</body>
+<div th:replace="fragments/core-script"></div>
+<script src="vendor/jquery-ui/jquery-ui.js" type="text/javascript"></script>
+<script src="js/create-feedback-content.js" type="text/javascript"></script>
+</html>
