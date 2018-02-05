@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="JAVA_MODULE" version="4">
   <component name="FacetManager">
-    <facet type="jpa" name="JPA">
-      <configuration>
+    <!--<facet type="jpa" name="JPA">
+ <configuration>
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
@@ -10,7 +10,7 @@
         </datasource-mapping>
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/java/META-INF/persistence.xml" />
       </configuration>
-    </facet>
+    </facet>-->
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
@@ -19,7 +19,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="javax.persistence" level="project" />
-    <orderEntry type="library" name="javax.persistence" level="project" />
+    <!--<orderEntry type="library" name="javax.persistence" level="project" />
+    <orderEntry type="library" name="javax.persistence" level="project" />-->
   </component>
 </module>

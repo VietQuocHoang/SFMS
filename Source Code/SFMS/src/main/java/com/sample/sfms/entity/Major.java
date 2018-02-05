@@ -6,13 +6,14 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 /**
- * Created by Binh Nguyen on 04-Feb-18.
+ * Created by Binh Nguyen on 05-Feb-18.
  */
 @Entity
 public class Major {
     private int id;
     private String code;
     private String name;
+    private Integer referenceId;
 
     @Id
     @Column(name = "id")
@@ -44,6 +45,16 @@ public class Major {
         this.name = name;
     }
 
+    @Basic
+    @Column(name = "referenceID")
+    public Integer getReferenceId() {
+        return referenceId;
+    }
+
+    public void setReferenceId(Integer referenceId) {
+        this.referenceId = referenceId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -54,6 +65,7 @@ public class Major {
         if (id != major.id) return false;
         if (code != null ? !code.equals(major.code) : major.code != null) return false;
         if (name != null ? !name.equals(major.name) : major.name != null) return false;
+        if (referenceId != null ? !referenceId.equals(major.referenceId) : major.referenceId != null) return false;
 
         return true;
     }
@@ -63,6 +75,7 @@ public class Major {
         int result = id;
         result = 31 * result + (code != null ? code.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (referenceId != null ? referenceId.hashCode() : 0);
         return result;
     }
 }

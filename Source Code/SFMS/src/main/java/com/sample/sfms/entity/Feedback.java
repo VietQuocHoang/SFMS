@@ -7,13 +7,12 @@ import javax.persistence.Id;
 import java.sql.Timestamp;
 
 /**
- * Created by Binh Nguyen on 04-Feb-18.
+ * Created by Binh Nguyen on 05-Feb-18.
  */
 @Entity
 public class Feedback {
     private int id;
     private Integer point;
-    private Integer preferenceId;
     private Byte isTemplate;
     private Timestamp createDate;
     private Timestamp fromDate;
@@ -23,14 +22,13 @@ public class Feedback {
     private String templateDes;
     private String feedbackDes;
     private Byte isPublished;
-    private Integer questionId;
     private Integer userId;
     private Integer departmentId;
     private Integer courseId;
-    private Integer lecturerId;
     private Integer majorId;
-    private Integer infoId;
+    private Integer classId;
     private Integer typeId;
+    private Integer referenceId;
 
     @Id
     @Column(name = "id")
@@ -50,16 +48,6 @@ public class Feedback {
 
     public void setPoint(Integer point) {
         this.point = point;
-    }
-
-    @Basic
-    @Column(name = "preferenceID")
-    public Integer getPreferenceId() {
-        return preferenceId;
-    }
-
-    public void setPreferenceId(Integer preferenceId) {
-        this.preferenceId = preferenceId;
     }
 
     @Basic
@@ -153,16 +141,6 @@ public class Feedback {
     }
 
     @Basic
-    @Column(name = "questionID")
-    public Integer getQuestionId() {
-        return questionId;
-    }
-
-    public void setQuestionId(Integer questionId) {
-        this.questionId = questionId;
-    }
-
-    @Basic
     @Column(name = "userID")
     public Integer getUserId() {
         return userId;
@@ -193,16 +171,6 @@ public class Feedback {
     }
 
     @Basic
-    @Column(name = "lecturerID")
-    public Integer getLecturerId() {
-        return lecturerId;
-    }
-
-    public void setLecturerId(Integer lecturerId) {
-        this.lecturerId = lecturerId;
-    }
-
-    @Basic
     @Column(name = "majorID")
     public Integer getMajorId() {
         return majorId;
@@ -213,13 +181,13 @@ public class Feedback {
     }
 
     @Basic
-    @Column(name = "infoID")
-    public Integer getInfoId() {
-        return infoId;
+    @Column(name = "classID")
+    public Integer getClassId() {
+        return classId;
     }
 
-    public void setInfoId(Integer infoId) {
-        this.infoId = infoId;
+    public void setClassId(Integer classId) {
+        this.classId = classId;
     }
 
     @Basic
@@ -232,6 +200,16 @@ public class Feedback {
         this.typeId = typeId;
     }
 
+    @Basic
+    @Column(name = "referenceID")
+    public Integer getReferenceId() {
+        return referenceId;
+    }
+
+    public void setReferenceId(Integer referenceId) {
+        this.referenceId = referenceId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -241,8 +219,6 @@ public class Feedback {
 
         if (id != feedback.id) return false;
         if (point != null ? !point.equals(feedback.point) : feedback.point != null) return false;
-        if (preferenceId != null ? !preferenceId.equals(feedback.preferenceId) : feedback.preferenceId != null)
-            return false;
         if (isTemplate != null ? !isTemplate.equals(feedback.isTemplate) : feedback.isTemplate != null) return false;
         if (createDate != null ? !createDate.equals(feedback.createDate) : feedback.createDate != null) return false;
         if (fromDate != null ? !fromDate.equals(feedback.fromDate) : feedback.fromDate != null) return false;
@@ -257,15 +233,15 @@ public class Feedback {
             return false;
         if (isPublished != null ? !isPublished.equals(feedback.isPublished) : feedback.isPublished != null)
             return false;
-        if (questionId != null ? !questionId.equals(feedback.questionId) : feedback.questionId != null) return false;
         if (userId != null ? !userId.equals(feedback.userId) : feedback.userId != null) return false;
         if (departmentId != null ? !departmentId.equals(feedback.departmentId) : feedback.departmentId != null)
             return false;
         if (courseId != null ? !courseId.equals(feedback.courseId) : feedback.courseId != null) return false;
-        if (lecturerId != null ? !lecturerId.equals(feedback.lecturerId) : feedback.lecturerId != null) return false;
         if (majorId != null ? !majorId.equals(feedback.majorId) : feedback.majorId != null) return false;
-        if (infoId != null ? !infoId.equals(feedback.infoId) : feedback.infoId != null) return false;
+        if (classId != null ? !classId.equals(feedback.classId) : feedback.classId != null) return false;
         if (typeId != null ? !typeId.equals(feedback.typeId) : feedback.typeId != null) return false;
+        if (referenceId != null ? !referenceId.equals(feedback.referenceId) : feedback.referenceId != null)
+            return false;
 
         return true;
     }
@@ -274,7 +250,6 @@ public class Feedback {
     public int hashCode() {
         int result = id;
         result = 31 * result + (point != null ? point.hashCode() : 0);
-        result = 31 * result + (preferenceId != null ? preferenceId.hashCode() : 0);
         result = 31 * result + (isTemplate != null ? isTemplate.hashCode() : 0);
         result = 31 * result + (createDate != null ? createDate.hashCode() : 0);
         result = 31 * result + (fromDate != null ? fromDate.hashCode() : 0);
@@ -284,14 +259,13 @@ public class Feedback {
         result = 31 * result + (templateDes != null ? templateDes.hashCode() : 0);
         result = 31 * result + (feedbackDes != null ? feedbackDes.hashCode() : 0);
         result = 31 * result + (isPublished != null ? isPublished.hashCode() : 0);
-        result = 31 * result + (questionId != null ? questionId.hashCode() : 0);
         result = 31 * result + (userId != null ? userId.hashCode() : 0);
         result = 31 * result + (departmentId != null ? departmentId.hashCode() : 0);
         result = 31 * result + (courseId != null ? courseId.hashCode() : 0);
-        result = 31 * result + (lecturerId != null ? lecturerId.hashCode() : 0);
         result = 31 * result + (majorId != null ? majorId.hashCode() : 0);
-        result = 31 * result + (infoId != null ? infoId.hashCode() : 0);
+        result = 31 * result + (classId != null ? classId.hashCode() : 0);
         result = 31 * result + (typeId != null ? typeId.hashCode() : 0);
+        result = 31 * result + (referenceId != null ? referenceId.hashCode() : 0);
         return result;
     }
 }

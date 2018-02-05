@@ -4,20 +4,19 @@
     <persistence-unit name="NewPersistenceUnit">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>com.sample.sfms.entity.Answer</class>
+        <class>com.sample.sfms.entity.Clazz</class>
         <class>com.sample.sfms.entity.Course</class>
         <class>com.sample.sfms.entity.Criteria</class>
         <class>com.sample.sfms.entity.Department</class>
         <class>com.sample.sfms.entity.Feedback</class>
-        <class>com.sample.sfms.entity.Info</class>
-        <class>com.sample.sfms.entity.Lecturer</class>
         <class>com.sample.sfms.entity.Major</class>
         <class>com.sample.sfms.entity.Option</class>
-        <class>com.sample.sfms.entity.Privilege</class>
-        <class>com.sample.sfms.entity.Privilegerole</class>
         <class>com.sample.sfms.entity.Question</class>
         <class>com.sample.sfms.entity.Role</class>
+        <class>com.sample.sfms.entity.Semester</class>
+        <class>com.sample.sfms.entity.Studentclass</class>
         <class>com.sample.sfms.entity.Type</class>
-        <class>com.sample.sfms.entity.Userinformation</class>
+        <class>com.sample.sfms.entity.User</class>
         <properties>
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/capstone"/>
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
