@@ -1,6 +1,8 @@
-// Call the dataTables jQuery plugin
-$(document).ready(function() {
-    $('#dataTable').DataTable(
+/**
+ * Created by MyPC on 05/02/2018.
+ */
+$(document).ready(function () {
+    $('#tbl-users').DataTable(
         {
             "language": {
                 "decimal": "",

@@ -73,4 +73,12 @@ public class TestController {
     private ModelAndView viewReport(){
         return new ModelAndView("view-report");
     }
+    @GetMapping(value = "/view-list-users")
+    private ModelAndView viewListUsers(){
+        return new ModelAndView("view-list-users");
+    }
+    @GetMapping(value = "/modify-user-details")
+    private ModelAndView viewUsers(){
+        return new ModelAndView("modify-user-details");
+    }
 }

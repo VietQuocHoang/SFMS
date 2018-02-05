@@ -105,7 +105,7 @@
             <div class="col-lg-12">
                 <div class="tab-content" id="nav-tabContent">
                     <!--tab pane lecturers-->
-                    <div class="tab-pane fade show active" id="nav-lecturers" role="tabpanel"
+                    <div class="tab-pane fade" id="nav-lecturers" role="tabpanel"
                          aria-labelledby="nav-lecturers-tab">
                         <!--filter bar-->
                         <div class="form-row">
@@ -514,7 +514,7 @@
                     </div>
                     <!--end tab pane department-->
                     <!--tab pane classes-->
-                    <div class="tab-pane fade" id="nav-classes" role="tabpanel" aria-labelledby="nav-subjects-tab">
+                    <div class="tab-pane fade show active" id="nav-classes" role="tabpanel" aria-labelledby="nav-subjects-tab">
                         <!--filter bar-->
                         <div class="form-row">
                             <!--major-->
@@ -528,29 +528,20 @@
                                     <option>Ngôn ngữ Nhật</option>
                                 </select>
                             </div>
-                            <!--end major-->
-                            <!--Khóa-->
+                            <!--&lt;!&ndash;end major&ndash;&gt;-->
+                            <!---->
+                            <!--SubMajor-->
                             <div class="form-group col-sm-2">
                                 <select class="form-control">
-                                    <option selected>--Khóa--</option>
-                                    <option>10A</option>
-                                    <option>10B</option>
-                                    <option>10C</option>
-                                    <option>10D</option>
-                                </select>
-                            </div>
-                            <!--SubMajor-->
-                            <div class="form-group col-sm-3">
-                                <select id="inputSubMajorForClass" class="form-control">
                                     <option selected>--Chuyên ngành--</option>
-                                    <option>Hệ thống thông tin</option>
-                                    <option>Kỹ sư cầu nối Nhật Bản</option>
-                                    <option>Nhúng</option>
+                                    <option>Computing Fundamentals</option>
+                                    <option>Software Engineering</option>
+                                    <option>Japanese</option>
                                 </select>
                             </div>
                             <!--Semester-->
                             <div class="form-group col-sm-2">
-                                <select id="inputSemesterForClass" class="form-control">
+                                <select class="form-control">
                                     <option selected>--Học kỳ--</option>
                                     <option>Fall 2018</option>
                                     <option>Summer 2018</option>
@@ -566,7 +557,7 @@
                             <!--Subject-->
                             <div class="form-group col-sm-2">
                                 <select class="form-control">
-                                    <option selected>--Môn hoc--</option>
+                                    <option selected>--Môn học--</option>
                                     <option>Database Warehouse - DBW301</option>
                                     <option>Capstone Project-DBW301</option>
                                     <option>Cloud Computing - PRC391</option>
@@ -598,20 +589,20 @@
                                     <thead>
                                     <tr>
                                         <th><input class="btn btn-check-all" type="button" name="target"  value="Chọn tất cả"/></th>
-                                        <th>Tên</th>
-                                        <th>Ngành</th>
-                                        <th>Khóa</th>
+                                        <th>Môn</th>
                                         <th>Chuyên ngành</th>
+                                        <th>Học kỳ</th>
+                                        <th>Giảng viên</th>
                                         <!--<th>Giảng viên</th>-->
                                     </tr>
                                     </thead>
                                     <tfoot>
                                     <tr>
                                         <th><input class="btn btn-check-all" type="button" name="target"  value="Chọn tất cả"/></th>
-                                        <th>Tên</th>
-                                        <th>Ngành</th>
-                                        <th>Khóa</th>
+                                        <th>Môn</th>
                                         <th>Chuyên ngành</th>
+                                        <th>Học kỳ</th>
+                                        <th>Giảng viên</th>
                                         <!--<th>Giảng viên</th>-->
                                     </tr>
                                     </tfoot>
@@ -621,40 +612,40 @@
                                             <input class="btn active btn-check-target" type="button" name="target"
                                                    value="Chọn"/>
                                         </td>
-                                        <td>SE1266</td>
-                                        <td>SE</td>
-                                        <td>12A</td>
-                                        <td></td>
+                                        <td>OOP201</td>
+                                        <td>Computing fundamentals</td>
+                                        <td>Spring 2017</td>
+                                        <td>Kiều Trọng Khánh</td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <input class="btn active btn-check-target" type="button" name="target"
                                                    value="Chọn"/>
                                         </td>
-                                        <td>SE1061</td>
-                                        <td>SE</td>
-                                        <td>10A</td>
-                                        <td>IS</td>
+                                        <td>PRX301</td>
+                                        <td>Software Engineering</td>
+                                        <td>Spring 2017</td>
+                                        <td>Kiều Trọng Khánh</td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <input class="btn active btn-check-target" type="button" name="target"
                                                    value="Chọn"/>
                                         </td>
-                                        <td>SE1068</td>
-                                        <td>SE</td>
-                                        <td>10A</td>
-                                        <td>ES</td>
+                                        <td>JAV101</td>
+                                        <td>Japanese</td>
+                                        <td>Spring 2017</td>
+                                        <td>Nguyễn Thị Cẩm</td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <input class="btn active btn-check-target" type="button" name="target"
                                                    value="Chọn"/>
                                         </td>
-                                        <td>SE1065</td>
-                                        <td>SE</td>
-                                        <td>10A</td>
-                                        <td>JS</td>
+                                        <td>JAV201</td>
+                                        <td>Japanese</td>
+                                        <td>Spring 2017</td>
+                                        <td>Nguyễn Thị Kiều</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -670,47 +661,68 @@
                         <div class="form-row">
                             <!--major-->
                             <div class="form-group col-sm-2">
-                                <select id="inputMajor" class="form-control">
+                                <select class="form-control">
                                     <option selected>--Ngành--</option>
                                     <option>An toàn thông tin</option>
                                     <option>Kỹ thuật phần mềm</option>
-                                    <option>Hệ thống thông tin</option>
-                                    <option>Kỹ sư cầu nối Nhật Bản</option>
-                                    <option>Nhúng</option>
+                                    <option>Thiết kế - đồ họa</option>
                                     <option>Quản trị kinh doanh</option>
                                     <option>Ngôn ngữ Nhật</option>
                                 </select>
                             </div>
-                            <!--end major-->
-                            <!--K-->
-                            <div class="form-group col-sm-2">
-                                <select class="form-control">
-                                    <option selected>--Khóa--</option>
-                                    <option>10A</option>
-                                    <option>10B</option>
-                                    <option>10C</option>
-                                    <option>10D</option>
-                                </select>
-                            </div>
-                            <!--Class-->
-                            <div class="form-group col-sm-2">
-                                <select class="form-control">
-                                    <option selected>--Lớp--</option>
-                                    <option>SE1066</option>
-                                    <option>SE1065</option>
-                                    <option>IA1061</option>
-                                    <option>SB1161</option>
-                                </select>
-                            </div><!--end K-->
+                            <!--&lt;!&ndash;end major&ndash;&gt;-->
+                            <!---->
                             <!--SubMajor-->
                             <div class="form-group col-sm-2">
                                 <select class="form-control">
                                     <option selected>--Chuyên ngành--</option>
-                                    <option>IS</option>
-                                    <option>ES</option>
-                                    <option>JS</option>
+                                    <option>Computing Fundamentals</option>
+                                    <option>Software Engineering</option>
+                                    <option>Japanese</option>
                                 </select>
-                            </div><!--end K-->
+                            </div>
+                            <!--Semester-->
+                            <div class="form-group col-sm-2">
+                                <select class="form-control">
+                                    <option selected>--Học kỳ--</option>
+                                    <option>Fall 2018</option>
+                                    <option>Summer 2018</option>
+                                    <option>Spring 2018</option>
+                                    <option>Fall 2017</option>
+                                    <option>Summer 2017</option>
+                                    <option>Spring 2017</option>
+                                    <option>Fall 2016</option>
+                                    <option>Summer 2016</option>
+                                    <option>Spring 2016</option>
+                                </select>
+                            </div>
+                            <!--Subject-->
+                            <div class="form-group col-sm-2">
+                                <select class="form-control">
+                                    <option selected>--Môn học--</option>
+                                    <option>Database Warehouse - DBW301</option>
+                                    <option>Capstone Project-DBW301</option>
+                                    <option>Cloud Computing - PRC391</option>
+                                    <option>Digital Fundamentals - DGT201</option>
+                                    <option>E-Commerce - ISC301</option>
+                                    <option>Embedded Software Development - ESS301</option>
+                                    <option>Human Computer Interaction - HCI201</option>
+                                </select>
+                            </div>
+                            <!--Lecturer-->
+                            <div class="form-group col-sm-2">
+                                <select class="form-control">
+                                    <option selected>--Giảng viên--</option>
+                                    <option>Nguyễn Huy Hùng - HungNH</option>
+                                    <option>Kiều Trọng Khánh - KhanhKT</option>
+                                    <option>Thân Văn Sử - SuTV</option>
+                                    <option>Lâm Hữu Khánh Phương - PhuongLHK</option>
+                                    <option>Nguyễn Trọng Tài - TaiNT</option>
+                                    <option>Ngô Đặng Hà An - AnNDH</option>
+                                    <option>Dương Thiên Tứ - TuDT</option>
+                                    <option>Lại Đức Hùng - HungLD</option>
+                                </select>
+                            </div>
                         </div>
                         <!--table students-->
                         <div class="row">
@@ -720,20 +732,20 @@
                                     <tr>
                                         <th><input class="btn btn-check-all" type="button" name="target"  value="Chọn tất cả"/></th>
                                         <th>Họ & tên</th>
+                                        <th>MSSV</th>
                                         <th>Ngành</th>
-                                        <th>Khóa</th>
-                                        <th>Lớp</th>
-                                        <th>Chuyên Ngành</th>
+                                        <th>Chuyên ngành</th>
+                                        <th>Khóa đang học</th>
                                     </tr>
                                     </thead>
                                     <tfoot>
                                     <tr>
                                         <th><input class="btn btn-check-all" type="button" name="target"  value="Chọn tất cả"/></th>
                                         <th>Họ & tên</th>
+                                        <th>MSSV</th>
                                         <th>Ngành</th>
-                                        <th>Khóa</th>
-                                        <th>Lớp</th>
-                                        <th>Chuyên Ngành</th>
+                                        <th>Chuyên ngành</th>
+                                        <th>Khóa đang học</th>
                                     </tr>
                                     </tfoot>
                                     <tbody>
@@ -743,10 +755,10 @@
                                                    value="Chọn"/>
                                         </td>
                                         <td>Trần Hồ Minh Thuấn</td>
+                                        <td>SE61882</td>
                                         <td>SE</td>
-                                        <td>10A</td>
-                                        <td>SE1063</td>
                                         <td>IS</td>
+                                        <td>OOP201-KhanhKT<br>PRX301-KhanhKT</td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -754,10 +766,10 @@
                                                    value="Chọn"/>
                                         </td>
                                         <td>Hoàng Quốc Việt</td>
+                                        <td>SE61235</td>
                                         <td>SE</td>
-                                        <td>10A</td>
-                                        <td>SE1063</td>
                                         <td>IS</td>
+                                        <td>OOP201-KhanhKT<br>PRX301-KhanhKT</td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -765,10 +777,10 @@
                                                    value="Chọn"/>
                                         </td>
                                         <td>Park Hang Seo</td>
+                                        <td>SE12333</td>
                                         <td>SE</td>
-                                        <td>10A</td>
-                                        <td>SE1063</td>
                                         <td>IS</td>
+                                        <td>PRM301-HungNH<br>OOP201-KhanhKT<br>PRX301-KhanhKT</td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -776,10 +788,10 @@
                                                    value="Chọn"/>
                                         </td>
                                         <td>Trịnh Gia Bình</td>
+                                        <td>SE11663</td>
                                         <td>SE</td>
-                                        <td>10A</td>
-                                        <td>SE1063</td>
                                         <td>IS</td>
+                                        <td>OOP201-KhanhKT</td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -787,10 +799,10 @@
                                                    value="Chọn"/>
                                         </td>
                                         <td>Đặng Thế Anh</td>
+                                        <td>SE99999</td>
                                         <td>SE</td>
-                                        <td>1A</td>
-                                        <td>SE9999</td>
                                         <td>TokyoHot</td>
+                                        <td>OOP201-KhanhKT</td>
                                     </tr>
                                     </tbody>
                                 </table>
