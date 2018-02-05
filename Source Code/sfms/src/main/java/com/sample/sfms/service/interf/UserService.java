@@ -4,7 +4,7 @@ import com.sample.sfms.entity.User;
 
 public interface UserService {
 
-    User findUserByEmail(String email);
+    User findUserByMail(String email);
 
     void saveUser(User user);
 }
