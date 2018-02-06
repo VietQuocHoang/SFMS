@@ -117,42 +117,10 @@
             </div>
             <!-- /.container-fluid-->
             <!-- /.content-wrapper-->
-            <footer class="sticky-footer">
-                <div class="container">
-                    <div class="text-center">
-                        <small>Copyright © Your Website 2017</small>
-                    </div>
-                </div>
-            </footer>
-            <!-- Scroll to Top Button-->
-            <a class="scroll-to-top rounded" href="#page-top">
-                <i class="fa fa-angle-up"></i>
-            </a>
-            <!-- Logout Modal-->
-            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="logoutModalLabel">Đăng xuất khỏi hệ thống?</h5>
-                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">Ấn vào nút Đăng Xuất lần nữa để thoát khỏi hệ thống.</div>
-                        <div class="modal-footer">
-                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy bỏ</button>
-                            <a class="btn btn-submit" href="login.html">Đăng xuất</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div th:replace="fragments/footer"></div>
         </div>
     </body>
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <div th:replace="fragments/core-script"></div>
     <!-- dataTable -->
     <script src="vendor/datatables/jquery.dataTables.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
@@ -179,7 +147,7 @@
                 bindto: '#report-detail-chart',
                 data: {
                     onclick: function (d, element) {
-                        window.open("view-report-semester.html");
+                        window.open("view-report-semester");
                     },
                     columns: [
                         ['Chất lượng', 1.2, 2.5, 3.1, 4.1, 3.8, 3, 4],
@@ -197,7 +165,8 @@
                     }
                 },
                 size: {
-                    width: 800
+                    width: 1000,
+                    height:500
                 },
                 axis: {
                     x: {

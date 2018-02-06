@@ -44,6 +44,11 @@ public class TestController {
         return new ModelAndView("modify-feedback-viewers");
     }
 
+    @GetMapping(value = "/modify-feedback-suggested-improvement")
+    private ModelAndView ModifyFeedbackSuggestedImprovement() {
+        return new ModelAndView("modify-feedback-suggested-improvement");
+    }
+
     @GetMapping(value = "/skeleton")
     private ModelAndView skeleton() {
         return new ModelAndView("skeleton");
@@ -69,10 +74,21 @@ public class TestController {
         return new ModelAndView("view-report-semester");
     }
 
+    @GetMapping(value = "/view-list-feedback")
+    private ModelAndView viewListFeedback(){
+        return new ModelAndView("view-list-feedback");
+    }
+
     @GetMapping(value = "/view-report")
     private ModelAndView viewReport(){
         return new ModelAndView("view-report");
     }
+
+    @GetMapping(value = "/view-report-details")
+    private ModelAndView viewReportDetails(){
+        return new ModelAndView("view-report-details");
+    }
+
     @GetMapping(value = "/view-list-users")
     private ModelAndView viewListUsers(){
         return new ModelAndView("view-list-users");
