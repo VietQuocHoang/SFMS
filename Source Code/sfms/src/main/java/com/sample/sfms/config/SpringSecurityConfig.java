@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
@@ -44,18 +45,18 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.authorizeRequests()
-//                .antMatchers("/", "/login").permitAll()
-//                .antMatchers("/roles/**").hasAuthority("EDIT_PERMISSION")
-//                .antMatchers("/users/**").access("hasAuthority('EDIT_PERMISSION') or hasAuthority('EDIT_FEEDBACK')")
-//                .antMatchers("/feedbacks/**").access("hasAuthority('EDIT_PERMISSION') or hasAuthority('EDIT_FEEDBACK')")
-//                .antMatchers("/conduct-feedback/**").access("hasAuthority('CONDUCT_FEEDBACK')")
-//                .anyRequest().authenticated().and().formLogin().loginPage("/login").failureUrl("/login?error=true")
-//                .usernameParameter("email")
-//                .passwordParameter("password")
-//                .defaultSuccessUrl("/home")
-//                .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//                .logoutSuccessUrl("/").and().exceptionHandling()
-//                .accessDeniedPage("/access-denied");
+        http.authorizeRequests()
+                .antMatchers("/", "/login").permitAll()
+                .antMatchers("/roles/**").hasAuthority("EDIT_PERMISSION")
+                .antMatchers("/users/**").access("hasAuthority('EDIT_PERMISSION') or hasAuthority('EDIT_FEEDBACK')")
+                .antMatchers("/feedbacks/**").access("hasAuthority('EDIT_PERMISSION') or hasAuthority('EDIT_FEEDBACK')")
+                .antMatchers("/conduct-feedback/**").access("hasAuthority('CONDUCT_FEEDBACK')")
+                .anyRequest().authenticated().and().formLogin().loginPage("/login").failureUrl("/login?error=true")
+                .usernameParameter("email")
+                .passwordParameter("password")
+                .defaultSuccessUrl("/home")
+                .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/").and().exceptionHandling()
+                .accessDeniedPage("/access-denied");
     }
 }
