@@ -46,8 +46,12 @@
 
 var templateThumbnail = $(".template-thumbnail");
 
-$(".template-thumbnail").on('click', (el)=>{
-    var currentlySelected = $(".template-thumbnail.active");
-    currentlySelected.removeClass("active");
-    $(el.target).addClass("active");
+$(".thumbnail-content").on('mouseenter', (el)=>{
+    // var currentlySelected = $(".template-thumbnail.active");
+    // currentlySelected.removeClass("active");
+    // $(el.target).addClass("active");
+    $(el.target).closest(".template-thumbnail").addClass("active");
+});
+$(".template-thumbnail").on('mouseleave', (el)=>{
+    $(".template-thumbnail.active").removeClass("active");
 });
