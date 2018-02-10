@@ -2552,7 +2552,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "-studentCode: string",
+											"text": "-code: string",
 											"horizontalAlignment": 0,
 											"verticalAlignment": 5
 										},
@@ -2608,7 +2608,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "-studentMajor: Major",
+											"text": "-major: Major",
 											"horizontalAlignment": 0,
 											"verticalAlignment": 5
 										}
@@ -44388,7 +44388,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFhYdR5mOBJlBA="
 							},
-							"name": "studentCode",
+							"name": "code",
 							"visibility": "private",
 							"isStatic": false,
 							"isLeaf": false,
@@ -44424,7 +44424,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFhYdR5mOBJlBA="
 							},
-							"name": "studentMajor",
+							"name": "major",
 							"visibility": "private",
 							"isStatic": false,
 							"isLeaf": false,
