@@ -24,13 +24,13 @@ DROP TABLE IF EXISTS `privilegerole`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `privilegerole` (
   `id` int(11) NOT NULL,
-  `roleID` int(11) DEFAULT NULL,
-  `privilegeID` int(11) DEFAULT NULL,
+  `role_id` int(11) DEFAULT NULL,
+  `privilege_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_PrivilegeRole_Privilege1_idx` (`privilegeID`),
-  KEY `fk_PrivilegeRole_Role1_idx` (`roleID`),
-  CONSTRAINT `fk_PrivilegeRole_Privilege1` FOREIGN KEY (`privilegeID`) REFERENCES `privilege` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_PrivilegeRole_Role1` FOREIGN KEY (`roleID`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_PrivilegeRole_Privilege1_idx` (`privilege_id`),
+  KEY `fk_PrivilegeRole_Role1_idx` (`role_id`),
+  CONSTRAINT `fk_PrivilegeRole_Privilege1` FOREIGN KEY (`privilege_id`) REFERENCES `privilege` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_PrivilegeRole_Role1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-05 17:11:20
+-- Dump completed on 2018-02-10 15:03:22

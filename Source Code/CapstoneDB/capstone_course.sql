@@ -24,11 +24,9 @@ DROP TABLE IF EXISTS `course`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `course` (
   `id` int(11) NOT NULL,
-  `name` varchar(45) DEFAULT NULL,
-  `majorID` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_Course_Major1_idx` (`majorID`),
-  CONSTRAINT `fk_Course_Major1` FOREIGN KEY (`majorID`) REFERENCES `major` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `name` varchar(45) NOT NULL,
+  `code` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -50,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-05 17:11:14
+-- Dump completed on 2018-02-10 15:03:16

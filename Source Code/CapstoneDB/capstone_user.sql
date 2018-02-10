@@ -31,13 +31,16 @@ CREATE TABLE `user` (
   `mail` varchar(50) DEFAULT NULL,
   `birth` date DEFAULT NULL,
   `status` tinyint(1) DEFAULT NULL,
-  `roleID` int(11) NOT NULL,
-  `departmentID` int(11) NOT NULL,
-  PRIMARY KEY (`id`,`departmentID`),
-  KEY `fk_Role_UserInformation_idx` (`roleID`),
-  KEY `fk_user_department1_idx` (`departmentID`),
-  CONSTRAINT `fk_Role_UserInformation` FOREIGN KEY (`roleID`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_user_department1` FOREIGN KEY (`departmentID`) REFERENCES `department` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `department_id` int(11) DEFAULT NULL,
+  `role_id` int(11) DEFAULT NULL,
+  `major_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_user_department1_idx` (`department_id`),
+  KEY `fk_user_role1_idx` (`role_id`),
+  KEY `fk_user_major1_idx` (`major_id`),
+  CONSTRAINT `fk_user_department1` FOREIGN KEY (`department_id`) REFERENCES `department` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_major1` FOREIGN KEY (`major_id`) REFERENCES `major` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_role1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='		';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -59,4 +62,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-05 17:11:16
+-- Dump completed on 2018-02-10 15:03:18

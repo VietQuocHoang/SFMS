@@ -24,17 +24,17 @@ DROP TABLE IF EXISTS `question`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `question` (
   `id` int(11) NOT NULL,
-  `type` varchar(50) DEFAULT NULL,
-  `questionContent` varchar(50) DEFAULT NULL,
+  `type` varchar(50) NOT NULL,
   `suggestion` varchar(50) DEFAULT NULL,
-  `isRequied` tinyint(1) DEFAULT NULL,
-  `criteriaID` int(11) DEFAULT NULL,
-  `feedbackID` int(11) DEFAULT NULL,
+  `criteria_id` int(11) DEFAULT NULL,
+  `feedback_id` int(11) NOT NULL,
+  `is_requied` tinyint(4) NOT NULL,
+  `question_content` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_Question_Feedback1_idx` (`feedbackID`),
-  KEY `fk_Question_Criteria1_idx` (`criteriaID`),
-  CONSTRAINT `fk_Question_Criteria1` FOREIGN KEY (`criteriaID`) REFERENCES `criteria` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Question_Feedback1` FOREIGN KEY (`feedbackID`) REFERENCES `feedback` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_Question_Feedback1_idx` (`feedback_id`),
+  KEY `fk_Question_Criteria1_idx` (`criteria_id`),
+  CONSTRAINT `fk_Question_Criteria1` FOREIGN KEY (`criteria_id`) REFERENCES `criteria` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Question_Feedback1` FOREIGN KEY (`feedback_id`) REFERENCES `feedback` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -56,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-05 17:11:19
+-- Dump completed on 2018-02-10 15:03:21

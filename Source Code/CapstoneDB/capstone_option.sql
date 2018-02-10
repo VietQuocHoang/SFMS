@@ -24,12 +24,12 @@ DROP TABLE IF EXISTS `option`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `option` (
   `id` int(11) NOT NULL,
-  `optionContent` varchar(50) DEFAULT NULL,
+  `option_content` varchar(50) DEFAULT NULL,
   `point` float DEFAULT NULL,
-  `questionID` int(11) DEFAULT NULL,
+  `question_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_Option_Question1_idx` (`questionID`),
-  CONSTRAINT `fk_Option_Question1` FOREIGN KEY (`questionID`) REFERENCES `question` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_Option_Question1_idx` (`question_id`),
+  CONSTRAINT `fk_Option_Question1` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-05 17:11:18
+-- Dump completed on 2018-02-10 15:03:20

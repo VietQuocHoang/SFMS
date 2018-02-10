@@ -25,8 +25,8 @@ DROP TABLE IF EXISTS `semester`;
 CREATE TABLE `semester` (
   `id` int(11) NOT NULL,
   `title` varchar(45) NOT NULL,
-  `startDate` date NOT NULL,
-  `endDate` date NOT NULL,
+  `end_date` date NOT NULL,
+  `start_date` date NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -49,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-05 17:11:15
+-- Dump completed on 2018-02-10 15:03:17

@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `criteria`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `criteria` (
   `id` int(11) NOT NULL,
-  `criteria` varchar(45) DEFAULT NULL,
+  `criteria` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -47,4 +47,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-05 17:11:21
+-- Dump completed on 2018-02-10 15:03:24

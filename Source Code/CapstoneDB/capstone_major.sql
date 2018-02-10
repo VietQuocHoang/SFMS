@@ -26,10 +26,10 @@ CREATE TABLE `major` (
   `id` int(11) NOT NULL,
   `code` varchar(45) DEFAULT NULL,
   `name` varchar(45) DEFAULT NULL,
-  `referenceID` int(11) DEFAULT NULL,
+  `reference_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_Major_Major1_idx` (`referenceID`),
-  CONSTRAINT `fk_Major_Major1` FOREIGN KEY (`referenceID`) REFERENCES `major` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_Major_Major1_idx` (`reference_id`),
+  CONSTRAINT `fk_Major_Major1` FOREIGN KEY (`reference_id`) REFERENCES `major` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-05 17:11:12
+-- Dump completed on 2018-02-10 15:03:15

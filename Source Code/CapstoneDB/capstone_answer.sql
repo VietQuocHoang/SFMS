@@ -24,15 +24,15 @@ DROP TABLE IF EXISTS `answer`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `answer` (
   `id` int(11) NOT NULL,
-  `answerContent` varchar(50) DEFAULT NULL,
-  `createDate` datetime DEFAULT NULL,
-  `optionID` int(11) DEFAULT NULL,
-  `userID` int(11) DEFAULT NULL,
+  `option_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `answer_content` varchar(255) NOT NULL,
+  `create_date` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_Answer_Option1_idx` (`optionID`),
-  KEY `fk_Answer_UserInformation1_idx` (`userID`),
-  CONSTRAINT `fk_Answer_Option1` FOREIGN KEY (`optionID`) REFERENCES `option` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Answer_UserInformation1` FOREIGN KEY (`userID`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_Answer_Option1_idx` (`option_id`),
+  KEY `fk_Answer_UserInformation1_idx` (`user_id`),
+  CONSTRAINT `fk_Answer_Option1` FOREIGN KEY (`option_id`) REFERENCES `option` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Answer_UserInformation1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-05 17:11:18
+-- Dump completed on 2018-02-10 15:03:20
