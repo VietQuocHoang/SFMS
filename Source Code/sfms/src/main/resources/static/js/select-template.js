@@ -55,3 +55,6 @@ $(".thumbnail-content").on('mouseenter', (el)=>{
 $(".template-thumbnail").on('mouseleave', (el)=>{
     $(".template-thumbnail.active").removeClass("active");
 });
+$(".create-new-wrapper, .create-new-container").on('click', (el)=>{
+    $("#modalCreateNew").modal('toggle');
+});
