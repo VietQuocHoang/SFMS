@@ -1,5 +1,6 @@
 package com.sample.sfms.service.impl;
 
+import com.sample.sfms.entity.Role;
 import com.sample.sfms.entity.User;
 import com.sample.sfms.repository.RoleRepository;
 import com.sample.sfms.repository.UserRepository;
@@ -7,6 +8,8 @@ import com.sample.sfms.service.interf.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
@@ -29,4 +32,10 @@ public class UserServiceImpl implements UserService {
         user.setRole(roleRepository.findByRoleName(user.getRole().getRoleName()));
         userRepository.save(user);*/
     }
+
+    @Override
+    public List<Role> getListRole() {
+        return roleRepository.findAll();
+    }
+
 }
