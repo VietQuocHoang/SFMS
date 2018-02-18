@@ -13,7 +13,6 @@ public class TestController {
     @Autowired
     private UserService userService;
 
-
     @GetMapping(value = {"/", "/login"})
     private ModelAndView login() {
         return new ModelAndView("login");
