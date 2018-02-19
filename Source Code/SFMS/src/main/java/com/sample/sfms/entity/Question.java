@@ -11,8 +11,6 @@ public class Question {
     private int id;
     private String type;
     private String suggestion;
-    private Integer criteriaId;
-    private int feedbackId;
     private byte isRequied;
     private String questionContent;
     private Collection<Option> optionsById;
@@ -50,26 +48,6 @@ public class Question {
     }
 
     @Basic
-    @Column(name = "criteria_id")
-    public Integer getCriteriaId() {
-        return criteriaId;
-    }
-
-    public void setCriteriaId(Integer criteriaId) {
-        this.criteriaId = criteriaId;
-    }
-
-    @Basic
-    @Column(name = "feedback_id")
-    public int getFeedbackId() {
-        return feedbackId;
-    }
-
-    public void setFeedbackId(int feedbackId) {
-        this.feedbackId = feedbackId;
-    }
-
-    @Basic
     @Column(name = "is_requied")
     public byte getIsRequied() {
         return isRequied;
@@ -97,11 +75,9 @@ public class Question {
         Question question = (Question) o;
 
         if (id != question.id) return false;
-        if (feedbackId != question.feedbackId) return false;
         if (isRequied != question.isRequied) return false;
         if (type != null ? !type.equals(question.type) : question.type != null) return false;
         if (suggestion != null ? !suggestion.equals(question.suggestion) : question.suggestion != null) return false;
-        if (criteriaId != null ? !criteriaId.equals(question.criteriaId) : question.criteriaId != null) return false;
         if (questionContent != null ? !questionContent.equals(question.questionContent) : question.questionContent != null)
             return false;
 
@@ -113,8 +89,6 @@ public class Question {
         int result = id;
         result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (suggestion != null ? suggestion.hashCode() : 0);
-        result = 31 * result + (criteriaId != null ? criteriaId.hashCode() : 0);
-        result = 31 * result + feedbackId;
         result = 31 * result + (int) isRequied;
         result = 31 * result + (questionContent != null ? questionContent.hashCode() : 0);
         return result;

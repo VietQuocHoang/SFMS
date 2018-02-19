@@ -1,7 +1,5 @@
 package com.sample.sfms.service.impl;
 
-import com.sample.sfms.entity.Role;
-import com.sample.sfms.entity.User;
 import com.sample.sfms.repository.RoleRepository;
 import com.sample.sfms.repository.UserRepository;
 import com.sample.sfms.service.interf.UserService;

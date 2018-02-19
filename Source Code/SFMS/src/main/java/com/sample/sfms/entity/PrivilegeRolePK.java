@@ -1,21 +1,18 @@
 package com.sample.sfms.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  * Created by MyPC on 19/02/2018.
  */
-@Entity
-@Table(name = "privilege_role", schema = "capstone")
-@IdClass(PrivilegeRolePK.class)
-public class PrivilegeRole {
+public class PrivilegeRolePK implements Serializable {
     private int roleId;
     private int privilegeId;
-    private Role roleByRoleId;
-    private Privilege privilegeByPrivilegeId;
 
-    @Id
     @Column(name = "role_id")
+    @Id
     public int getRoleId() {
         return roleId;
     }
@@ -24,8 +21,8 @@ public class PrivilegeRole {
         this.roleId = roleId;
     }
 
-    @Id
     @Column(name = "privilege_id")
+    @Id
     public int getPrivilegeId() {
         return privilegeId;
     }
@@ -39,7 +36,7 @@ public class PrivilegeRole {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        PrivilegeRole that = (PrivilegeRole) o;
+        PrivilegeRolePK that = (PrivilegeRolePK) o;
 
         if (roleId != that.roleId) return false;
         if (privilegeId != that.privilegeId) return false;
@@ -52,25 +49,5 @@ public class PrivilegeRole {
         int result = roleId;
         result = 31 * result + privilegeId;
         return result;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
-    public Role getRoleByRoleId() {
-        return roleByRoleId;
-    }
-
-    public void setRoleByRoleId(Role roleByRoleId) {
-        this.roleByRoleId = roleByRoleId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "privilege_id", referencedColumnName = "id", nullable = false)
-    public Privilege getPrivilegeByPrivilegeId() {
-        return privilegeByPrivilegeId;
-    }
-
-    public void setPrivilegeByPrivilegeId(Privilege privilegeByPrivilegeId) {
-        this.privilegeByPrivilegeId = privilegeByPrivilegeId;
     }
 }

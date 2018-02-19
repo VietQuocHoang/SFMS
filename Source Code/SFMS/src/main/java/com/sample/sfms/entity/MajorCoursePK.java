@@ -1,21 +1,18 @@
 package com.sample.sfms.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  * Created by MyPC on 19/02/2018.
  */
-@Entity
-@Table(name = "major_course", schema = "capstone")
-@IdClass(MajorCoursePK.class)
-public class MajorCourse {
+public class MajorCoursePK implements Serializable {
     private int majorId;
     private int courseId;
-    private Major majorByMajorId;
-    private Course courseByCourseId;
 
-    @Id
     @Column(name = "major_id")
+    @Id
     public int getMajorId() {
         return majorId;
     }
@@ -24,8 +21,8 @@ public class MajorCourse {
         this.majorId = majorId;
     }
 
-    @Id
     @Column(name = "course_id")
+    @Id
     public int getCourseId() {
         return courseId;
     }
@@ -39,7 +36,7 @@ public class MajorCourse {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        MajorCourse that = (MajorCourse) o;
+        MajorCoursePK that = (MajorCoursePK) o;
 
         if (majorId != that.majorId) return false;
         if (courseId != that.courseId) return false;
@@ -52,25 +49,5 @@ public class MajorCourse {
         int result = majorId;
         result = 31 * result + courseId;
         return result;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "major_id", referencedColumnName = "id", nullable = false)
-    public Major getMajorByMajorId() {
-        return majorByMajorId;
-    }
-
-    public void setMajorByMajorId(Major majorByMajorId) {
-        this.majorByMajorId = majorByMajorId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "course_id", referencedColumnName = "id", nullable = false)
-    public Course getCourseByCourseId() {
-        return courseByCourseId;
-    }
-
-    public void setCourseByCourseId(Course courseByCourseId) {
-        this.courseByCourseId = courseByCourseId;
     }
 }

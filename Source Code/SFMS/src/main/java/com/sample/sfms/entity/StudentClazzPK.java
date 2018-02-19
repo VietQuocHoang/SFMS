@@ -1,21 +1,18 @@
 package com.sample.sfms.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  * Created by MyPC on 19/02/2018.
  */
-@Entity
-@Table(name = "student_clazz", schema = "capstone")
-@IdClass(StudentClazzPK.class)
-public class StudentClazz {
+public class StudentClazzPK implements Serializable {
     private int userId;
     private int clazzId;
-    private User userByUserId;
-    private Clazz clazzByClazzId;
 
-    @Id
     @Column(name = "user_id")
+    @Id
     public int getUserId() {
         return userId;
     }
@@ -24,8 +21,8 @@ public class StudentClazz {
         this.userId = userId;
     }
 
-    @Id
     @Column(name = "clazz_id")
+    @Id
     public int getClazzId() {
         return clazzId;
     }
@@ -39,7 +36,7 @@ public class StudentClazz {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        StudentClazz that = (StudentClazz) o;
+        StudentClazzPK that = (StudentClazzPK) o;
 
         if (userId != that.userId) return false;
         if (clazzId != that.clazzId) return false;
@@ -52,25 +49,5 @@ public class StudentClazz {
         int result = userId;
         result = 31 * result + clazzId;
         return result;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    public User getUserByUserId() {
-        return userByUserId;
-    }
-
-    public void setUserByUserId(User userByUserId) {
-        this.userByUserId = userByUserId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "clazz_id", referencedColumnName = "id", nullable = false)
-    public Clazz getClazzByClazzId() {
-        return clazzByClazzId;
-    }
-
-    public void setClazzByClazzId(Clazz clazzByClazzId) {
-        this.clazzByClazzId = clazzByClazzId;
     }
 }

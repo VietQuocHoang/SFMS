@@ -1,21 +1,18 @@
 package com.sample.sfms.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  * Created by MyPC on 19/02/2018.
  */
-@Entity
-@Table(name = "clazz_course", schema = "capstone")
-@IdClass(ClazzCoursePK.class)
-public class ClazzCourse {
+public class ClazzCoursePK implements Serializable {
     private int clazzId;
     private int courseId;
-    private Clazz clazzByClazzId;
-    private Course courseByCourseId;
 
-    @Id
     @Column(name = "clazz_id")
+    @Id
     public int getClazzId() {
         return clazzId;
     }
@@ -24,8 +21,8 @@ public class ClazzCourse {
         this.clazzId = clazzId;
     }
 
-    @Id
     @Column(name = "course_id")
+    @Id
     public int getCourseId() {
         return courseId;
     }
@@ -39,7 +36,7 @@ public class ClazzCourse {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ClazzCourse that = (ClazzCourse) o;
+        ClazzCoursePK that = (ClazzCoursePK) o;
 
         if (clazzId != that.clazzId) return false;
         if (courseId != that.courseId) return false;
@@ -52,25 +49,5 @@ public class ClazzCourse {
         int result = clazzId;
         result = 31 * result + courseId;
         return result;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "clazz_id", referencedColumnName = "id", nullable = false)
-    public Clazz getClazzByClazzId() {
-        return clazzByClazzId;
-    }
-
-    public void setClazzByClazzId(Clazz clazzByClazzId) {
-        this.clazzByClazzId = clazzByClazzId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "course_id", referencedColumnName = "id", nullable = false)
-    public Course getCourseByCourseId() {
-        return courseByCourseId;
-    }
-
-    public void setCourseByCourseId(Course courseByCourseId) {
-        this.courseByCourseId = courseByCourseId;
     }
 }
