@@ -11,7 +11,7 @@ public class MajorCoursePK implements Serializable {
     private int majorId;
     private int courseId;
 
-    @Column(name = "major_id")
+    @Column(name = "major_id", insertable = false, updatable = false)
     @Id
     public int getMajorId() {
         return majorId;
@@ -21,7 +21,7 @@ public class MajorCoursePK implements Serializable {
         this.majorId = majorId;
     }
 
-    @Column(name = "course_id")
+    @Column(name = "course_id", insertable = false, updatable = false)
     @Id
     public int getCourseId() {
         return courseId;

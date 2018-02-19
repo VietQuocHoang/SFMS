@@ -15,7 +15,7 @@ public class MajorCourse {
     private Course courseByCourseId;
 
     @Id
-    @Column(name = "major_id")
+    @Column(name = "major_id", insertable = false, updatable = false)
     public int getMajorId() {
         return majorId;
     }
@@ -25,7 +25,7 @@ public class MajorCourse {
     }
 
     @Id
-    @Column(name = "course_id")
+    @Column(name = "course_id", insertable = false, updatable = false)
     public int getCourseId() {
         return courseId;
     }

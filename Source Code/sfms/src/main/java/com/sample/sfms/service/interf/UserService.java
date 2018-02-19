@@ -1,5 +1,8 @@
 package com.sample.sfms.service.interf;
 
+import com.sample.sfms.entity.Role;
+import com.sample.sfms.entity.User;
+
 import java.util.List;
 
 public interface UserService {

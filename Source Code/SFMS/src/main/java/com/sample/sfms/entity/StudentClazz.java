@@ -15,7 +15,7 @@ public class StudentClazz {
     private Clazz clazzByClazzId;
 
     @Id
-    @Column(name = "user_id")
+    @Column(name = "user_id", insertable = false, updatable = false)
     public int getUserId() {
         return userId;
     }
@@ -25,7 +25,7 @@ public class StudentClazz {
     }
 
     @Id
-    @Column(name = "clazz_id")
+    @Column(name = "clazz_id", insertable = false, updatable = false)
     public int getClazzId() {
         return clazzId;
     }

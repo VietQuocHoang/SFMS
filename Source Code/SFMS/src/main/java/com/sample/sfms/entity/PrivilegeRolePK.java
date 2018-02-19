@@ -11,7 +11,7 @@ public class PrivilegeRolePK implements Serializable {
     private int roleId;
     private int privilegeId;
 
-    @Column(name = "role_id")
+    @Column(name = "role_id", insertable = false, updatable = false)
     @Id
     public int getRoleId() {
         return roleId;
@@ -21,7 +21,7 @@ public class PrivilegeRolePK implements Serializable {
         this.roleId = roleId;
     }
 
-    @Column(name = "privilege_id")
+    @Column(name = "privilege_id", insertable = false, updatable = false)
     @Id
     public int getPrivilegeId() {
         return privilegeId;

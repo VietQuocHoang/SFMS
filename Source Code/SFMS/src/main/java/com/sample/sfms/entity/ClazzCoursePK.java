@@ -11,7 +11,7 @@ public class ClazzCoursePK implements Serializable {
     private int clazzId;
     private int courseId;
 
-    @Column(name = "clazz_id")
+    @Column(name = "clazz_id", insertable = false, updatable = false)
     @Id
     public int getClazzId() {
         return clazzId;
@@ -21,7 +21,7 @@ public class ClazzCoursePK implements Serializable {
         this.clazzId = clazzId;
     }
 
-    @Column(name = "course_id")
+    @Column(name = "course_id", insertable = false, updatable = false)
     @Id
     public int getCourseId() {
         return courseId;

@@ -15,7 +15,7 @@ public class ClazzCourse {
     private Course courseByCourseId;
 
     @Id
-    @Column(name = "clazz_id")
+    @Column(name = "clazz_id", insertable = false, updatable = false)
     public int getClazzId() {
         return clazzId;
     }
@@ -25,7 +25,7 @@ public class ClazzCourse {
     }
 
     @Id
-    @Column(name = "course_id")
+    @Column(name = "course_id", insertable = false, updatable = false)
     public int getCourseId() {
         return courseId;
     }

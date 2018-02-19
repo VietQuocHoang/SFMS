@@ -15,7 +15,7 @@ public class PrivilegeRole {
     private Privilege privilegeByPrivilegeId;
 
     @Id
-    @Column(name = "role_id")
+    @Column(name = "role_id", insertable = false, updatable = false)
     public int getRoleId() {
         return roleId;
     }
@@ -25,7 +25,7 @@ public class PrivilegeRole {
     }
 
     @Id
-    @Column(name = "privilege_id")
+    @Column(name = "privilege_id", insertable = false, updatable = false)
     public int getPrivilegeId() {
         return privilegeId;
     }
