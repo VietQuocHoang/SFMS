@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `capstone` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `capstone`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: capstone
@@ -16,17 +18,16 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `privilegerole`
+-- Table structure for table `privilege_role`
 --
 
-DROP TABLE IF EXISTS `privilegerole`;
+DROP TABLE IF EXISTS `privilege_role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `privilegerole` (
-  `id` int(11) NOT NULL,
-  `role_id` int(11) DEFAULT NULL,
-  `privilege_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
+CREATE TABLE `privilege_role` (
+  `role_id` int(11) NOT NULL,
+  `privilege_id` int(11) NOT NULL,
+  PRIMARY KEY (`role_id`,`privilege_id`),
   KEY `fk_PrivilegeRole_Privilege1_idx` (`privilege_id`),
   KEY `fk_PrivilegeRole_Role1_idx` (`role_id`),
   CONSTRAINT `fk_PrivilegeRole_Privilege1` FOREIGN KEY (`privilege_id`) REFERENCES `privilege` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -35,12 +36,12 @@ CREATE TABLE `privilegerole` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `privilegerole`
+-- Dumping data for table `privilege_role`
 --
 
-LOCK TABLES `privilegerole` WRITE;
-/*!40000 ALTER TABLE `privilegerole` DISABLE KEYS */;
-/*!40000 ALTER TABLE `privilegerole` ENABLE KEYS */;
+LOCK TABLES `privilege_role` WRITE;
+/*!40000 ALTER TABLE `privilege_role` DISABLE KEYS */;
+/*!40000 ALTER TABLE `privilege_role` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-10 15:03:22
+-- Dump completed on 2018-02-19  9:18:41
