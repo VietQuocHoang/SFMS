@@ -5,13 +5,13 @@ import java.sql.Date;
 import java.util.Collection;
 
 /**
- * Created by MyPC on 19/02/2018.
+ * Created by MyPC on 21/02/2018.
  */
 @Entity
 public class User {
     private int id;
-    private String password;
     private String username;
+    private String password;
     private String fullname;
     private String code;
     private String mail;
@@ -26,7 +26,8 @@ public class User {
     private Major majorByMajorId;
 
     @Id
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -36,17 +37,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "password")
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Basic
-    @Column(name = "username")
+    @Column(name = "username", nullable = true, length = 50)
     public String getUsername() {
         return username;
     }
@@ -56,7 +47,17 @@ public class User {
     }
 
     @Basic
-    @Column(name = "fullname")
+    @Column(name = "password", nullable = true, length = 50)
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Basic
+    @Column(name = "fullname", nullable = true, length = 50)
     public String getFullname() {
         return fullname;
     }
@@ -66,7 +67,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "code")
+    @Column(name = "code", nullable = true, length = 10)
     public String getCode() {
         return code;
     }
@@ -76,7 +77,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "mail")
+    @Column(name = "mail", nullable = true, length = 50)
     public String getMail() {
         return mail;
     }
@@ -86,7 +87,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "birth")
+    @Column(name = "birth", nullable = true)
     public Date getBirth() {
         return birth;
     }
@@ -96,7 +97,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "status")
+    @Column(name = "status", nullable = true)
     public Byte getStatus() {
         return status;
     }
@@ -113,8 +114,8 @@ public class User {
         User user = (User) o;
 
         if (id != user.id) return false;
-        if (password != null ? !password.equals(user.password) : user.password != null) return false;
         if (username != null ? !username.equals(user.username) : user.username != null) return false;
+        if (password != null ? !password.equals(user.password) : user.password != null) return false;
         if (fullname != null ? !fullname.equals(user.fullname) : user.fullname != null) return false;
         if (code != null ? !code.equals(user.code) : user.code != null) return false;
         if (mail != null ? !mail.equals(user.mail) : user.mail != null) return false;
@@ -127,8 +128,8 @@ public class User {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (username != null ? username.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (fullname != null ? fullname.hashCode() : 0);
         result = 31 * result + (code != null ? code.hashCode() : 0);
         result = 31 * result + (mail != null ? mail.hashCode() : 0);

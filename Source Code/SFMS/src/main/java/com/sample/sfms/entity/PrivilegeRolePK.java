@@ -5,13 +5,13 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * Created by MyPC on 19/02/2018.
+ * Created by MyPC on 21/02/2018.
  */
 public class PrivilegeRolePK implements Serializable {
     private int roleId;
     private int privilegeId;
 
-    @Column(name = "role_id", insertable = false, updatable = false)
+    @Column(name = "role_id", nullable = false, insertable = false, updatable = false)
     @Id
     public int getRoleId() {
         return roleId;
@@ -21,7 +21,7 @@ public class PrivilegeRolePK implements Serializable {
         this.roleId = roleId;
     }
 
-    @Column(name = "privilege_id", insertable = false, updatable = false)
+    @Column(name = "privilege_id", nullable = false, insertable = false, updatable = false)
     @Id
     public int getPrivilegeId() {
         return privilegeId;

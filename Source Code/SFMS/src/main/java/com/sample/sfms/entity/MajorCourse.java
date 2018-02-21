@@ -3,7 +3,7 @@ package com.sample.sfms.entity;
 import javax.persistence.*;
 
 /**
- * Created by MyPC on 19/02/2018.
+ * Created by MyPC on 21/02/2018.
  */
 @Entity
 @Table(name = "major_course", schema = "capstone")
@@ -15,7 +15,8 @@ public class MajorCourse {
     private Course courseByCourseId;
 
     @Id
-    @Column(name = "major_id", insertable = false, updatable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "major_id", nullable = false)
     public int getMajorId() {
         return majorId;
     }
@@ -25,7 +26,7 @@ public class MajorCourse {
     }
 
     @Id
-    @Column(name = "course_id", insertable = false, updatable = false)
+    @Column(name = "course_id", nullable = false)
     public int getCourseId() {
         return courseId;
     }

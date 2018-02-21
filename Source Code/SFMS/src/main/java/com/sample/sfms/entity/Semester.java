@@ -5,7 +5,7 @@ import java.sql.Date;
 import java.util.Collection;
 
 /**
- * Created by MyPC on 19/02/2018.
+ * Created by MyPC on 21/02/2018.
  */
 @Entity
 public class Semester {
@@ -16,7 +16,8 @@ public class Semester {
     private Collection<Clazz> clazzesById;
 
     @Id
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -26,7 +27,7 @@ public class Semester {
     }
 
     @Basic
-    @Column(name = "title")
+    @Column(name = "title", nullable = false, length = 45)
     public String getTitle() {
         return title;
     }
@@ -36,7 +37,7 @@ public class Semester {
     }
 
     @Basic
-    @Column(name = "end_date")
+    @Column(name = "end_date", nullable = false)
     public Date getEndDate() {
         return endDate;
     }
@@ -46,7 +47,7 @@ public class Semester {
     }
 
     @Basic
-    @Column(name = "start_date")
+    @Column(name = "start_date", nullable = false)
     public Date getStartDate() {
         return startDate;
     }

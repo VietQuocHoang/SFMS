@@ -31,10 +31,13 @@ CREATE TABLE `clazz` (
   `start_date` date DEFAULT NULL,
   `class_name` varchar(45) NOT NULL,
   `lecturer_id` int(11) NOT NULL,
+  `course_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_Class_Semester1_idx` (`semester_id`),
   KEY `fk_clazz_user1_idx` (`lecturer_id`),
+  KEY `fk_clazz_course1_idx` (`course_id`),
   CONSTRAINT `fk_Class_Semester1` FOREIGN KEY (`semester_id`) REFERENCES `semester` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_clazz_course1` FOREIGN KEY (`course_id`) REFERENCES `course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_clazz_user1` FOREIGN KEY (`lecturer_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -57,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-19  9:18:42
+-- Dump completed on 2018-02-21 18:18:29

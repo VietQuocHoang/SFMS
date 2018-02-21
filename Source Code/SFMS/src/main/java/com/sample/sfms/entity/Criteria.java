@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 /**
- * Created by MyPC on 19/02/2018.
+ * Created by MyPC on 21/02/2018.
  */
 @Entity
 public class Criteria {
@@ -13,7 +13,8 @@ public class Criteria {
     private Collection<Question> questionsById;
 
     @Id
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -23,7 +24,7 @@ public class Criteria {
     }
 
     @Basic
-    @Column(name = "criteria")
+    @Column(name = "criteria", nullable = false, length = 45)
     public String getCriteria() {
         return criteria;
     }

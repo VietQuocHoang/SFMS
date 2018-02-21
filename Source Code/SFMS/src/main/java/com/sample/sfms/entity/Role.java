@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 /**
- * Created by MyPC on 19/02/2018.
+ * Created by MyPC on 21/02/2018.
  */
 @Entity
 public class Role {
@@ -14,7 +14,8 @@ public class Role {
     private Collection<User> usersById;
 
     @Id
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -24,7 +25,7 @@ public class Role {
     }
 
     @Basic
-    @Column(name = "role_name")
+    @Column(name = "role_name", nullable = true, length = 255)
     public String getRoleName() {
         return roleName;
     }

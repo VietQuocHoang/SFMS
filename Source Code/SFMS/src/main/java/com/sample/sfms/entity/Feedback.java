@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import java.util.Collection;
 
 /**
- * Created by MyPC on 19/02/2018.
+ * Created by MyPC on 21/02/2018.
  */
 @Entity
 public class Feedback {
@@ -33,7 +33,8 @@ public class Feedback {
     private Collection<Question> questionsById;
 
     @Id
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -43,7 +44,7 @@ public class Feedback {
     }
 
     @Basic
-    @Column(name = "point")
+    @Column(name = "point", nullable = true)
     public Integer getPoint() {
         return point;
     }
@@ -53,7 +54,7 @@ public class Feedback {
     }
 
     @Basic
-    @Column(name = "is_template")
+    @Column(name = "is_template", nullable = false)
     public byte getIsTemplate() {
         return isTemplate;
     }
@@ -63,7 +64,7 @@ public class Feedback {
     }
 
     @Basic
-    @Column(name = "create_date")
+    @Column(name = "create_date", nullable = true)
     public Timestamp getCreateDate() {
         return createDate;
     }
@@ -73,7 +74,7 @@ public class Feedback {
     }
 
     @Basic
-    @Column(name = "start_date")
+    @Column(name = "start_date", nullable = true)
     public Timestamp getStartDate() {
         return startDate;
     }
@@ -83,7 +84,7 @@ public class Feedback {
     }
 
     @Basic
-    @Column(name = "end_date")
+    @Column(name = "end_date", nullable = true)
     public Timestamp getEndDate() {
         return endDate;
     }
@@ -93,7 +94,7 @@ public class Feedback {
     }
 
     @Basic
-    @Column(name = "feedback_des")
+    @Column(name = "feedback_des", nullable = true, length = 255)
     public String getFeedbackDes() {
         return feedbackDes;
     }
@@ -103,7 +104,7 @@ public class Feedback {
     }
 
     @Basic
-    @Column(name = "feedback_name")
+    @Column(name = "feedback_name", nullable = true, length = 255)
     public String getFeedbackName() {
         return feedbackName;
     }
@@ -113,7 +114,7 @@ public class Feedback {
     }
 
     @Basic
-    @Column(name = "template_des")
+    @Column(name = "template_des", nullable = true, length = 255)
     public String getTemplateDes() {
         return templateDes;
     }
@@ -123,7 +124,7 @@ public class Feedback {
     }
 
     @Basic
-    @Column(name = "template_name")
+    @Column(name = "template_name", nullable = true, length = 255)
     public String getTemplateName() {
         return templateName;
     }
@@ -133,7 +134,7 @@ public class Feedback {
     }
 
     @Basic
-    @Column(name = "is_published")
+    @Column(name = "is_published", nullable = true)
     public Byte getIsPublished() {
         return isPublished;
     }
@@ -143,7 +144,7 @@ public class Feedback {
     }
 
     @Basic
-    @Column(name = "conductors")
+    @Column(name = "conductors", nullable = true, length = -1)
     public String getConductors() {
         return conductors;
     }
@@ -153,7 +154,7 @@ public class Feedback {
     }
 
     @Basic
-    @Column(name = "viewers")
+    @Column(name = "viewers", nullable = true, length = -1)
     public String getViewers() {
         return viewers;
     }

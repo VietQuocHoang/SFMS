@@ -4,18 +4,19 @@ import javax.persistence.*;
 import java.util.Collection;
 
 /**
- * Created by MyPC on 19/02/2018.
+ * Created by MyPC on 21/02/2018.
  */
 @Entity
 public class Option {
     private int id;
-    private Double point;
     private String optionContent;
+    private Double point;
     private Collection<Answer> answersById;
     private Question questionByQuestionId;
 
     @Id
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -25,23 +26,23 @@ public class Option {
     }
 
     @Basic
-    @Column(name = "point")
-    public Double getPoint() {
-        return point;
-    }
-
-    public void setPoint(Double point) {
-        this.point = point;
-    }
-
-    @Basic
-    @Column(name = "option_content")
+    @Column(name = "option_content", nullable = true, length = 50)
     public String getOptionContent() {
         return optionContent;
     }
 
     public void setOptionContent(String optionContent) {
         this.optionContent = optionContent;
+    }
+
+    @Basic
+    @Column(name = "point", nullable = true, precision = 0)
+    public Double getPoint() {
+        return point;
+    }
+
+    public void setPoint(Double point) {
+        this.point = point;
     }
 
     @Override
@@ -52,9 +53,9 @@ public class Option {
         Option option = (Option) o;
 
         if (id != option.id) return false;
-        if (point != null ? !point.equals(option.point) : option.point != null) return false;
         if (optionContent != null ? !optionContent.equals(option.optionContent) : option.optionContent != null)
             return false;
+        if (point != null ? !point.equals(option.point) : option.point != null) return false;
 
         return true;
     }
@@ -62,8 +63,8 @@ public class Option {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (point != null ? point.hashCode() : 0);
         result = 31 * result + (optionContent != null ? optionContent.hashCode() : 0);
+        result = 31 * result + (point != null ? point.hashCode() : 0);
         return result;
     }
 

@@ -4,19 +4,20 @@ import javax.persistence.*;
 import java.util.Collection;
 
 /**
- * Created by MyPC on 19/02/2018.
+ * Created by MyPC on 21/02/2018.
  */
 @Entity
 public class Course {
     private int id;
     private String name;
     private String code;
-    private Collection<ClazzCourse> clazzCoursesById;
+    private Collection<Clazz> clazzesById;
     private Collection<Feedback> feedbacksById;
     private Collection<MajorCourse> majorCoursesById;
 
     @Id
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -26,7 +27,7 @@ public class Course {
     }
 
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, length = 45)
     public String getName() {
         return name;
     }
@@ -36,7 +37,7 @@ public class Course {
     }
 
     @Basic
-    @Column(name = "code")
+    @Column(name = "code", nullable = false, length = 45)
     public String getCode() {
         return code;
     }
@@ -68,12 +69,12 @@ public class Course {
     }
 
     @OneToMany(mappedBy = "courseByCourseId")
-    public Collection<ClazzCourse> getClazzCoursesById() {
-        return clazzCoursesById;
+    public Collection<Clazz> getClazzesById() {
+        return clazzesById;
     }
 
-    public void setClazzCoursesById(Collection<ClazzCourse> clazzCoursesById) {
-        this.clazzCoursesById = clazzCoursesById;
+    public void setClazzesById(Collection<Clazz> clazzesById) {
+        this.clazzesById = clazzesById;
     }
 
     @OneToMany(mappedBy = "courseByCourseId")

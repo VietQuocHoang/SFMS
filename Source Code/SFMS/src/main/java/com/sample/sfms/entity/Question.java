@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 /**
- * Created by MyPC on 19/02/2018.
+ * Created by MyPC on 21/02/2018.
  */
 @Entity
 public class Question {
@@ -18,7 +18,8 @@ public class Question {
     private Feedback feedbackByFeedbackId;
 
     @Id
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -28,7 +29,7 @@ public class Question {
     }
 
     @Basic
-    @Column(name = "type")
+    @Column(name = "type", nullable = false, length = 50)
     public String getType() {
         return type;
     }
@@ -38,7 +39,7 @@ public class Question {
     }
 
     @Basic
-    @Column(name = "suggestion")
+    @Column(name = "suggestion", nullable = true, length = 50)
     public String getSuggestion() {
         return suggestion;
     }
@@ -48,7 +49,7 @@ public class Question {
     }
 
     @Basic
-    @Column(name = "is_requied")
+    @Column(name = "is_requied", nullable = false)
     public byte getIsRequied() {
         return isRequied;
     }
@@ -58,7 +59,7 @@ public class Question {
     }
 
     @Basic
-    @Column(name = "question_content")
+    @Column(name = "question_content", nullable = true, length = 255)
     public String getQuestionContent() {
         return questionContent;
     }

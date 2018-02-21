@@ -5,13 +5,13 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * Created by MyPC on 19/02/2018.
+ * Created by MyPC on 21/02/2018.
  */
 public class StudentClazzPK implements Serializable {
     private int userId;
     private int clazzId;
 
-    @Column(name = "user_id", insertable = false, updatable = false)
+    @Column(name = "user_id", nullable = false, insertable = false, updatable = false)
     @Id
     public int getUserId() {
         return userId;
@@ -21,7 +21,7 @@ public class StudentClazzPK implements Serializable {
         this.userId = userId;
     }
 
-    @Column(name = "clazz_id", insertable = false, updatable = false)
+    @Column(name = "clazz_id", nullable = false, insertable = false, updatable = false)
     @Id
     public int getClazzId() {
         return clazzId;

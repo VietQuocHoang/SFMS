@@ -5,7 +5,7 @@ import java.sql.Date;
 import java.util.Collection;
 
 /**
- * Created by MyPC on 19/02/2018.
+ * Created by MyPC on 21/02/2018.
  */
 @Entity
 public class Clazz {
@@ -15,12 +15,13 @@ public class Clazz {
     private String className;
     private Semester semesterBySemesterId;
     private User userByLecturerId;
-    private Collection<ClazzCourse> clazzCoursesById;
+    private Course courseByCourseId;
     private Collection<Feedback> feedbacksById;
     private Collection<StudentClazz> studentClazzesById;
 
     @Id
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -30,7 +31,7 @@ public class Clazz {
     }
 
     @Basic
-    @Column(name = "end_date")
+    @Column(name = "end_date", nullable = true)
     public Date getEndDate() {
         return endDate;
     }
@@ -40,7 +41,7 @@ public class Clazz {
     }
 
     @Basic
-    @Column(name = "start_date")
+    @Column(name = "start_date", nullable = true)
     public Date getStartDate() {
         return startDate;
     }
@@ -50,7 +51,7 @@ public class Clazz {
     }
 
     @Basic
-    @Column(name = "class_name")
+    @Column(name = "class_name", nullable = false, length = 45)
     public String getClassName() {
         return className;
     }
@@ -103,13 +104,14 @@ public class Clazz {
         this.userByLecturerId = userByLecturerId;
     }
 
-    @OneToMany(mappedBy = "clazzByClazzId")
-    public Collection<ClazzCourse> getClazzCoursesById() {
-        return clazzCoursesById;
+    @ManyToOne
+    @JoinColumn(name = "course_id", referencedColumnName = "id", nullable = false)
+    public Course getCourseByCourseId() {
+        return courseByCourseId;
     }
 
-    public void setClazzCoursesById(Collection<ClazzCourse> clazzCoursesById) {
-        this.clazzCoursesById = clazzCoursesById;
+    public void setCourseByCourseId(Course courseByCourseId) {
+        this.courseByCourseId = courseByCourseId;
     }
 
     @OneToMany(mappedBy = "clazzByClazzId")

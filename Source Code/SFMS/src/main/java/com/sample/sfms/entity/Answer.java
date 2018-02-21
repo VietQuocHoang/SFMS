@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * Created by MyPC on 19/02/2018.
+ * Created by MyPC on 21/02/2018.
  */
 @Entity
 public class Answer {
@@ -15,7 +15,8 @@ public class Answer {
     private User userByUserId;
 
     @Id
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     public int getId() {
         return id;
     }
@@ -25,7 +26,7 @@ public class Answer {
     }
 
     @Basic
-    @Column(name = "answer_content")
+    @Column(name = "answer_content", nullable = false, length = 255)
     public String getAnswerContent() {
         return answerContent;
     }
@@ -35,7 +36,7 @@ public class Answer {
     }
 
     @Basic
-    @Column(name = "create_date")
+    @Column(name = "create_date", nullable = false)
     public Timestamp getCreateDate() {
         return createDate;
     }
