@@ -19,6 +19,7 @@ public class RoleAPI {
     private List<Role> getListRole(){
         return roleService.getListRole();
     }
+
     @GetMapping("/{id}")
     private Role getRole(@PathVariable("id") int id){
         return roleService.getRoleByRoleId(id);
