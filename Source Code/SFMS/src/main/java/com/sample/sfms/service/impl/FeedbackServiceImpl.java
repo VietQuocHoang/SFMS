@@ -26,6 +26,6 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public Feedback findFeedbackById(int id) {
-        return feedbackRepository.findFeedbackById(id);
+        return feedbackRepository.findById(id);
     }
 }
