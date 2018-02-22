@@ -11,11 +11,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping
-    public String index(Model model) {
-        model.addAttribute("users", userService.findAll());
-        return "list";
-    }
+//    @GetMapping
+//    public String index(Model model) {
+//        model.addAttribute("users", userService.findAll());
+//        return "list";
+//    }
 
 }
 
