@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `capstone` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `capstone`;
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
 --
 -- Host: localhost    Database: capstone
 -- ------------------------------------------------------
--- Server version	5.5.5-10.1.19-MariaDB
+-- Server version	5.7.17-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -18,30 +16,31 @@ USE `capstone`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `option`
+-- Table structure for table `optionn`
 --
 
-DROP TABLE IF EXISTS `option`;
+DROP TABLE IF EXISTS `optionn`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `option` (
+CREATE TABLE `optionn` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `option_content` varchar(50) DEFAULT NULL,
   `point` float DEFAULT NULL,
   `question_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_Option_Question1_idx` (`question_id`),
+  CONSTRAINT `FKbykq7jjnm2rawv0ws669o86hy` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`),
   CONSTRAINT `fk_Option_Question1` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `option`
+-- Dumping data for table `optionn`
 --
 
-LOCK TABLES `option` WRITE;
-/*!40000 ALTER TABLE `option` DISABLE KEYS */;
-/*!40000 ALTER TABLE `option` ENABLE KEYS */;
+LOCK TABLES `optionn` WRITE;
+/*!40000 ALTER TABLE `optionn` DISABLE KEYS */;
+/*!40000 ALTER TABLE `optionn` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -53,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-21 18:18:22
+-- Dump completed on 2018-02-22 22:04:30

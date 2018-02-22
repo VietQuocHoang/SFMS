@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `capstone` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `capstone`;
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
 --
 -- Host: localhost    Database: capstone
 -- ------------------------------------------------------
--- Server version	5.5.5-10.1.19-MariaDB
+-- Server version	5.7.17-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -28,7 +26,7 @@ CREATE TABLE `privilege` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='	';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='	';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,6 +35,7 @@ CREATE TABLE `privilege` (
 
 LOCK TABLES `privilege` WRITE;
 /*!40000 ALTER TABLE `privilege` DISABLE KEYS */;
+INSERT INTO `privilege` VALUES (1,'EDIT_PERMISSION'),(2,'EDIT_FEEDBACK'),(3,'SEE_FEEDBACK'),(4,'CONDUCT_FEEDBACK');
 /*!40000 ALTER TABLE `privilege` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-21 18:18:36
+-- Dump completed on 2018-02-22 22:04:32

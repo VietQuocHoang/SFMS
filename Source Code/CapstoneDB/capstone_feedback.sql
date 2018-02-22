@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `capstone` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `capstone`;
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
 --
 -- Host: localhost    Database: capstone
 -- ------------------------------------------------------
--- Server version	5.5.5-10.1.19-MariaDB
+-- Server version	5.7.17-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -53,6 +51,13 @@ CREATE TABLE `feedback` (
   KEY `fk_Feedback_Department1_idx` (`department_id`),
   KEY `fk_Feedback_UserInformation1_idx` (`creator_id`),
   KEY `fk_Feedback_Feedback1_idx` (`reference_id`),
+  CONSTRAINT `FK5ifya7npo8o9by8w03t3tpjv7` FOREIGN KEY (`major_id`) REFERENCES `major` (`id`),
+  CONSTRAINT `FK7wi6mvied4ds2jygaywvfrs4v` FOREIGN KEY (`clazz_id`) REFERENCES `clazz` (`id`),
+  CONSTRAINT `FKau3o7f0hohmh8aookeoqb423w` FOREIGN KEY (`reference_id`) REFERENCES `feedback` (`id`),
+  CONSTRAINT `FKdpfiqfk0mpmsenpdk5nh2xd1x` FOREIGN KEY (`creator_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `FKg0851pc63hb0u8jm2xma73q74` FOREIGN KEY (`type_id`) REFERENCES `type` (`id`),
+  CONSTRAINT `FKko7f08v61t5y67teh5jxxwrea` FOREIGN KEY (`course_id`) REFERENCES `course` (`id`),
+  CONSTRAINT `FKstj588oojtw87ntyonmbir01v` FOREIGN KEY (`department_id`) REFERENCES `department` (`id`),
   CONSTRAINT `fk_Feedback_Course1` FOREIGN KEY (`course_id`) REFERENCES `course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Feedback_Department1` FOREIGN KEY (`department_id`) REFERENCES `department` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Feedback_Feedback1` FOREIGN KEY (`reference_id`) REFERENCES `feedback` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -81,4 +86,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-21 18:18:17
+-- Dump completed on 2018-02-22 22:04:29
