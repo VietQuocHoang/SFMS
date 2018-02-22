@@ -4,12 +4,13 @@ import javax.persistence.*;
 import java.util.Collection;
 
 /**
- * Created by MyPC on 21/02/2018.
+ * Created by MyPC on 22/02/2018.
  */
 @Entity
-public class Option {
+@Table(name = "option", schema = "capstone", catalog = "")
+public class Optionn {
     private int id;
-    private String optionContent;
+    private String optionnContent;
     private Double point;
     private Collection<Answer> answersById;
     private Question questionByQuestionId;
@@ -27,12 +28,12 @@ public class Option {
 
     @Basic
     @Column(name = "option_content", nullable = true, length = 50)
-    public String getOptionContent() {
-        return optionContent;
+    public String getOptionnContent() {
+        return optionnContent;
     }
 
-    public void setOptionContent(String optionContent) {
-        this.optionContent = optionContent;
+    public void setOptionnContent(String optionnContent) {
+        this.optionnContent = optionnContent;
     }
 
     @Basic
@@ -50,12 +51,12 @@ public class Option {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Option option = (Option) o;
+        Optionn optionn = (Optionn) o;
 
-        if (id != option.id) return false;
-        if (optionContent != null ? !optionContent.equals(option.optionContent) : option.optionContent != null)
+        if (id != optionn.id) return false;
+        if (optionnContent != null ? !optionnContent.equals(optionn.optionnContent) : optionn.optionnContent != null)
             return false;
-        if (point != null ? !point.equals(option.point) : option.point != null) return false;
+        if (point != null ? !point.equals(optionn.point) : optionn.point != null) return false;
 
         return true;
     }
@@ -63,12 +64,12 @@ public class Option {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (optionContent != null ? optionContent.hashCode() : 0);
+        result = 31 * result + (optionnContent != null ? optionnContent.hashCode() : 0);
         result = 31 * result + (point != null ? point.hashCode() : 0);
         return result;
     }
 
-    @OneToMany(mappedBy = "optionByOptionId")
+    @OneToMany(mappedBy = "optionnByOptionnId")
     public Collection<Answer> getAnswersById() {
         return answersById;
     }

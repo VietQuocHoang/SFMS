@@ -3,10 +3,10 @@ package com.sample.sfms.entity;
 import javax.persistence.*;
 
 /**
- * Created by MyPC on 21/02/2018.
+ * Created by MyPC on 22/02/2018.
  */
 @Entity
-@Table(name = "privilege_role", schema = "capstone")
+@Table(name = "privilege_role", schema = "capstone", catalog = "")
 @IdClass(PrivilegeRolePK.class)
 public class PrivilegeRole {
     private int roleId;
@@ -15,6 +15,7 @@ public class PrivilegeRole {
     private Privilege privilegeByPrivilegeId;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "role_id", nullable = false)
     public int getRoleId() {
         return roleId;

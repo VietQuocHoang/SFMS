@@ -3,10 +3,10 @@ package com.sample.sfms.entity;
 import javax.persistence.*;
 
 /**
- * Created by MyPC on 21/02/2018.
+ * Created by MyPC on 22/02/2018.
  */
 @Entity
-@Table(name = "major_course", schema = "capstone")
+@Table(name = "major_course", schema = "capstone", catalog = "")
 @IdClass(MajorCoursePK.class)
 public class MajorCourse {
     private int majorId;

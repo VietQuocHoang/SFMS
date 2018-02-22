@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 /**
- * Created by MyPC on 21/02/2018.
+ * Created by MyPC on 22/02/2018.
  */
 @Entity
 public class Question {
@@ -13,7 +13,7 @@ public class Question {
     private String suggestion;
     private byte isRequied;
     private String questionContent;
-    private Collection<Option> optionsById;
+    private Collection<Optionn> optionsById;
     private Criteria criteriaByCriteriaId;
     private Feedback feedbackByFeedbackId;
 
@@ -96,11 +96,11 @@ public class Question {
     }
 
     @OneToMany(mappedBy = "questionByQuestionId")
-    public Collection<Option> getOptionsById() {
+    public Collection<Optionn> getOptionsById() {
         return optionsById;
     }
 
-    public void setOptionsById(Collection<Option> optionsById) {
+    public void setOptionsById(Collection<Optionn> optionsById) {
         this.optionsById = optionsById;
     }
 
