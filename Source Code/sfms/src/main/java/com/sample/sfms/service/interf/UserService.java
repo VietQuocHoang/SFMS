@@ -4,7 +4,6 @@ import com.sample.sfms.entity.Role;
 import com.sample.sfms.entity.User;
 
 import java.util.List;
-
 public interface UserService {
 
     User findUserByMail(String email);
@@ -22,4 +21,5 @@ public interface UserService {
     void save(User user);
 
     void delete(int id);
+
 }

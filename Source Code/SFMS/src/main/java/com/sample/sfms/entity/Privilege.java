@@ -53,7 +53,7 @@ public class Privilege {
         return result;
     }
 
-    @OneToMany(mappedBy = "privilegeByPrivilegeId")
+    @OneToMany(mappedBy = "privilegeRolePK.privilege")
     public Collection<PrivilegeRole> getPrivilegeRolesById() {
         return privilegeRolesById;
     }

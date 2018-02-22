@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `capstone` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `capstone`;
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
 --
 -- Host: localhost    Database: capstone
 -- ------------------------------------------------------
--- Server version	5.5.5-10.1.19-MariaDB
+-- Server version	5.7.17-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -30,6 +28,8 @@ CREATE TABLE `privilege_role` (
   PRIMARY KEY (`role_id`,`privilege_id`),
   KEY `fk_PrivilegeRole_Privilege1_idx` (`privilege_id`),
   KEY `fk_PrivilegeRole_Role1_idx` (`role_id`),
+  CONSTRAINT `FKmjdxh3xvb9u84vp2nt7fi1fcb` FOREIGN KEY (`privilege_id`) REFERENCES `privilege` (`id`),
+  CONSTRAINT `FKs1shi5inbkewred4y50c9rihl` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
   CONSTRAINT `fk_PrivilegeRole_Privilege1` FOREIGN KEY (`privilege_id`) REFERENCES `privilege` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_PrivilegeRole_Role1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -41,6 +41,7 @@ CREATE TABLE `privilege_role` (
 
 LOCK TABLES `privilege_role` WRITE;
 /*!40000 ALTER TABLE `privilege_role` DISABLE KEYS */;
+INSERT INTO `privilege_role` VALUES (6,3),(6,4);
 /*!40000 ALTER TABLE `privilege_role` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-21 18:18:26
+-- Dump completed on 2018-02-22 22:04:31
