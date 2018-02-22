@@ -12,4 +12,14 @@ public interface UserService {
     void saveUser(User user);
 
     List<Role> getListRole();
+
+    Iterable<User> findAll();
+
+    List<User> search(String q);
+
+    User findOne(int id);
+
+    void save(User user);
+
+    void delete(int id);
 }
