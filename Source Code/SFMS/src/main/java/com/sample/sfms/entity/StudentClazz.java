@@ -3,10 +3,10 @@ package com.sample.sfms.entity;
 import javax.persistence.*;
 
 /**
- * Created by MyPC on 21/02/2018.
+ * Created by MyPC on 22/02/2018.
  */
 @Entity
-@Table(name = "student_clazz", schema = "capstone")
+@Table(name = "student_clazz", schema = "capstone", catalog = "")
 @IdClass(StudentClazzPK.class)
 public class StudentClazz {
     private int userId;

@@ -10,7 +10,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
@@ -23,19 +22,43 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserByMail(String email) {
+
         return userRepository.findByMail(email);
     }
 
     @Override
     public void saveUser(User user) {
-      /*  user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setRole(roleRepository.findByRoleName(user.getRole().getRoleName()));
-        userRepository.save(user);*/
     }
 
     @Override
     public List<Role> getListRole() {
+
         return roleRepository.findAll();
+    }
+
+    @Override
+    public Iterable<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public List<User> search(String q) {
+        return userRepository.findByBirthContaining(q);
+    }
+
+    @Override
+    public User findOne(int id) {
+        return userRepository.findOne(id);
+    }
+
+    @Override
+    public void save(User user) {
+        userRepository.save(user);
+    }
+
+    @Override
+    public void delete(int id) {
+        userRepository.delete(id);
     }
 
 }

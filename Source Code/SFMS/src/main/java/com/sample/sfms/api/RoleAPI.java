@@ -26,13 +26,13 @@ public class RoleAPI {
     }
 
     @PostMapping
-    private ResponseEntity<Role> postRole(@RequestParam("roleName") String roleName){
-        return roleService.saveRole(roleName);
+    private ResponseEntity<Role> postRole(@RequestParam("roleName") String roleName, @RequestParam(value = "privilegeNames", required = false) String[] privilegeNames) {
+        return roleService.saveRole(roleName, privilegeNames);
     }
 
     @PutMapping
-    private ResponseEntity<Role> putRole(@RequestParam("id") int id, @RequestParam("roleName") String roleName){
-        return roleService.saveRole(id, roleName);
+    private ResponseEntity<Role> putRole(@RequestParam("id") int id, @RequestParam("roleName") String roleName, @RequestParam(value = "privilegeNames", required = false) String[] privilegeNames) {
+        return roleService.saveRole(id, roleName, privilegeNames);
     }
 
     @DeleteMapping

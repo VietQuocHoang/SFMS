@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `capstone` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `capstone`;
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
 --
 -- Host: localhost    Database: capstone
 -- ------------------------------------------------------
--- Server version	5.5.5-10.1.19-MariaDB
+-- Server version	5.7.17-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -35,6 +33,8 @@ CREATE TABLE `question` (
   PRIMARY KEY (`id`),
   KEY `fk_Question_Feedback1_idx` (`feedback_id`),
   KEY `fk_Question_Criteria1_idx` (`criteria_id`),
+  CONSTRAINT `FK4807p70be7cwvjvvku3s3vr5u` FOREIGN KEY (`criteria_id`) REFERENCES `criteria` (`id`),
+  CONSTRAINT `FKltx8iulpaeb8rqujiaad8s60i` FOREIGN KEY (`feedback_id`) REFERENCES `feedback` (`id`),
   CONSTRAINT `fk_Question_Criteria1` FOREIGN KEY (`criteria_id`) REFERENCES `criteria` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Question_Feedback1` FOREIGN KEY (`feedback_id`) REFERENCES `feedback` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -58,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-21 18:18:27
+-- Dump completed on 2018-02-22 22:04:31

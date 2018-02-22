@@ -4,14 +4,14 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * Created by MyPC on 21/02/2018.
+ * Created by MyPC on 22/02/2018.
  */
 @Entity
 public class Answer {
     private int id;
     private String answerContent;
     private Timestamp createDate;
-    private Option optionByOptionId;
+    private Optionn optionnByOptionnId;
     private User userByUserId;
 
     @Id
@@ -70,12 +70,12 @@ public class Answer {
 
     @ManyToOne
     @JoinColumn(name = "option_id", referencedColumnName = "id", nullable = false)
-    public Option getOptionByOptionId() {
-        return optionByOptionId;
+    public Optionn getOptionnByOptionnId() {
+        return optionnByOptionnId;
     }
 
-    public void setOptionByOptionId(Option optionByOptionId) {
-        this.optionByOptionId = optionByOptionId;
+    public void setOptionnByOptionnId(Optionn optionnByOptionnId) {
+        this.optionnByOptionnId = optionnByOptionnId;
     }
 
     @ManyToOne

@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 /**
- * Created by MyPC on 21/02/2018.
+ * Created by MyPC on 22/02/2018.
  */
 @Entity
 public class Privilege {
@@ -53,7 +53,7 @@ public class Privilege {
         return result;
     }
 
-    @OneToMany(mappedBy = "privilegeByPrivilegeId")
+    @OneToMany(mappedBy = "privilegeRolePK.privilege")
     public Collection<PrivilegeRole> getPrivilegeRolesById() {
         return privilegeRolesById;
     }

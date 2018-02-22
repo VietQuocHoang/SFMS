@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `capstone` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `capstone`;
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
 --
 -- Host: localhost    Database: capstone
 -- ------------------------------------------------------
--- Server version	5.5.5-10.1.19-MariaDB
+-- Server version	5.7.17-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -36,6 +34,9 @@ CREATE TABLE `clazz` (
   KEY `fk_Class_Semester1_idx` (`semester_id`),
   KEY `fk_clazz_user1_idx` (`lecturer_id`),
   KEY `fk_clazz_course1_idx` (`course_id`),
+  CONSTRAINT `FK1b0iisn4kc2hqtec5lqcrk594` FOREIGN KEY (`lecturer_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `FKl717r2ytsugssmoolftdhi3ae` FOREIGN KEY (`course_id`) REFERENCES `course` (`id`),
+  CONSTRAINT `FKxv4n1nb7xhihhtxcmuxbktus` FOREIGN KEY (`semester_id`) REFERENCES `semester` (`id`),
   CONSTRAINT `fk_Class_Semester1` FOREIGN KEY (`semester_id`) REFERENCES `semester` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_clazz_course1` FOREIGN KEY (`course_id`) REFERENCES `course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_clazz_user1` FOREIGN KEY (`lecturer_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -60,4 +61,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-21 18:18:29
+-- Dump completed on 2018-02-22 22:04:31
