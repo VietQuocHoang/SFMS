@@ -8,5 +8,7 @@ public interface FeedbackService {
 
     List<Feedback> getListTemplate(boolean isTemplate);
 
+    Feedback findFeedbackById (int id);
+
 }
 

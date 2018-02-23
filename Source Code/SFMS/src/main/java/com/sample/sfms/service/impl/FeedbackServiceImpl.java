@@ -23,4 +23,9 @@ public class FeedbackServiceImpl implements FeedbackService {
     public List<Feedback> getListTemplate(boolean isTemplate) {
         return feedbackRepository.findByIsTemplate(isTemplate);
     }
+
+    @Override
+    public Feedback findFeedbackById(int id) {
+        return feedbackRepository.findById(id);
+    }
 }
