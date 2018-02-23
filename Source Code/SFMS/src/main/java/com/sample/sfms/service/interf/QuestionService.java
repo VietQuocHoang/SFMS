@@ -1,6 +1,8 @@
 package com.sample.sfms.service.interf;
 
 import com.sample.sfms.entity.Clazz;
+import com.sample.sfms.entity.Question;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -10,4 +12,5 @@ import java.util.List;
 
 public interface QuestionService {
 
+    public ResponseEntity<Question> saveQuestion(String type, String suggestion, byte isRequired, String content);
 }
