@@ -10,22 +10,22 @@ import java.util.List;
 public class FeedbackDetailsModel {
     private List<User> conductors;
     private List<User> reportviewers;
-    private Major targetedMajor;
-    private Course targetedCourse;
-    private Clazz targetedClazz;
-    private Department targetedDepartment;
+    private Major major;
+    private Course course;
+    private Clazz clazz;
+    private Department department;
     private Type type;
 
     public FeedbackDetailsModel() {
     }
 
-    public FeedbackDetailsModel(List<User> conductors, List<User> reportviewers, Major targetedMajor, Course targetedCourse, Clazz targetedClazz, Department targetedDepartment, Type type) {
+    public FeedbackDetailsModel(List<User> conductors, List<User> reportviewers, Major major, Course course, Clazz clazz, Department department, Type type) {
         this.conductors = conductors;
         this.reportviewers = reportviewers;
-        this.targetedMajor = targetedMajor;
-        this.targetedCourse = targetedCourse;
-        this.targetedClazz = targetedClazz;
-        this.targetedDepartment = targetedDepartment;
+        this.major = major;
+        this.course = course;
+        this.clazz = clazz;
+        this.department = department;
         this.type = type;
     }
 
@@ -45,36 +45,36 @@ public class FeedbackDetailsModel {
         this.reportviewers = reportviewers;
     }
 
-    public Major getTargetedMajor() {
-        return targetedMajor;
+    public Major getMajor() {
+        return major;
     }
 
-    public void setTargetedMajor(Major targetedMajor) {
-        this.targetedMajor = targetedMajor;
+    public void setMajor(Major major) {
+        this.major = major;
     }
 
-    public Course getTargetedCourse() {
-        return targetedCourse;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setTargetedCourse(Course targetedCourse) {
-        this.targetedCourse = targetedCourse;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
-    public Clazz getTargetedClazz() {
-        return targetedClazz;
+    public Clazz getClazz() {
+        return clazz;
     }
 
-    public void setTargetedClazz(Clazz targetedClazz) {
-        this.targetedClazz = targetedClazz;
+    public void setClazz(Clazz clazz) {
+        this.clazz = clazz;
     }
 
-    public Department getTargetedDepartment() {
-        return targetedDepartment;
+    public Department getDepartment() {
+        return department;
     }
 
-    public void setTargetedDepartment(Department targetedDepartment) {
-        this.targetedDepartment = targetedDepartment;
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     public Type getType() {

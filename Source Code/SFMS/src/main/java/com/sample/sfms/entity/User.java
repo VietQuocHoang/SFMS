@@ -18,7 +18,7 @@ public class User {
     private Date birth;
     private Byte status;
     private Collection<Answer> answersById;
-    private Collection<Clazz> clazzesById;
+    private Collection<Clazz> clazzesById;//clazzes whose be taught by a lecturer
     private Collection<Feedback> feedbacksById;
     private Collection<StudentClazz> studentClazzesById;
     private Department departmentByDepartmentId;

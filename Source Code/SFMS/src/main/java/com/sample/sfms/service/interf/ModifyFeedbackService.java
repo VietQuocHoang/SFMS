@@ -1,13 +1,12 @@
 package com.sample.sfms.service.interf;
 
-import com.sample.sfms.entity.Clazz;
-import com.sample.sfms.entity.Course;
-import com.sample.sfms.entity.Feedback;
-import com.sample.sfms.entity.Major;
+import com.sample.sfms.entity.*;
 import com.sample.sfms.model.FeedbackDetailsModel;
 import com.sample.sfms.model.ModifyFeedbackModel;
 import org.springframework.http.ResponseEntity;
 
+import java.security.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,7 +16,21 @@ public interface ModifyFeedbackService {
 
     public Feedback getFeedback(int id);
 
-    public List<ResponseEntity<Feedback>> saveFeadbacks(ModifyFeedbackModel modifyFeedbackModel);
+    public ResponseEntity<List<Feedback>> saveFeadbacks(ModifyFeedbackModel model);
 
-//    public ResponseEntity<ModifyFeedbackModel> addTargets()
+    public ResponseEntity<ModifyFeedbackModel> addTarget(int typeId, int targetId, ModifyFeedbackModel model);
+
+    public ResponseEntity<ModifyFeedbackModel> removeTarget(int typeId, int targetId, ModifyFeedbackModel model);
+
+    public List<User> autoGenerateConductors(FeedbackDetailsModel model);
+
+    public List<User> autoGenerateViewers(FeedbackDetailsModel model);
+
+    public ResponseEntity<FeedbackDetailsModel> customizeConductors(FeedbackDetailsModel model, int[] conductorIds);
+
+    public ResponseEntity<FeedbackDetailsModel> customizeViewers(FeedbackDetailsModel model, int[] viewerIds);
+
+    public ResponseEntity<ModifyFeedbackModel> setStart(Date start, Feedback feedback);
+
+    public ResponseEntity<ModifyFeedbackModel> setEnd(Date end, Feedback feedback);
 }

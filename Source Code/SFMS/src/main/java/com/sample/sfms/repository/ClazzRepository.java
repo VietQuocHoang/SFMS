@@ -1,6 +1,7 @@
 package com.sample.sfms.repository;
 
 import com.sample.sfms.entity.Clazz;
+import com.sample.sfms.entity.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,4 +21,6 @@ public interface ClazzRepository extends JpaRepository<Clazz, Integer> {
     List<Clazz> filtering(@Param("coursename") String coursename,
                           @Param("semestertitle") String semestertitle,
                           @Param("lecturerfullname") String lecturerfullname);
+
+    List<Clazz> findByCourseByCourseId(Course courseByCourseId);
 }
