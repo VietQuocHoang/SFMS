@@ -1,13 +1,12 @@
 package com.sample.sfms.service.impl;
 
-import com.sample.sfms.entity.Feedback;
-import com.sample.sfms.entity.Type;
-import com.sample.sfms.entity.User;
+import com.sample.sfms.entity.*;
 import com.sample.sfms.model.FeedbackDetailsModel;
 import com.sample.sfms.model.ModifyFeedbackModel;
 import com.sample.sfms.repository.*;
 import com.sample.sfms.service.interf.ModifyFeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.UnexpectedRollbackException;
@@ -44,6 +43,12 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     @Autowired
     private TypeRepository typeRepo;
 
+    @Autowired
+    private UserFilteringRepository userRepo;
+
+    @Autowired
+    private StudentClazzRepository studentClazzRepo;
+
     @Override
     public Feedback getFeedback(int id) {
         return feedbackRepo.findOne(id);
@@ -63,16 +68,16 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                 tmp = sharedTemplate;
                 switch (t.getDescription()) {
                     case "Major":
-                        tmp.setMajorByMajorId(majorRepo.findOne(detail.getTargetedId()));
+                        tmp.setMajorByMajorId(majorRepo.findOne(detail.getMajor().getId()));
                         break;
                     case "Course":
-                        tmp.setCourseByCourseId(courseRepo.findOne(detail.getTargetedId()));
+                        tmp.setCourseByCourseId(courseRepo.findOne(detail.getCourse().getId()));
                         break;
                     case "Clazz":
-                        tmp.setClazzByClazzId(clazzRepo.findOne(detail.getTargetedId()));
+                        tmp.setClazzByClazzId(clazzRepo.findOne(detail.getClazz().getId()));
                         break;
                     case "Department":
-                        tmp.setDepartmentByDepartmentId(departmentRepo.findOne(detail.getTargetedId()));
+                        tmp.setDepartmentByDepartmentId(departmentRepo.findOne(detail.getDepartment().getId()));
                         break;
                 }
                 tmp.setTypeByTypeId(t);
@@ -104,16 +109,16 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
             detailModel.setType(t);
             switch (t.getDescription()) {
                 case "Major":
-                    detailModel.setTargetedId(majorRepo.findOne(targetId).getId());
+                    detailModel.setMajor(majorRepo.findOne(targetId));
                     break;
                 case "Course":
-                    detailModel.setTargetedId(courseRepo.findOne(targetId).getId());
+                    detailModel.setCourse(courseRepo.findOne(targetId));
                     break;
                 case "Clazz":
-                    detailModel.setTargetedId(clazzRepo.findOne(targetId).getId());
+                    detailModel.setClazz(clazzRepo.findOne(targetId));
                     break;
                 case "Department":
-                    detailModel.setTargetedId(departmentRepo.findOne(targetId).getId());
+                    detailModel.setDepartment(departmentRepo.findOne(targetId));
                     break;
             }
             detailModel.setConductors(autoGenerateConductors(detailModel));
@@ -135,21 +140,38 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
 
     @Override
     public List<User> autoGenerateConductors(FeedbackDetailsModel detailModel) {
-        switch (detailModel.getType().getDescription()){
+        List<User> conductors = new ArrayList<>();
+        List<StudentClazz> studentClazzes = new ArrayList<>();
+        User tmp;
+        switch (detailModel.getType().getDescription()) {
             case "Major":
-
+                detailModel.setConductors(userRepo.findByMajorByMajorId(detailModel.getMajor()));
                 break;
             case "Course":
-
+                Course course = detailModel.getCourse();
+                List<Clazz> clazzesOfCourse = clazzRepo.findByCourseByCourseId(course);
+                for (Clazz c : clazzesOfCourse) {
+                    tmp = c.getUserByLecturerId();
+                    if (!conductors.contains(tmp)) conductors.add(tmp);
+                    studentClazzes.addAll(studentClazzRepo.findByClazzByClazzId(c));
+                }
+                for (StudentClazz sc : studentClazzes) {
+                    tmp = sc.getUserByUserId();
+                    if (!conductors.contains(tmp)) conductors.add(tmp);
+                }
                 break;
             case "Clazz":
-
+                studentClazzes.addAll(studentClazzRepo.findByClazzByClazzId(detailModel.getClazz()));
+                for (StudentClazz sc : studentClazzes) {
+                    tmp = sc.getUserByUserId();
+                    if (!conductors.contains(tmp)) conductors.add(tmp);
+                }
                 break;
             case "Department":
 
                 break;
         }
-        return null;
+        return conductors;
     }
 
     @Override

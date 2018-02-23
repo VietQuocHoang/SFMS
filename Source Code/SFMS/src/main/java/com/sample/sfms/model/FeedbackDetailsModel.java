@@ -10,16 +10,22 @@ import java.util.List;
 public class FeedbackDetailsModel {
     private List<User> conductors;
     private List<User> reportviewers;
-    private int targetedId;
+    private Major major;
+    private Course course;
+    private Clazz clazz;
+    private Department department;
     private Type type;
 
     public FeedbackDetailsModel() {
     }
 
-    public FeedbackDetailsModel(List<User> conductors, List<User> reportviewers, int targetId, Type type) {
+    public FeedbackDetailsModel(List<User> conductors, List<User> reportviewers, Major major, Course course, Clazz clazz, Department department, Type type) {
         this.conductors = conductors;
         this.reportviewers = reportviewers;
-        this.targetedId = targetedId;
+        this.major = major;
+        this.course = course;
+        this.clazz = clazz;
+        this.department = department;
         this.type = type;
     }
 
@@ -39,12 +45,36 @@ public class FeedbackDetailsModel {
         this.reportviewers = reportviewers;
     }
 
-    public int getTargetedId() {
-        return targetedId;
+    public Major getMajor() {
+        return major;
     }
 
-    public void setTargetedId(int targetedId) {
-        this.targetedId = targetedId;
+    public void setMajor(Major major) {
+        this.major = major;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public Clazz getClazz() {
+        return clazz;
+    }
+
+    public void setClazz(Clazz clazz) {
+        this.clazz = clazz;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     public Type getType() {
