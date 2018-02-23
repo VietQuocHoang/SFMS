@@ -1,9 +1,6 @@
 package com.sample.sfms.service.interf;
 
-import com.sample.sfms.entity.Clazz;
-import com.sample.sfms.entity.Course;
-import com.sample.sfms.entity.Feedback;
-import com.sample.sfms.entity.Major;
+import com.sample.sfms.entity.*;
 import com.sample.sfms.model.FeedbackDetailsModel;
 import com.sample.sfms.model.ModifyFeedbackModel;
 import org.springframework.http.ResponseEntity;
@@ -19,21 +16,21 @@ public interface ModifyFeedbackService {
 
     public Feedback getFeedback(int id);
 
-    public List<ResponseEntity<Feedback>> saveFeadbacks(ModifyFeedbackModel modifyFeedbackModel);
+    public ResponseEntity<List<Feedback>> saveFeadbacks(ModifyFeedbackModel model);
 
-    public ResponseEntity<ModifyFeedbackModel> addTarget(int typeId, int targetId);
+    public ResponseEntity<ModifyFeedbackModel> addTarget(int typeId, int targetId, ModifyFeedbackModel model);
 
-    public ResponseEntity<ModifyFeedbackModel> removeTarget(int typeId, int targetId);
+    public ResponseEntity<ModifyFeedbackModel> removeTarget(int typeId, int targetId, ModifyFeedbackModel model);
 
-    public ResponseEntity<ModifyFeedbackModel> autoGenerateConductors(int targetId);
+    public List<User> autoGenerateConductors(FeedbackDetailsModel model);
 
-    public ResponseEntity<ModifyFeedbackModel> autoGenerateViewers(int targetId);
+    public List<User> autoGenerateViewers(FeedbackDetailsModel model);
 
-    public ResponseEntity<ModifyFeedbackModel> customizeConductors(int targetId, int[] conductorIds);
+    public ResponseEntity<FeedbackDetailsModel> customizeConductors(FeedbackDetailsModel model, int[] conductorIds);
 
-    public ResponseEntity<ModifyFeedbackModel> customizeViewers(int targetId, int[] viewerIds);
+    public ResponseEntity<FeedbackDetailsModel> customizeViewers(FeedbackDetailsModel model, int[] viewerIds);
 
-    public ResponseEntity<ModifyFeedbackModel> setStart(Date start);
+    public ResponseEntity<ModifyFeedbackModel> setStart(Date start, Feedback feedback);
 
-    public ResponseEntity<ModifyFeedbackModel> setEnd(Date end);
+    public ResponseEntity<ModifyFeedbackModel> setEnd(Date end, Feedback feedback);
 }

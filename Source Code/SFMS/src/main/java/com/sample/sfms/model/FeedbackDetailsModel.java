@@ -10,22 +10,16 @@ import java.util.List;
 public class FeedbackDetailsModel {
     private List<User> conductors;
     private List<User> reportviewers;
-    private Major targetedMajor;
-    private Course targetedCourse;
-    private Clazz targetedClazz;
-    private Department targetedDepartment;
+    private int targetedId;
     private Type type;
 
     public FeedbackDetailsModel() {
     }
 
-    public FeedbackDetailsModel(List<User> conductors, List<User> reportviewers, Major targetedMajor, Course targetedCourse, Clazz targetedClazz, Department targetedDepartment, Type type) {
+    public FeedbackDetailsModel(List<User> conductors, List<User> reportviewers, int targetId, Type type) {
         this.conductors = conductors;
         this.reportviewers = reportviewers;
-        this.targetedMajor = targetedMajor;
-        this.targetedCourse = targetedCourse;
-        this.targetedClazz = targetedClazz;
-        this.targetedDepartment = targetedDepartment;
+        this.targetedId = targetedId;
         this.type = type;
     }
 
@@ -45,36 +39,12 @@ public class FeedbackDetailsModel {
         this.reportviewers = reportviewers;
     }
 
-    public Major getTargetedMajor() {
-        return targetedMajor;
+    public int getTargetedId() {
+        return targetedId;
     }
 
-    public void setTargetedMajor(Major targetedMajor) {
-        this.targetedMajor = targetedMajor;
-    }
-
-    public Course getTargetedCourse() {
-        return targetedCourse;
-    }
-
-    public void setTargetedCourse(Course targetedCourse) {
-        this.targetedCourse = targetedCourse;
-    }
-
-    public Clazz getTargetedClazz() {
-        return targetedClazz;
-    }
-
-    public void setTargetedClazz(Clazz targetedClazz) {
-        this.targetedClazz = targetedClazz;
-    }
-
-    public Department getTargetedDepartment() {
-        return targetedDepartment;
-    }
-
-    public void setTargetedDepartment(Department targetedDepartment) {
-        this.targetedDepartment = targetedDepartment;
+    public void setTargetedId(int targetedId) {
+        this.targetedId = targetedId;
     }
 
     public Type getType() {
