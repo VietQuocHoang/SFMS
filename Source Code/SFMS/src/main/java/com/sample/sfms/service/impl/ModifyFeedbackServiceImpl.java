@@ -50,8 +50,22 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     private StudentClazzRepository studentClazzRepo;
 
     @Override
-    public Feedback getFeedback(int id) {
-        return feedbackRepo.findOne(id);
+    public ResponseEntity<ModifyFeedbackModel> createFeedbackFromTemplate(int id) {
+        ResponseEntity<ModifyFeedbackModel> response;
+        try{
+            return new ResponseEntity<ModifyFeedbackModel>(
+                    new ModifyFeedbackModel(feedbackRepo.findOne(id), null), HttpStatus.OK);
+        }catch (UnexpectedRollbackException e) {
+            logger.log(Level.FINE, e.toString());
+            response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return response;
+        }
+    }
+
+    @Override
+    public ResponseEntity<ModifyFeedbackModel> createEmptyFeedback() {
+        return new ResponseEntity<ModifyFeedbackModel>(
+                new ModifyFeedbackModel(), HttpStatus.OK);
     }
 
     @Override
@@ -79,6 +93,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                     case "Department":
                         tmp.setDepartmentByDepartmentId(departmentRepo.findOne(detail.getDepartment().getId()));
                         break;
+                    default: break;
                 }
                 tmp.setTypeByTypeId(t);
                 for (User conductor : detail.getConductors()) {
@@ -120,6 +135,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                 case "Department":
                     detailModel.setDepartment(departmentRepo.findOne(targetId));
                     break;
+                default: break;
             }
             detailModel.setConductors(autoGenerateConductors(detailModel));
             detailModel.setReportviewers(autoGenerateViewers(detailModel));
@@ -135,7 +151,48 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
 
     @Override
     public ResponseEntity<ModifyFeedbackModel> removeTarget(int typeId, int targetId, ModifyFeedbackModel model) {
-        return null;
+        try {
+            List<FeedbackDetailsModel> details = model.getSelectedObjs();
+            Type t = typeRepo.findOne(typeId);
+            for (FeedbackDetailsModel dm : details) {
+                if (dm.getType().equals(t))
+                    switch (t.getDescription()) {
+                        case "Major":
+                            if (dm.getMajor().getId() == targetId) {
+                                details.remove(dm);
+                                model.setSelectedObjs(details);
+                                return new ResponseEntity<>(model, HttpStatus.OK);
+                            }
+                            break;
+                        case "Course":
+                            if (dm.getCourse().getId() == targetId) {
+                                details.remove(dm);
+                                model.setSelectedObjs(details);
+                                return new ResponseEntity<>(model, HttpStatus.OK);
+                            }
+                            break;
+                        case "Clazz":
+                            if (dm.getClazz().getId() == targetId) {
+                                details.remove(dm);
+                                model.setSelectedObjs(details);
+                                return new ResponseEntity<>(model, HttpStatus.OK);
+                            }
+                            break;
+                        case "Department":
+                            if (dm.getDepartment().getId() == targetId) {
+                                details.remove(dm);
+                                model.setSelectedObjs(details);
+                                return new ResponseEntity<>(model, HttpStatus.OK);
+                            }
+                            break;
+                        default: break;
+                    }
+            }
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (UnexpectedRollbackException e) {
+            logger.log(Level.FINE, e.toString());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override
@@ -180,12 +237,17 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     }
 
     @Override
-    public ResponseEntity<FeedbackDetailsModel> customizeConductors(FeedbackDetailsModel model, int[] conductorIds) {
-        return null;
+    public FeedbackDetailsModel customizeConductors(FeedbackDetailsModel model, int[] conductorIds) {
+        try{
+            return null;
+        }catch (UnexpectedRollbackException e) {
+            logger.log(Level.FINE, e.toString());
+            return null;
+        }
     }
 
     @Override
-    public ResponseEntity<FeedbackDetailsModel> customizeViewers(FeedbackDetailsModel model, int[] viewerIds) {
+    public FeedbackDetailsModel customizeViewers(FeedbackDetailsModel model, int[] viewerIds) {
         return null;
     }
 
