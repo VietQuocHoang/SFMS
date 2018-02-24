@@ -12,9 +12,7 @@ import java.util.List;
  */
 @Repository
 public interface MajorRepository extends JpaRepository<Major, Integer> {
-
     @Query("select m from Major m where " +
             "EXISTS (SELECT f FROM Feedback f WHERE f.majorByMajorId.id = m.id)")
     List<Major> filtering ();
-
 }
