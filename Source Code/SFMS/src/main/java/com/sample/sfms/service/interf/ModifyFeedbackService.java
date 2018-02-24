@@ -14,7 +14,9 @@ import java.util.List;
  */
 public interface ModifyFeedbackService {
 
-    public Feedback getFeedback(int id);
+    public ResponseEntity<ModifyFeedbackModel> createEmptyFeedback();
+
+    public ResponseEntity<ModifyFeedbackModel> createFeedbackFromTemplate(int id);
 
     public ResponseEntity<List<Feedback>> saveFeadbacks(ModifyFeedbackModel model);
 
@@ -26,9 +28,9 @@ public interface ModifyFeedbackService {
 
     public List<User> autoGenerateViewers(FeedbackDetailsModel model);
 
-    public ResponseEntity<FeedbackDetailsModel> customizeConductors(FeedbackDetailsModel model, int[] conductorIds);
+    public FeedbackDetailsModel customizeConductors(FeedbackDetailsModel model, int[] conductorIds);
 
-    public ResponseEntity<FeedbackDetailsModel> customizeViewers(FeedbackDetailsModel model, int[] viewerIds);
+    public FeedbackDetailsModel customizeViewers(FeedbackDetailsModel model, int[] viewerIds);
 
     public ResponseEntity<ModifyFeedbackModel> setStart(Date start, Feedback feedback);
 

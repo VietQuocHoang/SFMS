@@ -11,6 +11,9 @@ public class ModifyFeedbackModel {
     private Feedback feedback;
     private List<FeedbackDetailsModel> selectedObjs;
 
+    public ModifyFeedbackModel() {
+    }
+
     public ModifyFeedbackModel(Feedback feedback, List<FeedbackDetailsModel> selectedObjs) {
         this.feedback = feedback;
         this.selectedObjs = selectedObjs;
@@ -31,4 +34,5 @@ public class ModifyFeedbackModel {
     public void setSelectedObjs(List<FeedbackDetailsModel> selectedObjs) {
         this.selectedObjs = selectedObjs;
     }
+
 }
