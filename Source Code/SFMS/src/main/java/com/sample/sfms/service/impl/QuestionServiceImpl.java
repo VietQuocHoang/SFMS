@@ -23,7 +23,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Autowired
     private QuestionRepository questionRepo;
 
-    @Override
+ /*   @Override
     public ResponseEntity<Question> saveQuestion(String type, String suggestion, byte isRequired, String content) {
         ResponseEntity<Question> response;
         try {
@@ -44,6 +44,6 @@ public class QuestionServiceImpl implements QuestionService {
             response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             return response;
         }
-    }
+    }*/
 
 }

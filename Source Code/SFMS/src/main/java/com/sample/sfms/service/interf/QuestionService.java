@@ -12,5 +12,5 @@ import java.util.List;
 
 public interface QuestionService {
 
-    public ResponseEntity<Question> saveQuestion(String type, String suggestion, byte isRequired, String content);
+  //  public ResponseEntity<Question> saveQuestion(String type, String suggestion, byte isRequired, String content);
 }
