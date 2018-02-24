@@ -25,6 +25,7 @@ class ModifyFeedbackObjsAPI {
 
 }
 @RestController
+@SessionAttributes("MFModel")
 @RequestMapping("/api/modify-feedback")
 class  ModifyFeedbackAPI{
     @Autowired
@@ -37,9 +38,16 @@ class  ModifyFeedbackAPI{
 
     @PostMapping
     private ResponseEntity<ModifyFeedbackModel> createFeedbackModel(@RequestParam("templateId") int templateId, HttpSession session){
-        if(templateId==0) return modifyService.createEmptyFeedback();
-        else return modifyService.createFeedbackFromTemplate(templateId);
+        ResponseEntity<ModifyFeedbackModel> response;
+        if(templateId==0) response = modifyService.createEmptyFeedback();
+        else response = modifyService.createFeedbackFromTemplate(templateId);
+        session.setAttribute("MFModel", response);
+        return response;
     }
+
+//    @DeleteMapping
+//    private ResponseEntity<ModifyFeedbackModel> cancel
+
 
 //    @PutMapping
 //    private ResponseEntity<ModifyFeedbackModel> saveFeedbackModel (@RequestParam)
