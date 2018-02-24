@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.UnexpectedRollbackException;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import java.util.logging.Logger;
 /**
  * Created by MyPC on 23/02/2018.
  */
+@Service("ModifyFeedbackService")
 public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
 
     static Logger logger = Logger.getLogger(RoleServiceImpl.class.getName());
