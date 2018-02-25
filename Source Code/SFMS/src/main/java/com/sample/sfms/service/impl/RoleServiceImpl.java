@@ -51,13 +51,15 @@ public class RoleServiceImpl implements RoleService{
         try {
             List<Privilege> privileges = findPrivilegesByName(privilegeNames);
             List<PrivilegeRole> privilegeRoles = new ArrayList<>();
+            List<Integer> listPrivilegeIds = new ArrayList<>();
             for (Privilege p : privileges) {
                 PrivilegeRole pr = new PrivilegeRole();
                 pr.setRole(role);
                 pr.setPrivilege(p);
                 privilegeRoles.add(pr);
+                listPrivilegeIds.add(p.getId());
             }
-            privilegeRoleRepository.deleteAll(); //TODO tìm cách khác tốt hơn
+            privilegeRoleRepository.clearAllByRoleId(role.getId()); //TODO tìm cách khác tốt hơn :(
             privilegeRoleRepository.save(privilegeRoles);
             role.setPrivilegeRolesById(privilegeRoles);
             roleRepository.save(role);
