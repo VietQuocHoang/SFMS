@@ -1,27 +1,102 @@
-$(".list-widget").sortable({
+$(".item-list").sortable({
     // appendTo: 'body',
-    // helper: 'clone',
-    connectWith: ".answers-panel",
+    connectWith: ".answer-list",
     // remove: (event,ui)=>{
     //   ui.item.clone().appendTo(".list-widget");
     //   $(this).sortable('cancel');
     // },
+    // axis: 'y',
     helper: (e, li)=>{
         copyHelper = li.clone().insertAfter(li);
         return li.clone();
     },
     stop: ()=>{
         copyHelper && copyHelper.remove();
-    }
+    },
+    appendTo: '.question-container',
 }).disableSelection();
-$(".questions-list").sortable().disableSelection();
-function initAnswersPanel(answerPanel){
+
+$(".answer-list").sortable({
+    receive: (ev, ui) => {
+        console.log("received");
+        copyHelper = null;
+        if ($(ev.target).find('li').length > 1) {
+            ui.item.remove();
+        } else {
+            let id = ui.item.attr('id');
+            switch (id) {
+                case 'text-ele': {
+                    ui.item.html("<div class='form-group'>" +
+                        "<label class='control-label'>Nhập câu trả lời của bạn vào đây</label>" +
+                        "<input type='text' class='form-control'>" +
+                        "</div>");
+                    break;
+                }
+                case 'radio-ele': {
+                    ui.item.html("<div class='form-check'>" +
+                        "<label class='form-check-label'>" +
+                        "<input class='form-check-input' type='radio' checked> Đáp án 1" +
+                        "</label>" +
+                        "</div>" +
+                        "<div class='form-check'>" +
+                        "<label class='form-check-label'>" +
+                        "<input class='form-check-input' type='radio'> Đáp án 2" +
+                        "</label>" +
+                        "</div>" +
+                        "<div class='form-check'>" +
+                        "<label class='form-check-label'>" +
+                        "<input class='form-check-input' type='radio'> Đáp án 3" +
+                        "</label>" +
+                        "</div>");
+                    break;
+                }
+                case 'checkbox-ele': {
+                    ui.item.html("<div class='form-check'>" +
+                        "<label class='form-check-label'>" +
+                        "<input class='form-check-input' type='checkbox' checked> Đáp án 1" +
+                        "</label>" +
+                        "</div>");
+                    break;
+                }
+                case 'textarea-ele': {
+                    ui.item.html("<div class='form-group'>" +
+                        "<label class='control-label'>Nhập câu trả lời của bạn vào đây</label>" +
+                        "<textarea class='form-control'></textarea>" +
+                        "</div>")
+                }
+            }
+        }
+    },
+    over: () => {
+        removeIntent = false;
+    },
+    out: () => {
+        removeIntent = true;
+    },
+    beforeStop: (event, ui) => {
+        if (removeIntent == true) {
+            ui.item.remove();
+        }
+    },
+}).disableSelection();
+
+
+function removeAnswer(event){
+    console.log("ahihi");
+    var answerContainer = $(event.target).closest(".answers-container");
+    console.log(answerContainer);
+    var listAnswer = $(answerContainer).find("ul>li").remove();
+}
+
+var numOfQuestion = 0;
+
+function initAnswersPanel(answerPanel) {
     $(answerPanel).sortable({
         // connectWith: ".list-widget",
-        receive: (ev, ui)=>{
+        receive: (ev, ui) => {
             console.log($(ev.target).find('li').length);
             copyHelper = null;
-            if($(ev.target).find('li').length > 1){
+            if ($(ev.target).find('li').length > 1) {
                 ui.item.remove();
             } else {
                 let id = ui.item.attr('id');
@@ -68,29 +143,19 @@ function initAnswersPanel(answerPanel){
                 }
             }
         },
-        over: ()=>{
+        over: () => {
             removeIntent = false;
         },
-        out: ()=>{
+        out: () => {
             removeIntent = true;
         },
-        beforeStop: (event,ui)=>{
-            if(removeIntent == true){
+        beforeStop: (event, ui) => {
+            if (removeIntent == true) {
                 ui.item.remove();
             }
         }
     }).disableSelection();
 }
-
-function removeAnswer(event){
-    console.log("ahihi");
-    var answerContainer = $(event.target).closest(".answers-container");
-    console.log(answerContainer);
-    var listAnswer = $(answerContainer).find("ul>li").remove();
-}
-
-var numOfQuestion = 0;
-
 
 $(".btn-add-new").on('click', (event)=>{
     var html = "<li>" +
@@ -118,8 +183,11 @@ $(".btn-add-new").on('click', (event)=>{
         "</ul>" +
         "</div>" +
         "</li>";
-    let domNode = jQuery.parseHTML(html);
+    let domNode = $(html);
+    domNode.hide();
+    // $(html).hide().appendTo($(".questions-list")).slideDown("fast");
     $(".questions-list").append(domNode);
+    domNode.slideDown("fast");
     let answerPanel = $(domNode).find(".answers-panel");
     initAnswersPanel(answerPanel);
     numOfQuestion++;

@@ -1,97 +1,191 @@
-.floating-menu{
-    z-index: 100;
-    position: fixed;
-    width:200px;
-    /*border: 1px black solid;*/
-    right: 15px;
-    top: 150px;
-}
-.floating-menu>ul{
-    padding:0px;
-    list-style: none;
-}
-.floating-menu>ul>li{
-    padding: 10px;
-    width:100%;
-    border: 1px lightgray solid;
-}
-.floating-menu>ul>li:active{
-    cursor: move;
-}
-.questions-container{
-    min-height:500px;
-    width:100%;
-}
-.questions-container.empty{
-    border: lightgray 3px dashed;
-}
-.questions-list{
-    list-style: none;
-    padding: 10px;
-}
-.questions-list>li:active{
-    cursor: move;
-}
-.questions-list>li:hover{
-    cursor: move;
-}
-.questions-list>li{
-    margin:10px;
-}
-.answers-panel{
-    width:100%;
-    padding:10px;
-    min-height: 200px;
-    border:1px solid lightgray;
-    list-style: none;
-}
-.answers-panel>li{
-    border:none;
-}
-.btn-add-new{
-    background-color: #08ae9e;
-    color:#fff;
-}
-.question{
-    width:100%;
-}
-
-.questions-container>ul>li>.container{
+/*question list css*/
+.question-list-container {
+    height: 500px;
+    border: 1px solid black;
+    overflow-y: auto;
+    overflow-x: hidden;
     padding: 20px;
-    /*border: 1px solid lightgray;*/
-}
-.toggle-bar{
-    width:100%;
-    background-color:lightgray;
-}
-.field-action{
-    width:10%;
-    /*display:;*/
-    float:right;
-}
-.field-action:hover{
-    display:block;
+    box-sizing: padding-box;
 }
 
-.btn-edit-answer{
-    color: lightblue;
-    border: 1px solid lightgray;
+.question-list-wrapper {
+    width:100%;
+    float: left;
+    height: 100px;
 }
-.btn-edit-answer:hover{
-    background-color: lightblue;
-    color: #ffffff;
+
+/*individual question css*/
+.question-container {
+    overflow-x: hidden;
+    margin-left: 10%;
+    width: 80%;
+    float: left;
+    margin-bottom: 50px;
 }
-button:hover{
-    cursor: pointer;
+
+.question-wrapper {
+    overflow-x: hidden;
+    position: relative;
+    float: left;
+    width:100%;
+    border: 1px solid lightgrey;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
-.btn-remove-answer, .btn-remove-question{
-    color: red;
-    border: 1px solid lightgray;
+
+/*question content css*/
+.question-content-container {
+    overflow-x: hidden;
+    float: left;
+    width:100%;
+    padding: 50px 50px 0 50px;
+}
+
+.question-content-wrapper {
+    float: left;
+    width: 100%;
+    /*margin-left:10%;*/
+    border-bottom: 1px solid black;
+}
+
+.txtQuestion {
+    border: none;
+    width: 100%;
+    overflow: visible;
+    resize: none;
+    outline: none;
+}
+
+/*drop answer css*/
+.drop-answer-container {
+    width: 100%;
+    padding: 15px 50px 50px 50px;
+    float: left;
+}
+
+.drop-answer-wrapper {
+    width: 100%;
+    float: left;
+    /*margin-left:10%;*/
+}
+
+.answer-list {
+    width: 100%;
+    list-style: none;
+    min-height: 200px;
+    border: 1px dashed black;
+    border-radius: 2px;
+    padding: 20px;
+}
+
+.answer-list > .item {
+    border: none;
+}
+
+/*Submit css*/
+.submit-container {
+    position: relative;
+    width:100%;
+    float: left;
+    padding: 20px;
+}
+
+.submit-wrapper {
+    float: right;
+    align-content: right;
+    width: auto;
+}
+
+/*toggle bar css*/
+.toggle-bar-container {
+    width:100%;
+    float: left;
+    background-color: lightgrey;
+}
+
+.toggle-bar-wrapper {
+    padding-right: 10px;
+    width: auto;
+    float:right;
+    /*padding: 10px 5px;*/
+}
+
+/*.toggle-bar-wrapper.active{*/
+/*visibility: visible;*/
+/*}*/
+.btn-edit-question {
+    color: white;
+    background-color: #3399FF;
+}
+
+.btn-edit-question:hover {
+    background-color: #457ae6;
 }
 .btn-remove-question{
-    float:right;
+    color: white;
+    background-color: red;
 }
-.btn-remove-question, .btn-remove-answer:hover{
-    background-color:red;
-    color:#FFFFFF;
+
+.btn-remove-question:hover {
+    background-color: #c30101;
+}
+
+.btn-edit-question {
+    height: 40px;
+    width: 100px;
+}
+
+.btn-remove-question {
+    height: 40px;
+    width: 100px;
+}
+
+/*Item menu css*/
+
+.item-menu-container {
+    height: 500px;
+    /*border: 1px solid lightgrey;*/
+    overflow: hidden;
+    /*overflow-x:hidden;*/
+    padding: 0px;
+}
+
+.item-menu-wrapper {
+    overflow: hidden;
+    /*overflow-x: hidden;*/
+    width: 100%;
+    float: left;
+    box-sizing: border-box;
+}
+
+.item-list {
+    padding-left: 0rem;
+    list-style: none;
+}
+
+.item-list > li, .item {
+    width: 100%;
+    height: auto;
+    padding: 10px 8px;
+    border: 1px lightgrey solid;
+    word-break: keep-all;
+    /*background-color: rgba(0,0,0,0.1);*/
+    transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    list-style: none;
+}
+
+.item-list > li:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.item-list > li > a, .item > a {
+    color: black;
+}
+
+.item-list > li > a:hover, .item > a:hover {
+    text-decoration: none;
+}
+
+.content-wrapper {
+    overflow-y: hidden;
 }
