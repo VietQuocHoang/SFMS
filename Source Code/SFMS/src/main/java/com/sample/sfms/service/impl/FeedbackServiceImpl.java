@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 @Service("feedbackService")
 public class FeedbackServiceImpl implements FeedbackService {
 
-    static Logger logger = Logger.getLogger(RoleServiceImpl.class.getName());
+    static Logger logger = Logger.getLogger(FeedbackServiceImpl.class.getName());
     @Autowired
     private FeedbackRepository feedbackRepository;
 

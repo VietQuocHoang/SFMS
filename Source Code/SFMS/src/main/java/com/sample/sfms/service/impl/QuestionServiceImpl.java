@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 @Service("questionService")
 public class QuestionServiceImpl implements QuestionService {
 
-    static Logger logger = Logger.getLogger(RoleServiceImpl.class.getName());
+    static Logger logger = Logger.getLogger(QuestionServiceImpl.class.getName());
 
     @Autowired
     private QuestionRepository questionRepo;
