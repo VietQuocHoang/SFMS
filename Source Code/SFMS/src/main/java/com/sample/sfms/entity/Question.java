@@ -11,7 +11,7 @@ public class Question {
     private int id;
     private String type;
     private String suggestion;
-    private byte isRequied;
+    private boolean isRequied;
     private String questionContent;
     private Collection<Optionn> optionsById;
     private Criteria criteriaByCriteriaId;
@@ -50,11 +50,11 @@ public class Question {
 
     @Basic
     @Column(name = "is_requied", nullable = false)
-    public byte getIsRequied() {
+    public boolean getIsRequied() {
         return isRequied;
     }
 
-    public void setIsRequied(byte isRequied) {
+    public void setIsRequied(boolean isRequied) {
         this.isRequied = isRequied;
     }
 
@@ -90,7 +90,7 @@ public class Question {
         int result = id;
         result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (suggestion != null ? suggestion.hashCode() : 0);
-        result = 31 * result + (int) isRequied;
+        //result = 31 * result + (int) isRequied;
         result = 31 * result + (questionContent != null ? questionContent.hashCode() : 0);
         return result;
     }

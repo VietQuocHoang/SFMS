@@ -2,6 +2,9 @@ package com.sample.sfms.service.interf;
 
 import com.sample.sfms.entity.Clazz;
 import com.sample.sfms.entity.Question;
+import com.sample.sfms.model.AddQuestionModel;
+import com.sample.sfms.model.RemoveQuestionModel;
+import com.sample.sfms.model.UpdateQuestionModel;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -12,5 +15,15 @@ import java.util.List;
 
 public interface QuestionService {
 
-  //  public ResponseEntity<Question> saveQuestion(String type, String suggestion, byte isRequired, String content);
+    /**
+     * Add 1 question
+     * @param model
+     * @return Id của question vừa được tạo dưới db
+     */
+    int addQuestion(AddQuestionModel model) throws Exception;
+
+    void updateQuestion(UpdateQuestionModel model) throws Exception;
+
+    void removeQuestion(RemoveQuestionModel model) throws Exception;
+
 }
