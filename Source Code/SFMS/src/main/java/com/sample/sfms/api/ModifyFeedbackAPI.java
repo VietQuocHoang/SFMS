@@ -1,5 +1,6 @@
 package com.sample.sfms.api;
 
+import com.sample.sfms.entity.Feedback;
 import com.sample.sfms.entity.Role;
 import com.sample.sfms.model.ModifyFeedbackModel;
 import com.sample.sfms.service.interf.ModifyFeedbackService;
@@ -31,18 +32,24 @@ class  ModifyFeedbackAPI{
     @Autowired
     ModifyFeedbackService modifyService;
 
-    @GetMapping
-    private ModifyFeedbackModel getMFModel(HttpSession session){
-        return (ModifyFeedbackModel) session.getAttribute("MFModel");
+    @GetMapping("/{id}")
+    private ModifyFeedbackModel getMFModel(@PathVariable("id") int id){
+        return modifyService.getFeedback(id);
     }
 
     @PostMapping
-    private ResponseEntity<ModifyFeedbackModel> createFeedbackModel(@RequestParam("templateId") int templateId, HttpSession session){
-        ResponseEntity<ModifyFeedbackModel> response;
-        if(templateId==0) response = modifyService.createEmptyFeedback();
-        else response = modifyService.createFeedbackFromTemplate(templateId);
-        session.setAttribute("MFModel", response);
-        return response;
+    private ResponseEntity<List<Feedback>> saveNewFeedbacks(@RequestParam("MFModel") ModifyFeedbackModel MFModel){
+        return modifyService.saveNewFeadbacks(MFModel);
+    }
+
+    @PutMapping
+    private ResponseEntity<Feedback> updateTemplate(@RequestParam("MFModel") ModifyFeedbackModel MFModel){
+        return modifyService.updateTemplate(MFModel);
+    }
+
+    @DeleteMapping
+    private ResponseEntity<Feedback> deleteFeedback(@RequestParam("deletedId") int id){
+        return modifyService.deleteFeedback(id);
     }
 
 //    @DeleteMapping
