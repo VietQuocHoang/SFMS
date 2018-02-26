@@ -16,6 +16,7 @@ $(".item-list").sortable({
     appendTo: '.question-container',
 }).disableSelection();
 
+
 $(".answer-list").sortable({
     receive: (ev, ui) => {
         console.log("received");
@@ -80,6 +81,33 @@ $(".answer-list").sortable({
     },
 }).disableSelection();
 
+
+$(".btn-expand-edit").on("click", (event) => {
+    let parentContainer = $(event.target).closest(".question-container");
+    let parentWrapper = parentContainer.find(".question-wrapper");
+    let previewQuestion = parentWrapper.find(".preview-question-container");
+    let editQuestionContainer = parentWrapper.find(".edit-question-container");
+    $(event.target).toggleClass("fa-angle-down fa-angle-up");
+    editQuestionContainer.slideToggle();
+});
+
+$(".required-checkbox").on("change", (event) => {
+    let checkbox = $(event.target);
+    let parentContainer = checkbox.parents(".question-container");
+    let requireQuestion = parentContainer.find(".required-question");
+    if (checkbox.is(":checked")) {
+        requireQuestion.show();
+    } else {
+        requireQuestion.hide();
+    }
+});
+$(".txtEditQuestion").on("keyup", (event) => {
+    let txtEditQuestion = $(event.target);
+    let parentContainer = txtEditQuestion.parents(".question-container");
+    let questionContent = parentContainer.find(".question-content-paragraph");
+    var value = txtEditQuestion.val();
+    questionContent.html(value);
+});
 
 function removeAnswer(event){
     console.log("ahihi");
