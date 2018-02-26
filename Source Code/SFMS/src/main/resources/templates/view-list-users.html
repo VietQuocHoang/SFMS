@@ -38,40 +38,60 @@
                         </button>
                     </div>
                     <!--SubMajor-->
-                    <div class="form-group col-sm-3">
-                        <select id="inputSubMajorForLect" class="form-control">
-                            <option selected>--Phòng ban/Chuyên ngành--</option>
+                    <div class="form-group col-sm-2">
+                        <div class="input-group input-group-sm">
+                            <input list="list-departments" class="form-control" placeholder="Phòng ban"/>
+                        </div>
+                        <datalist id="list-departments">
+                            <option>Phòng Tuyển sinh</option>
                             <option>Ban giám hiệu</option>
-                            <option>Phòng đào tạo</option>
+                            <option>Phòng Hành chính</option>
+                            <option>Phòng Đào tạo</option>
+                            <option>Phòng Khảo thí</option>
                             <option>Phòng IT</option>
-                            <option>Phòng bảo vệ</option>
-                            <option>Phòng hành chính</option>
+                            <option>Phòng CTSV</option>
+                            <option>Phòng PDP</option>
+                            <option>Phòng Thư viện</option>
+                            <option>Phòng Y tế</option>
+                            <option>Phòng Bảo vệ</option>
+                        </datalist>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <div class="input-group input-group-sm">
+                            <input list="list-majors" class="form-control" placeholder="Chuyên ngành"/>
+                        </div>
+                        <datalist id="list-majors">
                             <option>SE</option>
                             <option>SB</option>
                             <option>IA</option>
                             <option>JS</option>
                             <option>IS</option>
                             <option>ES</option>
-                        </select>
+                        </datalist>
                     </div>
+
                     <!--major-->
                     <div class="form-group col-sm-2">
-                        <select id="inputMajorForLect" class="form-control">
-                            <option selected>--Phân quyền--</option>
+                        <div class="input-group input-group-sm">
+                            <input list="list-roles" class="form-control" placeholder="Phân quyền"/>
+                        </div>
+                        <datalist id="list-roles">
                             <option>Head of Academic</option>
                             <option>Student</option>
                             <option>Lecturer</option>
                             <option>Staff</option>
-                        </select>
+                        </datalist>
                     </div>
                     <!--end major-->
                     <!--Subject-->
                     <div class="form-group col-sm-2">
-                        <select id="inputSubjectForLect" class="form-control">
-                            <option selected>--Trạng thái--</option>
+                        <div class="input-group input-group-sm">
+                            <input list="list-statuzz" class="form-control" placeholder="Trạng thái"/>
+                        </div>
+                        <datalist id="list-statuzz">
                             <option>Active</option>
                             <option>Deactivate</option>
-                        </select>
+                        </datalist>
                     </div>
                     <!--end Subjects-->
                 </div>

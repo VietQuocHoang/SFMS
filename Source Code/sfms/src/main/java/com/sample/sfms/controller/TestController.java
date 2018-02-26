@@ -93,7 +93,11 @@ public class TestController {
         return new ModelAndView("view-list-users");
     }
     @GetMapping(value = "/modify-user-details")
-    private ModelAndView viewUsers(){
+    private ModelAndView modifySelectedUser(){
         return new ModelAndView("modify-user-details");
+    }
+    @GetMapping(value = "/create-user")
+    private ModelAndView createUsers(){
+        return new ModelAndView("create-user");
     }
 }

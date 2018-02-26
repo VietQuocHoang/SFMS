@@ -38,13 +38,22 @@ h5.overview-title{
 .justify-content-center{
     margin-bottom: 2%;
 }
-.btn-new{
+.btn-new, .btn-update{
     color: #08AE9E;
     background-color: #FFFFFF;
     border: 1px solid #08AE9E;
     /*margin-top: 1%;*/
     margin-bottom: 1%;
 }
+
+.btn-erase{
+    color: #d59392;
+    background-color: #FFFFFF;
+    border: 1px solid #d59392;
+    /*margin-top: 1%;*/
+    margin-bottom: 1%;
+}
+
 .btn-cancel{
     color: #e0a800;
     background-color: #FFFFFF;
@@ -73,7 +82,7 @@ input[type=radio]{
 }
 
 input[type=text]:focus, input[type=password]:focus ,select:focus {
-    background-color: #ddd;
+    /*background-color: #ddd;*/
     outline: none;
 }
 
