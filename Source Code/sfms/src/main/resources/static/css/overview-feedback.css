@@ -1,20 +1,20 @@
-h5.overview-title{
-    color: #08AE9E;
-    margin-left: 30%;
+h4.overview-title{
+    /*color: #08AE9E;*/
+    margin-left: 26%;
     margin-top: 1%;
 }
 .radio-inline{
     margin-right: 1%;
 }
 .btn-cancel{
-    background-color: #FFFFFF;
-    color: red;
-    border: 2px solid red;
+    background-color: #FFFFFF   ;
+    color: #c7254e;
+    border: 2px solid #c7254e;
 }
 .btn-edit-target, .btn-save-opt{
     background-color: #FFFFFF;
-    color: #08AE9E;
-    border: 2px solid #08ae9e;
+    color: #007fff;
+    border: 2px solid #007fff;
 }
 input.input-break {
     word-wrap: break-word;
@@ -22,7 +22,7 @@ input.input-break {
     height: auto;
 }
 label.lb-inf{
-    color: #28a745;
+    color: #6c757d;
     font-weight: bold;
     font-size: 18px;
 }
@@ -38,6 +38,14 @@ a.add-inf-item-link{
     /*font-size: large;*/
     margin-left: 3%;
 }
+
+a.edit-content-item-link{
+    color: #007fff;
+    font-weight: bold;
+    /*font-size: large;*/
+    margin-left: 3%;
+}
+
 .input-group-addon{
     height: inherit;
     font-size: smaller;
