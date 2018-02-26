@@ -14,6 +14,8 @@ public class Semester {
     private Date endDate;
     private Date startDate;
     private Collection<Clazz> clazzesById;
+    private Collection<Feedback> feedbacksById;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -87,5 +89,14 @@ public class Semester {
 
     public void setClazzesById(Collection<Clazz> clazzesById) {
         this.clazzesById = clazzesById;
+    }
+
+    @OneToMany(mappedBy = "semesterBySemesterId")
+    public Collection<Feedback> getFeedbacksById() {
+        return feedbacksById;
+    }
+
+    public void setFeedbacksById(Collection<Feedback> feedbacksById) {
+        this.feedbacksById = feedbacksById;
     }
 }

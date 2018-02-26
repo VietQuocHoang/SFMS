@@ -29,6 +29,7 @@ public class Feedback {
     private Clazz clazzByClazzId;
     private Type typeByTypeId;
     private Feedback feedbackByReferenceId;
+    private Semester semesterBySemesterId;
     private Collection<Feedback> feedbacksById;
     private Collection<Question> questionsById;
 
@@ -278,6 +279,16 @@ public class Feedback {
 
     public void setFeedbackByReferenceId(Feedback feedbackByReferenceId) {
         this.feedbackByReferenceId = feedbackByReferenceId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "semester_id", referencedColumnName = "id")
+    public Semester getSemesterBySemesterId() {
+        return semesterBySemesterId;
+    }
+
+    public void setSemesterBySemesterId(Semester semesterBySemesterId) {
+        this.semesterBySemesterId = semesterBySemesterId;
     }
 
     @OneToMany(mappedBy = "feedbackByReferenceId")
