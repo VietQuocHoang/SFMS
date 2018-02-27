@@ -11,6 +11,7 @@
     <!--Core style-->
     <div th:replace="fragments/core-css"></div>
     <!-- Custom styles for this template-->
+    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
     <link href="css/progressbar-feedback.css" rel="stylesheet">
     <link href="css/conduct-feedback.css" rel="stylesheet" type="text/css">
     <!--<link href="css/progressbar-feedback.css" rel="stylesheet">-->
@@ -35,8 +36,8 @@
         <!--Overview content-->
         <br>
         <div class="row">
-            <div class="col-sm-1"></div>
-            <div class="col-lg-11">
+            <!--<div class="col-sm-1"></div>-->
+            <div class="col-lg-12">
                 <!--save options-->
                 <div class="row">
                     <div class="col-md-3">
@@ -79,7 +80,8 @@
                     <!--end published at-->
                     <div class="col-sm-1"></div>
                     <div class="form-group col-sm-5">
-                        <a class="add-inf-item-link" href="#" data-toggle="modal" data-target="#FBContentModal"><i class="fa fa-eye"></i> Xem nội dung feedback
+                        <a class="add-inf-item-link" href="#" data-toggle="modal" data-target="#FBContentModal"><i
+                                class="fa fa-eye"></i> Xem nội dung feedback
                         </a>
                         <br><br>
                         <a class="add-inf-item-link" href="#"><i class="fa fa-plus"></i> Đề xuất cải tiến
@@ -98,50 +100,131 @@
                 <!--feedback target-->
                 <div class="row feedback-target">
                     <div class="col-md-3">
-                        <label class="lb-inf">Đối tượng được feedback</label>
+                        <label class="lb-inf">Đối tượng được đánh giá</label>
                     </div>
-                    <div class="col-md-10">
-                        <div class="row form-row">
-                            <!--Categories-->
-                            <div class="form-group col-sm-2">
-                                <select id="inputMajorForLect" class="form-control">
-                                    <option>--Loại đối tượng--</option>
-                                    <option selected>Khóa học</option>
-                                    <option>Giảng viên</option>
-                                    <option>Phòng ban</option>
-                                    <option>Môn học</option>
-                                </select>
-                            </div>
-                            <!--list objects of selected category with current selected object value-->
-                            <div class="form-group col-sm-7">
-                                <!--<div class="form-control">-->
-                                <select id="inputSubMajorForLect" class="form-control">
-                                    <option selected>E-Commerce - ISC301 - Kỳ Spring 2018 - Giảng viên: Lại Đức Hùng
-                                    </option>
-                                    <option>E-Commerce - ISC301 - Kỳ Fall 2017 - Giảng viên: Lại Đức Hùng</option>
-                                    <option>E-Commerce - ISC301 - Kỳ Summer 2017 - Giảng viên: Lại Đức Hùng</option>
-                                    <option>E-Commerce - ISC301 - Kỳ Spring 2017 - Giảng viên: Lại Đức Hùng</option>
-                                    <option>E-Commerce - ISC301 - Kỳ Summer 2016 - Giảng viên: Lại Đức Hùng</option>
-                                    <option>E-Commerce - ISC301 - Kỳ Spring 2016 - Giảng viên: Lại Đức Hùng</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-sm-3">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-edit-target" href="#"><i class="fa fa-edit"></i> Thay đổi
-                                    </button>
-                                </div>
-                            </div>
+                    <div class="form-group col-sm-2">
+                        <div class="input-group input-group-sm">
+                            <input list="list-types" class="form-control" placeholder="Loại đối tượng"/>
                         </div>
+                        <datalist id="list-types">
+                            <option>--Loại đối tượng--</option>
+                            <option selected>Lớp học</option>
+                            <option>Môn học</option>
+                            <option>Chuyên ngành</option>
+                            <option>Phòng ban</option>
+                        </datalist>
                     </div>
+                </div>
+                <div class="row form-row feedback-target">
+                    <!--<div class="row form-row">-->
+                    <!--Categories-->
+                    <!--list objects of selected category with current selected object value-->
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="tbl-targets" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th>Môn học</th>
+                                <th>Mã môn</th>
+                                <th>Học kỳ</th>
+                                <th>Lớp</th>
+                                <th>Giảng viên</th>
+                                <th>Ngành</th>
+                                <th>Người làm feedback</th>
+                                <th>Người xem báo cáo</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>Môn học</th>
+                                <th>Mã môn</th>
+                                <th>Học kỳ</th>
+                                <th>Lớp</th>
+                                <th>Giảng viên</th>
+                                <th>Ngành</th>
+                                <th>Người làm feedback</th>
+                                <th>Người xem báo cáo</th>
+                                <th></th>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            <tr>
+                                <td>Software Project Management</td>
+                                <td>SWM301</td>
+                                <td>Spring 2018</td>
+                                <td>SE1234</td>
+                                <td>Hồ Hoàn Kiếm</td>
+                                <td>SE</td>
+                                <td class="conductor-field">
+                                    120
+                                    <a class="add-inf-item-link" href="modify-feedback-conductors" style="display: none">
+                                        <i class="fa fa-pencil"></i> Chỉnh sửa
+                                    </a>
+                                </td>
+                                <td class="viewer-field">
+                                    12
+                                    <a class="add-inf-item-link" href="modify-feedback-viewers" style="display: none">
+                                        <i class="fa fa-pencil"></i> Chỉnh sửa
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="modify-feedback-target">
+                                        <i class="fa fa-plus"></i>
+                                    </a>
+                                    <a href="modify-feedback-target">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                    <a href="#">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Software Project Management</td>
+                                <td>SWM301</td>
+                                <td>Spring 2018</td>
+                                <td>SE1244</td>
+                                <td>Ngô Đăng Hà An</td>
+                                <td>SE</td>
+                                <td class="conductor-field">
+                                    120
+                                    <a class="add-inf-item-link" href="modify-feedback-conductors" style="display: none">
+                                        <i class="fa fa-pencil"></i> Chỉnh sửa
+                                    </a>
+                                </td>
+                                <td class="viewer-field">
+                                    12
+                                    <a class="add-inf-item-link" href="modify-feedback-viewers" style="display: none">
+                                        <i class="fa fa-pencil"></i> Chỉnh sửa
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="modify-feedback-target">
+                                        <i class="fa fa-plus"></i>
+                                    </a>
+                                    <a href="modify-feedback-target">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                    <a href="#">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--</div>-->
                 </div>
                 <br>
                 <!--feedback content overview options-->
-                <div class="modal fade" id="FBContentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="FBContentModal" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Nội dung feedback</h5>
-                                <a class="edit-content-item-link" href="#" style="margin-left: 20%"><i class="fa fa-pencil"></i> Chỉnh sửa
+                                <a class="edit-content-item-link" href="create-feedback-content" style="margin-left: 20%"><i
+                                        class="fa fa-pencil"></i> Chỉnh sửa
                                 </a>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -161,7 +244,8 @@
                                                     </div>
                                                     <div class="card-block">
                                                         <p class="card-text">
-                                                            Tốc độ giảng dạy của giảng viên có phù hợp với bạn hay không?
+                                                            Tốc độ giảng dạy của giảng viên có phù hợp với bạn hay
+                                                            không?
                                                         <div class="form-group">
                                                             <div class="form-check">
                                                                 <label class="form-check-label">
@@ -208,7 +292,8 @@
                                                             <div class="form-check">
                                                                 <label class="form-check-label">
                                                                     <input class="form-check-input" type="radio"
-                                                                           name="answer-2"> Đã đầy đủ và có những kiến thức
+                                                                           name="answer-2"> Đã đầy đủ và có những kiến
+                                                                    thức
                                                                     thực
                                                                     tế bổ ích
                                                                 </label>
@@ -249,27 +334,31 @@
                                                         <div class="form-group">
                                                             <div class="form-check">
                                                                 <label class="form-check-label">
-                                                                    <input class="form-check-input" type="checkbox"> Ngay
+                                                                    <input class="form-check-input" type="checkbox">
+                                                                    Ngay
                                                                     sau
                                                                     khi câu hỏi được đề ra
                                                                 </label>
                                                             </div>
                                                             <div class="form-check">
                                                                 <label class="form-check-label">
-                                                                    <input class="form-check-input" type="checkbox"> Sau giờ
-                                                                    học
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <label class="form-check-label">
-                                                                    <input class="form-check-input" type="checkbox"> Trước
+                                                                    <input class="form-check-input" type="checkbox"> Sau
                                                                     giờ
                                                                     học
                                                                 </label>
                                                             </div>
                                                             <div class="form-check">
                                                                 <label class="form-check-label">
-                                                                    <input class="form-check-input" type="checkbox"> Không
+                                                                    <input class="form-check-input" type="checkbox">
+                                                                    Trước
+                                                                    giờ
+                                                                    học
+                                                                </label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <label class="form-check-label">
+                                                                    <input class="form-check-input" type="checkbox">
+                                                                    Không
                                                                     được
                                                                     giải đáp
                                                                 </label>
@@ -286,7 +375,8 @@
                                                     </div>
                                                     <div class="card-block">
                                                         <p class="card-text">
-                                                            Tốc độ giảng dạy của giảng viên có phù hợp với bạn hay không?
+                                                            Tốc độ giảng dạy của giảng viên có phù hợp với bạn hay
+                                                            không?
                                                         <div class="form-group">
                                                             <div class="form-check">
                                                                 <label class="form-check-label">
@@ -333,7 +423,8 @@
                                                             <div class="form-check">
                                                                 <label class="form-check-label">
                                                                     <input class="form-check-input" type="radio"
-                                                                           name="answer-2"> Đã đầy đủ và có những kiến thức
+                                                                           name="answer-2"> Đã đầy đủ và có những kiến
+                                                                    thức
                                                                     thực
                                                                     tế bổ ích
                                                                 </label>
@@ -375,7 +466,8 @@
                                                             <div class="form-check">
                                                                 <label class="form-check-label">
                                                                     <input class="form-check-input" type="radio"
-                                                                           name="answer-2"> Đã đầy đủ và có những kiến thức
+                                                                           name="answer-2"> Đã đầy đủ và có những kiến
+                                                                    thức
                                                                     thực
                                                                     tế bổ ích
                                                                 </label>
@@ -414,7 +506,8 @@
                                                     </div>
                                                     <div class="card-block">
                                                         <p class="card-text">
-                                                            Tốc độ giảng dạy của giảng viên có phù hợp với bạn hay không?
+                                                            Tốc độ giảng dạy của giảng viên có phù hợp với bạn hay
+                                                            không?
                                                         <div class="form-group">
                                                             <div class="form-check">
                                                                 <label class="form-check-label">
@@ -461,7 +554,8 @@
                                                             <div class="form-check">
                                                                 <label class="form-check-label">
                                                                     <input class="form-check-input" type="radio"
-                                                                           name="answer-2"> Đã đầy đủ và có những kiến thức
+                                                                           name="answer-2"> Đã đầy đủ và có những kiến
+                                                                    thức
                                                                     thực
                                                                     tế bổ ích
                                                                 </label>
@@ -498,7 +592,8 @@
                                                     </div>
                                                     <div class="card-block">
                                                         <p class="card-text">
-                                                            Bạn có góp ý gì thêm cho giáo viên cũng như môn học này không?
+                                                            Bạn có góp ý gì thêm cho giáo viên cũng như môn học này
+                                                            không?
                                                         <div class="form-group">
                                                     <textarea class="form-control"
                                                               placeholder="Ghi đề xuất của bạn vào đây"></textarea>
@@ -524,18 +619,18 @@
                                     </div>
                                 </div>
                                 <!-- end div pagination -->
-                                    <!-- div progress bar-->
-                                    <div class="row justify-content-center" style="margin-top: 10px">
-                                        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-12 btn-group text-center">
-                                            <div class="col-2"></div>
-                                            <div class="col-8">
-                                                <div class="progress">
-                                                    <div class="progress-bar"></div>
-                                                </div>
+                                <!-- div progress bar-->
+                                <div class="row justify-content-center" style="margin-top: 10px">
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-12 btn-group text-center">
+                                        <div class="col-2"></div>
+                                        <div class="col-8">
+                                            <div class="progress">
+                                                <div class="progress-bar"></div>
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- end div progress bar-->
+                                </div>
+                                <!-- end div progress bar-->
                             </div>
                             <div class="modal-footer">
                                 <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
@@ -548,7 +643,6 @@
                 <!--end feedback content panel-->
                 <!--Save & publish options-->
                 <br>
-
                 <br>
             </div>
         </div>
@@ -559,10 +653,14 @@
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <!-- Core plugin JavaScript-->
         <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <!-- Page level plugin JavaScript-->
+        <script src="vendor/datatables/jquery.dataTables.js"></script>
+        <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
         <!-- Custom scripts for all pages-->
         <script src="js/sb-admin.min.js"></script>
         <!-- /.content-wrapper-->
         <script src="js/conduct-feedback.js"></script>
+        <script src="js/overview-feedback.js"></script>
     </div>
 </div>
 </body>

@@ -90,3 +90,6 @@ span.label-default{
     margin-bottom: 1%;
     background-color: #ebd5ec;
 }
+.conductor-field > a{
+    display: none;
+}
