@@ -6,14 +6,14 @@ $(".item-list").sortable({
     //   $(this).sortable('cancel');
     // },
     // axis: 'y',
-    helper: (e, li)=>{
+    helper: (e, li) => {
         copyHelper = li.clone().insertAfter(li);
         return li.clone();
     },
-    stop: ()=>{
+    stop: () => {
         copyHelper && copyHelper.remove();
     },
-    appendTo: '.question-container',
+    appendTo: '.question-list-container',
 }).disableSelection();
 
 
@@ -82,7 +82,48 @@ $(".answer-list").sortable({
 }).disableSelection();
 
 
-$(".btn-expand-edit").on("click", (event) => {
+$(".list-answer-edit").sortable({
+    helper: 'clone',
+    handle: ".sort-edit-answer-handle",
+    appendTo: ".list-answer-edit",
+    containment: ".edit-answer-wrapper"
+}).disableSelection();
+
+$(document).on("click", ".btn-remove-question", (event) => {
+    let parentContainer = $(event.target).parents(".question-container");
+    parentContainer.slideUp("normal", () => {
+        parentContainer.remove()
+    });
+});
+
+$(document).on("click", ".add-new-answer-wrapper", (event) => {
+    let parentQuestionContainer = $(event.target).parents(".question-container");
+    let listPreviewAnswer = parentQuestionContainer.find(".answer-wrapper");
+    let listEditAnswer = parentQuestionContainer.find(".list-answer-edit");
+    var editQuestion = "<li>" +
+        "<div class='edit-answer-item'>" +
+        "<div class='sort-edit-answer-handle'>" +
+        "<i class='fa fa-bars'></i>" +
+        "</div>" +
+        "<div class='input-edit-answer-holder'>" +
+        "<input type='text' class='answer-content-input' value='Đáp án " + (listEditAnswer.find("li").length + 1) + "'>" +
+        " Trọng số: <input type='number' min='0' class='weight-input' value='1'>" +
+        "</div>" +
+        "<div class='remove-answer-holder'>" +
+        "<i class='fa fa-close'></i>" +
+        "</div>" +
+        "</div>" +
+        "</li >";
+    let previewQuestion = "<div class='form-check'>" +
+        "<label class='form-check-label'>" +
+        "<input class='form-check-input' type='radio' disabled> Đáp án " + (listEditAnswer.find("li").length + 1) +
+        "</label>" +
+        "</div>";
+    listPreviewAnswer.append(previewQuestion);
+    listEditAnswer.append(editQuestion);
+});
+
+$(document).on("click", ".btn-expand-edit", (event) => {
     let parentContainer = $(event.target).closest(".question-container");
     let parentWrapper = parentContainer.find(".question-wrapper");
     let previewQuestion = parentWrapper.find(".preview-question-container");
@@ -91,7 +132,7 @@ $(".btn-expand-edit").on("click", (event) => {
     editQuestionContainer.slideToggle();
 });
 
-$(".required-checkbox").on("change", (event) => {
+$(document).on("change", ".required-checkbox", (event) => {
     let checkbox = $(event.target);
     let parentContainer = checkbox.parents(".question-container");
     let requireQuestion = parentContainer.find(".required-question");
@@ -101,7 +142,8 @@ $(".required-checkbox").on("change", (event) => {
         requireQuestion.hide();
     }
 });
-$(".txtEditQuestion").on("keyup", (event) => {
+
+$(document).on("keyup", ".txtEditQuestion", (event) => {
     let txtEditQuestion = $(event.target);
     let parentContainer = txtEditQuestion.parents(".question-container");
     let questionContent = parentContainer.find(".question-content-paragraph");
@@ -109,12 +151,24 @@ $(".txtEditQuestion").on("keyup", (event) => {
     questionContent.html(value);
 });
 
-function removeAnswer(event){
-    console.log("ahihi");
-    var answerContainer = $(event.target).closest(".answers-container");
-    console.log(answerContainer);
-    var listAnswer = $(answerContainer).find("ul>li").remove();
-}
+$(document).on("click", ".remove-answer-holder>i.fa-close", (event) => {
+    let parentContainer = $(event.target).parents(".question-container");
+    let listAnswer = parentContainer.find(".form-check");
+    let parentListItem = $(event.target).parents("li");
+    let listEditAnswerContainer = $(event.target).parents(".list-answer-edit");
+    if (listEditAnswerContainer.find(".edit-answer-item").length > 1) {
+        let index = listEditAnswerContainer.find("li").index(parentListItem);
+        console.log(index);
+        parentListItem.fadeOut(500, () => {
+            parentListItem.remove()
+        });
+        let removeAnswer = $(listAnswer.get(index));
+        removeAnswer.fadeOut(500, () => {
+            removeAnswer.remove()
+        });
+    }
+});
+
 
 var numOfQuestion = 0;
 
@@ -185,7 +239,7 @@ function initAnswersPanel(answerPanel) {
     }).disableSelection();
 }
 
-$(".btn-add-new").on('click', (event)=>{
+$(".btn-add-new").on('click', (event) => {
     var html = "<li>" +
         "<div class='container'>" +
         "<div class='toggle-bar'>" +
@@ -206,7 +260,7 @@ $(".btn-add-new").on('click', (event)=>{
         "<div class='field-action'>" +
         "<button class='btn-edit-answer'><i class='fa fa-fw fa-pencil'></i></button>" +
         "<button class='btn-remove-answer' onclick='removeAnswer(event)'><i class='fa fa-fw fa-remove'></i></button>" +
-        "</div>"+
+        "</div>" +
         "<ul class='answers-panel'>" +
         "</ul>" +
         "</div>" +

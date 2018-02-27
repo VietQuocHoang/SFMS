@@ -28,39 +28,6 @@
             </li>
             <li class="breadcrumb-item active">Tạo mới feedback</li>
         </ol>
-        <!--Progress-Bar-->
-        <div class="modify-feedback-progressbar">
-            <div class="row">
-                <div class="col-sm-10">
-                    <!--nav wizard-->
-                    <ul class="nav nav-wizard">
-                        <li class="progress-item"><a href="select-template"><span class="badge badge-step">1</span> Chọn
-                            mẫu</a></li>
-                        <li class="progress-item active"><a href="#"><span class="badge badge-step">2</span> Tùy chỉnh
-                            nội dung</a>
-                        </li>
-                        <li class="progress-item">
-                            <a href="modify-feedback-target"><span class="badge badge-step">3</span> Chọn các đối tượng</a>
-                        </li>
-                        <li class="progress-item"><a href="#"><span class="badge badge-step">4</span> Thêm đề xuất</a>
-                        </li>
-                        <li class="progress-item">
-                            <a href="#"><span class="badge badge-step">5</span>Hoàn tất thông tin feedback</a>
-                        </li>
-                    </ul>
-                    <!--end nav-wizard-->
-                </div>
-                <div class="col-sm-2">
-                    <button class="btn btn-group-sm to-previous-step">
-                        <i class="fa fa-angle-left" aria-hidden="true"></i>
-                    </button>
-                    <button class="btn btn-group-sm to-next-step">
-                        <i class="fa fa-angle-right" aria-hidden="true"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!--end progress bar-->
         <!--header-->
         <div class="row">
             <div class="col-12">
@@ -129,6 +96,141 @@
                                                 <div class="col-8">
                                                     <textarea class="txtEditQuestion">Tốc độ giảng dạy của giảng viên thế nào?</textarea>
                                                 </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-4 col-form-label text-right">Loại đánh giá: </label>
+                                                <div class="col-8">
+                                                    <select class="form-control select-list-criteria">
+                                                        <option>Chuyên cần</option>
+                                                        <option>Tác phong</option>
+                                                        <option>Thái độ</option>
+                                                        <option>Chuyên môn</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="edit-answer-container">
+                                                <div class="edit-answer-wrapper">
+                                                    <ul class="list-answer-edit">
+                                                        <li>
+                                                            <div class="edit-answer-item">
+                                                                <div class="sort-edit-answer-handle">
+                                                                    <i class="fa fa-bars"></i>
+                                                                </div>
+                                                                <div class="input-edit-answer-holder">
+                                                                    <input type="text" class="answer-content-input"
+                                                                           value="Đáp án 1">
+                                                                    Trọng số: <input type="number" min="0"
+                                                                                     class="weight-input" value="1">
+                                                                </div>
+                                                                <div class="remove-answer-holder">
+                                                                    <i class="fa fa-close"></i>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="edit-answer-item">
+                                                                <div class="sort-edit-answer-handle">
+                                                                    <i class="fa fa-bars"></i>
+                                                                </div>
+                                                                <div class="input-edit-answer-holder">
+                                                                    <input type="text" class="answer-content-input"
+                                                                           value="Đáp án 2">
+                                                                    Trọng số: <input type="number" min="0"
+                                                                                     class="weight-input" value="1">
+                                                                </div>
+                                                                <div class="remove-answer-holder">
+                                                                    <i class="fa fa-close"></i>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="edit-answer-item">
+                                                                <div class="sort-edit-answer-handle">
+                                                                    <i class="fa fa-bars"></i>
+                                                                </div>
+                                                                <div class="input-edit-answer-holder">
+                                                                    <input type="text" class="answer-content-input"
+                                                                           value="Đáp án 3">
+                                                                    Trọng số: <input type="number" min="0"
+                                                                                     class="weight-input" value="1">
+                                                                </div>
+                                                                <div class="remove-answer-holder">
+                                                                    <i class="fa fa-close"></i>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="add-new-answer-wrapper">
+                                                        <a class="add-new-answer"><i class="fa fa-plus"></i> Thêm</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="question-container">
+                        <div class="question-wrapper">
+                            <div class="toggle-bar-container">
+                                <div class="toggle-bar-wrapper">
+                                    <div class="delete-question-holder">
+                                        <button class="btn-remove-question"><i class="fa fa-trash"></i> Xóa</button>
+                                    </div>
+                                    <div class="expand-edit-question-holder">
+                                        <i class="btn-expand-edit fa fa-angle-down"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-question-container">
+                                <div class="preview-question-wrapper">
+                                    <div class="question-content-container">
+                                        <div class="question-content-wrapper">
+                                            <p class="question-content-paragraph">Tốc độ giảng dạy của giảng viên thế
+                                                nào?</p>
+                                            <span class="required-question" style="display:none"><sup>*</sup></span>
+                                        </div>
+                                    </div>
+                                    <div class="answer-container">
+                                        <div class="answer-wrapper">
+                                            <div class='form-check'>
+                                                <label class='form-check-label'>
+                                                    <input class='form-check-input' type='radio' disabled> Đáp án 1
+                                                </label>
+                                            </div>
+                                            <div class='form-check'>
+                                                <label class='form-check-label'>
+                                                    <input class='form-check-input' type='radio' disabled> Đáp án 2
+                                                </label>
+                                            </div>
+                                            <div class='form-check'>
+                                                <label class='form-check-label'>
+                                                    <input class='form-check-input' type='radio' disabled> Đáp án 3
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="edit-question-container">
+                                <div class="edit-question-wrapper">
+                                    <div class="edit-panel-container">
+                                        <div class="edit-panel-wrapper">
+                                            <div class="form-group row">
+                                                <label class="col-4 col-form-label text-right">Câu hỏi bắt buộc:</label>
+                                                <div class="col-8" style="padding-top: 7px; padding-bottom:7px;">
+                                                    <input class="required-checkbox" type="checkbox">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-4 col-form-label text-right">Nội dung: </label>
+                                                <div class="col-8">
+                                                    <textarea class="txtEditQuestion">Tốc độ giảng dạy của giảng viên thế nào?</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+
                                             </div>
                                         </div>
                                     </div>
