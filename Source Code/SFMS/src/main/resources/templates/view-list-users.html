@@ -34,7 +34,8 @@
             <div class="card-body">
                 <div class="form-row" align="center">
                     <div class="form-group col-sm-2">
-                        <button formaction='modify-user-details' type="button" class="btn btn-add-user"><i class="fa fa-plus"></i> Thêm người dùng
+                        <button formaction='modify-user-details' type="button" class="btn btn-add-user"><i
+                                class="fa fa-plus"></i> Thêm người dùng
                         </button>
                     </div>
                     <!--SubMajor-->
@@ -43,6 +44,8 @@
                             <input list="list-departments" class="form-control" placeholder="Phòng ban"/>
                         </div>
                         <datalist id="list-departments">
+                            <!--<datalist id="list-departments" th:each="department : ${departments}">-->
+                            <!--<option th:utext="${department.name}">...</option>-->
                             <option>Phòng Tuyển sinh</option>
                             <option>Ban giám hiệu</option>
                             <option>Phòng Hành chính</option>
@@ -61,6 +64,8 @@
                             <input list="list-majors" class="form-control" placeholder="Chuyên ngành"/>
                         </div>
                         <datalist id="list-majors">
+                            <!--<datalist id="list-majors" th:each="major : ${majors}">-->
+                            <!--<option th:utext="${major.code}">...</option>-->
                             <option>SE</option>
                             <option>SB</option>
                             <option>IA</option>
@@ -75,11 +80,14 @@
                         <div class="input-group input-group-sm">
                             <input list="list-roles" class="form-control" placeholder="Phân quyền"/>
                         </div>
-                        <datalist id="list-roles">
-                            <option>Head of Academic</option>
-                            <option>Student</option>
-                            <option>Lecturer</option>
-                            <option>Staff</option>
+                        <datalist id="list-roles"
+                        ">
+                        <!--<datalist id="list-roles" th:each="role : ${roles}">-->
+                        <!--<option th:utext="${role.name}">...</option>-->
+                        <option>Head of Academic</option>
+                        <option>Student</option>
+                        <option>Lecturer</option>
+                        <option>Staff</option>
                         </datalist>
                     </div>
                     <!--end major-->
@@ -99,25 +107,35 @@
                     <table class="table table-bordered" id="tbl-users" width="100%" cellspacing="0">
                         <thead>
                         <tr>
-                            <th>Họ</th>
-                            <th>Tên</th>
-                            <th>Phòng ban/Chuyên ngành</th>
+                            <th>Họ & Tên</th>
                             <th>Phân quyền</th>
+                            <th>Phòng ban</th>
+                            <th>Chuyên ngành</th>
                             <th>Trạng thái</th>
                             <th>Email</th>
                         </tr>
                         </thead>
                         <tfoot>
                         <tr>
-                            <th>Họ</th>
-                            <th>Tên</th>
-                            <th>Phòng ban/Chuyên ngành</th>
+                            <th>Họ & Tên</th>
                             <th>Phân quyền</th>
+                            <th>Phòng ban</th>
+                            <th>Chuyên ngành</th>
                             <th>Trạng thái</th>
                             <th>Email</th>
                         </tr>
                         </tfoot>
                         <tbody>
+                        <!--show each data records-->
+                        <!--<tr th:each ="user : ${users}">-->
+                        <!--<td th:utext="${user.fullname}">...</td>-->
+                        <!--<td th:utext="${user.roleByRoleId.roleName}">...</td>-->
+                        <!--<td th:utext="${user.departmentByDepartmentId.name}">...</td>-->
+                        <!--<td th:utext="${user.majorByMajorId.code}">...</td>-->
+                        <!--<td th:utext="${user.status==1}?'Active':'Deactive'">...</td>-->
+                        <!--<td th:utext="${user.email}">...</td>-->
+                        <!--</tr>-->
+                        <!--end show data records-->
                         <tr>
                             <td><a href="#">Thái Tiến</a></td>
                             <td><a href="#">Hoàng</a></td>

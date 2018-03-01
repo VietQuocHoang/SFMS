@@ -139,6 +139,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                     selectedusers += conductor.getId() + "/";
                 }
                 tmp.setConductors(selectedusers.substring(0, selectedusers.length() - 1));
+                selectedusers ="";
                 for (User viewer : detail.getReportviewers()) {
                     selectedusers += viewer.getId() + "/";
                 }
