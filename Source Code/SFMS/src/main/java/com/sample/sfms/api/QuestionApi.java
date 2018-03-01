@@ -2,9 +2,9 @@ package com.sample.sfms.api;
 
 import com.sample.sfms.api.responseModel.AddQuestionResponseModel;
 import com.sample.sfms.api.responseModel.Response;
-import com.sample.sfms.model.AddQuestionModel;
-import com.sample.sfms.model.RemoveQuestionModel;
-import com.sample.sfms.model.UpdateQuestionModel;
+import com.sample.sfms.model.question.AddQuestionModel;
+import com.sample.sfms.model.question.RemoveQuestionModel;
+import com.sample.sfms.model.question.UpdateQuestionModel;
 import com.sample.sfms.service.interf.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

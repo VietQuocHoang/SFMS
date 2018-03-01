@@ -1,4 +1,4 @@
-package com.sample.sfms.model;
+package com.sample.sfms.model.question;
 
 public class RemoveQuestionModel {
     private int id;

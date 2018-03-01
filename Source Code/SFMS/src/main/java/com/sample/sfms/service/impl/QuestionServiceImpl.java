@@ -1,22 +1,21 @@
 package com.sample.sfms.service.impl;
 
 import com.sample.sfms.entity.*;
-import com.sample.sfms.model.AddQuestionModel;
-import com.sample.sfms.model.RemoveQuestionModel;
-import com.sample.sfms.model.UpdateQuestionModel;
+import com.sample.sfms.model.option.OptionCreateModel;
+import com.sample.sfms.model.option.OptionUpdateModel;
+import com.sample.sfms.model.question.AddQuestionModel;
+import com.sample.sfms.model.question.RemoveQuestionModel;
+import com.sample.sfms.model.StaticVariables;
+import com.sample.sfms.model.question.UpdateQuestionModel;
 import com.sample.sfms.repository.FeedbackRepository;
 import com.sample.sfms.repository.QuestionRepository;
-import com.sample.sfms.service.interf.FeedbackService;
+import com.sample.sfms.service.interf.OptionnService;
 import com.sample.sfms.service.interf.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.UnexpectedRollbackException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
+import javax.transaction.Transactional;
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 /**
@@ -25,7 +24,7 @@ import java.util.logging.Logger;
 @Service("questionService")
 public class QuestionServiceImpl implements QuestionService {
 
-    static Logger logger = Logger.getLogger(QuestionServiceImpl.class.getName());
+    static Logger logger = Logger.getLogger(RoleServiceImpl.class.getName());
 
     @Autowired
     private QuestionRepository questionRepo;
@@ -33,7 +32,11 @@ public class QuestionServiceImpl implements QuestionService {
     @Autowired
     private FeedbackRepository feedbackRepository;
 
+    @Autowired
+    private OptionnService optionnService;
+
     @Override
+    @Transactional
     public int addQuestion(AddQuestionModel model) throws Exception {
 
         if (model.getFeedbackId() == 0) {
@@ -44,21 +47,39 @@ public class QuestionServiceImpl implements QuestionService {
             throw new Exception("Xin hãy chọn loại câu hỏi");
         }
 
+        if (!isValidType(model)){
+            throw new Exception("Xin kiểm tra lại loại câu hỏi và các option");
+        }
+
         Question question = new Question();
         question.setIsRequied(model.isRequired());
         question.setQuestionContent(model.getQuestionContent());
         question.setSuggestion(model.getSuggestion());
         question.setType(model.getType());
 
-        Feedback feedback = feedbackRepository.findById(model.getFeedbackId());
+        try {
+            Feedback feedback = feedbackRepository.findById(model.getFeedbackId());
 
-        question.setFeedbackByFeedbackId(feedback);
+            question.setFeedbackByFeedbackId(feedback);
 
-        this.questionRepo.save(question);
-        return question.getId();
+            this.questionRepo.save(question);
+
+            int id = question.getId();
+
+            for (OptionCreateModel option : model.getOptionCreateModel()) {
+                option.setQuestion(question);
+                optionnService.add(option);
+            }
+            return id;
+        } catch (Exception ex) {
+            throw ex;
+        }
+
+
     }
 
     @Override
+    @Transactional
     public void updateQuestion(UpdateQuestionModel model) throws Exception {
         if (model.getId() == 0) {
             throw new Exception("Xin chọn câu hỏi để update");
@@ -68,7 +89,11 @@ public class QuestionServiceImpl implements QuestionService {
         }
 
         if (model.getType() == null) {
-            throw new Exception("Xin hãy chọn loại câu hỏi");
+            throw new Exception("Xin kiểm tra lại loại câu hỏi và các option");
+        }
+
+        if (!isValidType(model)){
+            throw new Exception("Xin kiểm tra lại các option. Nếu chọn option thì thêm đủ option.");
         }
 
         try {
@@ -84,6 +109,10 @@ public class QuestionServiceImpl implements QuestionService {
 
             this.questionRepo.save(question);
 
+            for (OptionUpdateModel option : model.getOptionUpdateModels()) {
+                optionnService.update(option);
+            }
+
         } catch (Exception ex) {
             throw ex;
         }
@@ -96,10 +125,24 @@ public class QuestionServiceImpl implements QuestionService {
         }
 
         try {
+            Question question = this.questionRepo.findOne(model.getId());
+
+            for (Optionn option : question.getOptionsById()) {
+                this.optionnService.remove(option.getId());
+            }
+
             this.questionRepo.delete(model.getId());
 
         } catch (Exception ex) {
             throw ex;
         }
     }
+
+    /*---------------Private methods------------------*/
+    private boolean isValidType(AddQuestionModel model) {
+        if (Arrays.asList(StaticVariables.OPTION_NEEDED_QUESTION_TYPE).contains(model.getType()))
+            return model.getOptionCreateModel() != null;
+        else return model.getOptionCreateModel() == null;
+    }
+
 }
