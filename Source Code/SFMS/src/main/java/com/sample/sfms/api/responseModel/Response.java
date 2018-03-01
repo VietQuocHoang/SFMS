@@ -19,4 +19,12 @@ public class Response {
     public boolean isSucceed() {
         return succeed;
     }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }

@@ -1,4 +1,6 @@
-package com.sample.sfms.model;
+package com.sample.sfms.model.question;
+
+import com.sample.sfms.model.option.OptionCreateModel;
 
 public class AddQuestionModel {
 
@@ -8,6 +10,7 @@ public class AddQuestionModel {
     private int feedbackId;
     private boolean isRequired;
     private String questionContent;
+    private OptionCreateModel[] optionCreateModel;
 
 
     public AddQuestionModel() {
@@ -62,5 +65,13 @@ public class AddQuestionModel {
 
     public void setQuestionContent(String questionContent) {
         this.questionContent = questionContent;
+    }
+
+    public OptionCreateModel[] getOptionCreateModel() {
+        return optionCreateModel;
+    }
+
+    public void setOptionCreateModel(OptionCreateModel[] optionCreateModel) {
+        this.optionCreateModel = optionCreateModel;
     }
 }

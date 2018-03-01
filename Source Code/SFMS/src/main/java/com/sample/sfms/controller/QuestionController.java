@@ -1,8 +1,7 @@
 package com.sample.sfms.controller;
 
-import com.sample.sfms.model.AddQuestionModel;
+import com.sample.sfms.model.question.AddQuestionModel;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
