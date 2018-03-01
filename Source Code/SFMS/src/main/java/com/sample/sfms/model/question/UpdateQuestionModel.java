@@ -1,5 +1,6 @@
 package com.sample.sfms.model.question;
 
+import com.sample.sfms.model.option.OptionCreateModel;
 import com.sample.sfms.model.option.OptionUpdateModel;
 
 public class UpdateQuestionModel extends AddQuestionModel {
@@ -23,5 +24,10 @@ public class UpdateQuestionModel extends AddQuestionModel {
 
     public void setOptionUpdateModels(OptionUpdateModel[] optionUpdateModels) {
         this.optionUpdateModels = optionUpdateModels;
+    }
+
+    @Override
+    public OptionCreateModel[] getOptionCreateModel() {
+        return this.getOptionUpdateModels();
     }
 }

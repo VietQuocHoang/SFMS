@@ -7,6 +7,7 @@ import com.sample.sfms.model.question.AddQuestionModel;
 import com.sample.sfms.model.question.RemoveQuestionModel;
 import com.sample.sfms.model.StaticVariables;
 import com.sample.sfms.model.question.UpdateQuestionModel;
+import com.sample.sfms.repository.CriteriaRepository;
 import com.sample.sfms.repository.FeedbackRepository;
 import com.sample.sfms.repository.QuestionRepository;
 import com.sample.sfms.service.interf.OptionnService;
@@ -33,6 +34,9 @@ public class QuestionServiceImpl implements QuestionService {
     private FeedbackRepository feedbackRepository;
 
     @Autowired
+    private CriteriaRepository criteriaRepository;
+
+    @Autowired
     private OptionnService optionnService;
 
     @Override
@@ -57,10 +61,13 @@ public class QuestionServiceImpl implements QuestionService {
         question.setSuggestion(model.getSuggestion());
         question.setType(model.getType());
 
+
         try {
             Feedback feedback = feedbackRepository.findById(model.getFeedbackId());
-
             question.setFeedbackByFeedbackId(feedback);
+
+            Criteria criteria = criteriaRepository.findById(model.getCriteriaId());
+            question.setCriteriaByCriteriaId(criteria);
 
             this.questionRepo.save(question);
 
