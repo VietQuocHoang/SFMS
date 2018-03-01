@@ -1,30 +1,34 @@
 /*question list css*/
 .question-list-container {
-    height: 500px;
-    border: 1px solid black;
+    position: relative;
     overflow-y: auto;
     overflow-x: hidden;
+    height: 500px;
+    border: 1px solid black;
     padding: 20px;
     box-sizing: padding-box;
+    float: left;
 }
 
 .question-list-wrapper {
+    overflow-x: auto;
+    min-height: 500px;
+    position: static;
     width:100%;
     float: left;
-    height: 100px;
+    height: auto;
 }
 
 /*individual question css*/
 .question-container {
-    overflow-x: hidden;
+    position: inherit;
     margin-left: 10%;
     width: 80%;
     float: left;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 }
 
 .question-wrapper {
-    overflow-x: hidden;
     position: relative;
     float: left;
     width:100%;
@@ -74,6 +78,17 @@
     color: red;
 }
 
+.star-wrapper {
+    width: 100%;
+    float: left;
+}
+
+.star-wrapper {
+    color: #c5c5c5;
+    margin-right: 10px;
+    font-size: 20px;
+}
+
 /*answer panel css*/
 .answer-container {
     width: 100%;
@@ -98,6 +113,10 @@
     border: none;
 }
 
+.form-other.disabled {
+    display: none;
+}
+
 /*Edit question css*/
 .edit-question-container {
     display: none;
@@ -108,6 +127,26 @@
 
 .edit-question-wrapper {
     width: 100%;
+    float: left;
+}
+
+/*#question-list{*/
+/*overflow-y: auto;*/
+/*overflow-x: hidden;*/
+/*width:100%;*/
+/*list-style: none;*/
+/*padding: 0;*/
+/*float:left;*/
+/*}*/
+/*#question-list>li{*/
+/*min-height: 100px;*/
+/*width:100%;*/
+/*display:block;*/
+/*}*/
+
+.sortable-placeholder {
+    width: 100%;
+    height: auto;
     float: left;
 }
 
@@ -128,10 +167,101 @@
 }
 
 .txtEditQuestion {
+    padding: 6px 12px;
     width: 100%;
     resize: none;
 }
 
+.edit-answer-container {
+    width: 100%;
+    float: left;
+}
+
+.edit-answer-wrapper {
+    border: 1px solid lightgrey;
+    width: 100%;
+    float: left;
+}
+
+/*.list-answer-edit>li:first-child>.edit-answer-item>.remove-answer-holder{*/
+/*visibility:hidden;*/
+/*}*/
+
+.edit-answer-item {
+    width: 100%;
+    float: left;
+}
+
+.sort-edit-answer-handle {
+    /*border-right: 1px solid lightgrey;*/
+    padding: 8px;
+    float: left;
+}
+
+.input-edit-answer-holder {
+    padding: 8px;
+    display: inline;
+    width: 85%;
+    float: left;
+}
+
+.answer-content-input {
+    padding: 0px 6px;
+    border: 1px solid #ced4da;
+    border-radius: 2px;
+    width: 60%;
+}
+
+.weight-input {
+    /*padding: 1px;*/
+    border: 1px solid #ced4da;
+    border-radius: 2px;
+    width: 20%;
+}
+
+.remove-answer-holder {
+    padding: 8px;
+    float: right;
+}
+
+.list-answer-edit {
+    list-style: none;
+    width: 100%;
+    padding: 0;
+}
+
+.list-answer-edit > li {
+    min-height: 50px;
+}
+
+.add-new-answer-wrapper {
+    color: #08ae9e;
+    padding: 8px;
+    width: auto;
+    float: right;
+}
+
+.add-new-answer-wrapper:hover {
+    cursor: pointer;
+    color: #1e8c94;
+}
+
+i.fa-bars {
+    color: #c5c5c5;
+}
+
+i.fa-close {
+    color: #c66865;
+}
+
+i.fa-close:hover {
+    color: #ad776a;
+}
+
+i.fa-bars:hover {
+    color: #ababab;
+    cursor: move;
+}
 
 /*Submit css*/
 .submit-container {
@@ -174,6 +304,10 @@
     /*padding: 10px 5px;*/
 }
 
+.toggle-bar-wrapper:hover {
+    cursor: move;
+}
+
 .expand-edit-question-holder {
     width: auto;
     float:right;
@@ -184,6 +318,10 @@
     padding-left: 20px;
     width: auto;
     float: left;
+}
+
+.delete-question-holder:hover {
+    cursor: pointer;
 }
 
 .btn-remove-question{
@@ -202,6 +340,7 @@
 .btn-expand-edit:hover {
     /*background-color: #65aac6;*/
     color: #ababab;
+    cursor: pointer;
 }
 
 .btn-expand-edit {
