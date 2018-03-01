@@ -1,22 +1,27 @@
 /*question list css*/
 .question-list-container {
-    height: 500px;
-    border: 1px solid black;
+    position: relative;
     overflow-y: auto;
     overflow-x: hidden;
+    height: 500px;
+    border: 1px solid black;
     padding: 20px;
     box-sizing: padding-box;
+    float: left;
 }
 
 .question-list-wrapper {
+    overflow-x: auto;
+    min-height: 500px;
+    position: static;
     width:100%;
     float: left;
-    height: 100px;
+    height: auto;
 }
 
 /*individual question css*/
 .question-container {
-    overflow-x: hidden;
+    position: inherit;
     margin-left: 10%;
     width: 80%;
     float: left;
@@ -24,7 +29,6 @@
 }
 
 .question-wrapper {
-    overflow-x: hidden;
     position: relative;
     float: left;
     width:100%;
@@ -74,6 +78,17 @@
     color: red;
 }
 
+.star-wrapper {
+    width: 100%;
+    float: left;
+}
+
+.star-wrapper {
+    color: #c5c5c5;
+    margin-right: 10px;
+    font-size: 20px;
+}
+
 /*answer panel css*/
 .answer-container {
     width: 100%;
@@ -98,6 +113,10 @@
     border: none;
 }
 
+.form-other.disabled {
+    display: none;
+}
+
 /*Edit question css*/
 .edit-question-container {
     display: none;
@@ -108,6 +127,26 @@
 
 .edit-question-wrapper {
     width: 100%;
+    float: left;
+}
+
+/*#question-list{*/
+/*overflow-y: auto;*/
+/*overflow-x: hidden;*/
+/*width:100%;*/
+/*list-style: none;*/
+/*padding: 0;*/
+/*float:left;*/
+/*}*/
+/*#question-list>li{*/
+/*min-height: 100px;*/
+/*width:100%;*/
+/*display:block;*/
+/*}*/
+
+.sortable-placeholder {
+    width: 100%;
+    height: auto;
     float: left;
 }
 
@@ -265,6 +304,10 @@ i.fa-bars:hover {
     /*padding: 10px 5px;*/
 }
 
+.toggle-bar-wrapper:hover {
+    cursor: move;
+}
+
 .expand-edit-question-holder {
     width: auto;
     float:right;
@@ -275,6 +318,10 @@ i.fa-bars:hover {
     padding-left: 20px;
     width: auto;
     float: left;
+}
+
+.delete-question-holder:hover {
+    cursor: pointer;
 }
 
 .btn-remove-question{
@@ -293,6 +340,7 @@ i.fa-bars:hover {
 .btn-expand-edit:hover {
     /*background-color: #65aac6;*/
     color: #ababab;
+    cursor: pointer;
 }
 
 .btn-expand-edit {
