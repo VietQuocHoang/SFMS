@@ -30,6 +30,7 @@ public class Feedback {
     private Type typeByTypeId;
     private Feedback feedbackByReferenceId;
     private Semester semesterBySemesterId;
+    private Collection<UserFeedback> userFeedbacksById;
     private Collection<Feedback> feedbacksById;
     private Collection<Question> questionsById;
 
@@ -289,6 +290,15 @@ public class Feedback {
 
     public void setSemesterBySemesterId(Semester semesterBySemesterId) {
         this.semesterBySemesterId = semesterBySemesterId;
+    }
+
+    @OneToMany(mappedBy = "feedbackByFeedbackId")
+    public Collection<UserFeedback> getUserFeedbacksById() {
+        return userFeedbacksById;
+    }
+
+    public void setUserFeedbacksById(Collection<UserFeedback> userFeedbacksById) {
+        this.userFeedbacksById = userFeedbacksById;
     }
 
     @OneToMany(mappedBy = "feedbackByReferenceId")
