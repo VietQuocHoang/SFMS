@@ -15,8 +15,6 @@ import java.util.logging.Logger;
 @Service("ModifyFeedbackViewConductService")
 public class ModifyFeedbackViewerConductorServiceImpl implements ModifyFeedbackViewConductService {
 
-    static Logger logger = Logger.getLogger(RoleServiceImpl.class.getName());
-
     @Autowired
     private FeedbackRepository feedbackRepo;
 
@@ -45,62 +43,80 @@ public class ModifyFeedbackViewerConductorServiceImpl implements ModifyFeedbackV
     private UserRepository userRepo;
 
     @Override
-    public FeedbackDetailsModel addConductors(FeedbackDetailsModel model, List<User> conductorIds) {
-        FeedbackDetailsModel feedbackmodel = null;
+    public FeedbackDetailsModel addConductors(FeedbackDetailsModel model, int[] conductorIds) {
+        int[] unexist = new int[0];
+        int j = 0;
         try {
             List<User> conductors = model.getConductors();
-            conductors.addAll(conductorIds);
-            feedbackmodel.setConductors(conductors);
+            for (int i = 0; i < conductorIds.length ; i++){
+                if(userRepo.findOne(conductorIds[i]) != null){
+                    conductors.add(userRepo.findOne(conductorIds[i]));
+                } else {
+                    unexist[j] = conductorIds[i];
+                    j++;
+                }
+            }
+            model.setReportviewers(conductors);
         } catch (Exception e){
             e.printStackTrace();
         }
-        return feedbackmodel;
+        return model;
     }
 
     @Override
-    public FeedbackDetailsModel addViewers(FeedbackDetailsModel model, List<User> viewerIds) {
-        FeedbackDetailsModel feedbackmodel = null;
+    public FeedbackDetailsModel addViewers(FeedbackDetailsModel model, int[] viewerIds) {
         try {
             List<User> viewers = model.getReportviewers();
-            viewers.addAll(viewerIds);
-            feedbackmodel.setConductors(viewers);
+            for (int i = 0; i < viewerIds.length ; i++){
+                if(userRepo.findOne(viewerIds[i]) != null){
+                    viewers.add(userRepo.findOne(viewerIds[i]));
+                } else {
+                    int unexist = viewerIds[i];
+                }
+            }
+            model.setReportviewers(viewers);
         } catch (Exception e){
             e.printStackTrace();
         }
-        return feedbackmodel;
+        return model;
     }
 
     @Override
-    public FeedbackDetailsModel removeConductors(FeedbackDetailsModel model, List<User> conductorIds) {
-        FeedbackDetailsModel feedbackmodel = null;
+    public FeedbackDetailsModel removeConductors(FeedbackDetailsModel model, int[] conductorIds) {
+        int[] unexist = new int[0];
+        int j = 0;
         try {
             List<User> conductors = model.getConductors();
-            for (User user : conductorIds){
-                if (conductors.contains(user)) {
-                    conductors.remove(user);
+            for (int i = 0; i < conductorIds.length ; i++){
+                if(userRepo.findOne(conductorIds[i]) != null){
+                    conductors.remove(userRepo.findOne(conductorIds[i]));
+                } else {
+                    unexist[j] = conductorIds[i];
+                    j++;
                 }
             }
-            feedbackmodel.setConductors(conductors);
+            model.setReportviewers(conductors);
         } catch (Exception e){
             e.printStackTrace();
         }
-        return feedbackmodel;
+        return model;
     }
 
     @Override
-    public FeedbackDetailsModel removeViewers(FeedbackDetailsModel model, List<User> viewerIds) {
-        FeedbackDetailsModel feedbackmodel = null;
+    public FeedbackDetailsModel removeViewers(FeedbackDetailsModel model, int[] viewerIds) {
         try {
             List<User> viewers = model.getReportviewers();
-            for (User user : viewerIds){
-                if (viewers.contains(user)) {
-                    viewers.remove(user);
+            for (int i = 0; i < viewerIds.length ; i++){
+                if(userRepo.findOne(viewerIds[i]) != null){
+                    viewers.add(userRepo.findOne(viewerIds[i]));
+                } else {
+                    int unexist = viewerIds[i];
                 }
             }
-            feedbackmodel.setConductors(viewers);
+            model.setReportviewers(viewers);
         } catch (Exception e){
             e.printStackTrace();
         }
-        return feedbackmodel;
+        return model;
     }
 }

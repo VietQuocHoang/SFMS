@@ -14,11 +14,11 @@ import java.util.List;
  */
 public interface ModifyFeedbackViewConductService {
 
-    public FeedbackDetailsModel addConductors(FeedbackDetailsModel model, List<User> conductorIds);
+    public FeedbackDetailsModel addConductors(FeedbackDetailsModel model, int[] conductorIds);
 
-    public FeedbackDetailsModel addViewers(FeedbackDetailsModel model, List<User> viewerIds);
+    public FeedbackDetailsModel addViewers(FeedbackDetailsModel model, int[] viewerIds);
 
-    public FeedbackDetailsModel removeConductors(FeedbackDetailsModel model, List<User> conductorIds);
+    public FeedbackDetailsModel removeConductors(FeedbackDetailsModel model, int[] conductorIds);
 
-    public FeedbackDetailsModel removeViewers(FeedbackDetailsModel model, List<User> viewerIds);
+    public FeedbackDetailsModel removeViewers(FeedbackDetailsModel model, int[] viewerIds);
 }
