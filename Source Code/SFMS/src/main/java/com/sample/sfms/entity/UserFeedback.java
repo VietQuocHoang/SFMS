@@ -13,6 +13,7 @@ public class UserFeedback {
     private int feedbackId;
     private Byte isConductor;
     private Byte isViewer;
+    private Byte isConducted;
     private User userByUserId;
     private Feedback feedbackByFeedbackId;
     @Id
@@ -55,8 +56,15 @@ public class UserFeedback {
         this.isViewer = isViewer;
     }
 
+    @Basic
+    @Column(name = "is_conducted", nullable = true)
+    public Byte getIsConducted() {
+        return isConducted;
+    }
 
-
+    public void setIsConducted(Byte isConducted) {
+        this.isConducted = isConducted;
+    }
 
     @Override
     public boolean equals(Object o) {
