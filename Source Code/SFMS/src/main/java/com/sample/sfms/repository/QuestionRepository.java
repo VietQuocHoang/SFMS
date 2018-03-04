@@ -12,5 +12,7 @@ import java.util.List;
  */
 @org.springframework.stereotype.Repository
 public interface QuestionRepository extends JpaRepository<Question, Integer> {
+
     List<Question> findByFeedbackByFeedbackId(int feedbackID);
+
 }

@@ -44,7 +44,7 @@ public class FeedbackAPI {
         if(model.valid()) {
             try {
                 int feedbackId = feedbackService.save(model);
-                System.out.println(feedbackId);
+
                 for (AddQuestionModel question :
                         model.getQuestions()) {
                     question.setFeedbackId(feedbackId);
