@@ -20,8 +20,6 @@ public class Feedback {
     private String templateDes;
     private String templateName;
     private Byte isPublished;
-    private String conductors;
-    private String viewers;
     private User userByCreatorId;
     private Department departmentByDepartmentId;
     private Course courseByCourseId;
@@ -145,26 +143,6 @@ public class Feedback {
         this.isPublished = isPublished;
     }
 
-    @Basic
-    @Column(name = "conductors", nullable = true, length = -1)
-    public String getConductors() {
-        return conductors;
-    }
-
-    public void setConductors(String conductors) {
-        this.conductors = conductors;
-    }
-
-    @Basic
-    @Column(name = "viewers", nullable = true, length = -1)
-    public String getViewers() {
-        return viewers;
-    }
-
-    public void setViewers(String viewers) {
-        this.viewers = viewers;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -188,8 +166,6 @@ public class Feedback {
             return false;
         if (isPublished != null ? !isPublished.equals(feedback.isPublished) : feedback.isPublished != null)
             return false;
-        if (conductors != null ? !conductors.equals(feedback.conductors) : feedback.conductors != null) return false;
-        if (viewers != null ? !viewers.equals(feedback.viewers) : feedback.viewers != null) return false;
 
         return true;
     }
@@ -207,8 +183,6 @@ public class Feedback {
         result = 31 * result + (templateDes != null ? templateDes.hashCode() : 0);
         result = 31 * result + (templateName != null ? templateName.hashCode() : 0);
         result = 31 * result + (isPublished != null ? isPublished.hashCode() : 0);
-        result = 31 * result + (conductors != null ? conductors.hashCode() : 0);
-        result = 31 * result + (viewers != null ? viewers.hashCode() : 0);
         return result;
     }
 
@@ -317,5 +291,22 @@ public class Feedback {
 
     public void setQuestionsById(Collection<Question> questionsById) {
         this.questionsById = questionsById;
+    }
+
+    public Feedback(String feedbackDes, String feedbackName, String templateDes, String templateName, Department departmentByDepartmentId, Course courseByCourseId, Major majorByMajorId, Clazz clazzByClazzId, Type typeByTypeId, Feedback feedbackByReferenceId, Collection<Question> questionsById) {
+        this.feedbackDes = feedbackDes;
+        this.feedbackName = feedbackName;
+        this.templateDes = templateDes;
+        this.templateName = templateName;
+        this.departmentByDepartmentId = departmentByDepartmentId;
+        this.courseByCourseId = courseByCourseId;
+        this.majorByMajorId = majorByMajorId;
+        this.clazzByClazzId = clazzByClazzId;
+        this.typeByTypeId = typeByTypeId;
+        this.feedbackByReferenceId = feedbackByReferenceId;
+        this.questionsById = questionsById;
+    }
+
+    public Feedback() {
     }
 }

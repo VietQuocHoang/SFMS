@@ -14,11 +14,11 @@ import java.util.List;
  */
 public interface ModifyFeedbackService {
 
-    public ModifyFeedbackModel getFeedback(int id);
+    public ResponseEntity<Feedback> getFeedback(int id);
 
-    public ModifyFeedbackModel createEmptyFeedback();
+    public ResponseEntity<Feedback> createEmptyFeedback();
 
-    public ModifyFeedbackModel createFeedbackFromTemplate(int id);
+    public ResponseEntity<Feedback> createFeedbackFromTemplate(int id);
 
     public ResponseEntity<List<Feedback>> saveNewFeadbacks(ModifyFeedbackModel model);
 

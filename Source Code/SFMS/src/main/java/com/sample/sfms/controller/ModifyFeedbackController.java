@@ -1,5 +1,6 @@
 package com.sample.sfms.controller;
 
+import com.sample.sfms.entity.Feedback;
 import com.sample.sfms.model.ModifyFeedbackModel;
 import com.sample.sfms.service.interf.ModifyFeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,9 @@ public class ModifyFeedbackController {
     @GetMapping(value = "modify-feedback/create/{id}")
     private ModelAndView createFeedbackModel(@PathVariable("templateId") int templateId){
         ModelAndView mv = new ModelAndView("create-feedback-content");
-        ModifyFeedbackModel response;
-        if(templateId==0) response = modifyService.createEmptyFeedback();
-        else response = modifyService.createFeedbackFromTemplate(templateId);
+        Feedback response;
+        if(templateId==0) response = modifyService.createEmptyFeedback().getBody();
+        else response = modifyService.createFeedbackFromTemplate(templateId).getBody();
         mv.addObject("MFModel", response);
         return mv;
     }

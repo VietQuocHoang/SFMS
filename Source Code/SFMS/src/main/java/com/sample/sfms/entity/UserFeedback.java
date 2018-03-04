@@ -11,9 +11,9 @@ import javax.persistence.*;
 public class UserFeedback {
     private int userId;
     private int feedbackId;
-    private Byte isConductor;
-    private Byte isViewer;
-    private Byte isConducted;
+    private boolean isConductor;
+    private boolean isViewer;
+    private boolean isConducted;
     private User userByUserId;
     private Feedback feedbackByFeedbackId;
     @Id
@@ -38,32 +38,32 @@ public class UserFeedback {
 
     @Basic
     @Column(name = "is_conductor", nullable = true)
-    public Byte getIsConductor() {
+    public boolean isConductor() {
         return isConductor;
     }
 
-    public void setIsConductor(Byte isConductor) {
-        this.isConductor = isConductor;
+    public void setConductor(boolean conductor) {
+        isConductor = conductor;
     }
 
     @Basic
     @Column(name = "is_viewer", nullable = true)
-    public Byte getIsViewer() {
+    public boolean isViewer() {
         return isViewer;
     }
 
-    public void setIsViewer(Byte isViewer) {
-        this.isViewer = isViewer;
+    public void setViewer(boolean viewer) {
+        isViewer = viewer;
     }
 
     @Basic
     @Column(name = "is_conducted", nullable = true)
-    public Byte getIsConducted() {
+    public boolean isConducted() {
         return isConducted;
     }
 
-    public void setIsConducted(Byte isConducted) {
-        this.isConducted = isConducted;
+    public void setConducted(boolean conducted) {
+        isConducted = conducted;
     }
 
     @Override
