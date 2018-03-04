@@ -59,58 +59,80 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     private UserFilteringRepository userFilteringRepo;
 
     @Override
-    public ModifyFeedbackModel getFeedback(int id) {
+    public ResponseEntity<Feedback> getFeedback(int id) {
         Feedback fb = feedbackRepo.findOne(id);
-        String[] conductorIds = fb.getConductors().split("/"), viewerIds = fb.getViewers().split("/");
-        List<User> conductors = new ArrayList<>(), viewers = new ArrayList<>();
-        User tmp;
-        if (conductorIds != null) {
-            for (String conductorId : conductorIds) {
-                tmp = userRepo.findOne(Integer.parseInt(conductorId));
-                if (tmp != null) conductors.add(tmp);
-            }
+        try{
+            return new ResponseEntity<Feedback>(feedbackRepo.findOne(id), HttpStatus.OK);
+        }catch (UnexpectedRollbackException e) {
+            logger.log(Level.FINE, e.toString());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        if (viewerIds != null) {
-            for (String viewerId : viewerIds) {
-                tmp = userRepo.findOne(Integer.parseInt(viewerId));
-                if (tmp != null) viewers.add(tmp);
-            }
-        }
-        List<FeedbackDetailsModel> details = new ArrayList<>();
-        switch (fb.getTypeByTypeId().getDescription()) {
-            case "Major":
-                details.add(new FeedbackDetailsModel(conductors, viewers, fb.getMajorByMajorId(), null, null, null, fb.getTypeByTypeId()));
-                break;
-            case "Course":
-                details.add(new FeedbackDetailsModel(conductors, viewers, null, fb.getCourseByCourseId(), null, null, fb.getTypeByTypeId()));
-                break;
-            case "Clazz":
-                details.add(new FeedbackDetailsModel(conductors, viewers, null, null, fb.getClazzByClazzId(), null, fb.getTypeByTypeId()));
-                break;
-            case "Department":
-                details.add(new FeedbackDetailsModel(conductors, viewers, null, null, null, fb.getDepartmentByDepartmentId(), fb.getTypeByTypeId()));
-                break;
-            default:
-                break;
-        }
-        return new ModifyFeedbackModel(fb, details);
+//        String[] conductorIds = fb.getConductors().split("/"), viewerIds = fb.getViewers().split("/");
+//        List<User> conductors = new ArrayList<>(), viewers = new ArrayList<>();
+//        User tmp;
+//        if (conductorIds != null) {
+//            for (String conductorId : conductorIds) {
+//                tmp = userRepo.findOne(Integer.parseInt(conductorId));
+//                if (tmp != null) conductors.add(tmp);
+//            }
+//        }
+//        if (viewerIds != null) {
+//            for (String viewerId : viewerIds) {
+//                tmp = userRepo.findOne(Integer.parseInt(viewerId));
+//                if (tmp != null) viewers.add(tmp);
+//            }
+//        }
+//        List<FeedbackDetailsModel> details = new ArrayList<>();
+//        switch (fb.getTypeByTypeId().getDescription()) {
+//            case "Major":
+//                details.add(new FeedbackDetailsModel(conductors, viewers, fb.getMajorByMajorId(), null, null, null, fb.getTypeByTypeId()));
+//                break;
+//            case "Course":
+//                details.add(new FeedbackDetailsModel(conductors, viewers, null, fb.getCourseByCourseId(), null, null, fb.getTypeByTypeId()));
+//                break;
+//            case "Clazz":
+//                details.add(new FeedbackDetailsModel(conductors, viewers, null, null, fb.getClazzByClazzId(), null, fb.getTypeByTypeId()));
+//                break;
+//            case "Department":
+//                details.add(new FeedbackDetailsModel(conductors, viewers, null, null, null, fb.getDepartmentByDepartmentId(), fb.getTypeByTypeId()));
+//                break;
+//            default:
+//                break;
+//        }
     }
 
     @Override
-    public ModifyFeedbackModel createFeedbackFromTemplate(int id) {
-
+    public ResponseEntity<Feedback> createFeedbackFromTemplate(int id) {
         try {
-            return new ModifyFeedbackModel(feedbackRepo.findOne(id), null);
+            Feedback template = feedbackRepo.findOne(id);
+            return new ResponseEntity<Feedback>(feedbackRepo.save(new Feedback(
+                    template.getFeedbackDes(),
+                    template.getFeedbackName(),
+                    template.getFeedbackDes(),
+                    template.getFeedbackName(),
+                    template.getDepartmentByDepartmentId(),
+                    template.getCourseByCourseId(),
+                    template.getMajorByMajorId(),
+                    template.getClazzByClazzId(),
+                    template.getTypeByTypeId(),
+                    template.getFeedbackByReferenceId(),
+                    template.getQuestionsById()
+            )), HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
-            return null;
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
 
     @Override
-    public ModifyFeedbackModel createEmptyFeedback() {
-        return new ModifyFeedbackModel();
+    public ResponseEntity<Feedback> createEmptyFeedback() {
+        try {
+            return new ResponseEntity<Feedback>(feedbackRepo.save(new Feedback()), HttpStatus.OK);
+        } catch (UnexpectedRollbackException e) {
+            logger.log(Level.FINE, e.toString());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override
@@ -118,41 +140,41 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
         ResponseEntity<List<Feedback>> response;
         try {
             List<Feedback> affected = new ArrayList<>();
-            Feedback sharedTemplate = model.getFeedback(), tmp;
-            Type t;
-            String selectedusers;
-            for (FeedbackDetailsModel detail : model.getSelectedObjs()) {
-                t = detail.getType();
-                selectedusers = "";
-                tmp = sharedTemplate;
-                switch (t.getDescription()) {
-                    case "Major":
-                        tmp.setMajorByMajorId(majorRepo.findOne(detail.getMajor().getId()));
-                        break;
-                    case "Course":
-                        tmp.setCourseByCourseId(courseRepo.findOne(detail.getCourse().getId()));
-                        break;
-                    case "Clazz":
-                        tmp.setClazzByClazzId(clazzRepo.findOne(detail.getClazz().getId()));
-                        break;
-                    case "Department":
-                        tmp.setDepartmentByDepartmentId(departmentRepo.findOne(detail.getDepartment().getId()));
-                        break;
-                    default:
-                        break;
-                }
-                tmp.setTypeByTypeId(t);
-                for (User conductor : detail.getConductors()) {
-                    selectedusers += conductor.getId() + "/";
-                }
-                tmp.setConductors(selectedusers.substring(0, selectedusers.length() - 1));
-                selectedusers = "";
-                for (User viewer : detail.getReportviewers()) {
-                    selectedusers += viewer.getId() + "/";
-                }
-                tmp.setViewers(selectedusers.substring(0, selectedusers.length() - 1));
-                affected.add(feedbackRepo.save(tmp));
-            }
+//            Feedback sharedTemplate = model.getFeedback(), tmp;
+//            Type t;
+//            String selectedusers;
+//            for (FeedbackDetailsModel detail : model.getSelectedObjs()) {
+//                t = detail.getType();
+//                selectedusers = "";
+//                tmp = sharedTemplate;
+//                switch (t.getDescription()) {
+//                    case "Major":
+//                        tmp.setMajorByMajorId(majorRepo.findOne(detail.getMajor().getId()));
+//                        break;
+//                    case "Course":
+//                        tmp.setCourseByCourseId(courseRepo.findOne(detail.getCourse().getId()));
+//                        break;
+//                    case "Clazz":
+//                        tmp.setClazzByClazzId(clazzRepo.findOne(detail.getClazz().getId()));
+//                        break;
+//                    case "Department":
+//                        tmp.setDepartmentByDepartmentId(departmentRepo.findOne(detail.getDepartment().getId()));
+//                        break;
+//                    default:
+//                        break;
+//                }
+//                tmp.setTypeByTypeId(t);
+//                for (User conductor : detail.getConductors()) {
+//                    selectedusers += conductor.getId() + "/";
+//                }
+//                tmp.setConductors(selectedusers.substring(0, selectedusers.length() - 1));
+//                selectedusers = "";
+//                for (User viewer : detail.getReportviewers()) {
+//                    selectedusers += viewer.getId() + "/";
+//                }
+//                tmp.setViewers(selectedusers.substring(0, selectedusers.length() - 1));
+//                affected.add(feedbackRepo.save(tmp));
+//            }
             response = new ResponseEntity<>(affected, HttpStatus.OK);
             return response;
         } catch (UnexpectedRollbackException e) {
@@ -166,8 +188,8 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     public ResponseEntity<Feedback> updateTemplate(ModifyFeedbackModel model) {
         try {
             if (feedbackRepo.exists(model.getFeedback().getId())) {
-                model.getFeedback().setConductors("");
-                model.getFeedback().setViewers("");
+//                model.getFeedback().setConductors("");
+//                model.getFeedback().setViewers("");
                 feedbackRepo.save(model.getFeedback());
                 return new ResponseEntity<>(HttpStatus.OK);
             } else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -318,7 +340,8 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     @Override
     public List<User> autoGenerateViewers(FeedbackDetailsModel detailModel) {
         List<User> viewers = new ArrayList<>();
-        Course course; List<MajorCourse> majorCourses;
+        Course course;
+        List<MajorCourse> majorCourses;
         switch (detailModel.getType().getDescription()) {
             case "Major":
                 viewers = userFilteringRepo.findByRoleByRoleId_RoleNameAndMajorByMajorId("HeadOfAcademic", detailModel.getMajor());

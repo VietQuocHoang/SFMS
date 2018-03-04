@@ -33,13 +33,18 @@ class  ModifyFeedbackAPI{
     ModifyFeedbackService modifyService;
 
     @GetMapping("/{id}")
-    private ModifyFeedbackModel getMFModel(@PathVariable("id") int id){
+    private ResponseEntity<Feedback> getFeedback(@PathVariable("id") int id){
         return modifyService.getFeedback(id);
     }
 
     @PostMapping
-    private ResponseEntity<List<Feedback>> saveNewFeedbacks(@RequestParam("MFModel") ModifyFeedbackModel MFModel){
-        return modifyService.saveNewFeadbacks(MFModel);
+    private ResponseEntity<Feedback> createFeedback(){
+        return modifyService.createEmptyFeedback();
+    }
+
+    @PostMapping("/{id}")
+    private ResponseEntity<Feedback> createFeedback(@PathVariable("id") int id){
+        return modifyService.createFeedbackFromTemplate(id);
     }
 
     @PutMapping
