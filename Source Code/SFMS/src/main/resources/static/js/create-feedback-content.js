@@ -1,5 +1,7 @@
 var wscrolltop = 0;
 
+$.getScript("models.js", () => { alert('Error loading front-end models') });
+
 //use to generate uniqueId
 function generateId() {
     return new Date().getTime();
@@ -89,6 +91,7 @@ function initEditAnswerList() {
 }
 
 //init question-list-wrapper
+//Khang-san có chỉnh một chút, phần sinh ra các element
 $(".question-list-wrapper").sortable({
     items: ".question-container",
     // containment: ".question-list-container",
@@ -166,10 +169,10 @@ $(".question-list-wrapper").sortable({
                     "                                                <label class='col-4 col-form-label text-right'>Loại đánh giá: </label>" +
                     "                                                <div class='col-8'>" +
                     "                                                    <select class='form-control select-list-criteria'>" +
-                    "                                                        <option>Chuyên cần</option>" +
-                    "                                                        <option>Tác phong</option>" +
-                    "                                                        <option>Thái độ</option>" +
-                    "                                                        <option>Chuyên môn</option>" +
+                    "                                                        <option value='1'>Chuyên cần</option>" +
+                    "                                                        <option value='2'>Tác phong</option>" +
+                    "                                                        <option value='3'>Thái độ</option>" +
+                    "                                                        <option value='4'>Chuyên môn</option>" +
                     "                                                    </select>" +
                     "                                                </div>" +
                     "                                            </div>" +
@@ -200,8 +203,8 @@ $(".question-list-wrapper").sortable({
                     "                                <div class='preview-question-wrapper'>" +
                     "                                    <div class='question-content-container'>" +
                     "                                        <div class='question-content-wrapper'>" +
-                    "                                            <p class='question-content-paragraph'>Tốc độ giảng dạy của giảng viên thế" +
-                    "                                                nào?</p>" +
+                    "                                            <p class='question-content-paragraph'>Tốc độ giảng dạy của giảng viên thế nào?" +
+                    "                                                </p>" +
                     "                                            <span class='required-question' style='display:none'><sup>*</sup></span>" +
                     "                                        </div>" +
                     "                                    </div>" +
@@ -252,10 +255,10 @@ $(".question-list-wrapper").sortable({
                     "                                                <label class='col-4 col-form-label text-right'>Loại đánh giá: </label>" +
                     "                                                <div class='col-8'>" +
                     "                                                    <select class='form-control select-list-criteria'>" +
-                    "                                                        <option>Chuyên cần</option>" +
-                    "                                                        <option>Tác phong</option>" +
-                    "                                                        <option>Thái độ</option>" +
-                    "                                                        <option>Chuyên môn</option>" +
+                    "                                                        <option value='1'>Chuyên cần</option>" +
+                    "                                                        <option value='2'>Tác phong</option>" +
+                    "                                                        <option value='3'>Thái độ</option>" +
+                    "                                                        <option value='4'>Chuyên môn</option>" +
                     "                                                    </select>" +
                     "                                                </div>" +
                     "                                            </div>" +
@@ -276,9 +279,9 @@ $(".question-list-wrapper").sortable({
                     "                                                                </div>" +
                     "                                                                <div class='input-edit-answer-holder'>" +
                     "                                                                    <input type='text' class='answer-content-input'" +
-                    "                                                                           value='Đáp án 1'>" +
+                    "                                                                           placeholder='Đáp án 1'>" +
                     "                                                                    Trọng số: <input type='number' min='0'" +
-                    "                                                                                     class='weight-input' value='1'>" +
+                    "                                                                                     class='weight-input'>" +
                     "                                                                </div>" +
                     "                                                                <div class='remove-answer-holder'>" +
                     "                                                                    <i class='fa fa-close'></i>" +
@@ -292,9 +295,9 @@ $(".question-list-wrapper").sortable({
                     "                                                                </div>" +
                     "                                                                <div class='input-edit-answer-holder'>" +
                     "                                                                    <input type='text' class='answer-content-input'" +
-                    "                                                                           value='Đáp án 2'>" +
+                    "                                                                           placeholder='Đáp án 2'>" +
                     "                                                                    Trọng số: <input type='number' min='0'" +
-                    "                                                                                     class='weight-input' value='1'>" +
+                    "                                                                                     class='weight-input'>" +
                     "                                                                </div>" +
                     "                                                                <div class='remove-answer-holder'>" +
                     "                                                                    <i class='fa fa-close'></i>" +
@@ -308,9 +311,9 @@ $(".question-list-wrapper").sortable({
                     "                                                                </div>" +
                     "                                                                <div class='input-edit-answer-holder'>" +
                     "                                                                    <input type='text' class='answer-content-input'" +
-                    "                                                                           value='Đáp án 3'>" +
+                    "                                                                           placeholder='Đáp án 3'>" +
                     "                                                                    Trọng số: <input type='number' min='0'" +
-                    "                                                                                     class='weight-input' value='1'>" +
+                    "                                                                                     class='weight-input'>" +
                     "                                                                </div>" +
                     "                                                                <div class='remove-answer-holder'>" +
                     "                                                                    <i class='fa fa-close'></i>" +
@@ -352,8 +355,8 @@ $(".question-list-wrapper").sortable({
                     "                                <div class='preview-question-wrapper'>" +
                     "                                    <div class='question-content-container'>" +
                     "                                        <div class='question-content-wrapper'>" +
-                    "                                            <p class='question-content-paragraph'>Tốc độ giảng dạy của giảng viên thế" +
-                    "                                                nào?</p>" +
+                    "                                            <p class='question-content-paragraph'>Tốc độ giảng dạy của giảng viên thế nào?" +
+                    "                                                </p>" +
                     "                                            <span class='required-question' style='display:none'><sup>*</sup></span>" +
                     "                                        </div>" +
                     "                                    </div>" +
@@ -394,10 +397,10 @@ $(".question-list-wrapper").sortable({
                     "                                                <label class='col-4 col-form-label text-right'>Loại đánh giá: </label>" +
                     "                                                <div class='col-8'>" +
                     "                                                    <select class='form-control select-list-criteria'>" +
-                    "                                                        <option>Chuyên cần</option>" +
-                    "                                                        <option>Tác phong</option>" +
-                    "                                                        <option>Thái độ</option>" +
-                    "                                                        <option>Chuyên môn</option>" +
+                    "                                                        <option value='1'>Chuyên cần</option>" +
+                    "                                                        <option value='2'>Tác phong</option>" +
+                    "                                                        <option value='3'>Thái độ</option>" +
+                    "                                                        <option value='4'>Chuyên môn</option>" +
                     "                                                    </select>" +
                     "                                                </div>" +
                     "                                            </div>" +
@@ -418,9 +421,9 @@ $(".question-list-wrapper").sortable({
                     "                                                                </div>" +
                     "                                                                <div class='input-edit-answer-holder'>" +
                     "                                                                    <input type='text' class='answer-content-input'" +
-                    "                                                                           value='Đáp án 1'>" +
+                    "                                                                           placeholder='Đáp án 1'>" +
                     "                                                                    Trọng số: <input type='number' min='0'" +
-                    "                                                                                     class='weight-input' value='1'>" +
+                    "                                                                                     class='weight-input'>" +
                     "                                                                </div>" +
                     "                                                                <div class='remove-answer-holder'>" +
                     "                                                                    <i class='fa fa-close'></i>" +
@@ -495,10 +498,10 @@ $(".question-list-wrapper").sortable({
                     "                                                <label class='col-4 col-form-label text-right'>Loại đánh giá: </label>" +
                     "                                                <div class='col-8'>" +
                     "                                                    <select class='form-control select-list-criteria'>" +
-                    "                                                        <option>Chuyên cần</option>" +
-                    "                                                        <option>Tác phong</option>" +
-                    "                                                        <option>Thái độ</option>" +
-                    "                                                        <option>Chuyên môn</option>" +
+                    "                                                        <option value='1'>Chuyên cần</option>" +
+                    "                                                        <option value='2'>Tác phong</option>" +
+                    "                                                        <option value='3'>Thái độ</option>" +
+                    "                                                        <option value='4'>Chuyên môn</option>" +
                     "                                                    </select>" +
                     "                                                </div>" +
                     "                                            </div>" +
@@ -566,10 +569,10 @@ $(".question-list-wrapper").sortable({
                     "                                                <label class='col-4 col-form-label text-right'>Loại đánh giá: </label>" +
                     "                                                <div class='col-8'>" +
                     "                                                    <select class='form-control select-list-criteria'>" +
-                    "                                                        <option>Chuyên cần</option>" +
-                    "                                                        <option>Tác phong</option>" +
-                    "                                                        <option>Thái độ</option>" +
-                    "                                                        <option>Chuyên môn</option>" +
+                    "                                                        <option value='1'>Chuyên cần</option>" +
+                    "                                                        <option value='2'>Tác phong</option>" +
+                    "                                                        <option value='3'>Thái độ</option>" +
+                    "                                                        <option value='4'>Chuyên môn</option>" +
                     "                                                    </select>" +
                     "                                                </div>" +
                     "                                            </div>" +
@@ -840,3 +843,107 @@ $(".btn-add-new").on('click', (event) => {
 //         .find("ul")
 //         .append(clonedElem);
 // }
+
+//Start Khang-san
+class Feedback {
+    constructor() {
+        this.questions = [];
+    }
+}
+
+class Question {
+
+    /**
+     * @param options Array of options contents
+     * @param type Type of question
+     * */
+    constructor(title, options, type, required, criteriaId, requireOther) {
+        this.questionContent = title;
+        this.optionCreateModel = options;
+        this.type = type;
+        this.isRequired = required;
+        this.criteriaId = criteriaId;
+        this.requireOther = requireOther;
+    }
+
+}
+
+class Option {
+    constructor(content, weight) {
+        this.content = content;
+        this.point = weight;
+    }
+}
+
+function getQuestions() {
+    let feedback = new Feedback();
+
+    //Lấy hết các div chứa question
+    let allQuestions = $("div[class='question-container']");
+
+    for (var i = 0; i < allQuestions.length; ++i) {
+        //Lấy id của div để biết thuộc loại question nào
+        let id = allQuestions[i].getAttribute("id");
+
+        //Lấy title của question
+        let title = allQuestions[i].querySelector("p[class='question-content-paragraph']").innerHTML.trim();
+
+        //Có require hay không
+        let required = allQuestions[i].querySelector("input[class='required-checkbox']").checked;
+
+        //Loại criteria
+        let criteriaId = allQuestions[i].querySelector("select[class='form-control select-list-criteria']").value;
+
+
+        if (id.indexOf("radio-question") >= 0) {
+            //Có cần option khác
+            let requireOther = allQuestions[i].querySelector("input[class='other-option-checkbox']");
+            let optionDivs = allQuestions[i].querySelectorAll("input[class='answer-content-input']");
+            let weightDivs = allQuestions[i].querySelectorAll("input[class='weight-input']");
+            let options = [];
+            for (var j = 0; j < optionDivs.length; ++j) {
+                options.push(new Option(optionDivs[j].value, weightDivs[j].value));
+            }
+
+            feedback.questions.push(new Question(title, options, "Radio", required, criteriaId, requireOther.checked));
+        }
+        else if (id.indexOf("checkbox-question") >= 0) {
+            //Có cần option khác
+            let requireOther = allQuestions[i].querySelector("input[class='other-option-checkbox']");
+            let optionDivs = allQuestions[i].querySelectorAll("input[class='answer-content-input']");
+            let weightDivs = allQuestions[i].querySelectorAll("input[class='weight-input']");
+            let options = [];
+            for (var j = 0; j < optionDivs.length; ++j) {
+                options.push(new Option(optionDivs[j].value, weightDivs[j].value));
+            }
+            feedback.questions.push(new Question(title, options, "CheckBox", required, criteriaId, requireOther.checked));
+        }
+        else if (id.indexOf("textfield-question") >= 0) {
+            feedback.questions.push(new Question(title, null, "Text", required, criteriaId, false));
+        }
+        else if (id.indexOf("textarea-question") >= 0) {
+            feedback.questions.push(new Question(title, null, "Paragraph", required, criteriaId, false));
+        }
+        else if (id.indexOf("star-question") >= 0) {
+            feedback.questions.push(new Question(title, null, "Star", required, criteriaId, false));
+        }
+    }
+
+    console.log(feedback);
+    saveFeedback(feedback);
+}
+
+function saveFeedback(feedback) {
+    $.ajax({
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        url: '/sfms/api/feedbacks/save-feedback',
+        type: 'POST',
+        data: JSON.stringify(feedback),
+        success: (data) => alert("Đã lưu thành công"),
+        error: (err) => alert(err),
+    });
+}
+

@@ -1,7 +1,10 @@
 package com.sample.sfms.service.impl;
 
 import com.sample.sfms.entity.Feedback;
+import com.sample.sfms.entity.Type;
+import com.sample.sfms.model.feedback.FeedbackCreateModel;
 import com.sample.sfms.repository.FeedbackRepository;
+import com.sample.sfms.repository.TypeRepository;
 import com.sample.sfms.service.interf.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +22,9 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Autowired
     private FeedbackRepository feedbackRepository;
 
+    @Autowired
+    private TypeRepository typeRepository;
+
     @Override
     public List<Feedback> getListTemplate(boolean isTemplate) {
         return feedbackRepository.findByIsTemplate(isTemplate);
@@ -27,5 +33,16 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Override
     public Feedback findFeedbackById(int id) {
         return feedbackRepository.findById(id);
+    }
+
+    @Override
+    public int save(FeedbackCreateModel model) throws Exception {
+        Feedback feedback = new Feedback();
+        Type type = typeRepository.getOne(1); //Hard code. Please fix when release
+        feedback.setTypeByTypeId(type);
+        feedback.setIsTemplate(false); //Hard code
+
+        feedbackRepository.save(feedback);
+        return feedback.getId();
     }
 }

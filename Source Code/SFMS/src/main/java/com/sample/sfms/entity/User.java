@@ -21,6 +21,7 @@ public class User {
     private Collection<Clazz> clazzesById;//clazzes whose be taught by a lecturer
     private Collection<Feedback> feedbacksById;
     private Collection<StudentClazz> studentClazzesById;
+    private Collection<UserFeedback> userFeedbacksById;
     private Department departmentByDepartmentId;
     private Role roleByRoleId;
     private Major majorByMajorId;
@@ -163,6 +164,15 @@ public class User {
 
     public void setFeedbacksById(Collection<Feedback> feedbacksById) {
         this.feedbacksById = feedbacksById;
+    }
+
+    @OneToMany(mappedBy = "userByUserId")
+    public Collection<UserFeedback> getUserFeedbacksById() {
+        return userFeedbacksById;
+    }
+
+    public void setUserFeedbacksById(Collection<UserFeedback> userFeedbacksById) {
+        this.userFeedbacksById = userFeedbacksById;
     }
 
     @OneToMany(mappedBy = "userByUserId")

@@ -1,8 +1,12 @@
 package com.sample.sfms.model.question;
 
+import com.sample.sfms.model.Model;
+import com.sample.sfms.model.StaticVariables;
 import com.sample.sfms.model.option.OptionCreateModel;
 
-public class AddQuestionModel {
+import java.util.Arrays;
+
+public class AddQuestionModel extends Model {
 
     private String type;
     private String suggestion;
@@ -11,6 +15,7 @@ public class AddQuestionModel {
     private boolean isRequired;
     private String questionContent;
     private OptionCreateModel[] optionCreateModel;
+    private boolean requireOther;
 
 
     public AddQuestionModel() {
@@ -67,11 +72,29 @@ public class AddQuestionModel {
         this.questionContent = questionContent;
     }
 
+    public boolean isRequireOther() {
+        return requireOther;
+    }
+
+    public void setRequireOther(boolean requireOther) {
+        this.requireOther = requireOther;
+    }
+
     public OptionCreateModel[] getOptionCreateModel() {
         return optionCreateModel;
     }
 
     public void setOptionCreateModel(OptionCreateModel[] optionCreateModel) {
         this.optionCreateModel = optionCreateModel;
+    }
+
+    @Override
+    public boolean valid() {
+        if (type == null)
+            return false;
+
+        if (Arrays.asList(StaticVariables.OPTION_NEEDED_QUESTION_TYPE).contains(this.type))
+            return this.optionCreateModel != null;
+        else return this.optionCreateModel == null;
     }
 }

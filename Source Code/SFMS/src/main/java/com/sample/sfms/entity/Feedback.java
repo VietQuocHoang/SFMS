@@ -11,7 +11,7 @@ import java.util.Collection;
 public class Feedback {
     private int id;
     private Integer point;
-    private byte isTemplate;
+    private boolean isTemplate;
     private Timestamp createDate;
     private Timestamp startDate;
     private Timestamp endDate;
@@ -30,6 +30,7 @@ public class Feedback {
     private Type typeByTypeId;
     private Feedback feedbackByReferenceId;
     private Semester semesterBySemesterId;
+    private Collection<UserFeedback> userFeedbacksById;
     private Collection<Feedback> feedbacksById;
     private Collection<Question> questionsById;
 
@@ -56,11 +57,11 @@ public class Feedback {
 
     @Basic
     @Column(name = "is_template", nullable = false)
-    public byte getIsTemplate() {
+    public boolean getIsTemplate() {
         return isTemplate;
     }
 
-    public void setIsTemplate(byte isTemplate) {
+    public void setIsTemplate(boolean isTemplate) {
         this.isTemplate = isTemplate;
     }
 
@@ -197,7 +198,7 @@ public class Feedback {
     public int hashCode() {
         int result = id;
         result = 31 * result + (point != null ? point.hashCode() : 0);
-        result = 31 * result + (int) isTemplate;
+        //result = 31 * result + (int) isTemplate;
         result = 31 * result + (createDate != null ? createDate.hashCode() : 0);
         result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
         result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
@@ -289,6 +290,15 @@ public class Feedback {
 
     public void setSemesterBySemesterId(Semester semesterBySemesterId) {
         this.semesterBySemesterId = semesterBySemesterId;
+    }
+
+    @OneToMany(mappedBy = "feedbackByFeedbackId")
+    public Collection<UserFeedback> getUserFeedbacksById() {
+        return userFeedbacksById;
+    }
+
+    public void setUserFeedbacksById(Collection<UserFeedback> userFeedbacksById) {
+        this.userFeedbacksById = userFeedbacksById;
     }
 
     @OneToMany(mappedBy = "feedbackByReferenceId")
