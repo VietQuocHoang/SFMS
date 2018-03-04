@@ -1,5 +1,3 @@
-//Khang-san
-
 class Feedback {
     constructor() {
         this.questions = [];

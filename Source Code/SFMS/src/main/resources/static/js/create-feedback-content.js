@@ -844,7 +844,7 @@ $(".btn-add-new").on('click', (event) => {
 //         .append(clonedElem);
 // }
 
-//Start Khang-san
+//Start Add/edit/remove question
 class Feedback {
     constructor() {
         this.questions = [];
@@ -861,7 +861,7 @@ class Question {
         this.questionContent = title;
         this.optionCreateModel = options;
         this.type = type;
-        this.isRequired = required;
+        this.required = required;
         this.criteriaId = criteriaId;
         this.requireOther = requireOther;
     }
@@ -870,7 +870,7 @@ class Question {
 
 class Option {
     constructor(content, weight) {
-        this.content = content;
+        this.optionContent = content;
         this.point = weight;
     }
 }
@@ -905,7 +905,7 @@ function getQuestions() {
                 options.push(new Option(optionDivs[j].value, weightDivs[j].value));
             }
 
-            feedback.questions.push(new Question(title, options, "Radio", required, criteriaId, requireOther.checked));
+            feedback.questions.push(new Question(title, options, "MultiChoice", required, criteriaId, requireOther.checked));
         }
         else if (id.indexOf("checkbox-question") >= 0) {
             //Có cần option khác
@@ -942,7 +942,7 @@ function saveFeedback(feedback) {
         url: '/sfms/api/feedbacks/save-feedback',
         type: 'POST',
         data: JSON.stringify(feedback),
-        success: (data) => alert("Đã lưu thành công"),
+        success: (data) => alert(data.message),
         error: (err) => alert(err),
     });
 }

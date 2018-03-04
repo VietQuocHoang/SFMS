@@ -73,9 +73,18 @@ public class QuestionServiceImpl implements QuestionService {
 
             int id = question.getId();
 
-            for (OptionCreateModel option : model.getOptionCreateModel()) {
-                option.setQuestion(question);
-                optionnService.add(option);
+            if (model.getOptionCreateModel() != null) {
+                for (OptionCreateModel option : model.getOptionCreateModel()) {
+                    option.setQuestion(question);
+                    optionnService.add(option);
+                }
+                if (model.isRequireOther()) {
+                    OptionCreateModel optionCreateModel = new OptionCreateModel();
+                    optionCreateModel.setQuestion(question);
+                    optionCreateModel.setOptionContent("Khác");
+                    optionCreateModel.setPoint(0.0);
+                    optionnService.add(optionCreateModel);
+                }
             }
             return id;
         } catch (Exception ex) {
@@ -116,8 +125,11 @@ public class QuestionServiceImpl implements QuestionService {
 
             this.questionRepo.save(question);
 
-            for (OptionUpdateModel option : model.getOptionUpdateModels()) {
-                optionnService.update(option);
+            if (model.getOptionUpdateModels() != null) {
+                for (OptionUpdateModel option : model.getOptionUpdateModels()) {
+                    option.setQuestion(question);
+                    optionnService.update(option);
+                }
             }
 
         } catch (Exception ex) {

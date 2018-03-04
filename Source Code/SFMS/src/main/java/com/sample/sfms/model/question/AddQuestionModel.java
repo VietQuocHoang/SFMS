@@ -12,7 +12,7 @@ public class AddQuestionModel extends Model {
     private String suggestion;
     private int criteriaId;
     private int feedbackId;
-    private boolean isRequired;
+    private boolean required;
     private String questionContent;
     private OptionCreateModel[] optionCreateModel;
     private boolean requireOther;
@@ -57,11 +57,11 @@ public class AddQuestionModel extends Model {
     }
 
     public boolean isRequired() {
-        return isRequired;
+        return required;
     }
 
     public void setRequired(boolean required) {
-        isRequired = required;
+        this.required = required;
     }
 
     public String getQuestionContent() {
