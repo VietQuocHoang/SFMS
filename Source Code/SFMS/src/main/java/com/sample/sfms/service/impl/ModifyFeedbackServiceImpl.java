@@ -33,6 +33,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     @Autowired
     private MajorRepository majorRepo;
 
+    private MajorCourseRepository majorCourseRepo;
     @Autowired
     private CourseRepository courseRepo;
 
@@ -46,10 +47,16 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     private TypeRepository typeRepo;
 
     @Autowired
-    private UserFilteringRepository userRepo;
+    private UserRepository userRepo;
 
     @Autowired
     private StudentClazzRepository studentClazzRepo;
+
+    @Autowired
+    private RoleRepository roleRepo;
+
+    @Autowired
+    private UserFilteringRepository userFilteringRepo;
 
     @Override
     public ModifyFeedbackModel getFeedback(int id) {
@@ -81,7 +88,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                 details.add(new FeedbackDetailsModel(conductors, viewers, null, null, fb.getClazzByClazzId(), null, fb.getTypeByTypeId()));
                 break;
             case "Department":
-                details.add(new FeedbackDetailsModel(conductors, viewers, null,null, null, fb.getDepartmentByDepartmentId(), fb.getTypeByTypeId()));
+                details.add(new FeedbackDetailsModel(conductors, viewers, null, null, null, fb.getDepartmentByDepartmentId(), fb.getTypeByTypeId()));
                 break;
             default:
                 break;
@@ -139,6 +146,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                     selectedusers += conductor.getId() + "/";
                 }
                 tmp.setConductors(selectedusers.substring(0, selectedusers.length() - 1));
+                selectedusers = "";
                 for (User viewer : detail.getReportviewers()) {
                     selectedusers += viewer.getId() + "/";
                 }
@@ -267,9 +275,10 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
         List<User> conductors = new ArrayList<>();
         List<StudentClazz> studentClazzes = new ArrayList<>();
         User tmp;
+        String specialDepartment = "IT/Y tế/Thư Viện";
         switch (detailModel.getType().getDescription()) {
             case "Major":
-                detailModel.setConductors(userRepo.findByMajorByMajorId(detailModel.getMajor()));
+                conductors = userFilteringRepo.findByMajorByMajorId(detailModel.getMajor());
                 break;
             case "Course":
                 Course course = detailModel.getCourse();
@@ -292,19 +301,54 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                 }
                 break;
             case "Department":
-
+                if (specialDepartment.contains(detailModel.getDepartment().getName())) {
+                    conductors.addAll(userRepo.findAll());
+                    for (User conductor : conductors) {
+                        if (conductor.getDepartmentByDepartmentId().getName().equals("IT"))
+                            conductors.remove(conductor);
+                    }
+                } else conductors.addAll(userRepo.findByRoleByRoleId_RoleName("Student"));
+                break;
+            default:
                 break;
         }
         return conductors;
     }
 
     @Override
-    public List<User> autoGenerateViewers(FeedbackDetailsModel model) {
-        return null;
+    public List<User> autoGenerateViewers(FeedbackDetailsModel detailModel) {
+        List<User> viewers = new ArrayList<>();
+        Course course; List<MajorCourse> majorCourses;
+        switch (detailModel.getType().getDescription()) {
+            case "Major":
+                viewers = userFilteringRepo.findByRoleByRoleId_RoleNameAndMajorByMajorId("HeadOfAcademic", detailModel.getMajor());
+                break;
+            case "Course":
+                course = detailModel.getCourse();
+                majorCourses = majorCourseRepo.findByCourseByCourseId(course);
+                viewers.addAll(userFilteringRepo.findByRoleByRoleIdAndMajorByMajorId_MajorCoursesByIdContains(
+                        roleRepo.findByRoleName("HeadOfAcademic"), majorCourses
+                ));
+                viewers.addAll(userFilteringRepo.findByRoleByRoleIdAndMajorByMajorId_MajorCoursesByIdContains(
+                        roleRepo.findByRoleName("Lecturer"), majorCourses
+                ));
+                break;
+            case "Clazz":
+                course = detailModel.getClazz().getCourseByCourseId();
+                majorCourses = majorCourseRepo.findByCourseByCourseId(course);
+                viewers.addAll(userFilteringRepo.findByRoleByRoleIdAndMajorByMajorId_MajorCoursesByIdContains(
+                        roleRepo.findByRoleName("HeadOfAcademic"), majorCourses
+                ));
+                break;
+            case "Department":
+                viewers = userFilteringRepo.findByRoleByRoleId_RoleNameAndMajorByMajorId("HeadOfAcademic", detailModel.getMajor());
+                break;
+        }
+        return viewers;
     }
 
     @Override
-        public FeedbackDetailsModel customizeConductors(FeedbackDetailsModel model, int[] conductorIds) {
+    public FeedbackDetailsModel customizeConductors(FeedbackDetailsModel model, int[] conductorIds) {
         try {
             return null;
         } catch (UnexpectedRollbackException e) {
