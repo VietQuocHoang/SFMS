@@ -5,8 +5,6 @@ import com.sample.sfms.service.interf.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/users")
 public class UserAPI {
@@ -25,7 +23,7 @@ public class UserAPI {
     }
 
     @PostMapping
-    private void saveUser(@RequestParam("user") User user){
+    private void saveUser(@RequestBody User user) {
         userService.saveUser(user);
     }
 

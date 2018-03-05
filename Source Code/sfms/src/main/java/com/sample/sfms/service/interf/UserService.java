@@ -2,12 +2,13 @@ package com.sample.sfms.service.interf;
 
 import com.sample.sfms.entity.Role;
 import com.sample.sfms.entity.User;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 public interface UserService {
     User findUserByMail(String email);
 
-    void saveUser(User user);
+    ResponseEntity saveUser(User user);
 
     List<Role> getListRole();
 
@@ -20,4 +21,6 @@ public interface UserService {
     void save(User user);
 
     void delete(int id);
+
+    User getCurrentAuthenticatedUser();
 }
