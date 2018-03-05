@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: capstone
 -- ------------------------------------------------------
--- Server version	5.7.17-log
+-- Server version	5.5.5-10.1.19-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -24,9 +24,9 @@ DROP TABLE IF EXISTS `criteria`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `criteria` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `criteria` varchar(45) NOT NULL,
+  `criteria` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -35,6 +35,7 @@ CREATE TABLE `criteria` (
 
 LOCK TABLES `criteria` WRITE;
 /*!40000 ALTER TABLE `criteria` DISABLE KEYS */;
+INSERT INTO `criteria` VALUES (1,'Chuyên cần'),(2,'Kĩ năng chuyên môn'),(3,'Giải đáp thắc mắc'),(6,'Hỗ trợ trong - ngoài giờ'),(7,'Bảo đảm giáo trình');
 /*!40000 ALTER TABLE `criteria` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -47,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-22 22:04:31
+-- Dump completed on 2018-03-05 10:59:07

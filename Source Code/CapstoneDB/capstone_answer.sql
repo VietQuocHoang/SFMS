@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: capstone
 -- ------------------------------------------------------
--- Server version	5.7.17-log
+-- Server version	5.5.5-10.1.19-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -26,8 +26,8 @@ CREATE TABLE `answer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `option_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `answer_content` varchar(255) NOT NULL,
-  `create_date` datetime NOT NULL,
+  `answer_content` text,
+  `create_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_Answer_Option1_idx` (`option_id`),
   KEY `fk_Answer_UserInformation1_idx` (`user_id`),
@@ -56,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-22 22:04:30
+-- Dump completed on 2018-03-05 10:59:03

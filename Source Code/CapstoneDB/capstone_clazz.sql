@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: capstone
 -- ------------------------------------------------------
--- Server version	5.7.17-log
+-- Server version	5.5.5-10.1.19-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -27,7 +27,7 @@ CREATE TABLE `clazz` (
   `semester_id` int(11) NOT NULL,
   `end_date` date DEFAULT NULL,
   `start_date` date DEFAULT NULL,
-  `class_name` varchar(45) NOT NULL,
+  `class_name` varchar(255) NOT NULL,
   `lecturer_id` int(11) NOT NULL,
   `course_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -40,7 +40,7 @@ CREATE TABLE `clazz` (
   CONSTRAINT `fk_Class_Semester1` FOREIGN KEY (`semester_id`) REFERENCES `semester` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_clazz_course1` FOREIGN KEY (`course_id`) REFERENCES `course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_clazz_user1` FOREIGN KEY (`lecturer_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -49,6 +49,7 @@ CREATE TABLE `clazz` (
 
 LOCK TABLES `clazz` WRITE;
 /*!40000 ALTER TABLE `clazz` DISABLE KEYS */;
+INSERT INTO `clazz` VALUES (26,1,NULL,NULL,'SE1061',6,4),(27,1,NULL,NULL,'SE1061',7,3),(28,2,NULL,NULL,'SE1062',6,1),(29,2,NULL,NULL,'SE1062',7,2),(30,3,NULL,NULL,'SE1063',6,3),(31,3,NULL,NULL,'SE1061',7,4),(32,4,NULL,NULL,'SE1062',6,5),(33,4,NULL,NULL,'SE1163',7,6),(34,5,NULL,NULL,'SE1164',6,7),(35,5,NULL,NULL,'SE1265',7,8),(36,6,NULL,NULL,'SE1266',6,9),(37,6,NULL,NULL,'SE1367',7,10);
 /*!40000 ALTER TABLE `clazz` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -61,4 +62,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-22 22:04:31
+-- Dump completed on 2018-03-05 10:59:06
