@@ -38,13 +38,17 @@ class  ModifyFeedbackAPI{
     }
 
     @PostMapping
-    private ResponseEntity<Feedback> createFeedback(){
-        return modifyService.createEmptyFeedback();
+    private ResponseEntity<Feedback> createFeedback(HttpSession session){
+        ResponseEntity<Feedback> response = modifyService.createEmptyFeedback();
+        session.setAttribute("id", response.getBody().getId());
+        return response;
     }
 
     @PostMapping("/{id}")
-    private ResponseEntity<Feedback> createFeedback(@PathVariable("id") int id){
-        return modifyService.createFeedbackFromTemplate(id);
+    private ResponseEntity<Feedback> createFeedback(@PathVariable("id") int id, HttpSession session){
+        ResponseEntity<Feedback> response = modifyService.createFeedbackFromTemplate(id);
+        session.setAttribute("id", response.getBody().getId());
+        return response;
     }
 
     @PutMapping
