@@ -105,7 +105,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     public ResponseEntity<Feedback> createFeedbackFromTemplate(int id) {
         try {
             Feedback template = feedbackRepo.findOne(id);
-            return new ResponseEntity<Feedback>(feedbackRepo.save(new Feedback(
+            return new ResponseEntity<>(feedbackRepo.save(new Feedback(
                     template.getFeedbackDes(),
                     template.getFeedbackName(),
                     template.getFeedbackDes(),
@@ -190,6 +190,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
             if (feedbackRepo.exists(model.getFeedback().getId())) {
 //                model.getFeedback().setConductors("");
 //                model.getFeedback().setViewers("");
+                Feedback f = new Feedback();
                 feedbackRepo.save(model.getFeedback());
                 return new ResponseEntity<>(HttpStatus.OK);
             } else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

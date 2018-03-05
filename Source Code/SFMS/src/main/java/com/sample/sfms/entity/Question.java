@@ -29,7 +29,7 @@ public class Question {
     }
 
     @Basic
-    @Column(name = "type", nullable = false, length = 50)
+    @Column(name = "type", nullable = false, length = 255)
     public String getType() {
         return type;
     }
@@ -39,7 +39,7 @@ public class Question {
     }
 
     @Basic
-    @Column(name = "suggestion", nullable = true, length = 50)
+    @Column(name = "suggestion", nullable = true)
     public String getSuggestion() {
         return suggestion;
     }
@@ -59,7 +59,7 @@ public class Question {
     }
 
     @Basic
-    @Column(name = "question_content", nullable = true, length = 255)
+    @Column(name = "question_content", nullable = true)
     public String getQuestionContent() {
         return questionContent;
     }
