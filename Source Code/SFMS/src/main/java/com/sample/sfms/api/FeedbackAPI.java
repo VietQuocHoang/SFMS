@@ -1,6 +1,7 @@
 package com.sample.sfms.api;
 
 import com.sample.sfms.api.responseModel.Response;
+import com.sample.sfms.entity.Answer;
 import com.sample.sfms.entity.Feedback;
 import com.sample.sfms.model.feedback.FeedbackCreateModel;
 import com.sample.sfms.model.question.AddQuestionModel;
