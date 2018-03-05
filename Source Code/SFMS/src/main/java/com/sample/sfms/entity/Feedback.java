@@ -237,7 +237,7 @@ public class Feedback {
     }
 
     @ManyToOne
-    @JoinColumn(name = "type_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "type_id", referencedColumnName = "id", nullable = true)
     public Type getTypeByTypeId() {
         return typeByTypeId;
     }
@@ -293,7 +293,7 @@ public class Feedback {
         this.questionsById = questionsById;
     }
 
-    public Feedback(String feedbackDes, String feedbackName, String templateDes, String templateName, Department departmentByDepartmentId, Course courseByCourseId, Major majorByMajorId, Clazz clazzByClazzId, Type typeByTypeId, Feedback feedbackByReferenceId, Collection<Question> questionsById) {
+    public Feedback(String feedbackDes, String feedbackName, String templateDes, String templateName, Department departmentByDepartmentId, Course courseByCourseId, Major majorByMajorId, Clazz clazzByClazzId, Type typeByTypeId, Feedback feedbackByReferenceId) {
         this.feedbackDes = feedbackDes;
         this.feedbackName = feedbackName;
         this.templateDes = templateDes;
@@ -304,9 +304,17 @@ public class Feedback {
         this.clazzByClazzId = clazzByClazzId;
         this.typeByTypeId = typeByTypeId;
         this.feedbackByReferenceId = feedbackByReferenceId;
-        this.questionsById = questionsById;
+    }
+
+    public Feedback(Department departmentByDepartmentId, Course courseByCourseId, Major majorByMajorId, Clazz clazzByClazzId, Type typeByTypeId) {
+        this.departmentByDepartmentId = departmentByDepartmentId;
+        this.courseByCourseId = courseByCourseId;
+        this.majorByMajorId = majorByMajorId;
+        this.clazzByClazzId = clazzByClazzId;
+        this.typeByTypeId = typeByTypeId;
     }
 
     public Feedback() {
+
     }
 }

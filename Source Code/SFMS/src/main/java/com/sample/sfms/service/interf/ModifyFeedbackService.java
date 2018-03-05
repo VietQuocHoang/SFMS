@@ -26,13 +26,7 @@ public interface ModifyFeedbackService {
 
     public ResponseEntity<Feedback> deleteFeedback(int id);
 
-    public ResponseEntity<ModifyFeedbackModel> addTarget(int typeId, int targetId, ModifyFeedbackModel model);
-
-    public ResponseEntity<ModifyFeedbackModel> removeTarget(int typeId, int targetId, ModifyFeedbackModel model);
-
-    public List<User> autoGenerateConductors(FeedbackDetailsModel model);
-
-    public List<User> autoGenerateViewers(FeedbackDetailsModel model);
+    public ResponseEntity<Feedback> addTarget(int typeId, int targetId);
 
     public FeedbackDetailsModel customizeConductors(FeedbackDetailsModel model, int[] conductorIds);
 
@@ -41,4 +35,10 @@ public interface ModifyFeedbackService {
     public ResponseEntity<ModifyFeedbackModel> setStart(Date start, Feedback feedback);
 
     public ResponseEntity<ModifyFeedbackModel> setEnd(Date end, Feedback feedback);
+
+    public ResponseEntity<List<User>> loadConductors(int id);//id of feedback contains target
+
+    public ResponseEntity<List<User>> loadViewers(int id);//id of feedback contains target
+
+    public ResponseEntity<List<User>> loadTargets(int[] id);//ids of feedbacks contain targets
 }

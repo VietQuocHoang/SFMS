@@ -105,4 +105,12 @@ public class UserFeedback {
     public void setFeedbackByFeedbackId(Feedback feedbackByFeedbackId) {
         this.feedbackByFeedbackId = feedbackByFeedbackId;
     }
+
+    public UserFeedback(int userId, int feedbackId, boolean isConductor, boolean isViewer, boolean isConducted) {
+        this.userId = userId;
+        this.feedbackId = feedbackId;
+        this.isConductor = isConductor;
+        this.isViewer = isViewer;
+        this.isConducted = isConducted;
+    }
 }

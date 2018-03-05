@@ -19,12 +19,19 @@ public class ModifyFeedbackController {
     @Autowired
     ModifyFeedbackService modifyService;
 
-    @GetMapping(value = "modify-feedback/create/{id}")
+    @GetMapping(value = "/modify-feedback-create")
+    private ModelAndView createFeedbackModel(HttpSession session){
+        ModelAndView mv = new ModelAndView("create-feedback-content");
+        Feedback response = modifyService.createEmptyFeedback().getBody();
+        session.setAttribute("id", response.getId());
+        mv.addObject("MFModel", response);
+        return mv;
+    }
+
+    @GetMapping(value = "/modify-feedback-create/{id}")
     private ModelAndView createFeedbackModel(@PathVariable("templateId") int templateId, HttpSession session){
         ModelAndView mv = new ModelAndView("create-feedback-content");
-        Feedback response;
-        if(templateId==0) response = modifyService.createEmptyFeedback().getBody();
-        else response = modifyService.createFeedbackFromTemplate(templateId).getBody();
+        Feedback response = modifyService.createFeedbackFromTemplate(templateId).getBody();
         session.setAttribute("id", response.getId());
         mv.addObject("MFModel", response);
         return mv;
