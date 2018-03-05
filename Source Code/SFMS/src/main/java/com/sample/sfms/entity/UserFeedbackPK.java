@@ -50,4 +50,9 @@ public class UserFeedbackPK implements Serializable{
         result = 31 * result + feedbackId;
         return result;
     }
+
+    public UserFeedbackPK(int userId, int feedbackId) {
+        this.userId = userId;
+        this.feedbackId = feedbackId;
+    }
 }
