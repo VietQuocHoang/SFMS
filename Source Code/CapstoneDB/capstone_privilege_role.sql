@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: capstone
 -- ------------------------------------------------------
--- Server version	5.7.17-log
+-- Server version	5.5.5-10.1.19-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -41,7 +41,7 @@ CREATE TABLE `privilege_role` (
 
 LOCK TABLES `privilege_role` WRITE;
 /*!40000 ALTER TABLE `privilege_role` DISABLE KEYS */;
-INSERT INTO `privilege_role` VALUES (6,3),(6,4);
+INSERT INTO `privilege_role` VALUES (1,3),(1,4),(2,1),(2,2),(3,1),(3,2),(4,1),(4,2),(5,1),(5,2),(6,3),(6,4);
 /*!40000 ALTER TABLE `privilege_role` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-22 22:04:31
+-- Dump completed on 2018-03-05 10:59:04

@@ -26,7 +26,7 @@ public class Answer {
     }
 
     @Basic
-    @Column(name = "answer_content", nullable = false, length = 255)
+    @Column(name = "answer_content", nullable = true, length = 255)
     public String getAnswerContent() {
         return answerContent;
     }

@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: capstone
 -- ------------------------------------------------------
--- Server version	5.7.17-log
+-- Server version	5.5.5-10.1.19-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -41,6 +41,7 @@ CREATE TABLE `major_course` (
 
 LOCK TABLES `major_course` WRITE;
 /*!40000 ALTER TABLE `major_course` DISABLE KEYS */;
+INSERT INTO `major_course` VALUES (9,11),(9,12),(10,13),(10,14),(11,15),(11,16),(12,17),(12,18),(13,19),(14,20),(14,21),(15,1),(15,2),(15,3),(15,4),(15,5),(15,7),(15,8),(15,9),(15,10),(16,22),(16,23),(17,24),(19,25),(20,26),(20,27),(20,28),(20,29),(20,30),(21,31),(21,32),(21,33),(21,34),(21,35),(21,36),(21,37),(21,38),(21,39),(22,40),(22,41),(23,42),(23,43),(24,44),(24,45),(25,46),(25,47);
 /*!40000 ALTER TABLE `major_course` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-22 22:04:30
+-- Dump completed on 2018-03-05 10:59:02

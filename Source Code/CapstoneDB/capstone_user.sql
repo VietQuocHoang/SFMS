@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: capstone
 -- ------------------------------------------------------
--- Server version	5.7.17-log
+-- Server version	5.5.5-10.1.19-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -24,11 +24,11 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) DEFAULT NULL,
-  `password` varchar(50) DEFAULT NULL,
-  `fullname` varchar(50) DEFAULT NULL,
-  `code` varchar(10) DEFAULT NULL,
-  `mail` varchar(50) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `fullname` varchar(255) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `mail` varchar(255) DEFAULT NULL,
   `birth` date DEFAULT NULL,
   `status` tinyint(1) DEFAULT NULL,
   `department_id` int(11) DEFAULT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE `user` (
   CONSTRAINT `fk_user_department1` FOREIGN KEY (`department_id`) REFERENCES `department` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_user_major1` FOREIGN KEY (`major_id`) REFERENCES `major` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_user_role1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='		';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='		';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -53,6 +53,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'thuanthm','1','Trần Hồ Minh Thuấn','SE61882','thuanthmse61882@fpt.edu.vn','0000-00-00',1,NULL,6,1),(2,'viethq','1','Hoàng Quốc Việt','SE61882','thuanthmse61882@fpt.edu.vn','0000-00-00',1,NULL,6,1),(3,'hoangtt','1','Thái Tiến Hoàng','SE61882','thuanthmse61882@fpt.edu.vn','1996-08-03',1,NULL,6,1),(4,'tunv','1','Nguyễn Việt Tú','SE61882','thuanthmse61882@fpt.edu.vn','1996-01-06',1,NULL,6,1),(5,'admin','1','Nguyễn Huy Hùng','HungNH','hungnh@fpt.edu.vn','0000-00-00',1,2,2,1),(6,'lecturer','1','Nguyễn Huy Hoàng','HoangNH','hoangnh@fpt.edu.vn','0000-00-00',1,2,1,1),(7,'lecturer2','1','Nguyễn Huy Hiệu','HieuNH','hieunh@fpt.edu.vn','0000-00-00',1,2,1,1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -65,4 +66,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-22 22:04:30
+-- Dump completed on 2018-03-05 10:59:01

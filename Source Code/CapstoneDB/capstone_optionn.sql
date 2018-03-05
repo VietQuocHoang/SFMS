@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: capstone
 -- ------------------------------------------------------
--- Server version	5.7.17-log
+-- Server version	5.5.5-10.1.19-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -24,9 +24,9 @@ DROP TABLE IF EXISTS `optionn`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `optionn` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `option_content` varchar(50) DEFAULT NULL,
+  `option_content` text,
   `point` float DEFAULT NULL,
-  `question_id` int(11) DEFAULT NULL,
+  `question_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_Option_Question1_idx` (`question_id`),
   CONSTRAINT `FKbykq7jjnm2rawv0ws669o86hy` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`),
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-22 22:04:30
+-- Dump completed on 2018-03-05 10:59:02

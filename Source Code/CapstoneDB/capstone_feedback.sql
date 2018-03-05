@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: capstone
 -- ------------------------------------------------------
--- Server version	5.7.17-log
+-- Server version	5.5.5-10.1.19-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -41,8 +41,7 @@ CREATE TABLE `feedback` (
   `template_des` varchar(255) DEFAULT NULL,
   `template_name` varchar(255) DEFAULT NULL,
   `is_published` tinyint(4) DEFAULT NULL,
-  `conductors` longtext,
-  `viewers` longtext,
+  `semester_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_Feedback_Type1_idx` (`type_id`),
   KEY `fk_Feedback_Info1_idx` (`clazz_id`),
@@ -51,7 +50,9 @@ CREATE TABLE `feedback` (
   KEY `fk_Feedback_Department1_idx` (`department_id`),
   KEY `fk_Feedback_UserInformation1_idx` (`creator_id`),
   KEY `fk_Feedback_Feedback1_idx` (`reference_id`),
+  KEY `FK6uyfvdt6pynbadr7ojqsbjyxh` (`semester_id`),
   CONSTRAINT `FK5ifya7npo8o9by8w03t3tpjv7` FOREIGN KEY (`major_id`) REFERENCES `major` (`id`),
+  CONSTRAINT `FK6uyfvdt6pynbadr7ojqsbjyxh` FOREIGN KEY (`semester_id`) REFERENCES `semester` (`id`),
   CONSTRAINT `FK7wi6mvied4ds2jygaywvfrs4v` FOREIGN KEY (`clazz_id`) REFERENCES `clazz` (`id`),
   CONSTRAINT `FKau3o7f0hohmh8aookeoqb423w` FOREIGN KEY (`reference_id`) REFERENCES `feedback` (`id`),
   CONSTRAINT `FKdpfiqfk0mpmsenpdk5nh2xd1x` FOREIGN KEY (`creator_id`) REFERENCES `user` (`id`),
@@ -86,4 +87,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-22 22:04:29
+-- Dump completed on 2018-03-05 10:58:57
