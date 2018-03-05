@@ -27,7 +27,7 @@ public class Optionn {
     }
 
     @Basic
-    @Column(name = "option_content", nullable = true, length = 50)
+    @Column(name = "option_content", nullable = true)
     public String getOptionnContent() {
         return optionnContent;
     }
