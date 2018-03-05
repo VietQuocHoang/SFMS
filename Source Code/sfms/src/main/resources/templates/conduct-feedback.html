@@ -1,342 +1,254 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <meta name="ctx" th:content="${#httpServletRequest.getContextPath()}"/>
     <title>Làm feedback</title>
-    <!-- Bootstrap core CSS-->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-    <!-- Custom fonts for this template-->
-    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-    <!-- jQuery UI -->
-    <link href="vendor/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
+    <div th:replace="fragments/core-css"></div>
     <!-- custom style -->
-    <link href="css/conduct-feedback.css" rel="stylesheet" type="text/css"/>
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="vendor/jquery-ui/jquery-ui.min.js"></script>
+    <link th:href="@{/css/conduct-feedback.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/custom-style.css}" rel="stylesheet" type="text/css"/>
+    <div th:replace="fragments/core-script"></div>
     <!-- custom script -->
-    <script src="js/conduct-feedback.js"></script>
+    <script th:src="@{/js/conduct-feedback.js}"></script>
 </head>
 
 <body>
 <div class="container">
+    <div class="row justify-content-center">
+        <div class="feedback-title-wrapper">
+            <h3 class="feedback-title" th:text="${feedback.feedbackName}"></h3>
+            <hr/>
+            <p class="warning-text">Vui lòng hoàn thành các câu hỏi bắt buộc</p>
+        </div>
+    </div>
     <!-- div feedback content -->
     <div class="row justify-content-center">
         <div class="col-sm-12 col-12 col-md-6 col-xl-6 col-lg-6 text-center feedback-content">
-            <h3 class="feedback-title">Feedback cho môn học PRJ321 lớp SE1067</h3>
-            <hr/>
-            <p>Vui lòng hoàn thành các câu hỏi </p>
-            <form>
-                <div class="feedback-page page-active">
-                    <div class="card">
+            <!--<th:block th:with="numOfPage = ${feedback.questionsById.size()%3==0}?${feedback.questionsById.size()/3}:${(feedback.questionsById.size()/3) + 1}">-->
+            <!--<form>-->
+            <!---->
+            <!--</form>-->
+            <!--</th:block>-->
+            <th:block th:each="index:${#numbers.sequence(0,feedback.questionsById.size(),3)}">
+                <div th:class="${index==0}?'feedback-page page-active':'feedback-page'">
+                    <div class="card"
+                         th:classappend="${'question-' + feedback.questionsById.get(index).id} + (${feedback.questionsById.get(index).isRequied}?' required': '')">
                         <div class="card-header">
-                            Câu hỏi 1
+                            Câu hỏi <p th:text="${index+1}" th:remove="tag"></p>
+                            <span th:class="${feedback.questionsById.get(index).isRequied}?'required-question active':'required-question'">*</span>
+                            <!--TODO sửa lại cái này -->
                         </div>
                         <div class="card-block">
-                            <p class="card-text">
-                                Tốc độ giảng dạy của giảng viên có phù hợp với bạn hay không?
-                            <div class="form-group">
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-1"/> Quá nhanh
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-1"/> Nhanh
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-1"/> Vừa
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-1"/> Hơi chậm
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-1"/> Chậm
-                                    </label>
-                                </div>
-                            </div>
+                            <p class="card-text" th:text="${feedback.questionsById.get(index).questionContent}">
                             </p>
+                            <div class="answer-block" th:classappend="${feedback.questionsById.get(index).type}">
+                                <th:block th:switch="${feedback.questionsById.get(index).type}">
+                                    <div th:case="checkbox" th:remove="tag">
+                                        <div th:each="option: ${feedback.questionsById.get(index).optionsById}"
+                                             th:class="form-check">
+                                            <label class="form-check-label">
+                                                <input th:class="${option.point==0}?'form-check-input other-option':'form-check-input'"
+                                                       type="checkbox" th:value="${option.id}"
+                                                       th:name="${feedback.questionsById.get(index).id}"/>
+                                                <p th:text="${option.optionnContent}"></p>
+                                            </label>
+                                            <th:block th:if="${option.point == 0}">
+                                                <div class="other-option-input-wrapper">
+                                                    <input type="text" class="other-option-input" th:name="${option.id}"
+                                                           placeholder="Nhập câu trả lời của bạn vào đây">
+                                                </div>
+                                            </th:block>
+                                        </div>
+                                    </div>
+                                    <div th:case="radio" th:remove="tag">
+                                        <div th:each="option: ${feedback.questionsById.get(index).optionsById}"
+                                             th:class="form-check">
+                                            <label class="form-check-label">
+                                                <input th:class="${option.point==0}?'form-check-input other-option':'form-check-input'"
+                                                       type="radio" th:value="${option.id}"
+                                                       th:name="${feedback.questionsById.get(index).id}"/>
+                                                <p th:text="${option.optionnContent}"></p>
+                                            </label>
+                                            <th:block th:if="${option.point == 0}">
+                                                <div class="other-option-input-wrapper">
+                                                    <input type="text" class="other-option-input" th:name="${option.id}"
+                                                           placeholder="Nhập câu trả lời của bạn vào đây">
+                                                </div>
+                                            </th:block>
+                                        </div>
+                                    </div>
+                                    <div th:case="textarea" th:class="form-group">
+                                        <div th:each="option:${feedback.questionsById.get(index).optionsById}"
+                                             th:remove="tag">
+                                            <textarea class="form-control" th:name="${option.id}"></textarea>
+                                        </div>
+                                    </div>
+                                    <div th:case="textfield" th:class="form-group">
+                                        <div th:each="option:${feedback.questionsById.get(index).optionsById}"
+                                             th:remove="tag">
+                                            <input type="text" class="form-control" th:name="${option.id}">
+                                        </div>
+                                    </div>
+                                    <div th:case="star" th:class="form-rating">
+                                        <label th:each="option:${feedback.questionsById.get(index).optionsById}">
+                                            <input type="radio" class="input-star"
+                                                   th:name="${feedback.questionsById.get(index).id}" hidden
+                                                   th:value="${option.id}">
+                                            <span class="star-rating">★</span>
+                                        </label>
+                                    </div>
+                                </th:block>
+                            </div>
                         </div>
                     </div>
-                    <div class="card">
+                    <div class="card"
+                         th:classappend="${'question-' + feedback.questionsById.get(index+1).id} + (${feedback.questionsById.get(index+1).isRequied}?' required': '')"
+                         th:if="${(index+1)<feedback.questionsById.size()}">
                         <div class="card-header">
-                            Câu hỏi 2
+                            Câu hỏi <p th:text="${index+2}" th:remove="tag"></p>
+                            <span th:class="${feedback.questionsById.get(index+1).isRequied}?'required-question active':'required-question'">*</span>
+                            <!--TODO sửa lại cái này -->
                         </div>
                         <div class="card-block">
-                            <p class="card-text">
-                                Giáo án của giáo viên có đảm bảo kiến thức môn học không?
-                            <div class="form-group">
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-2"/> Đã đầy đủ và có
-                                        những kiến thức thực tế bổ ích
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-2"/> Đã đầy đủ nhưng
-                                        chưa có kiến thức thực tế nhiều
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-2"/> Chưa đầy đủ
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-2"/> Giáo viên bỏ và
-                                        dạy lướt qua nhiều phần quan trọng
-                                    </label>
-                                </div>
-                            </div>
+                            <p class="card-text" th:text="${feedback.questionsById.get(index+1).questionContent}">
                             </p>
+                            <div class="answer-block" th:classappend="${feedback.questionsById.get(index+1).type}">
+                                <th:block th:switch="${feedback.questionsById.get(index+1).type}">
+                                    <div th:case="checkbox" th:remove="tag">
+                                        <div th:each="option: ${feedback.questionsById.get(index+1).optionsById}"
+                                             th:class="form-check">
+                                            <label class="form-check-label">
+                                                <input th:class="${option.point==0}?'form-check-input other-option':'form-check-input'"
+                                                       type="checkbox" th:value="${option.id}"
+                                                       th:name="${feedback.questionsById.get(index+1).id}"/>
+                                                <p th:text="${option.optionnContent}"></p>
+                                            </label>
+                                            <th:block th:if="${option.point == 0}">
+                                                <div class="other-option-input-wrapper">
+                                                    <input type="text" class="other-option-input" th:name="${option.id}"
+                                                           placeholder="Nhập câu trả lời của bạn vào đây">
+                                                </div>
+                                            </th:block>
+                                        </div>
+                                    </div>
+                                    <div th:case="radio" th:remove="tag">
+                                        <div th:each="option: ${feedback.questionsById.get(index+1).optionsById}"
+                                             th:class="form-check">
+                                            <label class="form-check-label">
+                                                <input th:class="${option.point==0}?'form-check-input other-option':'form-check-input'"
+                                                       type="radio" th:value="${option.id}"
+                                                       th:name="${feedback.questionsById.get(index+1).id}"/>
+                                                <p th:text="${option.optionnContent}"></p>
+                                            </label>
+                                            <th:block th:if="${option.point == 0}">
+                                                <div class="other-option-input-wrapper">
+                                                    <input type="text" class="other-option-input" th:name="${option.id}"
+                                                           placeholder="Nhập câu trả lời của bạn vào đây">
+                                                </div>
+                                            </th:block>
+                                        </div>
+                                    </div>
+                                    <div th:case="textarea" th:class="form-group">
+                                        <div th:each="option:${feedback.questionsById.get(index+1).optionsById}"
+                                             th:remove="tag">
+                                            <textarea class="form-control" th:name="${option.id}"></textarea>
+                                        </div>
+                                    </div>
+                                    <div th:case="textfield" th:class="form-group">
+                                        <div th:each="option:${feedback.questionsById.get(index+1).optionsById}"
+                                             th:remove="tag">
+                                            <input type="text" class="form-control" th:name="${option.id}">
+                                        </div>
+                                    </div>
+                                    <div th:case="star" th:class="form-rating">
+                                        <label th:each="option:${feedback.questionsById.get(index+1).optionsById}">
+                                            <input type="radio" class="input-star"
+                                                   th:name="${feedback.questionsById.get(index+1).id}" hidden
+                                                   th:value="${option.id}">
+                                            <span class="star-rating">★</span>
+                                        </label>
+                                    </div>
+                                </th:block>
+                            </div>
                         </div>
                     </div>
-                    <div class="card">
+                    <div class="card"
+                         th:classappend="${'question-' + feedback.questionsById.get(index+2).id} + (${feedback.questionsById.get(index+2).isRequied}?' required': '')"
+                         th:if="${(index+2)<feedback.questionsById.size()}">
                         <div class="card-header">
-                            Câu hỏi 3
+                            Câu hỏi <p th:text="${index+3}" th:remove="tag"></p>
+                            <span th:class="${feedback.questionsById.get(index+2).isRequied}?'required-question active':'required-question'">*</span>
+                            <!--TODO sửa lại cái này -->
                         </div>
                         <div class="card-block">
-                            <p class="card-text">
-                                Các giải đáp của bạn có được giải quyết vào lúc nào?
-                            <div class="form-group">
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox"/> Ngay sau khi câu hỏi được đề
-                                        ra
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox"/> Sau giờ học
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox"/> Trước giờ học
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="checkbox"/> Không được giải đáp
-                                    </label>
-                                </div>
-                            </div>
+                            <p class="card-text" th:text="${feedback.questionsById.get(index+2).questionContent}">
                             </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="feedback-page">
-                    <div class="card">
-                        <div class="card-header">
-                            Câu hỏi 4
-                        </div>
-                        <div class="card-block">
-                            <p class="card-text">
-                                Tốc độ giảng dạy của giảng viên có phù hợp với bạn hay không?
-                            <div class="form-group">
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-1"/> Quá nhanh
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-1"/> Nhanh
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-1"/> Vừa
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-1"/> Hơi chậm
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-1"/> Chậm
-                                    </label>
-                                </div>
+                            <div class="answer-block" th:classappend="${feedback.questionsById.get(index+2).type}">
+                                <th:block th:switch="${feedback.questionsById.get(index+2).type}">
+                                    <div th:case="checkbox" th:remove="tag">
+                                        <div th:each="option: ${feedback.questionsById.get(index+2).optionsById}"
+                                             th:class="form-check">
+                                            <label class="form-check-label">
+                                                <input th:class="${option.point==0}?'form-check-input other-option':'form-check-input'"
+                                                       type="checkbox" th:value="${option.id}"
+                                                       th:name="${feedback.questionsById.get(index+2).id}"/>
+                                                <p th:text="${option.optionnContent}"></p>
+                                            </label>
+                                            <th:block th:if="${option.point == 0}">
+                                                <div class="other-option-input-wrapper">
+                                                    <input type="text" class="other-option-input" th:name="${option.id}"
+                                                           placeholder="Nhập câu trả lời của bạn vào đây">
+                                                </div>
+                                            </th:block>
+                                        </div>
+                                    </div>
+                                    <div th:case="radio" th:remove="tag">
+                                        <div th:each="option: ${feedback.questionsById.get(index+2).optionsById}"
+                                             th:class="form-check">
+                                            <label class="form-check-label">
+                                                <input th:class="${option.point==0}?'form-check-input other-option':'form-check-input'"
+                                                       type="radio" th:value="${option.id}"
+                                                       th:name="${feedback.questionsById.get(index+2).id}"/>
+                                                <p th:text="${option.optionnContent}"></p>
+                                            </label>
+                                            <th:block th:if="${option.point == 0}">
+                                                <div class="other-option-input-wrapper">
+                                                    <input type="text" class="other-option-input" th:name="${option.id}"
+                                                           placeholder="Nhập câu trả lời của bạn vào đây">
+                                                </div>
+                                            </th:block>
+                                        </div>
+                                    </div>
+                                    <div th:case="textarea" th:class="form-group">
+                                        <div th:each="option:${feedback.questionsById.get(index+2).optionsById}"
+                                             th:remove="tag">
+                                            <textarea class="form-control" th:name="${option.id}"></textarea>
+                                        </div>
+                                    </div>
+                                    <div th:case="textfield" th:class="form-group">
+                                        <div th:each="option:${feedback.questionsById.get(index+2).optionsById}"
+                                             th:remove="tag">
+                                            <input type="text" class="form-control" th:name="${option.id}">
+                                        </div>
+                                    </div>
+                                    <div th:case="star" th:class="form-rating">
+                                        <label th:each="option:${feedback.questionsById.get(index+2).optionsById}">
+                                            <input type="radio" class="input-star"
+                                                   th:name="${feedback.questionsById.get(index+2).id}" hidden
+                                                   th:value="${option.id}">
+                                            <span class="star-rating">★</span>
+                                        </label>
+                                    </div>
+                                </th:block>
                             </div>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            Câu hỏi 5
-                        </div>
-                        <div class="card-block">
-                            <p class="card-text">
-                                Giáo án của giáo viên có đảm bảo kiến thức môn học không?
-                            <div class="form-group">
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-2"/> Đã đầy đủ và có
-                                        những kiến thức thực tế bổ ích
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-2"/> Đã đầy đủ nhưng
-                                        chưa có kiến thức thực tế nhiều
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-2"/> Chưa đầy đủ
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-2"/> Giáo viên bỏ và
-                                        dạy lướt qua nhiều phần quan trọng
-                                    </label>
-                                </div>
-                            </div>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            Câu hỏi 6
-                        </div>
-                        <div class="card-block">
-                            <p class="card-text">
-                                Giáo án của giáo viên có đảm bảo kiến thức môn học không?
-                            <div class="form-group">
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-2"/> Đã đầy đủ và có
-                                        những kiến thức thực tế bổ ích
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-2"/> Đã đầy đủ nhưng
-                                        chưa có kiến thức thực tế nhiều
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-2"/> Chưa đầy đủ
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-2"/> Giáo viên bỏ và
-                                        dạy lướt qua nhiều phần quan trọng
-                                    </label>
-                                </div>
-                            </div>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="feedback-page">
-                    <div class="card">
-                        <div class="card-header">
-                            Câu hỏi 7
-                        </div>
-                        <div class="card-block">
-                            <p class="card-text">
-                                Tốc độ giảng dạy của giảng viên có phù hợp với bạn hay không?
-                            <div class="form-group">
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-1"/> Quá nhanh
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-1"/> Nhanh
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-1"/> Vừa
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-1"/> Hơi chậm
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-1"/> Chậm
-                                    </label>
-                                </div>
-                            </div>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            Câu hỏi 8
-                        </div>
-                        <div class="card-block">
-                            <p class="card-text">
-                                Giáo án của giáo viên có đảm bảo kiến thức môn học không?
-                            <div class="form-group">
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-2"/> Đã đầy đủ và có
-                                        những kiến thức thực tế bổ ích
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-2"/> Đã đầy đủ nhưng
-                                        chưa có kiến thức thực tế nhiều
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-2"/> Chưa đầy đủ
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" name="answer-2"/> Giáo viên bỏ và
-                                        dạy lướt qua nhiều phần quan trọng
-                                    </label>
-                                </div>
-                            </div>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            Câu hỏi 9
-                        </div>
-                        <div class="card-block">
-                            <p class="card-text">
-                                Bạn có góp ý gì thêm cho giáo viên cũng như môn học này không?
-                            <div class="form-group">
-                                <textarea class="form-control" placeholder="Ghi đề xuất của bạn vào đây"></textarea>
-                            </div>
-                            </p>
                         </div>
                     </div>
                 </div>
-            </form>
+            </th:block>
         </div>
 
     </div>
@@ -363,7 +275,7 @@
                 </div>
             </div>
             <div class="col-4">
-                <button class="btn btn-submit col-12" data-toggle="modal" data-target="#confirmModal" disabled="true">
+                <button class="btn col-12 btn-submit" data-toggle="modal" data-target="#confirmModal" disabled="true">
                     Gửi kết quả
                 </button>
             </div>
@@ -390,7 +302,7 @@
 
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button formaction='view-list-feedback' type="button" class="btn btn-submit">Gửi</button>
+                <button type="button" id="btn-submit-form" class="btn btn-submit">Gửi</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
             </div>
 
