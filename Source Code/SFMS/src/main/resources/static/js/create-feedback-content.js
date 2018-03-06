@@ -846,7 +846,8 @@ $(".btn-add-new").on('click', (event) => {
 
 //Start Add/edit/remove question
 class Feedback {
-    constructor() {
+    constructor(id) {
+        this.id = id;
         this.questions = [];
     }
 }
@@ -876,7 +877,10 @@ class Option {
 }
 
 function getQuestions() {
-    let feedback = new Feedback();
+    var feedbackID = document.getElementById("feedbackID").innerHTML;
+    alert(feedbackID);
+
+    let feedback = new Feedback(feedbackID);
 
     //Lấy hết các div chứa question
     let allQuestions = $("div[class='question-container']");
@@ -939,10 +943,12 @@ function saveFeedback(feedback) {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        url: '/sfms/api/feedbacks/save-feedback',
+        url: '/sfms/api/feedbacks/save-question',
         type: 'POST',
         data: JSON.stringify(feedback),
-        success: (data) => alert(data.message),
+        success: function(data) {
+                window.location=data.message;
+            },
         error: (err) => alert(err)
     });
 }

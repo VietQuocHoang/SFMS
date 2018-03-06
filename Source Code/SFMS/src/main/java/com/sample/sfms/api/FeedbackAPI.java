@@ -39,19 +39,20 @@ public class FeedbackAPI {
         return feedbackService.findFeedbackById(id);
     }
 
-    @RequestMapping(value = "/save-feedback", method = RequestMethod.POST)
+    @RequestMapping(value = "/save-question", method = RequestMethod.POST)
     @Transactional
-    public Response saveFeedback(@RequestBody FeedbackCreateModel model) {
+    public Response saveQuestion(@RequestBody FeedbackCreateModel model) {
         if(model.valid()) {
             try {
-                int feedbackId = feedbackService.save(model);
+                //int feedbackId = feedbackService.save(model);
+                int feedbackId = model.getId();
 
                 for (AddQuestionModel question :
                         model.getQuestions()) {
                     question.setFeedbackId(feedbackId);
                     questionService.addQuestion(question);
                 }
-                return new Response(true, "");
+                return new Response(true, "overview-feedback");
             } catch (Exception ex) {
                 return new Response(false, ex.getMessage());
             }

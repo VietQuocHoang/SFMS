@@ -7,6 +7,8 @@ import java.util.List;
 
 public class FeedbackCreateModel extends Model {
 
+    private int id;
+
     private List<AddQuestionModel> questions;
 
     public FeedbackCreateModel(List<AddQuestionModel> questions) {
@@ -14,6 +16,14 @@ public class FeedbackCreateModel extends Model {
     }
 
     public FeedbackCreateModel() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public List<AddQuestionModel> getQuestions() {
