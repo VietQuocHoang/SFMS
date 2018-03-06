@@ -32,19 +32,19 @@ class  ModifyFeedbackAPI{
     @Autowired
     ModifyFeedbackService modifyService;
 
-    @GetMapping("/{id}")
+    @GetMapping("/create/{id}")
     private ResponseEntity<Feedback> getFeedback(@PathVariable("id") int id){
         return modifyService.getFeedback(id);
     }
 
     @PostMapping
-    private ResponseEntity<Feedback> createFeedback(HttpSession session){
-        ResponseEntity<Feedback> response = modifyService.createEmptyFeedback();
+    private ResponseEntity<Feedback> createFeedback(HttpSession session, @RequestParam("title")String title, @RequestParam("description")String description){
+        ResponseEntity<Feedback> response = modifyService.createEmptyFeedback(title, description);
         session.setAttribute("id", response.getBody().getId());
         return response;
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/create/{id}")
     private ResponseEntity<Feedback> createFeedback(@PathVariable("id") int id, HttpSession session){
         ResponseEntity<Feedback> response = modifyService.createFeedbackFromTemplate(id);
         session.setAttribute("id", response.getBody().getId());

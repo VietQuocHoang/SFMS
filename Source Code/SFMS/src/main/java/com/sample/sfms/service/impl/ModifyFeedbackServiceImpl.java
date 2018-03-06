@@ -128,9 +128,9 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
 
 
     @Override
-    public ResponseEntity<Feedback> createEmptyFeedback() {
+    public ResponseEntity<Feedback> createEmptyFeedback(String title, String description) {
         try {
-            return new ResponseEntity<Feedback>(feedbackRepo.save(new Feedback()), HttpStatus.OK);
+            return new ResponseEntity<Feedback>(feedbackRepo.save(new Feedback(description, title)), HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

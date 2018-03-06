@@ -314,6 +314,11 @@ public class Feedback {
         this.typeByTypeId = typeByTypeId;
     }
 
+    public Feedback(String feedbackDes, String feedbackName) {
+        this.feedbackDes = feedbackDes;
+        this.feedbackName = feedbackName;
+    }
+
     public Feedback() {
 
     }

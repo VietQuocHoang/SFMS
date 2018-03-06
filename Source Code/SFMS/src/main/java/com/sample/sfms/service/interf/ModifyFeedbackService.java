@@ -16,7 +16,7 @@ public interface ModifyFeedbackService {
 
     public ResponseEntity<Feedback> getFeedback(int id);
 
-    public ResponseEntity<Feedback> createEmptyFeedback();
+    public ResponseEntity<Feedback> createEmptyFeedback(String title, String description);
 
     public ResponseEntity<Feedback> createFeedbackFromTemplate(int id);
 
