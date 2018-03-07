@@ -197,7 +197,7 @@ if (allDone) {
             url: _ctx + "/conduct-feedback/save",
             success: (data, status, xhr) => {
             if (xhr.status === 200) {
-        window.location.href = _ctx + "/view-list-feedback/list" //TODO đổi lại cái này về trang list feedback
+        window.location.href = _ctx + "/view-list-feedback" //TODO đổi lại cái này về trang list feedback
     } else if (xhr.status === 403) {
         window.location.href = _ctx + "/logout"
     } else {

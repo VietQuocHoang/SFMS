@@ -33,7 +33,7 @@
             <!---->
             <!--</form>-->
             <!--</th:block>-->
-            <th:block th:each="index:${#numbers.sequence(0,feedback.questionsById.size(),4)}">
+            <th:block th:each="index:${#numbers.sequence(0,feedback.questionsById.size(),3)}">
                 <div th:class="${index==0}?'feedback-page page-active':'feedback-page'">
                     <div class="card"
                          th:classappend="${'question-' + feedback.questionsById.get(index).id} + (${feedback.questionsById.get(index).isRequied}?' required': '')">

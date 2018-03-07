@@ -927,7 +927,7 @@ function getQuestions() {
             feedback.questions.push(new Question(title, null, "Text", required, criteriaId, false));
         }
         else if (id.indexOf("textarea-question") >= 0) {
-            feedback.questions.push(new Question(title, null, "Paragraph", required, criteriaId, false));
+            feedback.questions.push(new Question(title, null, "TextArea", required, criteriaId, false));
         }
         else if (id.indexOf("star-question") >= 0) {
             feedback.questions.push(new Question(title, null, "Star", required, criteriaId, false));
