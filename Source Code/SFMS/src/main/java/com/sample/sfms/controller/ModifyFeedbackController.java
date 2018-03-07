@@ -28,7 +28,7 @@ public class ModifyFeedbackController {
     QuestionService questionService;
 
     @PostMapping(value = "/modify-feedback/create")
-    private ModelAndView createFeedbackModel(@RequestParam("title") String title, @RequestParam("description") String description, HttpSession session){
+    private ModelAndView createFeedbackModel(@RequestParam("title") String title, @RequestParam("description") String description, HttpSession session) {
         ModelAndView mv = new ModelAndView("redirect:/create-feedback-content");
         Feedback response = modifyService.createEmptyFeedback(title, description).getBody();
         session.setAttribute("id", response.getId());
@@ -38,13 +38,36 @@ public class ModifyFeedbackController {
     }
 
     @PostMapping(value = "/modify-feedback/create/{id}")
-    private ModelAndView createFeedbackModel(@PathVariable("templateId") int templateId, HttpSession session){
+    private ModelAndView createFeedbackModel(@PathVariable("templateId") int templateId, HttpSession session) {
         ModelAndView mv = new ModelAndView("redirect:/create-feedback-content");
         Feedback response = modifyService.createFeedbackFromTemplate(templateId).getBody();
         session.setAttribute("id", response.getId());
         mv.addObject("MFModel", response);
         return mv;
     }
+
+    @GetMapping(value = "/modify-feedback-overview")
+    private ModelAndView getFeedbackOverview(HttpSession session) {
+        ModelAndView mv = new ModelAndView("overview-feedback");
+        Feedback feedback = modifyService.getFeedback(Integer.parseInt(session.getAttribute("id").toString())).getBody();
+        mv.addObject("feedback", feedback);
+        switch (feedback.getTypeByTypeId().getDescription()) {
+            case "Chuyên ngành":
+                mv.addObject("targets", modifyService.loadDepartmentTargets((int[]) session.getAttribute("targetIds")));
+                break;
+            case "Môn học":
+                mv.addObject("targets",modifyService.loadCourseTargets((int[])session.getAttribute("targetIds")));
+                break;
+            case "Lớp học":
+                mv.addObject("targets",modifyService.loadClazzTargets((int[])session.getAttribute("targetIds")));
+                break;
+            case "Phòng ban":
+                mv.addObject("targets",modifyService.loadDepartmentTargets((int[])session.getAttribute("targetIds")));
+                break;
+        }
+        return mv;
+    }
+
 
   /*  @PostMapping(value = "/save-question")
     private ModelAndView saveQuestion(@RequestBody FeedbackCreateModel model) {
