@@ -1,5 +1,6 @@
 class Feedback {
-    constructor() {
+    constructor(id) {
+        this.id = id;
         this.questions = [];
     }
 }
