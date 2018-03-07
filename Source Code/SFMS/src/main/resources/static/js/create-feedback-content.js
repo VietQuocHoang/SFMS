@@ -910,7 +910,7 @@ function getQuestions() {
                 options.push(new Option(optionDivs[j].value, weightDivs[j].value));
             }
 
-            feedback.questions.push(new Question(title, options, "MultiChoice", required, criteriaId, requireOther.checked));
+            feedback.questions.push(new Question(title, options, "Radio", required, criteriaId, requireOther.checked));
         }
         else if (id.indexOf("checkbox-question") >= 0) {
             //Có cần option khác
