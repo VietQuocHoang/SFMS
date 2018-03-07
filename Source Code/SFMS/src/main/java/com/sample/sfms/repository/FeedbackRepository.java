@@ -28,4 +28,19 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
    int findByMajorIdAndSemesterId(@Param("majorID")int majorID,
                                    @Param("semesterID")String semesterID);
 
+   @Query("select f from Feedback f, Semester s, Department d where " +
+           "f.departmentByDepartmentId = d.id AND f.semesterBySemesterId = s.id")
+   List<Feedback> getListDepFeedback();
+
+   @Query("select f from Feedback f, Semester s, Major j where " +
+           "f.majorByMajorId = j.id AND f.semesterBySemesterId = s.id")
+   List<Feedback> getListMajorFeedback();
+
+   @Query("select f from Feedback f, Semester s, Course c where " +
+           "f.courseByCourseId = c.id AND f.semesterBySemesterId = s.id")
+   List<Feedback> getListCourseFeedback();
+
+   @Query("select f from Feedback f, Semester s, Clazz c where " +
+           "f.clazzByClazzId = c.id AND f.semesterBySemesterId = s.id")
+   List<Feedback> getListClassFeedback();
 }

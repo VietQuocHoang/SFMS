@@ -9,6 +9,7 @@ import com.sample.sfms.service.interf.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -44,5 +45,26 @@ public class FeedbackServiceImpl implements FeedbackService {
 
         feedbackRepository.save(feedback);
         return feedback.getId();
+    }
+
+    @Override
+    public List<Feedback> loadListFeedback(String type) {
+        List<Feedback> list = new ArrayList<>();
+        switch (type) {
+            case "Major":
+                list.addAll(feedbackRepository.getListMajorFeedback());
+                break;
+            case "Course":
+                list.addAll(feedbackRepository.getListCourseFeedback());
+                break;
+            case "Dep":
+                list.addAll(feedbackRepository.getListDepFeedback());
+                break;
+            case "Class":
+                list.addAll(feedbackRepository.getListClassFeedback());
+                break;
+            default: break;
+        }
+        return list;
     }
 }

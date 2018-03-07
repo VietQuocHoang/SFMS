@@ -12,5 +12,7 @@ public interface FeedbackService {
     Feedback findFeedbackById (int id);
 
     int save(FeedbackCreateModel model) throws Exception;
+
+    List<Feedback> loadListFeedback (String type);
 }
 
