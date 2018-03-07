@@ -69,7 +69,7 @@ public class Answer {
     }
 
     @ManyToOne
-    @JoinColumn(name = "option_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "option_id", referencedColumnName = "id", nullable = true)
     public Optionn getOptionnByOptionnId() {
         return optionnByOptionnId;
     }

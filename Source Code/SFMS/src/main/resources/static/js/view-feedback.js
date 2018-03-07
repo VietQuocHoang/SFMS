@@ -1,3 +1,5 @@
+var selectedValue;
+
 $(document).ready(function () {
 
     var selected = document.getElementById("filter-scope");

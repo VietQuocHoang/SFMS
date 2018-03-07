@@ -943,7 +943,7 @@ function saveFeedback(feedback) {
         type: 'POST',
         data: JSON.stringify(feedback),
         success: (data) => alert(data.message),
-        error: (err) => alert(err),
+        error: (err) => alert(err)
     });
 }
 

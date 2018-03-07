@@ -20,7 +20,7 @@ public interface ModifyFeedbackService {
 
     public ResponseEntity<Feedback> createFeedbackFromTemplate(int id);
 
-    public ResponseEntity<List<Feedback>> saveNewFeadbacks(ModifyFeedbackModel model);
+    public ResponseEntity<List<Feedback>> saveNewFeadbacks(int templateId, int[]targetIds);
 
     public ResponseEntity<Feedback> updateTemplate(ModifyFeedbackModel model);
 
@@ -28,17 +28,27 @@ public interface ModifyFeedbackService {
 
     public ResponseEntity<Feedback> addTarget(int typeId, int targetId);
 
-    public FeedbackDetailsModel customizeConductors(FeedbackDetailsModel model, int[] conductorIds);
+    public ResponseEntity<UserFeedback> addConductor(int targetId, int userId);
 
-    public FeedbackDetailsModel customizeViewers(FeedbackDetailsModel model, int[] viewerIds);
+    public ResponseEntity<UserFeedback> removeConductor(int targetId, int userId);
 
-    public ResponseEntity<ModifyFeedbackModel> setStart(Date start, Feedback feedback);
+    public ResponseEntity<UserFeedback> addViewer(int targetId, int userId);
 
-    public ResponseEntity<ModifyFeedbackModel> setEnd(Date end, Feedback feedback);
+    public ResponseEntity<UserFeedback> removeViewer(int targetId, int userId);
+
+    public ResponseEntity<Feedback> setStart(Date start, int feedbbackId);
+
+    public ResponseEntity<Feedback> setEnd(Date end, int feedbackId);
 
     public ResponseEntity<List<User>> loadConductors(int id);//id of feedback contains target
 
     public ResponseEntity<List<User>> loadViewers(int id);//id of feedback contains target
 
-    public ResponseEntity<List<User>> loadTargets(int[] id);//ids of feedbacks contain targets
+    public ResponseEntity<List<Department>> loadDepartmentTargets(int[] targetIds);//ids of feedbacks contain targets
+
+    public ResponseEntity<List<Major>> loadMajorTargets(int[] targetIds);//ids of feedbacks contain targets
+
+    public ResponseEntity<List<Course>> loadCourseTargets(int[] targetIds);//ids of feedbacks contain targets
+
+    public ResponseEntity<List<Clazz>> loadClazzTargets(int[] targetIds);//ids of feedbacks contain targets
 }
