@@ -78,7 +78,7 @@ $(document).ready(() => {
             let questionType = classSplitted[1];
             let isRequired = $(questionContainer).hasClass("required");
             switch (questionType) {
-                case 'checkbox': {
+                case 'CheckBox': {
                     if (isRequired && (answerBlock.find(".form-check-input:checked").length === 0)) {
                         allDone = false;
                         questionContainer.addClass("not-answered");
@@ -108,7 +108,7 @@ $(document).ready(() => {
                     }
                     break;
                 }
-                case 'radio': {
+                case 'Radio': {
                     if (isRequired && (answerBlock.find(".form-check-input:checked").length === 0)) {
                         allDone = false;
                         questionContainer.addClass("not-answered");
@@ -137,7 +137,7 @@ $(document).ready(() => {
                     }
                     break;
                 }
-                case 'textarea': {
+                case 'TextArea': {
                     let textarea = questionContainer.find("textarea");
                     let value = textarea.val().trim();
                     //console.log(value);
@@ -154,7 +154,7 @@ $(document).ready(() => {
                     }
                     break;
                 }
-                case 'textfield': {
+                case 'Text': {
                     let textfield = questionContainer.find("input[type='text']");
                     let value = textfield.val().trim();
                     //console.log(value);
@@ -170,7 +170,7 @@ $(document).ready(() => {
                     }
                     break;
                 }
-                case 'star': {
+                case 'Star': {
                     if (isRequired && (answerBlock.find(".input-star:checked").length === 0)) {
                         allDone = false;
                         questionContainer.addClass()
@@ -197,7 +197,7 @@ $(document).ready(() => {
                 url: _ctx + "/conduct-feedback/save",
                 success: (data, status, xhr) => {
                     if (xhr.status === 200) {
-                        window.location.href = _ctx + "/home" //TODO đổi lại cái này về trang list feedback
+                        window.location.href = _ctx + "/view-list-feedback/list" //TODO đổi lại cái này về trang list feedback
                     } else if (xhr.status === 403) {
                         window.location.href = _ctx + "/logout"
                     } else {

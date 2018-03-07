@@ -47,7 +47,7 @@
                             </p>
                             <div class="answer-block" th:classappend="${feedback.questionsById.get(index).type}">
                                 <th:block th:switch="${feedback.questionsById.get(index).type}">
-                                    <div th:case="checkbox" th:remove="tag">
+                                    <div th:case="CheckBox" th:remove="tag">
                                         <div th:each="option: ${feedback.questionsById.get(index).optionsById}"
                                              th:class="form-check">
                                             <label class="form-check-label">
@@ -64,7 +64,7 @@
                                             </th:block>
                                         </div>
                                     </div>
-                                    <div th:case="radio" th:remove="tag">
+                                    <div th:case="Radio" th:remove="tag">
                                         <div th:each="option: ${feedback.questionsById.get(index).optionsById}"
                                              th:class="form-check">
                                             <label class="form-check-label">
@@ -81,19 +81,19 @@
                                             </th:block>
                                         </div>
                                     </div>
-                                    <div th:case="textarea" th:class="form-group">
+                                    <div th:case="TextArea" th:class="form-group">
                                         <div th:each="option:${feedback.questionsById.get(index).optionsById}"
                                              th:remove="tag">
                                             <textarea class="form-control" th:name="${option.id}"></textarea>
                                         </div>
                                     </div>
-                                    <div th:case="textfield" th:class="form-group">
+                                    <div th:case="Text" th:class="form-group">
                                         <div th:each="option:${feedback.questionsById.get(index).optionsById}"
                                              th:remove="tag">
                                             <input type="text" class="form-control" th:name="${option.id}">
                                         </div>
                                     </div>
-                                    <div th:case="star" th:class="form-rating">
+                                    <div th:case="Star" th:class="form-rating">
                                         <label th:each="option:${feedback.questionsById.get(index).optionsById}">
                                             <input type="radio" class="input-star"
                                                    th:name="${feedback.questionsById.get(index).id}" hidden
@@ -118,7 +118,7 @@
                             </p>
                             <div class="answer-block" th:classappend="${feedback.questionsById.get(index+1).type}">
                                 <th:block th:switch="${feedback.questionsById.get(index+1).type}">
-                                    <div th:case="checkbox" th:remove="tag">
+                                    <div th:case="CheckBox" th:remove="tag">
                                         <div th:each="option: ${feedback.questionsById.get(index+1).optionsById}"
                                              th:class="form-check">
                                             <label class="form-check-label">
@@ -135,7 +135,7 @@
                                             </th:block>
                                         </div>
                                     </div>
-                                    <div th:case="radio" th:remove="tag">
+                                    <div th:case="Radio" th:remove="tag">
                                         <div th:each="option: ${feedback.questionsById.get(index+1).optionsById}"
                                              th:class="form-check">
                                             <label class="form-check-label">
@@ -152,19 +152,19 @@
                                             </th:block>
                                         </div>
                                     </div>
-                                    <div th:case="textarea" th:class="form-group">
+                                    <div th:case="TextArea" th:class="form-group">
                                         <div th:each="option:${feedback.questionsById.get(index+1).optionsById}"
                                              th:remove="tag">
                                             <textarea class="form-control" th:name="${option.id}"></textarea>
                                         </div>
                                     </div>
-                                    <div th:case="textfield" th:class="form-group">
+                                    <div th:case="Text" th:class="form-group">
                                         <div th:each="option:${feedback.questionsById.get(index+1).optionsById}"
                                              th:remove="tag">
                                             <input type="text" class="form-control" th:name="${option.id}">
                                         </div>
                                     </div>
-                                    <div th:case="star" th:class="form-rating">
+                                    <div th:case="Star" th:class="form-rating">
                                         <label th:each="option:${feedback.questionsById.get(index+1).optionsById}">
                                             <input type="radio" class="input-star"
                                                    th:name="${feedback.questionsById.get(index+1).id}" hidden
@@ -189,7 +189,7 @@
                             </p>
                             <div class="answer-block" th:classappend="${feedback.questionsById.get(index+2).type}">
                                 <th:block th:switch="${feedback.questionsById.get(index+2).type}">
-                                    <div th:case="checkbox" th:remove="tag">
+                                    <div th:case="CheckBox" th:remove="tag">
                                         <div th:each="option: ${feedback.questionsById.get(index+2).optionsById}"
                                              th:class="form-check">
                                             <label class="form-check-label">
@@ -206,7 +206,7 @@
                                             </th:block>
                                         </div>
                                     </div>
-                                    <div th:case="radio" th:remove="tag">
+                                    <div th:case="Radio" th:remove="tag">
                                         <div th:each="option: ${feedback.questionsById.get(index+2).optionsById}"
                                              th:class="form-check">
                                             <label class="form-check-label">
@@ -223,19 +223,19 @@
                                             </th:block>
                                         </div>
                                     </div>
-                                    <div th:case="textarea" th:class="form-group">
+                                    <div th:case="TextArea" th:class="form-group">
                                         <div th:each="option:${feedback.questionsById.get(index+2).optionsById}"
                                              th:remove="tag">
                                             <textarea class="form-control" th:name="${option.id}"></textarea>
                                         </div>
                                     </div>
-                                    <div th:case="textfield" th:class="form-group">
+                                    <div th:case="Text" th:class="form-group">
                                         <div th:each="option:${feedback.questionsById.get(index+2).optionsById}"
                                              th:remove="tag">
                                             <input type="text" class="form-control" th:name="${option.id}">
                                         </div>
                                     </div>
-                                    <div th:case="star" th:class="form-rating">
+                                    <div th:case="Star" th:class="form-rating">
                                         <label th:each="option:${feedback.questionsById.get(index+2).optionsById}">
                                             <input type="radio" class="input-star"
                                                    th:name="${feedback.questionsById.get(index+2).id}" hidden
