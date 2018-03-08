@@ -3,6 +3,7 @@ package com.sample.sfms.entity;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Date;
 
 /**
  * Created by MyPC on 22/02/2018.
@@ -12,9 +13,9 @@ public class Feedback {
     private int id;
     private Integer point;
     private boolean isTemplate;
-    private Timestamp createDate;
-    private Timestamp startDate;
-    private Timestamp endDate;
+    private Date createDate;
+    private Date startDate;
+    private Date endDate;
     private String feedbackDes;
     private String feedbackName;
     private String templateDes;
@@ -65,31 +66,31 @@ public class Feedback {
 
     @Basic
     @Column(name = "create_date", nullable = true)
-    public Timestamp getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Timestamp createDate) {
+    public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
     @Basic
     @Column(name = "start_date", nullable = true)
-    public Timestamp getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Timestamp startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
     @Basic
     @Column(name = "end_date", nullable = true)
-    public Timestamp getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Timestamp endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
