@@ -20,13 +20,19 @@ public interface ModifyFeedbackService {
 
     public ResponseEntity<Feedback> createFeedbackFromTemplate(int id);
 
-    public ResponseEntity<List<Feedback>> saveNewFeadbacks(int templateId, int[]targetIds);
+    public ResponseEntity<List<Feedback>> savePublishFeadbacks(int feedbackId, List<Integer>targetIds);
 
-    public ResponseEntity<Feedback> updateTemplate(ModifyFeedbackModel model);
+    public ResponseEntity<List<Feedback>> saveTemplateFeadbacks(int feedbackId, List<Integer>targetIds);
+
+    public ResponseEntity<Feedback> updateSelectedTemplate(int feedbackId, List<Integer> targetIds);
 
     public ResponseEntity<Feedback> deleteFeedback(int id);
 
-    public ResponseEntity<Feedback> addTarget(int typeId, int targetId);
+    public ResponseEntity<Feedback> addTarget(int feedbackId, int targetId, List<Integer> targetIds);
+
+    public ResponseEntity<Feedback> removeTarget(int id, List<Integer> targetIds);
+
+    public ResponseEntity<List<Feedback>> deleteFeedbacks(List<Integer> targetIds);
 
     public ResponseEntity<UserFeedback> addConductor(int targetId, int userId);
 
@@ -36,6 +42,12 @@ public interface ModifyFeedbackService {
 
     public ResponseEntity<UserFeedback> removeViewer(int targetId, int userId);
 
+    public ResponseEntity<Feedback> saveFeedback(Feedback feedback);
+
+    public ResponseEntity<Feedback> updateSemester(int semesterId, int feedbackId);
+
+    public ResponseEntity<Feedback> updateType(int typeId, int feedbackId);
+
     public ResponseEntity<Feedback> setStart(Date start, int feedbbackId);
 
     public ResponseEntity<Feedback> setEnd(Date end, int feedbackId);
@@ -44,11 +56,13 @@ public interface ModifyFeedbackService {
 
     public ResponseEntity<List<User>> loadViewers(int id);//id of feedback contains target
 
-    public ResponseEntity<List<Department>> loadDepartmentTargets(int[] targetIds);//ids of feedbacks contain targets
+    public ResponseEntity<List<Department>> loadDepartmentTargets(List<Integer> targetIds);//ids of feedbacks contain targets
 
-    public ResponseEntity<List<Major>> loadMajorTargets(int[] targetIds);//ids of feedbacks contain targets
+    public ResponseEntity<List<Major>> loadMajorTargets(List<Integer> targetIds);//ids of feedbacks contain targets
 
-    public ResponseEntity<List<Course>> loadCourseTargets(int[] targetIds);//ids of feedbacks contain targets
+    public ResponseEntity<List<Course>> loadCourseTargets(List<Integer> targetIds);//ids of feedbacks contain targets
 
-    public ResponseEntity<List<Clazz>> loadClazzTargets(int[] targetIds);//ids of feedbacks contain targets
+    public ResponseEntity<List<Clazz>> loadClazzTargets(List<Integer> targetIds);//ids of feedbacks contain targets
+
+    public ResponseEntity<List<Feedback>> loadTargets(List<Integer> targetIds);//ids of feedbacks contain targets
 }

@@ -20,7 +20,7 @@ public class Feedback {
     private String feedbackName;
     private String templateDes;
     private String templateName;
-    private Byte isPublished;
+    private boolean isPublished;
     private User userByCreatorId;
     private Department departmentByDepartmentId;
     private Course courseByCourseId;
@@ -136,11 +136,11 @@ public class Feedback {
 
     @Basic
     @Column(name = "is_published", nullable = true)
-    public Byte getIsPublished() {
+    public Boolean getIsPublished() {
         return isPublished;
     }
 
-    public void setIsPublished(Byte isPublished) {
+    public void setIsPublished(Boolean isPublished) {
         this.isPublished = isPublished;
     }
 
@@ -165,8 +165,7 @@ public class Feedback {
             return false;
         if (templateName != null ? !templateName.equals(feedback.templateName) : feedback.templateName != null)
             return false;
-        if (isPublished != null ? !isPublished.equals(feedback.isPublished) : feedback.isPublished != null)
-            return false;
+        if (isPublished !=feedback.isPublished) return false;
 
         return true;
     }
@@ -183,7 +182,7 @@ public class Feedback {
         result = 31 * result + (feedbackName != null ? feedbackName.hashCode() : 0);
         result = 31 * result + (templateDes != null ? templateDes.hashCode() : 0);
         result = 31 * result + (templateName != null ? templateName.hashCode() : 0);
-        result = 31 * result + (isPublished != null ? isPublished.hashCode() : 0);
+//        result = 31 * result + (isPublished != null ? isPublished.hashCode() : 0);
         return result;
     }
 

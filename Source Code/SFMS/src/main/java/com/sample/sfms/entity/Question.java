@@ -123,4 +123,16 @@ public class Question {
     public void setFeedbackByFeedbackId(Feedback feedbackByFeedbackId) {
         this.feedbackByFeedbackId = feedbackByFeedbackId;
     }
+
+    public Question(String type, String suggestion, boolean isRequied, String questionContent, Criteria criteriaByCriteriaId, Feedback feedbackByFeedbackId) {
+        this.type = type;
+        this.suggestion = suggestion;
+        this.isRequied = isRequied;
+        this.questionContent = questionContent;
+        this.criteriaByCriteriaId = criteriaByCriteriaId;
+        this.feedbackByFeedbackId = feedbackByFeedbackId;
+    }
+
+    public Question() {
+    }
 }

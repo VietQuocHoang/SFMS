@@ -51,20 +51,7 @@ public class ModifyFeedbackController {
         ModelAndView mv = new ModelAndView("overview-feedback");
         Feedback feedback = modifyService.getFeedback(Integer.parseInt(session.getAttribute("id").toString())).getBody();
         mv.addObject("feedback", feedback);
-        switch (feedback.getTypeByTypeId().getDescription()) {
-            case "Chuyên ngành":
-                mv.addObject("targets", modifyService.loadDepartmentTargets((int[]) session.getAttribute("targetIds")));
-                break;
-            case "Môn học":
-                mv.addObject("targets",modifyService.loadCourseTargets((int[])session.getAttribute("targetIds")));
-                break;
-            case "Lớp học":
-                mv.addObject("targets",modifyService.loadClazzTargets((int[])session.getAttribute("targetIds")));
-                break;
-            case "Phòng ban":
-                mv.addObject("targets",modifyService.loadDepartmentTargets((int[])session.getAttribute("targetIds")));
-                break;
-        }
+//        mv.addObject("targets", modifyService.loadTargets((int[])session.getAttribute("targetIds")));
         return mv;
     }
 

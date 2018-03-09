@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
 
     static Logger logger = Logger.getLogger(ModifyFeedbackServiceImpl.class.getName());
-
+    //    Repositories
     @Autowired
     private FeedbackRepository feedbackRepo;
 
@@ -67,6 +67,12 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     @Autowired
     private QuestionRepository questionRepo;
 
+    @Autowired
+    private OptionnRepository optionRepo;
+
+    @Autowired
+    private SemesterRepository semesterRepo;
+
     @Override
     public ResponseEntity<Feedback> getFeedback(int id) {
         Feedback fb = feedbackRepo.findOne(id);
@@ -76,38 +82,92 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
             logger.log(Level.FINE, e.toString());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-//        String[] conductorIds = fb.getConductors().split("/"), viewerIds = fb.getViewers().split("/");
-//        List<User> conductors = new ArrayList<>(), viewers = new ArrayList<>();
-//        User tmp;
-//        if (conductorIds != null) {
-//            for (String conductorId : conductorIds) {
-//                tmp = userRepo.findOne(Integer.parseInt(conductorId));
-//                if (tmp != null) conductors.add(tmp);
-//            }
-//        }
-//        if (viewerIds != null) {
-//            for (String viewerId : viewerIds) {
-//                tmp = userRepo.findOne(Integer.parseInt(viewerId));
-//                if (tmp != null) viewers.add(tmp);
-//            }
-//        }
-//        List<FeedbackDetailsModel> details = new ArrayList<>();
-//        switch (fb.getTypeByTypeId().getDescription()) {
-//            case "Major":
-//                details.add(new FeedbackDetailsModel(conductors, viewers, fb.getMajorByMajorId(), null, null, null, fb.getTypeByTypeId()));
-//                break;
-//            case "Course":
-//                details.add(new FeedbackDetailsModel(conductors, viewers, null, fb.getCourseByCourseId(), null, null, fb.getTypeByTypeId()));
-//                break;
-//            case "Clazz":
-//                details.add(new FeedbackDetailsModel(conductors, viewers, null, null, fb.getClazzByClazzId(), null, fb.getTypeByTypeId()));
-//                break;
-//            case "Department":
-//                details.add(new FeedbackDetailsModel(conductors, viewers, null, null, null, fb.getDepartmentByDepartmentId(), fb.getTypeByTypeId()));
-//                break;
-//            default:
-//                break;
-//        }
+    }
+
+    @Override
+    public ResponseEntity<List<Feedback>> savePublishFeadbacks(int feedbackId, List<Integer> targetIds) {
+        try {
+            List<Feedback> affected = new ArrayList<>();
+            Feedback target = new Feedback(), template = feedbackRepo.findOne(feedbackId);
+            if (template == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            for (int targetId : targetIds) {
+                target = feedbackRepo.findOne(targetId);
+                if (target != null) {
+                    target = clone(template, target);
+                    target.setIsPublished(true);
+                    target.setIsTemplate(false);
+                    affected.add(feedbackRepo.save(target));
+                }
+            }
+            feedbackRepo.delete(feedbackId);
+            return new ResponseEntity<>(affected, HttpStatus.OK);
+        } catch (UnexpectedRollbackException e) {
+            logger.log(Level.FINE, e.toString());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public ResponseEntity<List<Feedback>> saveTemplateFeadbacks(int feedbackId, List<Integer> targetIds) {
+        try {
+            List<Feedback> affected = new ArrayList<>();
+            Feedback target = new Feedback(), template = feedbackRepo.findOne(feedbackId);
+            if (template == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            for (int targetId : targetIds) {
+                target = feedbackRepo.findOne(targetId);
+                if (target != null) {
+                    target = clone(template, target);
+                    target.setIsPublished(false);
+                    target.setIsTemplate(true);
+                    affected.add(feedbackRepo.save(target));
+                }
+            }
+            feedbackRepo.delete(feedbackId);
+            return new ResponseEntity<>(affected, HttpStatus.OK);
+        } catch (UnexpectedRollbackException e) {
+            logger.log(Level.FINE, e.toString());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public ResponseEntity<Feedback> updateSelectedTemplate(int feedbackId, List<Integer> targetIds) {
+        try {
+            Feedback feedback = feedbackRepo.findOne(feedbackId);
+            feedback.setId(feedback.getFeedbackByReferenceId().getId());
+            feedback.setFeedbackByReferenceId(null);
+            for (int id : targetIds) {
+                feedbackRepo.delete(id);
+            }
+            return new ResponseEntity<>(feedbackRepo.save(feedback), HttpStatus.OK);
+        } catch (UnexpectedRollbackException e) {
+            logger.log(Level.FINE, e.toString());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    public Feedback clone(Feedback template, Feedback target) {
+        target.setTypeByTypeId(template.getTypeByTypeId());
+        target.setFeedbackDes(template.getFeedbackDes());
+        target.setFeedbackName(template.getFeedbackName());
+        target.setFeedbackByReferenceId(template.getFeedbackByReferenceId());
+        target.setCreateDate(template.getCreateDate());
+        target.setStartDate(template.getStartDate());
+        target.setEndDate(template.getEndDate());
+        target.setIsTemplate(template.getIsTemplate());
+        target.setSemesterBySemesterId(template.getSemesterBySemesterId());
+        Question question = new Question();
+        Optionn optionn = new Optionn();
+        for (Question q : template.getQuestionsById()) {
+            question = new Question(q.getType(), q.getSuggestion(), q.getIsRequied(), q.getQuestionContent(),
+                    q.getCriteriaByCriteriaId(), target);
+            question = questionRepo.save(question);
+            for (Optionn o : q.getOptionsById()) {
+                optionn = new Optionn(o.getOptionnContent(), o.getPoint(), o.getQuestionByQuestionId());
+
+            }
+        }
+        return target;
     }
 
     @Override
@@ -124,7 +184,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                     template.getMajorByMajorId(),
                     template.getClazzByClazzId(),
                     template.getTypeByTypeId(),
-                    template.getFeedbackByReferenceId()
+                    template//selected template
             )), HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
@@ -132,102 +192,10 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
         }
     }
 
-
     @Override
     public ResponseEntity<Feedback> createEmptyFeedback(String title, String description) {
         try {
             return new ResponseEntity<Feedback>(feedbackRepo.save(new Feedback(description, title)), HttpStatus.OK);
-        } catch (UnexpectedRollbackException e) {
-            logger.log(Level.FINE, e.toString());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    public Feedback clone(Feedback template, Feedback target){
-        target.setTypeByTypeId(template.getTypeByTypeId());
-        target.setFeedbackDes(template.getFeedbackDes());
-        target.setFeedbackName(template.getFeedbackName());
-        target.setFeedbackByReferenceId(template.getFeedbackByReferenceId());
-        target.setCreateDate(template.getCreateDate());
-        target.setStartDate(template.getStartDate());
-        target.setEndDate(template.getEndDate());
-        target.setIsPublished(template.getIsPublished());
-        target.setIsTemplate(template.getIsTemplate());
-        target.setSemesterBySemesterId(template.getSemesterBySemesterId());
-        for (Question q: template.getQuestionsById()) {
-            questionRepo.save(new Question(
-            ));
-        }
-        return target;
-    }
-
-    @Override
-    public ResponseEntity<List<Feedback>> saveNewFeadbacks(int templateId, int[] targetIds) {
-        try {
-            List<Feedback> affected = new ArrayList<>();
-            Feedback target = new Feedback(), template = feedbackRepo.findOne(templateId);
-            if(template==null)return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            for (int targetId: targetIds) {
-                target = feedbackRepo.findOne(targetId);
-                if(target!=null){
-                    target = clone(template, target);
-                    feedbackRepo.save(target);
-
-                }
-            }
-//            Feedback sharedTemplate = model.getFeedback(), tmp;
-//            Type t;
-//            String selectedusers;
-//            for (FeedbackDetailsModel detail : model.getSelectedObjs()) {
-//                t = detail.getType();
-//                selectedusers = "";
-//                tmp = sharedTemplate;
-//                switch (t.getDescription()) {
-//                    case "Major":
-//                        tmp.setMajorByMajorId(majorRepo.findOne(detail.getMajor().getId()));
-//                        break;
-//                    case "Course":
-//                        tmp.setCourseByCourseId(courseRepo.findOne(detail.getCourse().getId()));
-//                        break;
-//                    case "Clazz":
-//                        tmp.setClazzByClazzId(clazzRepo.findOne(detail.getClazz().getId()));
-//                        break;
-//                    case "Department":
-//                        tmp.setDepartmentByDepartmentId(departmentRepo.findOne(detail.getDepartment().getId()));
-//                        break;
-//                    default:
-//                        break;
-//                }
-//                tmp.setTypeByTypeId(t);
-//                for (User conductor : detail.getConductors()) {
-//                    selectedusers += conductor.getId() + "/";
-//                }
-//                tmp.setConductors(selectedusers.substring(0, selectedusers.length() - 1));
-//                selectedusers = "";
-//                for (User viewer : detail.getReportviewers()) {
-//                    selectedusers += viewer.getId() + "/";
-//                }
-//                tmp.setViewers(selectedusers.substring(0, selectedusers.length() - 1));
-//                affected.add(feedbackRepo.save(tmp));
-//            }
-
-            return new ResponseEntity<>(affected, HttpStatus.OK);
-        } catch (UnexpectedRollbackException e) {
-            logger.log(Level.FINE, e.toString());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @Override
-    public ResponseEntity<Feedback> updateTemplate(ModifyFeedbackModel model) {
-        try {
-            if (feedbackRepo.exists(model.getFeedback().getId())) {
-//                model.getFeedback().setConductors("");
-//                model.getFeedback().setViewers("");
-                Feedback f = new Feedback();
-                feedbackRepo.save(model.getFeedback());
-                return new ResponseEntity<>(HttpStatus.OK);
-            } else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -246,21 +214,41 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     }
 
     @Override
-    public ResponseEntity<Feedback> addTarget(int typeId, int targetId) {
+    public ResponseEntity<Feedback> addTarget(int feedbackId, int targetId, List<Integer> targetIds) {
         Feedback response = new Feedback();
         try {
-            Type t = typeRepo.findOne(typeId);
+            Type t = feedbackRepo.findOne(feedbackId).getTypeByTypeId();
             switch (t.getDescription()) {
                 case "Major":
+                    for (int id: targetIds) {
+                        response = feedbackRepo.findOne(id);
+                        if(response.getMajorByMajorId().getId()==targetId)
+                            return new ResponseEntity<>(response, HttpStatus.ALREADY_REPORTED);
+                    }
                     response = feedbackRepo.save(new Feedback(null, null, majorRepo.findOne(targetId), null, t));
                     break;
                 case "Course":
+                    for (int id: targetIds) {
+                        response = feedbackRepo.findOne(id);
+                        if(response.getCourseByCourseId().getId()==targetId)
+                            return new ResponseEntity<>(response, HttpStatus.ALREADY_REPORTED);
+                    }
                     response = feedbackRepo.save(new Feedback(null, courseRepo.findOne(targetId), null, null, t));
                     break;
                 case "Clazz":
+                    for (int id: targetIds) {
+                        response = feedbackRepo.findOne(id);
+                        if(response.getClazzByClazzId().getId()==targetId)
+                            return new ResponseEntity<>(response, HttpStatus.ALREADY_REPORTED);
+                    }
                     response = feedbackRepo.save(new Feedback(null, null, null, clazzRepo.findOne(targetId), t));
                     break;
                 case "Department":
+                    for (int id: targetIds) {
+                        response = feedbackRepo.findOne(id);
+                        if(response.getDepartmentByDepartmentId().getId()==targetId)
+                            return new ResponseEntity<>(response, HttpStatus.ALREADY_REPORTED);
+                    }
                     response = feedbackRepo.save(new Feedback(departmentRepo.findOne(targetId), null, null, null, t));
                     break;
                 default:
@@ -274,6 +262,59 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
         }
     }
 
+    @Override
+    public ResponseEntity<Feedback> removeTarget(int id, List<Integer> targetIds) {
+        Feedback response = new Feedback();
+        try {
+            for (int targetId : targetIds) {
+                response = feedbackRepo.findOne(targetId);
+                Type t = response.getTypeByTypeId();
+                switch (t.getDescription()) {
+                    case "Major":
+                        if (response.getMajorByMajorId().getId() == id)
+                            feedbackRepo.delete(response);
+                        break;
+                    case "Course":
+                        if (response.getCourseByCourseId().getId() == id)
+                            feedbackRepo.delete(response);
+                        break;
+                    case "Clazz":
+                        if (response.getClazzByClazzId().getId() == id)
+                            feedbackRepo.delete(response);
+                        break;
+                    case "Department":
+                        if (response.getDepartmentByDepartmentId().getId() == id)
+                            feedbackRepo.delete(response);
+                        break;
+                    default:
+                        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
+            }
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (UnexpectedRollbackException e) {
+            logger.log(Level.FINE, e.toString());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public ResponseEntity<List<Feedback>> deleteFeedbacks(List<Integer> ids) {
+        try {
+            Feedback target;
+            List<Feedback> affected = new ArrayList<>();
+            for (int id : ids) {
+                target = feedbackRepo.findOne(id);
+                if (target != null) {
+                    feedbackRepo.delete(id);
+                    affected.add(target);
+                }
+            }
+            return new ResponseEntity<>(affected, HttpStatus.OK);
+        } catch (UnexpectedRollbackException e) {
+            logger.log(Level.FINE, e.toString());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
     public void autoGenerateConductorsAndViewers(Feedback f) {
         List<User> conductors = new ArrayList<>(), viewers = new ArrayList<>();
@@ -349,15 +390,15 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     public ResponseEntity<UserFeedback> addConductor(int targetId, int userId) {
         try {
             UserFeedback selected = userFeedbackRepo.findOne(new UserFeedbackPK(userId, targetId));
-            if(selected!=null){
+            if (selected != null) {
                 selected.setConductor(true);
                 return new ResponseEntity<>(userFeedbackRepo.save(selected), HttpStatus.OK);
             }
             return new ResponseEntity<>(
                     userFeedbackRepo.save(new UserFeedback(
                             feedbackRepo.findOne(targetId).getId()
-                            ,userRepo.findOne(userId).getId(),
-                            true,false, false)), HttpStatus.OK);
+                            , userRepo.findOne(userId).getId(),
+                            true, false, false)), HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -368,7 +409,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     public ResponseEntity<UserFeedback> removeConductor(int targetId, int userId) {
         try {
             UserFeedback selected = userFeedbackRepo.findOne(new UserFeedbackPK(userId, targetId));
-            if(selected.isViewer()){
+            if (selected.isViewer()) {
                 selected.setConductor(false);
                 return new ResponseEntity<>(userFeedbackRepo.save(selected), HttpStatus.OK);
             }
@@ -384,14 +425,14 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     public ResponseEntity<UserFeedback> addViewer(int targetId, int userId) {
         try {
             UserFeedback selected = userFeedbackRepo.findOne(new UserFeedbackPK(userId, targetId));
-            if(selected!=null){
+            if (selected != null) {
                 selected.setViewer(true);
                 userFeedbackRepo.save(selected);
             }
             return new ResponseEntity<>(
                     userFeedbackRepo.save(new UserFeedback(
                             feedbackRepo.findOne(targetId).getId()
-                            ,userRepo.findOne(userId).getId(),
+                            , userRepo.findOne(userId).getId(),
                             false, true, false)), HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
@@ -403,12 +444,46 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     public ResponseEntity<UserFeedback> removeViewer(int targetId, int userId) {
         try {
             UserFeedback selected = userFeedbackRepo.findOne(new UserFeedbackPK(userId, targetId));
-            if(selected.isViewer()){
+            if (selected.isViewer()) {
                 selected.setViewer(false);
                 return new ResponseEntity<>(userFeedbackRepo.save(selected), HttpStatus.OK);
             }
             userFeedbackRepo.delete(selected);
             return new ResponseEntity<>(HttpStatus.OK);
+        } catch (UnexpectedRollbackException e) {
+            logger.log(Level.FINE, e.toString());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public ResponseEntity<Feedback> saveFeedback(Feedback feedback) {
+        try {
+            return new ResponseEntity<>(feedbackRepo.save(feedback), HttpStatus.OK);
+        } catch (UnexpectedRollbackException e) {
+            logger.log(Level.FINE, e.toString());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public ResponseEntity<Feedback> updateSemester(int semesterId, int feedbackId) {
+        try {
+            Feedback feedback = feedbackRepo.findOne(feedbackId);
+            feedback.setSemesterBySemesterId(semesterRepo.findOne(semesterId));
+            return new ResponseEntity<>(feedbackRepo.save(feedback), HttpStatus.OK);
+        } catch (UnexpectedRollbackException e) {
+            logger.log(Level.FINE, e.toString());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public ResponseEntity<Feedback> updateType(int typeId, int feedbackId) {
+        try {
+            Feedback feedback = feedbackRepo.findOne(feedbackId);
+            feedback.setTypeByTypeId(typeRepo.findOne(typeId));
+            return new ResponseEntity<>(feedbackRepo.save(feedback), HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -469,10 +544,24 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     }
 
     @Override
-    public ResponseEntity<List<Department>> loadDepartmentTargets(int[] ids) {
+    public ResponseEntity<List<Feedback>> loadTargets(List<Integer> ids) {
+        try {
+            List<Feedback> results = new ArrayList<>();
+            for (int id : ids) {
+                results.add(feedbackRepo.findOne(id));
+            }
+            return new ResponseEntity<>(results, HttpStatus.OK);
+        } catch (UnexpectedRollbackException e) {
+            logger.log(Level.FINE, e.toString());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public ResponseEntity<List<Department>> loadDepartmentTargets(List<Integer> ids) {
         try {
             List<Department> results = new ArrayList<>();
-            for (int id: ids) {
+            for (int id : ids) {
                 results.add(feedbackRepo.findOne(id).getDepartmentByDepartmentId());
             }
             return new ResponseEntity<>(results, HttpStatus.OK);
@@ -483,10 +572,10 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     }
 
     @Override
-    public ResponseEntity<List<Major>> loadMajorTargets(int[] ids) {
+    public ResponseEntity<List<Major>> loadMajorTargets(List<Integer> ids) {
         try {
             List<Major> results = new ArrayList<>();
-            for (int id: ids) {
+            for (int id : ids) {
                 results.add(feedbackRepo.findOne(id).getMajorByMajorId());
             }
             return new ResponseEntity<>(results, HttpStatus.OK);
@@ -497,10 +586,10 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     }
 
     @Override
-    public ResponseEntity<List<Course>> loadCourseTargets(int[] ids) {
+    public ResponseEntity<List<Course>> loadCourseTargets(List<Integer> ids) {
         try {
             List<Course> results = new ArrayList<>();
-            for (int id: ids) {
+            for (int id : ids) {
                 results.add(feedbackRepo.findOne(id).getCourseByCourseId());
             }
             return new ResponseEntity<>(results, HttpStatus.OK);
@@ -511,10 +600,10 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     }
 
     @Override
-    public ResponseEntity<List<Clazz>> loadClazzTargets(int[] ids) {
+    public ResponseEntity<List<Clazz>> loadClazzTargets(List<Integer> ids) {
         try {
             List<Clazz> results = new ArrayList<>();
-            for (int id: ids) {
+            for (int id : ids) {
                 results.add(feedbackRepo.findOne(id).getClazzByClazzId());
             }
             return new ResponseEntity<>(results, HttpStatus.OK);

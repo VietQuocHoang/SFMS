@@ -87,4 +87,13 @@ public class Optionn {
     public void setQuestionByQuestionId(Question questionByQuestionId) {
         this.questionByQuestionId = questionByQuestionId;
     }
+
+    public Optionn(String optionnContent, Double point, Question questionByQuestionId) {
+        this.optionnContent = optionnContent;
+        this.point = point;
+        this.questionByQuestionId = questionByQuestionId;
+    }
+
+    public Optionn() {
+    }
 }
