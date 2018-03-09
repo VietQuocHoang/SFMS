@@ -85,6 +85,12 @@ public class QuestionServiceImpl implements QuestionService {
                     optionCreateModel.setPoint(0.0);
                     optionnService.add(optionCreateModel);
                 }
+            } else {
+                OptionCreateModel optionCreateModel = new OptionCreateModel();
+                optionCreateModel.setQuestion(question);
+                optionCreateModel.setOptionContent("");
+                optionCreateModel.setPoint(0.0);
+                optionnService.add(optionCreateModel);
             }
             return id;
         } catch (Exception ex) {
