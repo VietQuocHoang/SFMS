@@ -55,6 +55,15 @@ public class ModifyFeedbackController {
         return mv;
     }
 
+    @GetMapping(value = "/modify-feedback-overview/{id}")
+    private ModelAndView getFeedbackOverview(@PathVariable("id") int id, HttpSession session) {
+        ModelAndView mv = new ModelAndView("overview-feedback");
+        Feedback feedback = modifyService.getFeedback(id).getBody();
+        mv.addObject("feedback", feedback);
+//        mv.addObject("targets", modifyService.loadTargets((int[])session.getAttribute("targetIds")));
+        return mv;
+    }
+
 
   /*  @PostMapping(value = "/save-question")
     private ModelAndView saveQuestion(@RequestBody FeedbackCreateModel model) {
