@@ -1,5 +1,7 @@
 package com.sample.sfms.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
