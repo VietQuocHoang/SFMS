@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.UnexpectedRollbackException;
 
 import java.security.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -491,11 +492,12 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     }
 
     @Override
-    public ResponseEntity<Feedback> setStart(Date start, int feedbackId) {
+    public ResponseEntity<String> setStart(Date start, int feedbackId) {
         try {
             Feedback feedback = feedbackRepo.findOne(feedbackId);
             feedback.setStartDate(start);
-            return new ResponseEntity<>(feedbackRepo.save(feedback), HttpStatus.OK);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            return new ResponseEntity<>(sdf.format(feedbackRepo.save(feedback).getStartDate()), HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -503,11 +505,12 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     }
 
     @Override
-    public ResponseEntity<Feedback> setEnd(Date end, int feedbackId) {
+    public ResponseEntity<String> setEnd(Date end, int feedbackId) {
         try {
             Feedback feedback = feedbackRepo.findOne(feedbackId);
             feedback.setEndDate(end);
-            return new ResponseEntity<>(feedbackRepo.save(feedback), HttpStatus.OK);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            return new ResponseEntity<>(sdf.format(feedbackRepo.save(feedback).getEndDate()), HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -551,6 +554,16 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                 results.add(feedbackRepo.findOne(id));
             }
             return new ResponseEntity<>(results, HttpStatus.OK);
+        } catch (UnexpectedRollbackException e) {
+            logger.log(Level.FINE, e.toString());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public ResponseEntity<List<Type>> loadAllTypes() {
+        try {
+            return new ResponseEntity<>(typeRepo.findAll(), HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

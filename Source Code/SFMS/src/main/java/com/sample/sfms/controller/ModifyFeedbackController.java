@@ -14,12 +14,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by MyPC on 25/02/2018.
  */
 @RestController
-public class ModifyFeedbackController {
+@RequestMapping("/modify-feedback")
+class ModifyFeedbackController {
 
     @Autowired
     ModifyFeedbackService modifyService;
@@ -27,8 +29,8 @@ public class ModifyFeedbackController {
     @Autowired
     QuestionService questionService;
 
-    @PostMapping(value = "/modify-feedback-create")
-    private ModelAndView createFeedbackModel(@RequestParam("title") String title, @RequestParam("description") String description, HttpSession session){
+    @PostMapping(value = "/create")
+    private ModelAndView createFeedback(@RequestParam("title") String title, @RequestParam("description") String description, HttpSession session) {
         ModelAndView mv = new ModelAndView("create-feedback-content");
         Feedback response = modifyService.createEmptyFeedback(title, description).getBody();
         session.setAttribute("id", response.getId());
@@ -37,33 +39,38 @@ public class ModifyFeedbackController {
         //test
     }
 
-    @PostMapping(value = "/modify-feedback-create/{id}")
-    private ModelAndView createFeedbackModel(@PathVariable("templateId") int templateId, HttpSession session){
+    @PostMapping(value = "/create/{id}")
+    private ModelAndView createFeedback(@PathVariable("templateId") int templateId, HttpSession session) {
         ModelAndView mv = new ModelAndView("create-feedback-content");
         Feedback response = modifyService.createFeedbackFromTemplate(templateId).getBody();
         session.setAttribute("id", response.getId());
         mv.addObject("MFModel", response);
         return mv;
     }
-
-    @GetMapping(value = "/modify-feedback-overview")
+    @GetMapping(value = "/overview")
     private ModelAndView getFeedbackOverview(HttpSession session) {
         ModelAndView mv = new ModelAndView("overview-feedback");
         Feedback feedback = modifyService.getFeedback(Integer.parseInt(session.getAttribute("id").toString())).getBody();
         mv.addObject("feedback", feedback);
+        mv.addObject("alltypes", modifyService.loadAllTypes().getBody());
+        mv.addObject("startdate", new SimpleDateFormat("yyyy-MM-dd").format(feedback.getStartDate()));
+        mv.addObject("enddate", new SimpleDateFormat("yyyy-MM-dd").format(feedback.getEndDate()));
 //        mv.addObject("targets", modifyService.loadTargets((int[])session.getAttribute("targetIds")));
         return mv;
     }
 
-    @GetMapping(value = "/modify-feedback-overview/{id}")
+    @GetMapping(value = "/overview/{id}")
     private ModelAndView getFeedbackOverview(@PathVariable("id") int id, HttpSession session) {
         ModelAndView mv = new ModelAndView("overview-feedback");
         Feedback feedback = modifyService.getFeedback(id).getBody();
+        mv.addObject("startdate", new SimpleDateFormat("yyyy-MM-dd").format(feedback.getStartDate()));
+        mv.addObject("enddate", new SimpleDateFormat("yyyy-MM-dd").format(feedback.getEndDate()));
         mv.addObject("feedback", feedback);
+        mv.addObject("alltypes", modifyService.loadAllTypes().getBody());
 //        mv.addObject("targets", modifyService.loadTargets((int[])session.getAttribute("targetIds")));
         return mv;
     }
-
+}
 
   /*  @PostMapping(value = "/save-question")
     private ModelAndView saveQuestion(@RequestBody FeedbackCreateModel model) {
@@ -82,4 +89,3 @@ public class ModifyFeedbackController {
         ModelAndView mv = new ModelAndView("redirect:/overview-feedback");
         return mv;
     }*/
-}

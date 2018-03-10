@@ -11,11 +11,11 @@
     <!--Core style-->
     <div th:replace="fragments/core-css"></div>
     <!-- Custom styles for this template-->
-    <link th:href="@{vendor/datatables/dataTables.bootstrap4.css}" rel="stylesheet">
-    <link th:href="@{css/progressbar-feedback.css}" rel="stylesheet">
-    <link th:href="@{css/conduct-feedback.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/vendor/datatables/dataTables.bootstrap4.css}" rel="stylesheet">
+    <link th:href="@{/css/progressbar-feedback.css}" rel="stylesheet">
+    <link th:href="@{/css/conduct-feedback.css}" rel="stylesheet" type="text/css">
     <!--<link href="css/progressbar-feedback.css" rel="stylesheet">-->
-    <link th:href="@{css/overview-feedback.css}" rel="stylesheet">
+    <link th:href="@{/css/overview-feedback.css}" rel="stylesheet">
 </head>
 
 <body class="fixed-nav sticky-footer" id="page-top">
@@ -43,7 +43,7 @@
                 <div class="row fb-inf">
                     <div class="col-sm-3"><label class="lb-inf">Tiêu đề</label></div>
                     <div class="form-group col-sm-6">
-                        <input type='text' class="form-control input-group-sm" th:value="${feedback.feedbackName}"/>
+                        <input id="feedback-title" type='text' class="form-control input-group-sm" th:value="${feedback.feedbackName}"/>
                     </div>
                 </div>
                 <!--end title-->
@@ -51,7 +51,7 @@
                 <div class="row fb-inf">
                     <div class="col-sm-3"><label class="lb-inf">Mô tả</label></div>
                     <div class="form-group col-sm-6">
-                        <input type='text' class="form-control input-group-sm" th:value="${feedback.feedbackDes}"/>
+                        <input id="feedback-description" type='text' class="form-control input-group-sm" th:value="${feedback.feedbackDes}"/>
                     </div>
                 </div>
                 <!--end description-->
@@ -62,7 +62,7 @@
                         <label class="lb-inf">Bắt đầu nhận phản hồi:</label>
                     </div>
                     <div class="form-group col-sm-2">
-                        <input type='date' th:value="${feedback.startDate}" class="form-control input-group-sm"/>
+                        <input id="startdate" type='date' class="form-control input-group-sm" th:value="${startdate}"/>
                     </div>
                     <!--end published at-->
                     <div class="col-sm-1"></div>
@@ -82,7 +82,7 @@
                 <div class="row fb-inf">
                     <div class="col-sm-3"><label class="lb-inf">Kết thúc nhận phản hồi</label></div>
                     <div class="form-group col-sm-2">
-                        <input type='date' class="form-control input-group-sm" th:value="${feedback.endDate}"/>
+                        <input id="enddate" type='date' class="form-control input-group-sm" th:value="${enddate}"/>
                     </div>
                 </div>
                 <!--end closed at-->
@@ -93,16 +93,18 @@
                         <label class="lb-inf">Đối tượng được đánh giá</label>
                     </div>
                     <div class="form-group col-sm-2">
-                        <div class="input-group input-group-sm">
-                            <input list="list-types" class="form-control" placeholder="Loại đối tượng"/>
-                        </div>
-                        <datalist id="list-types">
-                            <option>--Loại đối tượng--</option>
-                            <option selected>Lớp học</option>
-                            <option>Môn học</option>
-                            <option>Chuyên ngành</option>
-                            <option>Phòng ban</option>
-                        </datalist>
+                        <!--<div class="input-group input-group-sm">-->
+                        <!--<input list="list-types" class="form-control" placeholder="Loại đối tượng"/>-->
+                        <!--</div>-->
+                        <select class="input-group input-group-sm" id="typeId">
+                            <!--<th:block th:each="type : ${alltypes}">-->
+                            <option th:each="type : ${alltypes}"
+                                    th:value="${type.id}"
+                                    th:text="${type.description}"
+                                    th:onclick=""
+                                    th:selected="${type.id==feedback.typeByTypeId.id}"></option>
+                            <!--</th:block>-->
+                        </select>
                     </div>
                 </div>
                 <div class="row form-row feedback-target">
@@ -674,18 +676,18 @@
         <!-- /.container-fluid-->
         <footer th:replace="fragments/footer"></footer>
         <!-- Bootstrap core JavaScript-->
-        <script th:src="@{vendor/jquery/jquery.min.js}"></script>
-        <script th:src="@{vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+        <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
         <!-- Core plugin JavaScript-->
-        <script th:src="@{vendor/jquery-easing/jquery.easing.min.js}"></script>
+        <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
         <!-- Page level plugin JavaScript-->
-        <script th:src="@{vendor/datatables/jquery.dataTables.js}"></script>
-        <script th:src="@{vendor/datatables/dataTables.bootstrap4.js}"></script>
+        <script th:src="@{/vendor/datatables/jquery.dataTables.js}"></script>
+        <script th:src="@{/vendor/datatables/dataTables.bootstrap4.js}"></script>
         <!-- Custom scripts for all pages-->
-        <script th:src="@{js/sb-admin.min.js}"></script>
+        <script th:src="@{/js/sb-admin.min.js}"></script>
         <!-- /.content-wrapper-->
-        <script th:src="@{js/conduct-feedback.js}"></script>
-        <script th:src="@{js/overview-feedback.js}"></script>
+        <script th:src="@{/js/conduct-feedback.js}"></script>
+        <script th:src="@{/js/overview-feedback.js}"></script>
     </div>
 </div>
 </body>

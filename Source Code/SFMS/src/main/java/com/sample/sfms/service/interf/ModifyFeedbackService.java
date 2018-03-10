@@ -6,6 +6,7 @@ import com.sample.sfms.model.ModifyFeedbackModel;
 import org.springframework.http.ResponseEntity;
 
 import java.security.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -48,9 +49,9 @@ public interface ModifyFeedbackService {
 
     public ResponseEntity<Feedback> updateType(int typeId, int feedbackId);
 
-    public ResponseEntity<Feedback> setStart(Date start, int feedbbackId);
+    public ResponseEntity<String> setStart(Date start, int feedbbackId);
 
-    public ResponseEntity<Feedback> setEnd(Date end, int feedbackId);
+    public ResponseEntity<String> setEnd(Date end, int feedbackId);
 
     public ResponseEntity<List<User>> loadConductors(int id);//id of feedback contains target
 
@@ -65,4 +66,6 @@ public interface ModifyFeedbackService {
     public ResponseEntity<List<Clazz>> loadClazzTargets(List<Integer> targetIds);//ids of feedbacks contain targets
 
     public ResponseEntity<List<Feedback>> loadTargets(List<Integer> targetIds);//ids of feedbacks contain targets
+
+    public ResponseEntity<List<Type>> loadAllTypes();
 }

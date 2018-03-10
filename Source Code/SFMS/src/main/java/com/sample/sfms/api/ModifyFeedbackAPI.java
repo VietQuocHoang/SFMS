@@ -71,16 +71,14 @@ class ModifyFeedbackAPI {
 
     @PutMapping("/start")
     private ResponseEntity<String> editStart(@RequestParam("startdate") Date startdate, HttpSession session) {
-        Feedback f = modifyService.getFeedback((int) session.getAttribute("id")).getBody();
-        f.setStartDate(startdate);
-        return new ResponseEntity<>(modifyService.saveFeedback(f).getBody().getFeedbackDes(), HttpStatus.OK);
+        return new ResponseEntity<>(modifyService.setStart(startdate,(int) session.getAttribute("id")).getBody(), HttpStatus.OK);
     }
 
     @PutMapping("/end")
     private ResponseEntity<String> editEnd(@RequestParam("enddate") Date enddate, HttpSession session) {
         Feedback f = modifyService.getFeedback((int) session.getAttribute("id")).getBody();
         f.setEndDate(enddate);
-        return new ResponseEntity<>(modifyService.saveFeedback(f).getBody().getFeedbackDes(), HttpStatus.OK);
+        return new ResponseEntity<>(modifyService.setEnd(enddate,(int) session.getAttribute("id")).getBody(), HttpStatus.OK);
     }
 
     @PutMapping("/semester")
@@ -92,7 +90,7 @@ class ModifyFeedbackAPI {
     }
 
     @PutMapping("/type")
-    private ResponseEntity<Type> editType(@RequestParam("semesterId") int typeId, HttpSession session) {
+    private ResponseEntity<Type> editType(@RequestParam("typeId") int typeId, HttpSession session) {
         modifyService.deleteFeedbacks((List<Integer>)session.getAttribute("targetIds"));
         return new ResponseEntity<Type>(
                 modifyService.updateType(typeId,

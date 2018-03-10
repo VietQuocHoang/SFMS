@@ -32,19 +32,32 @@ $(document).ready(function () {
     );
 });
 
-$(".conductor-field").hover(function (){
+// $("#feedback-title").focusout(function () {
+//     $.ajax(
+//         {
+//             url: "/api/modify-feedback/title",
+//             method: "PUT",
+//             data:
+//             success: function (result) {
+//                 $("#div1").html(result);
+//             }
+//         }
+//     );
+// })
+
+$(".conductor-field").hover(function () {
     $(this).children(".add-inf-item-link").show();
 })
-$(".conductor-field").mouseout(function (){
+$(".conductor-field").mouseout(function () {
     $(this).children(".add-inf-item-link").hide();
 })
-$(".viewer-field").hover(function (){
+$(".viewer-field").hover(function () {
     $(this).children(".add-inf-item-link").show();
 })
-$(".viewer-field").mouseout(function (){
+$(".viewer-field").mouseout(function () {
     $(this).children(".add-inf-item-link").hide();
 })
-$(".add-inf-item-link").hover(function (){
+$(".add-inf-item-link").hover(function () {
     $(this).show();
 })
 // $(".add-inf-item-link").mouseout(function (){
