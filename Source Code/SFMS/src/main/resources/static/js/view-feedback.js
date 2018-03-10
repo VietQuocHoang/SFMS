@@ -1,7 +1,5 @@
-var selectedValue
 $(document).ready(function () {
-    var selected = document.getElementById("filter-scope");
-    selectedValue = selected.options(selected.selectedIndex).value;
+
     /* selectedValue = "Phòng ban"; //selected.options[selected.selectedIndex].value;
      var i, tabcontent, tablinks;
      tabcontent = document.getElementsByClassName("tab-content");
@@ -43,24 +41,28 @@ $(document).ready(function () {
      document.getElementById(cityName).style.display = "block";
      evt.currentTarget.className += " active";
      }*/
-
-    function searchViaAjax(selectedValue) {
-        $.ajax({
-            type : "GET",
-            url : "/view-list-feedback/list"+selectedValue,
-            timeout : 100000,
-            success : function(selectedValue) {
-                console.log("SUCCESS: ", selectedValue);
-                display(selectedValue);
-                alert(response);
-            },
-            error : function(e) {
-                console.log("ERROR: ", e);
-                display(e);
-            },
-            done : function(e) {
-                console.log("DONE");
-            }
-        });
-    }
+    $('#filter-scope').addEventListener('change',function () {
+        function searchViaAjax(selectedValue) {
+            //var selected = document.getElementById("filter-scope");
+            //selectedValue = selected.options(selected.selectedIndex).value;
+            selectedValue = $('#filter-scope').find(":selected").text();
+            $.ajax({
+                type : "GET",
+                url : "/view-list-feedback/list"+selectedValue,
+                timeout : 100000,
+                success : function(selectedValue) {
+                    console.log("SUCCESS: ", selectedValue);
+                    display(selectedValue);
+                    alert(response);
+                },
+                error : function(e) {
+                    console.log("ERROR: ", e);
+                    display(e);
+                },
+                done : function(e) {
+                    console.log("DONE");
+                }
+            });
+        }
+    })
 });
