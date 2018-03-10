@@ -77,12 +77,10 @@
                                                         <p class='question-content-paragraph'
                                                            th:text="${feedback.questionsById.get(index).questionContent}">
                                                         </p>
-                                                        <th:block
-                                                                th:if="${feedback.questionsById.get(index).isRequied == true}">
-                                                            <span class='required-question'"><sup>*</sup></span>
+                                                        <th:block th:if="${feedback.questionsById.get(index).isRequied == true}">
+                                                            <span class='required-question'><sup>*</sup></span>
                                                         </th:block>
-                                                        <th:block
-                                                                th:if="${feedback.questionsById.get(index).isRequied == false}">
+                                                        <th:block th:if="${feedback.questionsById.get(index).isRequied == false}">
                                                             <span class='required-question'
                                                                   style="display: none"><sup>*</sup></span>
                                                         </th:block>
@@ -150,10 +148,7 @@
                                                             <label class='col-4 col-form-label text-right'>Nội
                                                                 dung: </label>
                                                             <div class='col-8'>
-                                                                <textarea class='txtEditQuestion'>
-                                                                    <span th:text="${feedback.questionsById.get(index).questionContent}"
-                                                                          th:remove="tag"></span>
-                                                                </textarea>
+                                                                <textarea class='txtEditQuestion'><span th:text="${feedback.questionsById.get(index).questionContent}" th:remove="tag"></span></textarea>
                                                             </div>
                                                         </div>
                                                         <div class='form-group row'>
@@ -352,11 +347,7 @@
                                                             <label class='col-4 col-form-label text-right'>Nội
                                                                 dung: </label>
                                                             <div class='col-8'>
-                                                                <textarea class='txtEditQuestion'>
-                                                                                                                                        <span th:text="${feedback.questionsById.get(index).questionContent}"
-                                                                                                                                              th:remove="tag"></span>
-
-                                                                </textarea>
+                                                                <textarea class='txtEditQuestion'><span th:text="${feedback.questionsById.get(index).questionContent}" th:remove="tag"></span></textarea>
                                                             </div>
                                                         </div>
                                                         <div class='form-group row'>
