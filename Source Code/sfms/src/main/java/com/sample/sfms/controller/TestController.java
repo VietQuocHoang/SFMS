@@ -68,6 +68,11 @@ public class TestController {
         return new ModelAndView("create-feedback-content");
     }
 
+    @GetMapping(value = "/edit-feedback-content")
+    private ModelAndView editFeedbackContent(){
+        return new ModelAndView("edit-feedback-content");
+    }
+
     @GetMapping(value = "/view-report-semester-details")
     private ModelAndView viewReportSemester(){
         return new ModelAndView("view-report-semester");
