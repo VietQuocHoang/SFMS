@@ -449,6 +449,193 @@
                                 </div>
                             </div>
 
+                            <!-- TEXT -->
+
+                            <div th:case="Text" th:remove="tag">
+                                <div class='question-container'
+                                     th:attr="id='textfield-question-' + ${feedback.questionsById.get(index).id}">
+                                    <div class='question-wrapper' th:attr="id=${feedback.questionsById.get(index).id}">
+                                        <div class='toggle-bar-container'>
+                                            <div class='toggle-bar-wrapper'>
+                                                <div class='delete-question-holder'>
+                                                    <button class='btn-remove-question'><i class='fa fa-trash'></i> Xóa
+                                                    </button>
+                                                </div>
+                                                <div class='expand-edit-question-holder'>
+                                                    <i class='btn-expand-edit fa fa-angle-down'></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class='preview-question-container'>
+                                            <div class='preview-question-wrapper'>
+                                                <div class='question-content-container'>
+                                                    <div class='question-content-wrapper'>
+                                                        <p class='question-content-paragraph'
+                                                           th:text="${feedback.questionsById.get(index).questionContent}">
+                                                        </p>
+                                                        <th:block
+                                                                th:if="${feedback.questionsById.get(index).isRequied == true}">
+                                                            <span class='required-question'><sup>*</sup></span>
+                                                        </th:block>
+                                                        <th:block
+                                                                th:if="${feedback.questionsById.get(index).isRequied == false}">
+                                                            <span class='required-question'
+                                                                  style="display: none"><sup>*</sup></span>
+                                                        </th:block>
+                                                    </div>
+                                                </div>
+                                                <div class='answer-container'>
+
+                                                    <div th:class="answer-wrapper">
+
+                                                        <div class='form-group row'>
+                                                            <input type='text' class='form-control'>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class='edit-question-container'>
+                                            <div class='edit-question-wrapper'>
+                                                <div class='edit-panel-container'>
+                                                    <div class='edit-panel-wrapper'>
+                                                        <div class='form-group row'>
+                                                            <label class='col-4 col-form-label text-right'>Câu hỏi bắt
+                                                                buộc:</label>
+                                                            <div class='col-8'
+                                                                 style='padding-top: 7px; padding-bottom:7px;'>
+                                                                <th:block
+                                                                        th:if="${feedback.questionsById.get(index).isRequied == true}">
+                                                                    <input class='required-checkbox' type='checkbox'
+                                                                           checked="checked">
+                                                                </th:block>
+                                                                <th:block
+                                                                        th:if="${feedback.questionsById.get(index).isRequied == false}">
+                                                                    <input class='required-checkbox' type='checkbox'>
+                                                                </th:block>
+                                                            </div>
+                                                        </div>
+                                                        <div class='form-group row'>
+                                                            <label class='col-4 col-form-label text-right'>Nội
+                                                                dung: </label>
+                                                            <div class='col-8'>
+                                                                <textarea class='txtEditQuestion'><span th:text="${feedback.questionsById.get(index).questionContent}" th:remove="tag"></span></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class='form-group row'>
+                                                            <label class='col-4 col-form-label text-right'>Loại đánh
+                                                                giá: </label>
+                                                            <div class='col-8'>
+                                                                <select class='form-control select-list-criteria'>
+                                                                    <option value='1'>Chuyên cần</option>
+                                                                    <option value='2'>Tác phong</option>
+                                                                    <option value='3'>Thái độ</option>
+                                                                    <option value='4'>Chuyên môn</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- TEXTAREA -->
+
+                            <div th:case="TextArea" th:remove="tag">
+                                <div class='question-container'
+                                     th:attr="id='textarea-question-' + ${feedback.questionsById.get(index).id}">
+                                    <div class='question-wrapper' th:attr="id=${feedback.questionsById.get(index).id}">
+                                        <div class='toggle-bar-container'>
+                                            <div class='toggle-bar-wrapper'>
+                                                <div class='delete-question-holder'>
+                                                    <button class='btn-remove-question'><i class='fa fa-trash'></i> Xóa
+                                                    </button>
+                                                </div>
+                                                <div class='expand-edit-question-holder'>
+                                                    <i class='btn-expand-edit fa fa-angle-down'></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class='preview-question-container'>
+                                            <div class='preview-question-wrapper'>
+                                                <div class='question-content-container'>
+                                                    <div class='question-content-wrapper'>
+                                                        <p class='question-content-paragraph'
+                                                           th:text="${feedback.questionsById.get(index).questionContent}">
+                                                        </p>
+                                                        <th:block
+                                                                th:if="${feedback.questionsById.get(index).isRequied == true}">
+                                                            <span class='required-question'><sup>*</sup></span>
+                                                        </th:block>
+                                                        <th:block
+                                                                th:if="${feedback.questionsById.get(index).isRequied == false}">
+                                                            <span class='required-question'
+                                                                  style="display: none"><sup>*</sup></span>
+                                                        </th:block>
+                                                    </div>
+                                                </div>
+                                                <div class='answer-container'>
+
+                                                    <div th:class="answer-wrapper">
+
+                                                        <div class='form-group row'>
+                                                            <textarea class='form-control'></textarea>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class='edit-question-container'>
+                                            <div class='edit-question-wrapper'>
+                                                <div class='edit-panel-container'>
+                                                    <div class='edit-panel-wrapper'>
+                                                        <div class='form-group row'>
+                                                            <label class='col-4 col-form-label text-right'>Câu hỏi bắt
+                                                                buộc:</label>
+                                                            <div class='col-8'
+                                                                 style='padding-top: 7px; padding-bottom:7px;'>
+                                                                <th:block
+                                                                        th:if="${feedback.questionsById.get(index).isRequied == true}">
+                                                                    <input class='required-checkbox' type='checkbox'
+                                                                           checked="checked">
+                                                                </th:block>
+                                                                <th:block
+                                                                        th:if="${feedback.questionsById.get(index).isRequied == false}">
+                                                                    <input class='required-checkbox' type='checkbox'>
+                                                                </th:block>
+                                                            </div>
+                                                        </div>
+                                                        <div class='form-group row'>
+                                                            <label class='col-4 col-form-label text-right'>Nội
+                                                                dung: </label>
+                                                            <div class='col-8'>
+                                                                <textarea class='txtEditQuestion'><span th:text="${feedback.questionsById.get(index).questionContent}" th:remove="tag"></span></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class='form-group row'>
+                                                            <label class='col-4 col-form-label text-right'>Loại đánh
+                                                                giá: </label>
+                                                            <div class='col-8'>
+                                                                <select class='form-control select-list-criteria'>
+                                                                    <option value='1'>Chuyên cần</option>
+                                                                    <option value='2'>Tác phong</option>
+                                                                    <option value='3'>Thái độ</option>
+                                                                    <option value='4'>Chuyên môn</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                         </th:block>
 
