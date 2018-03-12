@@ -4,5 +4,6 @@ public class FeedbackView {
     public static class conductFeedbackView {
     }
 
-    ;
+    public static class alertUserFeedbackView {
+    }
 }

@@ -1,14 +1,15 @@
 package com.sample.sfms.api;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.sample.sfms.api.responseModel.Response;
-import com.sample.sfms.entity.Answer;
 import com.sample.sfms.entity.Feedback;
 import com.sample.sfms.model.feedback.FeedbackCreateModel;
 import com.sample.sfms.model.question.AddQuestionModel;
 import com.sample.sfms.service.interf.FeedbackService;
 import com.sample.sfms.service.interf.QuestionService;
+import com.sample.sfms.view.FeedbackView;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -60,5 +61,12 @@ public class FeedbackAPI {
 
         }
         return new Response(false, "Xin kiểm tra lại feedback đã hợp lệ chưa");
+    }
+
+
+    @JsonView(FeedbackView.alertUserFeedbackView.class)
+    @GetMapping("/undone-by-authorized-user")
+    public ResponseEntity getListNotConductedFeedbackByAuthorizedUser() {
+        return feedbackService.getNotConductedFeedbacksByUserId();
     }
 }
