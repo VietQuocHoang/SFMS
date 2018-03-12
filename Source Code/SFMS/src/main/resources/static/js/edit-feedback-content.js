@@ -882,10 +882,10 @@ class Option {
 }
 
 function getQuestions() {
-    //var feedbackID = document.getElementById("feedbackID").innerHTML;
-    //alert(feedbackID);
+    var feedbackID = document.getElementById("feedbackID").innerHTML;
+    alert(feedbackID);
 
-    let feedback = new Feedback(34); ////// HARD CODE /////////////
+    let feedback = new Feedback(feedbackID); ////// HARD CODE /////////////
 
     //Lấy hết các div chứa question
     let allQuestions = $("div[class='question-container']");
