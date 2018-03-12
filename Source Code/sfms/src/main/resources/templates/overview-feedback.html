@@ -132,6 +132,7 @@
                         <!--<input list="list-types" class="form-control" placeholder="Loại đối tượng"/>-->
                         <!--</div>-->
                         <select class="input-group input-group-sm" id="typeId">
+<<<<<<< HEAD
                             <option th:if="${feedback.typeByTypeId != null}"
                                     th:each="type : ${alltypes}"
                                     th:value="${type.id}"
@@ -141,6 +142,15 @@
                                     th:each="type : ${alltypes}"
                                     th:value="${type.id}"
                                     th:text="${type.description}"></option>
+=======
+                            <!--<th:block th:each="type : ${alltypes}">-->
+                           <!-- <option th:each="type : ${alltypes}"
+                                    th:value="${type.id}"
+                                    th:text="${type.description}"
+                                    th:onclick=""
+                                    th:selected="${type.id==feedback.typeByTypeId.id}"></option>-->
+                            <!--</th:block>-->
+>>>>>>> bd2b950f2e9728e640de8a824a00c6c87a9db64e
                         </select>
                     </div>
                 </div>
@@ -286,7 +296,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Nội dung feedback</h5>
-                                <a class="edit-content-item-link" href="create-feedback-content"
+                                <a class="edit-content-item-link" th:href="@{'/edit-feedback-content/' + ${session.id}}"
                                    style="margin-left: 20%"><i
                                         class="fa fa-pencil"></i> Chỉnh sửa
                                 </a>

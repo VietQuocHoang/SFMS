@@ -1,4 +1,5 @@
 var wscrolltop = 0;
+var _ctx = $("meta[name='ctx']").attr("content");
 
 $.getScript("models.js", () => { alert('Error loading front-end models') });
 
@@ -939,6 +940,7 @@ function getQuestions() {
 }
 
 function saveFeedback(feedback) {
+    var ctx = "${pageContext.request.contextPath}";
     $.ajax({
             headers: {
                 'Accept': 'application/json',
@@ -948,7 +950,7 @@ function saveFeedback(feedback) {
             type: 'POST',
             data: JSON.stringify(feedback),
             success: function(data) {
-                window.location=data.message;
+                window.location.href = _ctx + "/modify-feedback/overview";
             },
             error: (err) => alert(err)
 });

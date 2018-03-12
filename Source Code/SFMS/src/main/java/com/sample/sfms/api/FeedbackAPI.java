@@ -3,8 +3,13 @@ package com.sample.sfms.api;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.sample.sfms.api.responseModel.Response;
 import com.sample.sfms.entity.Feedback;
+import com.sample.sfms.entity.Question;
 import com.sample.sfms.model.feedback.FeedbackCreateModel;
+import com.sample.sfms.model.feedback.FeedbackUpdateModel;
+import com.sample.sfms.model.option.OptionCreateModel;
+import com.sample.sfms.model.option.OptionUpdateModel;
 import com.sample.sfms.model.question.AddQuestionModel;
+import com.sample.sfms.model.question.UpdateQuestionModel;
 import com.sample.sfms.service.interf.FeedbackService;
 import com.sample.sfms.service.interf.QuestionService;
 import com.sample.sfms.view.FeedbackView;
@@ -13,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,13 +60,69 @@ public class FeedbackAPI {
                     question.setFeedbackId(feedbackId);
                     questionService.addQuestion(question);
                 }
-                return new Response(true, "overview-feedback");
+                return new Response(true, feedbackId + "");
             } catch (Exception ex) {
                 return new Response(false, ex.getMessage());
             }
 
         }
         return new Response(false, "Xin kiểm tra lại feedback đã hợp lệ chưa");
+    }
+
+    @RequestMapping(value = "/modify-question", method = RequestMethod.POST)
+    @Transactional
+    public Response modifyQuestion(@RequestBody FeedbackUpdateModel model) {
+        if(model.valid()) {
+            try {
+                //int feedbackId = feedbackService.save(model);
+                int feedbackId = model.getId();
+                List<Question> listExistedQuestion = questionService.findByFeedbackId(feedbackId);
+                System.out.print("listExistedQuestion: " + listExistedQuestion.size());
+                List<Integer> listModifyQuestionID = new ArrayList<>();
+                for (UpdateQuestionModel question : model.getQuestions()) {
+                    if (question.getQuestionId() >= 0) {
+                        question.setFeedbackId(feedbackId);
+                        questionService.updateQuestion(question);
+                        listModifyQuestionID.add(question.getQuestionId());
+                    } else {
+                        AddQuestionModel addQuestion = new AddQuestionModel();
+                        addQuestion.setFeedbackId(feedbackId);
+                        addQuestion.setType(question.getType());
+                        addQuestion.setSuggestion(question.getSuggestion());
+                        addQuestion.setCriteriaId(question.getCriteriaId());
+                        addQuestion.setQuestionContent(question.getQuestionContent());
+                        addQuestion.setRequired(question.isRequired());
+                        addQuestion.setRequireOther(question.isRequireOther());
+                        OptionCreateModel[] options = new OptionCreateModel[question.getOptionUpdateModels().length];
+                        int i = 0;
+                        for (OptionUpdateModel option : question.getOptionUpdateModels()) {
+                            OptionCreateModel addOption = new OptionCreateModel();
+                            addOption.setOptionContent(option.getOptionContent());
+                            addOption.setPoint(option.getPoint());
+                          //  addOption.setQuestionId(option.getQuestionId());
+                            addOption.setQuestion(option.getQuestion());
+                            options[i] = addOption;
+                            i++;
+                        }
+                        addQuestion.setOptionCreateModel(options);
+                        int questionID = questionService.addQuestion(addQuestion);
+                        listModifyQuestionID.add(questionID);
+                    }
+                }
+
+                for (Question question : listExistedQuestion) {
+                    if (!listModifyQuestionID.contains(question.getId()))     {
+                        questionService.removeQuestion(question.getId());
+                    }
+                }
+
+                return new Response(true, feedbackId + "");
+            } catch (Exception ex) {
+                return new Response(false, ex.getMessage());
+            }
+
+        }
+        return new Response(false,"Xin kiểm tra lại feedback đã hợp lệ chưa");
     }
 
 

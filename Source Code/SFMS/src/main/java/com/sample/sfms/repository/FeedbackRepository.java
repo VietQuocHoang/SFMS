@@ -14,33 +14,33 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
    Feedback findById(int id);
 
    @Query("select f from Feedback f, Semester s where " +
-           "f.departmentByDepartmentId = :depID AND f.semesterBySemesterId = :semesterID")
+           "f.departmentByDepartmentId.id = :depID AND f.semesterBySemesterId.id = :semesterID")
    int findByDepIdAndSemesterId(@Param("depID")int depID,
                               @Param("semesterID")String semesterID);
 
    @Query("select f from Feedback f, Semester s where " +
-           "f.courseByCourseId = :courseID AND f.semesterBySemesterId = :semesterID")
+           "f.courseByCourseId.id = :courseID AND f.semesterBySemesterId.id = :semesterID")
    int findByCourseIdAndSemesterId(@Param("courseID")int courseID,
                                 @Param("semesterID")String semesterID);
 
    @Query("select f from Feedback f, Semester s where " +
-           "f.majorByMajorId = :majorID AND f.semesterBySemesterId = :semesterID")
+           "f.majorByMajorId.id = :majorID AND f.semesterBySemesterId.id = :semesterID")
    int findByMajorIdAndSemesterId(@Param("majorID")int majorID,
                                    @Param("semesterID")String semesterID);
 
    @Query("select f from Feedback f, Semester s, Department d where " +
-           "f.departmentByDepartmentId = d.id AND f.semesterBySemesterId = s.id")
+           "f.departmentByDepartmentId.id = d.id AND f.semesterBySemesterId.id = s.id")
    List<Feedback> getListDepFeedback();
 
    @Query("select f from Feedback f, Semester s, Major j where " +
-           "f.majorByMajorId = j.id AND f.semesterBySemesterId = s.id")
+           "f.majorByMajorId.id = j.id AND f.semesterBySemesterId.id = s.id")
    List<Feedback> getListMajorFeedback();
 
    @Query("select f from Feedback f, Semester s, Course c where " +
-           "f.courseByCourseId = c.id AND f.semesterBySemesterId = s.id")
+           "f.courseByCourseId.id = c.id AND f.semesterBySemesterId.id = s.id")
    List<Feedback> getListCourseFeedback();
 
    @Query("select f from Feedback f, Semester s, Clazz c where " +
-           "f.clazzByClazzId = c.id AND f.semesterBySemesterId = s.id")
+           "f.clazzByClazzId.id = c.id AND f.semesterBySemesterId.id = s.id")
    List<Feedback> getListClassFeedback();
 }

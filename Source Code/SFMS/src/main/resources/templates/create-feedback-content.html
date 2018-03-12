@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta name="description" content=""/>
     <meta name="author" content=""/>
+    <meta name="ctx" th:content="${#httpServletRequest.getContextPath()}"/>
     <title>Tạo nội dung feedback</title>
     <div th:replace="fragments/core-css"></div>
-    <link rel="stylesheet" href="vendor/jquery-ui/jquery-ui.css">
-    <link rel="stylesheet" href="css/create-feedback-content.css">
-    <link href="css/progressbar-feedback.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/vendor/jquery-ui/jquery-ui.css}">
+    <link rel="stylesheet" th:href="@{/css/create-feedback-content.css}">
+    <link th:href="@{/css/progressbar-feedback.css}" rel="stylesheet">
 </head>
 
 <body class="fixed-nav sticky-footer" id="page-top">
@@ -75,6 +76,6 @@
 </div>
 </body>
 <div th:replace="fragments/core-script"></div>
-<script src="vendor/jquery-ui/jquery-ui.js" type="text/javascript"></script>
-<script src="js/create-feedback-content.js" type="text/javascript"></script>
+<script th:src="@{/vendor/jquery-ui/jquery-ui.js}" type="text/javascript"></script>
+<script th:src="@{/js/create-feedback-content.js}" type="text/javascript"></script>
 </html>
