@@ -1,4 +1,5 @@
 var wscrolltop = 0;
+var _ctx = $("meta[name='ctx']").attr("content");
 
 $.getScript("models.js", () => { alert('Error loading front-end models') });
 
@@ -882,10 +883,10 @@ class Option {
 }
 
 function getQuestions() {
-    //var feedbackID = document.getElementById("feedbackID").innerHTML;
-    //alert(feedbackID);
+    var feedbackID = document.getElementById("feedbackID").innerHTML;
+    alert(feedbackID);
 
-    let feedback = new Feedback(34); ////// HARD CODE /////////////
+    let feedback = new Feedback(feedbackID); ////// HARD CODE /////////////
 
     //Lấy hết các div chứa question
     let allQuestions = $("div[class='question-container']");
@@ -952,6 +953,7 @@ function getQuestions() {
 }
 
 function saveFeedback(feedback) {
+    var ctx = "${pageContext.request.contextPath}";
     $.ajax({
             headers: {
                 'Accept': 'application/json',
@@ -961,7 +963,8 @@ function saveFeedback(feedback) {
             type: 'POST',
             data: JSON.stringify(feedback),
             success: function(data) {
-                alert(data.message);
+                window.location.href = _ctx + "/modify-feedback/overview";
+                //alert(data.message);
                // window.location=data.message;
             },
             error: (err) => alert(err)
