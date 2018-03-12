@@ -60,3 +60,24 @@
     outline:none;
 }
 /*end search bar*/
+
+/*navbar css*/
+@media (min-width: 992px) {
+    .navbar-nav.ml-auto {
+        padding-right: 50px;
+        right: 0;
+    }
+
+    .notification-dropdown {
+        width: 250px;
+    }
+
+    .dropdown-item {
+        white-space: normal;
+        border-top: 1px solid lightgrey;
+    }
+
+    /*.dropdown-header{*/
+    /*white-space: normal;*/
+    /*}*/
+}
