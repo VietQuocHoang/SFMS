@@ -53,8 +53,8 @@ class ModifyFeedbackController {
         Feedback feedback = modifyService.getFeedback(Integer.parseInt(session.getAttribute("id").toString())).getBody();
         mv.addObject("feedback", feedback);
         mv.addObject("alltypes", modifyService.loadAllTypes().getBody());
-        mv.addObject("startdate", new SimpleDateFormat("yyyy-MM-dd").format(feedback.getStartDate()));
-        mv.addObject("enddate", new SimpleDateFormat("yyyy-MM-dd").format(feedback.getEndDate()));
+        //mv.addObject("startdate", new SimpleDateFormat("yyyy-MM-dd").format(feedback.getStartDate()));
+       // mv.addObject("enddate", new SimpleDateFormat("yyyy-MM-dd").format(feedback.getEndDate()));
 //        mv.addObject("targets", modifyService.loadTargets((int[])session.getAttribute("targetIds")));
         return mv;
     }
@@ -63,8 +63,8 @@ class ModifyFeedbackController {
     private ModelAndView getFeedbackOverview(@PathVariable("id") int id, HttpSession session) {
         ModelAndView mv = new ModelAndView("overview-feedback");
         Feedback feedback = modifyService.getFeedback(id).getBody();
-        mv.addObject("startdate", new SimpleDateFormat("yyyy-MM-dd").format(feedback.getStartDate()));
-        mv.addObject("enddate", new SimpleDateFormat("yyyy-MM-dd").format(feedback.getEndDate()));
+   //     mv.addObject("startdate", new SimpleDateFormat("yyyy-MM-dd").format(feedback.getStartDate()));
+   //     mv.addObject("enddate", new SimpleDateFormat("yyyy-MM-dd").format(feedback.getEndDate()));
         mv.addObject("feedback", feedback);
         mv.addObject("alltypes", modifyService.loadAllTypes().getBody());
 //        mv.addObject("targets", modifyService.loadTargets((int[])session.getAttribute("targetIds")));

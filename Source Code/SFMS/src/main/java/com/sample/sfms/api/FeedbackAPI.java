@@ -53,7 +53,7 @@ public class FeedbackAPI {
                     question.setFeedbackId(feedbackId);
                     questionService.addQuestion(question);
                 }
-                return new Response(true, "overview-feedback");
+                return new Response(true, feedbackId + "");
             } catch (Exception ex) {
                 return new Response(false, ex.getMessage());
             }
