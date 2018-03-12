@@ -2,13 +2,17 @@ package com.sample.sfms.api;
 
 //import com.fasterxml.jackson.core.JsonProcessingException;
 //import com.fasterxml.jackson.core.json.UTF8JsonGenerator;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sample.sfms.entity.Feedback;
 //import com.sample.sfms.entity.Role;
 //import com.sample.sfms.entity.Semester;
+import com.sample.sfms.entity.Semester;
 import com.sample.sfms.entity.Type;
 //import com.sample.sfms.model.ModifyFeedbackModel;
 import com.sample.sfms.service.interf.ModifyFeedbackService;
+import com.sample.sfms.view.SemesterView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -41,6 +46,22 @@ public class ModifyFeedbackAPI {
     @GetMapping("/get/{id}")
     private ResponseEntity<Feedback> getFeedback(@PathVariable("id") int id) {
         return modifyService.getFeedback(id);
+    }
+
+    @GetMapping("/list/targets")
+    private String listTarget(@RequestParam("id") int id, HttpSession session) throws JsonProcessingException {
+        if(session.getAttribute("targetIds")==null)return null;
+        Feedback f = modifyService.getFeedback(Integer.parseInt(session.getAttribute("id").toString())).getBody();
+        if(f.getTypeByTypeId()==null) return null;
+        List response;
+        switch (f.getTypeByTypeId().getDescription()){
+            case "Major": response = modifyService.loadMajorTargets((List<Integer>)session.getAttribute("targetIds"));break;
+            case "Course": response = modifyService.loadCourseTargets((List<Integer>)session.getAttribute("targetIds"));break;
+            case "Clazz": response = modifyService.loadClazzTargets((List<Integer>)session.getAttribute("targetIds"));break;
+            case "Department": response = modifyService.loadDepartmentTargets((List<Integer>)session.getAttribute("targetIds"));break;
+            default: response = new ArrayList();break;
+        }
+        return ObjToJson(response);
     }
 
     @PostMapping
@@ -89,9 +110,10 @@ public class ModifyFeedbackAPI {
         }
     }
 
+    @JsonView(SemesterView.basicSemesterView.class)
     @PutMapping("/semester")
-    private ResponseEntity<Feedback> editSemester(@RequestParam("semesterId") int semesterId, HttpSession session) {
-        return  modifyService.updateSemester(semesterId,(int) session.getAttribute("id"));
+    private ResponseEntity<Semester> editSemester(@RequestBody Semester semester, HttpSession session) {
+        return  modifyService.updateSemester(semester.getId(),(int) session.getAttribute("id"));
     }
 
     @PutMapping("/type")
@@ -103,6 +125,7 @@ public class ModifyFeedbackAPI {
     @PostMapping("/add/target")
     private ResponseEntity<Integer> addTarget(@RequestParam("id") int id, HttpSession session) {
         List<Integer> targetIds = (List<Integer>) session.getAttribute("targetIds");
+        if(targetIds==null)targetIds = new ArrayList<>();
         Feedback response = modifyService.addTarget((int) session.getAttribute("id"), id, targetIds).getBody();
         if (!targetIds.contains(response.getId())) targetIds.add(response.getId());
         session.setAttribute("targetIds", targetIds);
@@ -155,12 +178,7 @@ public class ModifyFeedbackAPI {
         return modifyService.deleteFeedback(id);
     }
 
-//    String ObjToJson(Object o) throws JsonProcessingException {
-//        return om.writerWithDefaultPrettyPrinter().writeValueAsString(o);
-//    }
-//
-//    String JsonToObj(Object o) throws JsonProcessingException {
-//        return om.writerWithDefaultPrettyPrinter().writeValueAsString(o);
-//    }
-
+    String ObjToJson(Object o) throws JsonProcessingException {
+        return om.writerWithDefaultPrettyPrinter().writeValueAsString(o);
+    }
 }

@@ -4,6 +4,10 @@
 $(document).ready(function () {
     $('#tbl-targets').DataTable(
         {
+            "ajax": {
+                "url": "/sfms/api/modify-feedback/list/targets",
+                "type": "GET"
+            },
             "language": {
                 "decimal": "",
                 "emptyTable": "Không kết quả nào được tìm thấy",
@@ -36,7 +40,7 @@ $("#feedback-title").focusout(function () {
     $.ajax(
         {
             url: "/sfms/api/modify-feedback/title",
-            method: "PUT",
+            type: "PUT",
             dataType: 'application/json',
             data: {"title": $("#feedback-title").val()},
             success: function (result) {
@@ -53,7 +57,7 @@ $("#feedback-description").focusout(function () {
     $.ajax(
         {
             url: "/sfms/api/modify-feedback/description",
-            method: "PUT",
+            type: "PUT",
             dataType: 'application/json',
             data: {"description": $("#feedback-description").val()},
             success: function (result) {
@@ -67,10 +71,18 @@ $("#feedback-description").focusout(function () {
 })
 
 $("#startdate").change(function () {
+    changeStart();
+})
+
+$("#enddate").change(function () {
+    changeEnd();
+})
+
+function changeStart(){
     $.ajax(
         {
             url: "/sfms/api/modify-feedback/start",
-            method: "PUT",
+            type: "PUT",
             dataType: 'application/json',
             data: {"startdate": $("#startdate").val()},
             success: function (result) {
@@ -81,14 +93,13 @@ $("#startdate").change(function () {
             }
         }
     );
-})
+}
 
-
-$("#enddate").change(function () {
+function changeEnd(){
     $.ajax(
         {
             url: "/sfms/api/modify-feedback/end",
-            method: "PUT",
+            type: "PUT",
             dataType: 'application/json',
             data: {"enddate": $("#enddate").val()},
             success: function (result) {
@@ -99,31 +110,15 @@ $("#enddate").change(function () {
             }
         }
     );
-})
+}
 
-$("#enddate").change(function () {
-    $.ajax(
-        {
-            url: "/sfms/api/modify-feedback/end",
-            method: "PUT",
-            dataType: 'application/json',
-            data: {"enddate": $("#enddate").val()},
-            success: function (result) {
-
-            },
-            error: function (result) {
-
-            }
-        }
-    );
-})
 
 
 $("#typeId").change(function () {
     $.ajax(
         {
             url: "/sfms/api/modify-feedback/type",
-            method: "PUT",
+            type: "PUT",
             dataType: 'application/json',
             data: {"typeId": $("#typeId").val()},
             success: function (result) {
@@ -136,29 +131,52 @@ $("#typeId").change(function () {
     );
 })
 
-
 $("#semesterId").change(function () {
+    let semesterData = {
+        "id": $("#semesterId").val(),
+        // "title": '',
+        // "endDate": '',
+        // "startDate": ''
+    };
+    console.log(semesterData);
     $.ajax(
         {
             url: "/sfms/api/modify-feedback/semester",
-            method: "PUT",
-            dataType: 'application/json',
-            data: {"semesterId": $("#semesterId").val()},
-            success: function (result) {
-                // $("#semesterId").setAttribute("min",)
-                alert("fuq");
+            type: "PUT",
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(semesterData),
+            success: function (data, status, xhr) {
+                let startd = new Date(parseInt(data.startDate));
+                let endd = new Date(parseInt(data.endDate));
+                $("#startdate").attr(
+                    {
+                        "min": $.datepicker.formatDate('yy-mm-dd',startd), "max": $.datepicker.formatDate('yy-mm-dd',endd)
+                    }
+                );
+                $("#startdate").val('');
+                $("#enddate").attr(
+                    {
+                        "min": $.datepicker.formatDate('yy-mm-dd',startd), "max": $.datepicker.formatDate('yy-mm-dd',endd)
+                    }
+                );
+                $("#enddate").val('');
             },
             error: function (result) {
                 alert("fuck");
             }
         }
-    );
+    )
+    ;
 })
+;
+
+
 // $("#enddate").focusout(function () {
 //     $.ajax(
 //         {
 //             url: "/sfms/api/modify-feedback/title",
-//             method: "PUT",
+//             type: "PUT",
 //             dataType: 'application/json',
 //             data: {"title": $("#enddate").val()},
 //             success: function (result) {

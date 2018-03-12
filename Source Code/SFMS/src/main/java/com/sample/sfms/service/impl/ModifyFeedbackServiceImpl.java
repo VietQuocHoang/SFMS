@@ -466,23 +466,25 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     }
 
     @Override
-    public ResponseEntity<Feedback> updateSemester(int semesterId, int feedbackId) {
+    public ResponseEntity<Semester> updateSemester(int semesterId, int feedbackId) {
         try {
             Feedback feedback = feedbackRepo.findOne(feedbackId);
             feedback.setSemesterBySemesterId(semesterRepo.findOne(semesterId));
-            return new ResponseEntity<>(feedbackRepo.save(feedback), HttpStatus.OK);
+//            feedback.setTypeByTypeId(null);
+            return new ResponseEntity<>(feedbackRepo.save(feedback).getSemesterBySemesterId(), HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @Override
-    public ResponseEntity<Feedback> updateType(int typeId, int feedbackId) {
+    public ResponseEntity<Type> updateType(int typeId, int feedbackId) {
         try {
             Feedback feedback = feedbackRepo.findOne(feedbackId);
             feedback.setTypeByTypeId(typeRepo.findOne(typeId));
-            return new ResponseEntity<>(feedbackRepo.save(feedback), HttpStatus.OK);
+            return new ResponseEntity<>(feedbackRepo.save(feedback).getTypeByTypeId(), HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -579,58 +581,58 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     }
 
     @Override
-    public ResponseEntity<List<Department>> loadDepartmentTargets(List<Integer> ids) {
+    public List<Department> loadDepartmentTargets(List<Integer> ids) {
         try {
             List<Department> results = new ArrayList<>();
             for (int id : ids) {
                 results.add(feedbackRepo.findOne(id).getDepartmentByDepartmentId());
             }
-            return new ResponseEntity<>(results, HttpStatus.OK);
+            return results;
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return null;
         }
     }
 
     @Override
-    public ResponseEntity<List<Major>> loadMajorTargets(List<Integer> ids) {
+    public List<Major> loadMajorTargets(List<Integer> ids) {
         try {
             List<Major> results = new ArrayList<>();
             for (int id : ids) {
                 results.add(feedbackRepo.findOne(id).getMajorByMajorId());
             }
-            return new ResponseEntity<>(results, HttpStatus.OK);
+            return results;
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return null;
         }
     }
 
     @Override
-    public ResponseEntity<List<Course>> loadCourseTargets(List<Integer> ids) {
+    public List<Course> loadCourseTargets(List<Integer> ids) {
         try {
             List<Course> results = new ArrayList<>();
             for (int id : ids) {
                 results.add(feedbackRepo.findOne(id).getCourseByCourseId());
             }
-            return new ResponseEntity<>(results, HttpStatus.OK);
+            return results;
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return null;
         }
     }
 
     @Override
-    public ResponseEntity<List<Clazz>> loadClazzTargets(List<Integer> ids) {
+    public List<Clazz> loadClazzTargets(List<Integer> ids) {
         try {
             List<Clazz> results = new ArrayList<>();
             for (int id : ids) {
                 results.add(feedbackRepo.findOne(id).getClazzByClazzId());
             }
-            return new ResponseEntity<>(results, HttpStatus.OK);
+            return results;
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return null;
         }
     }
 
