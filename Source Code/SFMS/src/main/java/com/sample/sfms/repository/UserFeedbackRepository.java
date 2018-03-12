@@ -22,4 +22,8 @@ public interface UserFeedbackRepository extends JpaRepository<UserFeedback, User
     @Modifying
     @Query("Select u from UserFeedback u where u.userByUserId.id=:userId and u.conducted=false")
     List<UserFeedback> findNotConductedFeedbacksByUserId(@Param("userId") int id);
+
+    @Modifying
+    @Query("Select u from UserFeedback u where u.userByUserId.id=:userId")
+    List<UserFeedback> findFeedbacksByUserId(@Param("userId") int id);
 }
