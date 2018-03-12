@@ -11,6 +11,9 @@ public class UserFeedbackPK implements Serializable{
     private int userId;
     private int feedbackId;
 
+    public UserFeedbackPK() {
+    }
+
     @Column(name = "user_id", nullable = false, insertable = false, updatable = false)
     @Id
     public int getUserId() {

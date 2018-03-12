@@ -3,6 +3,9 @@ package com.sample.sfms.repository;
 import com.sample.sfms.entity.UserFeedback;
 import com.sample.sfms.entity.UserFeedbackPK;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,4 +18,8 @@ public interface UserFeedbackRepository extends JpaRepository<UserFeedback, User
 
     List<UserFeedback> findByFeedbackByFeedbackId_Id(int id);
     List<UserFeedback> findByUserByUserId_Id(int id);
+
+    @Modifying
+    @Query("Select u from UserFeedback u where u.userByUserId.id=:userId and u.conducted=false")
+    List<UserFeedback> findNotConductedFeedbacksByUserId(@Param("userId") int id);
 }
