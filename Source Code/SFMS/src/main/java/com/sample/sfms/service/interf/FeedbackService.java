@@ -1,6 +1,7 @@
 package com.sample.sfms.service.interf;
 
 import com.sample.sfms.entity.Feedback;
+import com.sample.sfms.entity.UserFeedback;
 import com.sample.sfms.model.feedback.FeedbackCreateModel;
 import org.springframework.http.ResponseEntity;
 
@@ -17,5 +18,7 @@ public interface FeedbackService {
     List<Feedback> loadListFeedback (String type);
 
     ResponseEntity getNotConductedFeedbacksByUserId();
+
+    List<UserFeedback> getFeedbacksByUserId();
 }
 
