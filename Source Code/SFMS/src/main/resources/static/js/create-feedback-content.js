@@ -880,7 +880,7 @@ class Option {
 
 function getQuestions() {
     var feedbackID = document.getElementById("feedbackID").innerHTML;
-    alert(feedbackID);
+  //  alert(feedbackID);
 
     let feedback = new Feedback(feedbackID);
 
