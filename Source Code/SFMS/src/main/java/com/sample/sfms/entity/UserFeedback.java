@@ -1,5 +1,8 @@
 package com.sample.sfms.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.sample.sfms.view.FeedbackView;
+
 import javax.persistence.*;
 
 /**
@@ -15,7 +18,12 @@ public class UserFeedback {
     private boolean isViewer;
     private boolean isConducted;
     private User userByUserId;
+    @JsonView({FeedbackView.alertUserFeedbackView.class})
     private Feedback feedbackByFeedbackId;
+
+    public UserFeedback() {
+    }
+
     @Id
     @Column(name = "user_id", nullable = false)
     public int getUserId() {

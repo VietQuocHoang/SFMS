@@ -1,9 +1,9 @@
 package com.sample.sfms.entity;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.sample.sfms.view.FeedbackView;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
 
@@ -12,13 +12,16 @@ import java.util.Date;
  */
 @Entity
 public class Feedback {
+    @JsonView(FeedbackView.alertUserFeedbackView.class)
     private int id;
     private Integer point;
     private boolean isTemplate;
     private Date createDate;
     private Date startDate;
     private Date endDate;
+    @JsonView(FeedbackView.alertUserFeedbackView.class)
     private String feedbackDes;
+    @JsonView(FeedbackView.alertUserFeedbackView.class)
     private String feedbackName;
     private String templateDes;
     private String templateName;
