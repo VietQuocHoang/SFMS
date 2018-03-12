@@ -145,10 +145,11 @@ $("#semesterId").change(function () {
             dataType: 'application/json',
             data: {"semesterId": $("#semesterId").val()},
             success: function (result) {
-                $("#semesterId").setAttribute("min",)
+                // $("#semesterId").setAttribute("min",)
+                alert("fuq");
             },
             error: function (result) {
-                // alert("fuck");
+                alert("fuck");
             }
         }
     );
