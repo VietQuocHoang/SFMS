@@ -95,7 +95,7 @@
                                                                 <label class='form-check-label'>
                                                                     <input class='form-check-input' type='radio'
                                                                            disabled>
-                                                                    <p th:text="${option.optionnContent}"></p>
+                                                                    <p th:text="${option.optionnContent}" th:remove="tag"></p>
                                                                 </label>
                                                             </div>
                                                         </th:block>
@@ -116,7 +116,7 @@
                                                             <div class='form-check form-other'>
                                                                 <label class='form-check-label'>
                                                                     <input class='form-check-input' type='radio'>Khác
-                                                                    <input type='text' class='other-option-input'>
+                                                                    <input type='text' class='other-option-input' disabled>
                                                                 </label>
                                                             </div>
                                                         </th:block>
@@ -189,7 +189,8 @@
                                                                                     <input type='text'
                                                                                            class='answer-content-input'
                                                                                            th:placeholder="${option.optionnContent}"
-                                                                                           th:value="${option.optionnContent}"/>
+                                                                                           th:value="${option.optionnContent}"
+                                                                                           th:attr="id=${option.id}"/>
                                                                                     Trọng số: <input type='number'
                                                                                                      min='0'
                                                                                                      th:value="${option.point}"
@@ -294,7 +295,7 @@
                                                                 <label class='form-check-label'>
                                                                     <input class='form-check-input' type='checkbox'
                                                                            disabled>
-                                                                    <p th:text="${option.optionnContent}"></p>
+                                                                    <p th:text="${option.optionnContent}" th:remove="tag"></p>
                                                                 </label>
                                                             </div>
                                                         </th:block>
@@ -315,7 +316,7 @@
                                                             <div class='form-check form-other'>
                                                                 <label class='form-check-label'>
                                                                     <input class='form-check-input' type='checkbox'>Khác
-                                                                    <input type='text' class='other-option-input'>
+                                                                    <input type='text' class='other-option-input' disabled>
                                                                 </label>
                                                             </div>
                                                         </th:block>
@@ -388,7 +389,8 @@
                                                                                     <input type='text'
                                                                                            class='answer-content-input'
                                                                                            th:placeholder="${option.optionnContent}"
-                                                                                           th:value="${option.optionnContent}"/>
+                                                                                           th:value="${option.optionnContent}"
+                                                                                           th:attr="id=${option.id}"/>
                                                                                     Trọng số: <input type='number'
                                                                                                      min='0'
                                                                                                      th:value="${option.point}"

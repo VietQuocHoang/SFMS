@@ -62,7 +62,7 @@ public class QuestionApi {
     @RequestMapping(value = "/remove-question", method = RequestMethod.POST)
     public Response removeQuestion(@RequestBody RemoveQuestionModel model) {
         try {
-            this.questionService.removeQuestion(model);
+            this.questionService.removeQuestion(model.getId());
             return new Response(true, "Successful");
         } catch (Exception ex) {
             return new Response(false, ex.getMessage());

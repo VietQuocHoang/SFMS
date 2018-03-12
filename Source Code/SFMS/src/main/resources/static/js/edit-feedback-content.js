@@ -714,6 +714,7 @@ let listAnswer = parentContainer.find(".form-check:not(.form-other)");
 let parentListItem = $(event.target).parents("li");
 let listEditAnswerContainer = $(event.target).parents(".list-answer-edit");
 let index = listEditAnswerContainer.find("li").index(parentListItem);
+//listAnswer.find(".form-check-input")[index].nextSibling.nodeValue = "";
 listAnswer.find(".form-check-input")[index].nextSibling.nodeValue = value;
 });
 
@@ -860,9 +861,10 @@ class Question {
      * @param options Array of options contents
      * @param type Type of question
      * */
-    constructor(title, options, type, required, criteriaId, requireOther) {
+    constructor(id, title, options, type, required, criteriaId, requireOther) {
+        this.questionId = id;
         this.questionContent = title;
-        this.optionCreateModel = options;
+        this.optionUpdateModels = options;
         this.type = type;
         this.required = required;
         this.criteriaId = criteriaId;
@@ -872,17 +874,18 @@ class Question {
 }
 
 class Option {
-    constructor(content, weight) {
+    constructor(id, content, weight) {
+        this.id = id;
         this.optionContent = content;
         this.point = weight;
     }
 }
 
 function getQuestions() {
-    var feedbackID = document.getElementById("feedbackID").innerHTML;
-    alert(feedbackID);
+    //var feedbackID = document.getElementById("feedbackID").innerHTML;
+    //alert(feedbackID);
 
-    let feedback = new Feedback(feedbackID);
+    let feedback = new Feedback(34); ////// HARD CODE /////////////
 
     //Lấy hết các div chứa question
     let allQuestions = $("div[class='question-container']");
@@ -890,6 +893,13 @@ function getQuestions() {
     for (var i = 0; i < allQuestions.length; ++i) {
         //Lấy id của div để biết thuộc loại question nào
         let id = allQuestions[i].getAttribute("id");
+
+        //Lấy id của question để biết nó là question cũ hay mới tạo
+        let questionID = allQuestions[i].querySelector("div[class='question-wrapper']").getAttribute("id");
+
+        if (questionID == null) {
+            questionID = -1;
+        }
 
         //Lấy title của question
         let title = allQuestions[i].querySelector("p[class='question-content-paragraph']").innerHTML.trim();
@@ -906,32 +916,34 @@ function getQuestions() {
             let requireOther = allQuestions[i].querySelector("input[class='other-option-checkbox']");
             let optionDivs = allQuestions[i].querySelectorAll("input[class='answer-content-input']");
             let weightDivs = allQuestions[i].querySelectorAll("input[class='weight-input']");
+            let optionID = allQuestions[i].querySelector("input[class='answer-content-input']").getAttribute("id");
             let options = [];
             for (var j = 0; j < optionDivs.length; ++j) {
-                options.push(new Option(optionDivs[j].value, weightDivs[j].value));
+                options.push(new Option(optionDivs[j].id, optionDivs[j].value, weightDivs[j].value));
             }
 
-            feedback.questions.push(new Question(title, options, "Radio", required, criteriaId, requireOther.checked));
+            feedback.questions.push(new Question(questionID, title, options, "Radio", required, criteriaId, requireOther.checked));
         }
         else if (id.indexOf("checkbox-question") >= 0) {
             //Có cần option khác
             let requireOther = allQuestions[i].querySelector("input[class='other-option-checkbox']");
             let optionDivs = allQuestions[i].querySelectorAll("input[class='answer-content-input']");
             let weightDivs = allQuestions[i].querySelectorAll("input[class='weight-input']");
+            let optionID = allQuestions[i].querySelector("input[class='answer-content-input']").getAttribute("id");
             let options = [];
             for (var j = 0; j < optionDivs.length; ++j) {
-                options.push(new Option(optionDivs[j].value, weightDivs[j].value));
+                options.push(new Option(optionDivs[j].id, optionDivs[j].value, weightDivs[j].value));
             }
-            feedback.questions.push(new Question(title, options, "CheckBox", required, criteriaId, requireOther.checked));
+            feedback.questions.push(new Question(questionID, title, options, "CheckBox", required, criteriaId, requireOther.checked));
         }
         else if (id.indexOf("textfield-question") >= 0) {
-            feedback.questions.push(new Question(title, null, "Text", required, criteriaId, false));
+            feedback.questions.push(new Question(questionID, title, null, "Text", required, criteriaId, false));
         }
         else if (id.indexOf("textarea-question") >= 0) {
-            feedback.questions.push(new Question(title, null, "TextArea", required, criteriaId, false));
+            feedback.questions.push(new Question(questionID, title, null, "TextArea", required, criteriaId, false));
         }
         else if (id.indexOf("star-question") >= 0) {
-            feedback.questions.push(new Question(title, null, "Star", required, criteriaId, false));
+            feedback.questions.push(new Question(questionID, title, null, "Star", required, criteriaId, false));
         }
     }
 
@@ -945,11 +957,12 @@ function saveFeedback(feedback) {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            url: '/sfms/api/feedbacks/save-question',
+            url: '/sfms/api/feedbacks/modify-question',
             type: 'POST',
             data: JSON.stringify(feedback),
             success: function(data) {
-                window.location=data.message;
+                alert(data.message);
+               // window.location=data.message;
             },
             error: (err) => alert(err)
 });

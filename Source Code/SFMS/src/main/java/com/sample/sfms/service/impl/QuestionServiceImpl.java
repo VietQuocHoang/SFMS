@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -103,7 +104,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     @Transactional
     public void updateQuestion(UpdateQuestionModel model) throws Exception {
-        if (model.getId() == 0) {
+        if (model.getQuestionId() == 0) {
             throw new Exception("Xin chọn câu hỏi để update");
         }
         if (model.getFeedbackId() == 0) {
@@ -114,12 +115,12 @@ public class QuestionServiceImpl implements QuestionService {
             throw new Exception("Xin kiểm tra lại loại câu hỏi và các option");
         }
 
-        if (!isValidType(model)){
+        if (!isValidTypeUpdate(model)){
             throw new Exception("Xin kiểm tra lại các option. Nếu chọn option thì thêm đủ option.");
         }
 
         try {
-            Question question = this.questionRepo.getOne(model.getId());
+            Question question = this.questionRepo.getOne(model.getQuestionId());
 
             question.setIsRequied(model.isRequired());
             question.setQuestionContent(model.getQuestionContent());
@@ -144,23 +145,33 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public void removeQuestion(RemoveQuestionModel model) throws Exception {
-        if (model.getId() == 0) {
+    public void removeQuestion(int questionId) throws Exception {
+     /*   if (model.getId() == 0) {
             throw new Exception("Xin chọn câu hỏi để xóa");
-        }
+        }*/
 
         try {
-            Question question = this.questionRepo.findOne(model.getId());
+            Question question = this.questionRepo.findOne(questionId);
 
             for (Optionn option : question.getOptionsById()) {
                 this.optionnService.remove(option.getId());
             }
 
-            this.questionRepo.delete(model.getId());
+            this.questionRepo.delete(questionId);
 
         } catch (Exception ex) {
             throw ex;
         }
+    }
+
+    @Override
+    public List<Question> findAll() {
+        return questionRepo.findAll();
+    }
+
+    @Override
+    public List<Question> findByFeedbackId(int feedbackId) {
+        return questionRepo.findByFeedbackId(feedbackId);
     }
 
     /*---------------Private methods------------------*/
@@ -168,6 +179,12 @@ public class QuestionServiceImpl implements QuestionService {
         if (Arrays.asList(StaticVariables.OPTION_NEEDED_QUESTION_TYPE).contains(model.getType()))
             return model.getOptionCreateModel() != null;
         else return model.getOptionCreateModel() == null;
+    }
+
+    private boolean isValidTypeUpdate(UpdateQuestionModel model) {
+        if (Arrays.asList(StaticVariables.OPTION_NEEDED_QUESTION_TYPE).contains(model.getType()))
+            return model.getOptionUpdateModels() != null;
+        else return model.getOptionUpdateModels() == null;
     }
 
 }
