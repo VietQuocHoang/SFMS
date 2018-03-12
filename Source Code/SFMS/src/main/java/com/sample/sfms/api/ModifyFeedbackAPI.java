@@ -49,16 +49,16 @@ public class ModifyFeedbackAPI {
     }
 
     @GetMapping("/list/targets")
-    private String listTarget(@RequestParam("id") int id, HttpSession session) throws JsonProcessingException {
+    private String listTarget(HttpSession session) throws JsonProcessingException {
         if(session.getAttribute("targetIds")==null)return null;
         Feedback f = modifyService.getFeedback(Integer.parseInt(session.getAttribute("id").toString())).getBody();
         if(f.getTypeByTypeId()==null) return null;
         List response;
         switch (f.getTypeByTypeId().getDescription()){
-            case "Major": response = modifyService.loadMajorTargets((List<Integer>)session.getAttribute("targetIds"));break;
-            case "Course": response = modifyService.loadCourseTargets((List<Integer>)session.getAttribute("targetIds"));break;
-            case "Clazz": response = modifyService.loadClazzTargets((List<Integer>)session.getAttribute("targetIds"));break;
-            case "Department": response = modifyService.loadDepartmentTargets((List<Integer>)session.getAttribute("targetIds"));break;
+            case "Chuyên ngành": response = modifyService.loadMajorTargets((List<Integer>)session.getAttribute("targetIds"));break;
+            case "Môn học": response = modifyService.loadCourseTargets((List<Integer>)session.getAttribute("targetIds"));break;
+            case "Lớp": response = modifyService.loadClazzTargets((List<Integer>)session.getAttribute("targetIds"));break;
+            case "Phòng ban": response = modifyService.loadDepartmentTargets((List<Integer>)session.getAttribute("targetIds"));break;
             default: response = new ArrayList();break;
         }
         return ObjToJson(response);

@@ -71,6 +71,7 @@ class ModifyFeedbackController {
         List<Integer> targetIds = new ArrayList<>();
         if(feedback.getDepartmentByDepartmentId()!=null||feedback.getMajorByMajorId()!=null
                 ||feedback.getCourseByCourseId()!=null||feedback.getClazzByClazzId()!=null)targetIds.add(feedback.getId());
+        session.setAttribute("targetIds", targetIds);
         mv.addObject("feedback", feedback);
         mv.addObject("startdate", feedback.getStartDate()==null?"":new SimpleDateFormat("yyyy-MM-dd").format(feedback.getStartDate()));
         mv.addObject("enddate", feedback.getEndDate()==null?"":new SimpleDateFormat("yyyy-MM-dd").format(feedback.getEndDate()));

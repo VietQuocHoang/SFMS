@@ -215,7 +215,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
         try {
             Type t = feedbackRepo.findOne(feedbackId).getTypeByTypeId();
             switch (t.getDescription()) {
-                case "Major":
+                case "Chuyên ngành":
                     for (int id : targetIds) {
                         response = feedbackRepo.findOne(id);
                         if (response.getMajorByMajorId().getId() == targetId)
@@ -223,7 +223,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                     }
                     response = feedbackRepo.save(new Feedback(null, null, majorRepo.findOne(targetId), null, t));
                     break;
-                case "Course":
+                case "Môn học":
                     for (int id : targetIds) {
                         response = feedbackRepo.findOne(id);
                         if (response.getCourseByCourseId().getId() == targetId)
@@ -231,7 +231,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                     }
                     response = feedbackRepo.save(new Feedback(null, courseRepo.findOne(targetId), null, null, t));
                     break;
-                case "Clazz":
+                case "Lớp":
                     for (int id : targetIds) {
                         response = feedbackRepo.findOne(id);
                         if (response.getClazzByClazzId().getId() == targetId)
@@ -239,7 +239,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                     }
                     response = feedbackRepo.save(new Feedback(null, null, null, clazzRepo.findOne(targetId), t));
                     break;
-                case "Department":
+                case "Phòng ban":
                     for (int id : targetIds) {
                         response = feedbackRepo.findOne(id);
                         if (response.getDepartmentByDepartmentId().getId() == targetId)
@@ -266,19 +266,19 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                 response = feedbackRepo.findOne(targetId);
                 Type t = response.getTypeByTypeId();
                 switch (t.getDescription()) {
-                    case "Major":
+                    case "Chuyên ngành":
                         if (response.getMajorByMajorId().getId() == id)
                             feedbackRepo.delete(response);
                         break;
-                    case "Course":
+                    case "Môn học":
                         if (response.getCourseByCourseId().getId() == id)
                             feedbackRepo.delete(response);
                         break;
-                    case "Clazz":
+                    case "Lớp":
                         if (response.getClazzByClazzId().getId() == id)
                             feedbackRepo.delete(response);
                         break;
-                    case "Department":
+                    case "Phòng ban":
                         if (response.getDepartmentByDepartmentId().getId() == id)
                             feedbackRepo.delete(response);
                         break;
