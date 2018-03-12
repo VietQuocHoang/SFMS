@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 /**
  * Created by MyPC on 25/02/2018.
@@ -53,6 +54,7 @@ class ModifyFeedbackController {
         Feedback feedback = modifyService.getFeedback(Integer.parseInt(session.getAttribute("id").toString())).getBody();
         mv.addObject("feedback", feedback);
         mv.addObject("alltypes", modifyService.loadAllTypes().getBody());
+        mv.addObject("allSemesters", modifyService.loadAllSemesters().getBody());
         mv.addObject("startdate", new SimpleDateFormat("yyyy-MM-dd").format(feedback.getStartDate()));
         mv.addObject("enddate", new SimpleDateFormat("yyyy-MM-dd").format(feedback.getEndDate()));
 //        mv.addObject("targets", modifyService.loadTargets((int[])session.getAttribute("targetIds")));
@@ -63,10 +65,13 @@ class ModifyFeedbackController {
     private ModelAndView getFeedbackOverview(@PathVariable("id") int id, HttpSession session) {
         ModelAndView mv = new ModelAndView("overview-feedback");
         Feedback feedback = modifyService.getFeedback(id).getBody();
+        session.setAttribute("id", feedback.getId());
         mv.addObject("startdate", new SimpleDateFormat("yyyy-MM-dd").format(feedback.getStartDate()));
         mv.addObject("enddate", new SimpleDateFormat("yyyy-MM-dd").format(feedback.getEndDate()));
         mv.addObject("feedback", feedback);
         mv.addObject("alltypes", modifyService.loadAllTypes().getBody());
+
+        mv.addObject("allSemesters", modifyService.loadAllSemesters().getBody());
 //        mv.addObject("targets", modifyService.loadTargets((int[])session.getAttribute("targetIds")));
         return mv;
     }

@@ -32,14 +32,139 @@ $(document).ready(function () {
     );
 });
 
-// $("#feedback-title").focusout(function () {
+$("#feedback-title").focusout(function () {
+    $.ajax(
+        {
+            url: "/sfms/api/modify-feedback/title",
+            method: "PUT",
+            dataType: 'application/json',
+            data: {"title": $("#feedback-title").val()},
+            success: function (result) {
+
+            },
+            error: function (result) {
+
+            }
+        }
+    );
+})
+
+$("#feedback-description").focusout(function () {
+    $.ajax(
+        {
+            url: "/sfms/api/modify-feedback/description",
+            method: "PUT",
+            dataType: 'application/json',
+            data: {"description": $("#feedback-description").val()},
+            success: function (result) {
+
+            },
+            error: function (result) {
+
+            }
+        }
+    );
+})
+
+$("#startdate").change(function () {
+    $.ajax(
+        {
+            url: "/sfms/api/modify-feedback/start",
+            method: "PUT",
+            dataType: 'application/json',
+            data: {"startdate": $("#startdate").val()},
+            success: function (result) {
+
+            },
+            error: function (result) {
+
+            }
+        }
+    );
+})
+
+
+$("#enddate").change(function () {
+    $.ajax(
+        {
+            url: "/sfms/api/modify-feedback/end",
+            method: "PUT",
+            dataType: 'application/json',
+            data: {"enddate": $("#enddate").val()},
+            success: function (result) {
+
+            },
+            error: function (result) {
+
+            }
+        }
+    );
+})
+
+$("#enddate").change(function () {
+    $.ajax(
+        {
+            url: "/sfms/api/modify-feedback/end",
+            method: "PUT",
+            dataType: 'application/json',
+            data: {"enddate": $("#enddate").val()},
+            success: function (result) {
+
+            },
+            error: function (result) {
+
+            }
+        }
+    );
+})
+
+
+$("#typeId").change(function () {
+    $.ajax(
+        {
+            url: "/sfms/api/modify-feedback/type",
+            method: "PUT",
+            dataType: 'application/json',
+            data: {"typeId": $("#typeId").val()},
+            success: function (result) {
+
+            },
+            error: function (result) {
+
+            }
+        }
+    );
+})
+
+
+$("#semesterId").change(function () {
+    $.ajax(
+        {
+            url: "/sfms/api/modify-feedback/semester",
+            method: "PUT",
+            dataType: 'application/json',
+            data: {"semesterId": $("#semesterId").val()},
+            success: function (result) {
+                $("#semesterId").setAttribute("min",)
+            },
+            error: function (result) {
+                // alert("fuck");
+            }
+        }
+    );
+})
+// $("#enddate").focusout(function () {
 //     $.ajax(
 //         {
-//             url: "/api/modify-feedback/title",
+//             url: "/sfms/api/modify-feedback/title",
 //             method: "PUT",
-//             data:
+//             dataType: 'application/json',
+//             data: {"title": $("#enddate").val()},
 //             success: function (result) {
-//                 $("#div1").html(result);
+//
+//             },
+//             error: function (result) {
+//
 //             }
 //         }
 //     );

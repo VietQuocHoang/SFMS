@@ -43,15 +43,15 @@ public interface ModifyFeedbackService {
 
     public ResponseEntity<UserFeedback> removeViewer(int targetId, int userId);
 
-    public ResponseEntity<Feedback> saveFeedback(Feedback feedback);
+    public ResponseEntity saveFeedback(Feedback feedback);
 
-    public ResponseEntity<Feedback> updateSemester(int semesterId, int feedbackId);
+    public ResponseEntity updateSemester(int semesterId, int feedbackId);
 
-    public ResponseEntity<Feedback> updateType(int typeId, int feedbackId);
+    public ResponseEntity updateType(int typeId, int feedbackId);
 
-    public ResponseEntity<String> setStart(Date start, int feedbbackId);
+    public ResponseEntity setStart(Date start, int feedbbackId);
 
-    public ResponseEntity<String> setEnd(Date end, int feedbackId);
+    public ResponseEntity setEnd(Date end, int feedbackId);
 
     public ResponseEntity<List<User>> loadConductors(int id);//id of feedback contains target
 
@@ -68,4 +68,6 @@ public interface ModifyFeedbackService {
     public ResponseEntity<List<Feedback>> loadTargets(List<Integer> targetIds);//ids of feedbacks contain targets
 
     public ResponseEntity<List<Type>> loadAllTypes();
+
+    public ResponseEntity<List<Semester>> loadAllSemesters();
 }

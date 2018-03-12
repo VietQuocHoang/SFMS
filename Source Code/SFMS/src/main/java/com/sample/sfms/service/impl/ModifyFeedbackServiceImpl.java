@@ -1,21 +1,16 @@
 package com.sample.sfms.service.impl;
 
 import com.sample.sfms.entity.*;
-import com.sample.sfms.model.FeedbackDetailsModel;
-import com.sample.sfms.model.ModifyFeedbackModel;
 import com.sample.sfms.repository.*;
 import com.sample.sfms.service.interf.ModifyFeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.UnexpectedRollbackException;
 
-import java.security.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -221,33 +216,33 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
             Type t = feedbackRepo.findOne(feedbackId).getTypeByTypeId();
             switch (t.getDescription()) {
                 case "Major":
-                    for (int id: targetIds) {
+                    for (int id : targetIds) {
                         response = feedbackRepo.findOne(id);
-                        if(response.getMajorByMajorId().getId()==targetId)
+                        if (response.getMajorByMajorId().getId() == targetId)
                             return new ResponseEntity<>(response, HttpStatus.ALREADY_REPORTED);
                     }
                     response = feedbackRepo.save(new Feedback(null, null, majorRepo.findOne(targetId), null, t));
                     break;
                 case "Course":
-                    for (int id: targetIds) {
+                    for (int id : targetIds) {
                         response = feedbackRepo.findOne(id);
-                        if(response.getCourseByCourseId().getId()==targetId)
+                        if (response.getCourseByCourseId().getId() == targetId)
                             return new ResponseEntity<>(response, HttpStatus.ALREADY_REPORTED);
                     }
                     response = feedbackRepo.save(new Feedback(null, courseRepo.findOne(targetId), null, null, t));
                     break;
                 case "Clazz":
-                    for (int id: targetIds) {
+                    for (int id : targetIds) {
                         response = feedbackRepo.findOne(id);
-                        if(response.getClazzByClazzId().getId()==targetId)
+                        if (response.getClazzByClazzId().getId() == targetId)
                             return new ResponseEntity<>(response, HttpStatus.ALREADY_REPORTED);
                     }
                     response = feedbackRepo.save(new Feedback(null, null, null, clazzRepo.findOne(targetId), t));
                     break;
                 case "Department":
-                    for (int id: targetIds) {
+                    for (int id : targetIds) {
                         response = feedbackRepo.findOne(id);
-                        if(response.getDepartmentByDepartmentId().getId()==targetId)
+                        if (response.getDepartmentByDepartmentId().getId() == targetId)
                             return new ResponseEntity<>(response, HttpStatus.ALREADY_REPORTED);
                     }
                     response = feedbackRepo.save(new Feedback(departmentRepo.findOne(targetId), null, null, null, t));
@@ -303,11 +298,13 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
         try {
             Feedback target;
             List<Feedback> affected = new ArrayList<>();
-            for (int id : ids) {
-                target = feedbackRepo.findOne(id);
-                if (target != null) {
-                    feedbackRepo.delete(id);
-                    affected.add(target);
+            if (ids!=null) {
+                for (int id : ids) {
+                    target = feedbackRepo.findOne(id);
+                    if (target != null) {
+                        feedbackRepo.delete(id);
+                        affected.add(target);
+                    }
                 }
             }
             return new ResponseEntity<>(affected, HttpStatus.OK);
@@ -458,9 +455,10 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     }
 
     @Override
-    public ResponseEntity<Feedback> saveFeedback(Feedback feedback) {
+    public ResponseEntity saveFeedback(Feedback feedback) {
         try {
-            return new ResponseEntity<>(feedbackRepo.save(feedback), HttpStatus.OK);
+            feedbackRepo.save(feedback);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -492,12 +490,12 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     }
 
     @Override
-    public ResponseEntity<String> setStart(Date start, int feedbackId) {
+    public ResponseEntity<Feedback> setStart(Date start, int feedbackId) {
         try {
             Feedback feedback = feedbackRepo.findOne(feedbackId);
             feedback.setStartDate(start);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            return new ResponseEntity<>(sdf.format(feedbackRepo.save(feedback).getStartDate()), HttpStatus.OK);
+            return new ResponseEntity<>(feedbackRepo.save(feedback), HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -505,12 +503,12 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     }
 
     @Override
-    public ResponseEntity<String> setEnd(Date end, int feedbackId) {
+    public ResponseEntity<Feedback> setEnd(Date end, int feedbackId) {
         try {
             Feedback feedback = feedbackRepo.findOne(feedbackId);
             feedback.setEndDate(end);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            return new ResponseEntity<>(sdf.format(feedbackRepo.save(feedback).getEndDate()), HttpStatus.OK);
+            return new ResponseEntity<>(feedbackRepo.save(feedback), HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -564,6 +562,16 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     public ResponseEntity<List<Type>> loadAllTypes() {
         try {
             return new ResponseEntity<>(typeRepo.findAll(), HttpStatus.OK);
+        } catch (UnexpectedRollbackException e) {
+            logger.log(Level.FINE, e.toString());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public ResponseEntity<List<Semester>> loadAllSemesters() {
+        try {
+            return new ResponseEntity<>(semesterRepo.findAll(), HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

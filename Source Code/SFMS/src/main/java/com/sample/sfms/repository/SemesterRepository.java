@@ -1,4 +1,4 @@
-package com.sample.sfms.service.impl;
+package com.sample.sfms.repository;
 
 import com.sample.sfms.entity.Semester;
 import org.springframework.data.jpa.repository.JpaRepository;
