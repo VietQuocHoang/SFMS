@@ -47,31 +47,28 @@
                     <!-- <button class="tablinks" onclick="openCity(event, 'all')">Tất cả</button>
                      <button class="tablinks" onclick="openCity(event, 'undone')">Chưa hoàn thành</button>-->
                     <div class="tablinks-div">
-                        <button style="background-color: #08AE9E; color: #fff; " class=" btn-create-feedback btn">
-                            Tạo Feedback mới
-                        </button>
                         &nbsp;&nbsp;&nbsp;
                         Trạng thái
                         <select id="filter-status" style="height: 35px; border-radius: 0.25em" name="">
-                            <option value="all">Tất cả</option>
-                            <option value="undone">Chưa hoàn thành</option>
+                            <option value="All">Tất cả</option>
+                            <option value="Undone">Chưa hoàn thành</option>
                         </select>
                         &nbsp;&nbsp;&nbsp;
                         Loại Feedback
                         <select id="filter-scope" style="height: 35px; border-radius: 0.25em" name="">
                             <option value="All">Xem toàn bộ</option>
-                            <option value="Subject">Môn học</option>
-                            <option value="Dep">Phòng ban</option>
-                            <option value="Major">Ngành</option>
-                            <option value="Class">Lớp</option>
+                            <option value="Môn học">Môn học</option>
+                            <option value="Phòng ban">Phòng ban</option>
+                            <option value="Chuyên ngành">Ngành</option>
+                            <option value="Lớp">Lớp</option>
                         </select>
                         &nbsp;&nbsp;&nbsp;
                         Sắp xếp
-                        <select style="height: 35px;border-radius: 0.25em" name="">
-                            <option>A-Z</option>
-                            <option>Z-A</option>
-                            <option>Tăng theo kỳ</option>
-                            <option>Giảm theo kỳ</option>
+                        <select id="filter-sort" style="height: 35px;border-radius: 0.25em" name="">
+                            <option value="Asc">A-Z</option>
+                            <option value="Des">Z-A</option>
+                            <option value="semAsc">Tăng theo kỳ</option>
+                            <option value="semDes">Giảm theo kỳ</option>
                         </select>
 
                         <!--  Tìm
@@ -87,38 +84,52 @@
                 </th:block>
                 <th:block th:unless="${feedbacks.isEmpty()}" th:with="currDate=${#dates.createNow()}">
                     <div class="table-wrapper">
-                        <table id="tblSubject" class="table table-bordered table-striped table-responsive">
+                        <table id="tblFeedback" class="table table-bordered">
+                            <col style="width:25%">
+                            <col style="width:15%">
+                            <col style="width:15%">
+                            <col style="width:15%">
+                            <col style="width:15%">
+                            <col style="width:15%">
+                            <thead>
                             <tr>
                                 <th>Tên</th>
+                                <th>Kì học</th>
                                 <th>Ngày bắt đầu</th>
                                 <th>Ngày kết thúc</th>
                                 <th>Loại Feedback</th>
                                 <th>Trạng thái</th>
-                                <td></td>
                             </tr>
-                            <tr th:each="feedback:${feedbacks}">
-                                <td th:text="${feedback.feedbackByFeedbackId.feedbackName}"></td>
-                                <td th:text="${#dates.format(feedback.feedbackByFeedbackId.startDate, 'dd-MM-yyyy')}"></td>
-                                <td th:text="${#dates.format(feedback.feedbackByFeedbackId.endDate, 'dd-MM-yyyy')}"></td>
-                                <td th:text="${feedback.feedbackByFeedbackId.typeByTypeId.description}"></td>
-                                <td th:class="${feedback.conducted}?'text-success':'text-danger'"
-                                    th:text="${feedback.conducted?'Đã hoàn thành':'Chưa hoàn thành'}"></td>
-                                <!--switch case-->
-                                <td
+                            </thead>
+                            <tbody>
+                            <th:block th:each="feedback:${feedbacks}">
+                                <tr class="feedback-table-row"
+                                    th:attr="data-scope=${feedback.feedbackByFeedbackId.typeByTypeId.description}, data-status=${feedback.conducted}?'Done':'Undone'">
+                                    <td th:text="${feedback.feedbackByFeedbackId.feedbackName}"></td>
+                                    <td th:text="${feedback.feedbackByFeedbackId.semesterBySemesterId.title}"
+                                        th:attr="data-start-date=${feedback.feedbackByFeedbackId.semesterBySemesterId.startDate.getTime()}"></td>
+                                    <td th:text="${#dates.format(feedback.feedbackByFeedbackId.startDate, 'dd-MM-yyyy')}"></td>
+                                    <td th:text="${#dates.format(feedback.feedbackByFeedbackId.endDate, 'dd-MM-yyyy')}"></td>
+                                    <td th:text="${feedback.feedbackByFeedbackId.typeByTypeId.description}"></td>
+                                    <td class="text-success" th:if="${feedback.conducted}">Đã hoàn thành</td>
+                                    <!--switch case-->
+                                    <td th:if="${!feedback.conducted
+                                    && (currDate.getTime() < feedback.feedbackByFeedbackId.endDate.getTime())
+                                    && (currDate.getTime() > feedback.feedbackByFeedbackId.startDate.getTime())}">
+                                        <a class="btn btn-raised-primary"
+                                           th:href="@{/conduct-feedback/__${feedback.feedbackByFeedbackId.id}__}">Làm
+                                            feedback</a>
+                                    </td>
+                                    <td class="text-danger"
                                         th:if="${!feedback.conducted
-                                && (currDate.getTime() < feedback.feedbackByFeedbackId.endDate.getTime())
-                                && (currDate.getTime() > feedback.feedbackByFeedbackId.startDate.getTime())}">
-                                    <a class="btn btn-raised-primary"
-                                       th:href="@{/conduct-feedback/__${feedback.feedbackByFeedbackId.id}__}">Làm
-                                        feedback</a>
-                                </td>
-                                <td
-                                        th:unless="${!feedback.conducted
-                                && (currDate.getTime() < feedback.feedbackByFeedbackId.endDate.getTime())
-                                && (currDate.getTime() > feedback.feedbackByFeedbackId.startDate.getTime())}">
-                                </td>
-                                <!--end switch case-->
-                            </tr>
+                                    && ((currDate.getTime() > feedback.feedbackByFeedbackId.endDate.getTime())
+                                    || (currDate.getTime() < feedback.feedbackByFeedbackId.startDate.getTime()))}">
+                                        Feedback đã quá hạn hoặc chưa bắt đầu
+                                    </td>
+                                    <!--end switch case-->
+                                </tr>
+                            </th:block>
+                            </tbody>
                         </table>
                     </div>
                 </th:block>

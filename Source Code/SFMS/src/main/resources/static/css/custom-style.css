@@ -81,3 +81,8 @@
     /*white-space: normal;*/
     /*}*/
 }
+
+.text-notification {
+    font-size: 15px !important;
+    color: #CCCC00;
+}
