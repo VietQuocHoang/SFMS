@@ -78,10 +78,6 @@ public class TestController {
         return new ModelAndView("view-report-semester");
     }
 
-    @GetMapping(value = "/view-list-feedback")
-    private ModelAndView viewListFeedback(){
-        return new ModelAndView("view-list-feedback");
-    }
 
     @GetMapping(value = "/view-report")
     private ModelAndView viewReport(){

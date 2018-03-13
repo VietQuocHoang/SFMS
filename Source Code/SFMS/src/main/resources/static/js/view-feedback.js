@@ -1,68 +1,96 @@
-$(document).ready(function () {
+var filters = {
+    status: null,
+    scope: null,
+};
+var filterSort = "asc";
+var table = $("#tblFeedback");
+$(document).ready(() => {
+    sortTable('Asc');
+});
 
-    /* selectedValue = "Phòng ban"; //selected.options[selected.selectedIndex].value;
-     var i, tabcontent, tablinks;
-     tabcontent = document.getElementsByClassName("tab-content");
-     for (i = 0; i < tabcontent.length; i++) {
-     tabcontent[i].style.display = "none";
-     }
-     document.getElementById(selectedValue).style.display = "block";
+function compareAsc(row1, row2) {
+    let v1, v2;
+    v1 = $(row1).find("td:eq(0)").text();
+    v2 = $(row2).find("td:eq(0)").text();
+    return v1.localeCompare(v2);
+}
 
-     $('#filter-scope').change(function () {
+function compareDes(row1, row2) {
+    let v1, v2;
+    v1 = $(row1).find("td:eq(0)").text().toLowerCase();
+    v2 = $(row2).find("td:eq(0)").text().toLowerCase();
+    let result = v1.localeCompare(v2);
+    if (result !== 0) result = -result;
+    return result;
+}
 
-     var selected = document.getElementById("filter-scope");
-     selectedValue = selected.options[selected.selectedIndex].value;
-     //var selectedValue = parseInt(jQuery(this).val());
-     //  alert(selectedValue);
+function compareSemAsc(row1, row2) {
+    let v1, v2;
+    v1 = parseInt($(row1).find("td:eq(1)").data("start-date"));
+    v2 = parseInt($(row2).find("td:eq(1)").data("start-date"));
+    return v1 - v2;
+}
 
-     var i, tabcontent, tablinks;
-     tabcontent = document.getElementsByClassName("tab-content");
-     for (i = 0; i < tabcontent.length; i++) {
-     tabcontent[i].style.display = "none";
-     }
-     /*tablinks = document.getElementsByClassName("tablinks");
-     for (i = 0; i < tablinks.length; i++) {
-     tablinks[i].className = tablinks[i].className.replace(" active", "");
-     }*/
-    /*document.getElementById(selectedValue).style.display = "block";
-     //   evt.currentTarget.className += " active";
-     });
+function compareSemDes(row1, row2) {
+    let v1, v2;
+    v1 = parseInt($(row1).find("td:eq(1)").data("start-date"));
+    v2 = parseInt($(row2).find("td:eq(1)").data("start-date"));
+    return v2 - v1;
+}
 
-     function openCity(evt, cityName) {
-     var i, tabcontent, tablinks;
-     tabcontent = document.getElementsByClassName("tabcontent");
-     for (i = 0; i < tabcontent.length; i++) {
-     tabcontent[i].style.display = "none";
-     }
-     tablinks = document.getElementsByClassName("tablinks");
-     for (i = 0; i < tablinks.length; i++) {
-     tablinks[i].className = tablinks[i].className.replace(" active", "");
-     }
-     document.getElementById(cityName).style.display = "block";
-     evt.currentTarget.className += " active";
-     }*/
-    $('#filter-scope').addEventListener('change',function () {
-        function searchViaAjax(selectedValue) {
-            //var selected = document.getElementById("filter-scope");
-            //selectedValue = selected.options(selected.selectedIndex).value;
-            selectedValue = $('#filter-scope').find(":selected").text();
-            $.ajax({
-                type : "GET",
-                url : "/view-list-feedback/list"+selectedValue,
-                timeout : 100000,
-                success : function(selectedValue) {
-                    console.log("SUCCESS: ", selectedValue);
-                    display(selectedValue);
-                    alert(response);
-                },
-                error : function(e) {
-                    console.log("ERROR: ", e);
-                    display(e);
-                },
-                done : function(e) {
-                    console.log("DONE");
-                }
-            });
+function updateFilter() {
+    // let row = $(".feedback-table-row");
+    $('.feedback-table-row').hide().filter(function () {
+        let
+            self = $(this),
+            result = true; // not guilty until proven guilty
+        console.log(self);
+        Object.keys(filters).forEach(function (filter) {
+            if (filters[filter] && (filters[filter] != 'All')) {
+                result = result && filters[filter] === self.data(filter);
+            }
+        });
+
+        return result;
+    }).show();
+}
+
+function changeFilter(filterName) {
+    filters[filterName] = $(this).val();
+    updateFilter();
+}
+
+$(document).on('change', '#filter-scope', (event) => {
+    changeFilter.call($(event.target), 'scope');
+});
+$(document).on('change', '#filter-status', (event) => {
+    changeFilter.call($(event.target), 'status');
+});
+
+function sortTable(filterSort) {
+    let rows = $(".feedback-table-row").detach().get();
+    switch (filterSort) {
+        case 'Asc': {
+            rows.sort(compareAsc);
+            break;
         }
-    })
+        case 'Des': {
+            rows.sort(compareDes);
+            break;
+        }
+        case 'semAsc': {
+            rows.sort(compareSemAsc);
+            break;
+        }
+        case 'semDes': {
+            rows.sort(compareSemDes);
+            break;
+        }
+    }
+    table.append(rows);
+}
+
+$(document).on('change', "#filter-sort", (event) => {
+    filterSort = $(event.target).val().trim();
+    sortTable(filterSort);
 });
