@@ -9,31 +9,31 @@ var linkUpdate = "<a href='modify-feedback-target'><i class='fa fa-pencil'></i><
 $(document).ready(function () {
     $('#tbl-clazzes').DataTable(
         {
-            "lengthMenu": [[5, 10, 20, -1], [5, 10, 20, "All"]],
-            "ajax": {
-                "url": "/sfms/api/modify-feedback/list/targets",
-                "type": "GET"
-            },
-            "columns": [ //define columns for the table
+            //"lengthMenu": [[5, 10, 20, -1], [5, 10, 20, "All"]],
+            //"ajax": {
+            //    "url": "/sfms/api/modify-feedback/list/targets",
+            //    "type": "GET"
+            //},
+            //"columns": [ //define columns for the table
                 //data for the cell from the returned list
-                {"data": "courseByCourseId.name"},
-                {"data": "courseByCourseId.code"},
-                {"data": "semesterBySemesterId.title"},
-                {"data": "className"},
-                {"data": "userByLecturerId.fullname"},
-                {//column for modify conductor
-                    "data": null,
-                    "defaultContent": modifyconductorlink
-                },
-                {//column for modifyviewer
-                    "data": null,
-                    "defaultContent": modifyviewerlink
-                },
-                {//column for view detail-update-delete
-                    "data": null,
-                    "defaultContent": linkShow + linkUpdate + linkDelete
-                }
-            ],
+            //    {"data": "courseByCourseId.name"},
+            //    {"data": "courseByCourseId.code"},
+            //    {"data": "semesterBySemesterId.title"},
+             //   {"data": "className"},
+             //   {"data": "userByLecturerId.fullname"},
+             //   {//column for modify conductor
+             //       "data": null,
+             //       "defaultContent": modifyconductorlink
+              //  },
+              //  {//column for modifyviewer
+              //      "data": null,
+              //      "defaultContent": modifyviewerlink
+             //   },
+             //   {//column for view detail-update-delete
+             //       "data": null,
+             //       "defaultContent": linkShow + linkUpdate + linkDelete
+             //   }
+            //],
             "language": {
                 "decimal": "",
                 "emptyTable": "Không kết quả nào được tìm thấy",
