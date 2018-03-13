@@ -1,5 +1,8 @@
 package com.sample.sfms.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.sample.sfms.view.TargetView;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -9,7 +12,9 @@ import java.util.Collection;
 @Entity
 public class Major {
     private int id;
+    @JsonView(TargetView.basicTargetView.class)
     private String code;
+    @JsonView(TargetView.basicTargetView.class)
     private String name;
     private Collection<Feedback> feedbacksById;
     private Major majorByReferenceId;

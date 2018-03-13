@@ -1,5 +1,8 @@
 package com.sample.sfms.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.sample.sfms.view.TargetView;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -8,11 +11,15 @@ import java.util.Collection;
  */
 @Entity
 public class Course {
+    @JsonView(TargetView.basicTargetView.class)
     private int id;
+    @JsonView(TargetView.basicTargetView.class)
     private String name;
+    @JsonView(TargetView.basicTargetView.class)
     private String code;
     private Collection<Clazz> clazzesById;
     private Collection<Feedback> feedbacksById;
+    @JsonView(TargetView.basicTargetView.class)
     private Collection<MajorCourse> majorCoursesById;
 
     @Id

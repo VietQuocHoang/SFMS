@@ -9,31 +9,35 @@ var linkUpdate = "<a href='modify-feedback-target'><i class='fa fa-pencil'></i><
 $(document).ready(function () {
     $('#tbl-clazzes').DataTable(
         {
-            //"lengthMenu": [[5, 10, 20, -1], [5, 10, 20, "All"]],
-            //"ajax": {
-            //    "url": "/sfms/api/modify-feedback/list/targets",
-            //    "type": "GET"
-            //},
-            //"columns": [ //define columns for the table
-                //data for the cell from the returned list
-            //    {"data": "courseByCourseId.name"},
-            //    {"data": "courseByCourseId.code"},
-            //    {"data": "semesterBySemesterId.title"},
-             //   {"data": "className"},
-             //   {"data": "userByLecturerId.fullname"},
-             //   {//column for modify conductor
-             //       "data": null,
-             //       "defaultContent": modifyconductorlink
-              //  },
-              //  {//column for modifyviewer
-              //      "data": null,
-              //      "defaultContent": modifyviewerlink
-             //   },
-             //   {//column for view detail-update-delete
-             //       "data": null,
-             //       "defaultContent": linkShow + linkUpdate + linkDelete
-             //   }
-            //],
+            "ajax": {
+                "url": "/sfms/api/modify-feedback/list/targets/clazzes",
+                "dataSrc": "",
+                "type": "GET"
+            },
+            "columns": [ //define columns for the table
+                // data for the cell from the returned list
+                {
+                    "data": "id",
+                    "visible": false //hide the column processID
+                },
+                {"data": "courseByCourseId.name"},
+                {"data": "courseByCourseId.code"},
+                {"data": "semesterBySemesterId.title"},
+                {"data": "className"},
+                {"data": "userByLecturerId.fullname"},
+                {//column for modify conductor
+                    "data": null,
+                    "defaultContent": modifyconductorlink
+                },
+                {//column for modifyviewer
+                    "data": null,
+                    "defaultContent": modifyviewerlink
+                },
+                {//column for view detail-update-delete
+                    "data": null,
+                    "defaultContent": linkShow + linkUpdate + linkDelete
+                }
+            ],
             "language": {
                 "decimal": "",
                 "emptyTable": "Không kết quả nào được tìm thấy",
@@ -62,6 +66,33 @@ $(document).ready(function () {
     );
     $('#tbl-courses').DataTable(
         {
+            "ajax": {
+                "url": "/sfms/api/modify-feedback/list/targets/courses",
+                "dataSrc": "",
+                "type": "GET"
+            },
+            "columns": [
+                {"data": "name"},
+                {"data": "code"},
+                {//column for modify conductor
+                    "data": null,
+                    "defaultContent": modifyconductorlink
+                },
+                {//column for modifyviewer
+                    "data": null,
+                    "defaultContent": modifyviewerlink
+                },
+                {//column for view detail-update-delete
+                    "data": null,
+                    "defaultContent": linkShow + linkUpdate + linkDelete
+                }
+                // {
+                //     "data": "majorCoursesById",
+                //     "render": function(data, type, row, meta){
+                //
+                //     }
+                // }
+            ],
             "language": {
                 "decimal": "",
                 "emptyTable": "Không kết quả nào được tìm thấy",
@@ -90,6 +121,26 @@ $(document).ready(function () {
     );
     $('#tbl-departments').DataTable(
         {
+            "ajax": {
+                "url": "/sfms/api/modify-feedback/list/targets/departments",
+                "dataSrc": "",
+                "type": "GET"
+            },
+            "columns": [
+                {"data": "name"},
+                {//column for modify conductor
+                    "data": null,
+                    "defaultContent": modifyconductorlink
+                },
+                {//column for modifyviewer
+                    "data": null,
+                    "defaultContent": modifyviewerlink
+                },
+                {//column for view detail-update-delete
+                    "data": null,
+                    "defaultContent": linkShow + linkUpdate + linkDelete
+                }
+            ],
             "language": {
                 "decimal": "",
                 "emptyTable": "Không kết quả nào được tìm thấy",
@@ -118,6 +169,27 @@ $(document).ready(function () {
     );
     $('#tbl-majors').DataTable(
         {
+            "ajax": {
+                "url": "/sfms/api/modify-feedback/list/targets/majors",
+                "dataSrc": "",
+                "type": "GET"
+            },
+            "columns": [
+                {"data": "name"},
+                {"data": "code"},
+                {//column for modify conductor
+                    "data": null,
+                    "defaultContent": modifyconductorlink
+                },
+                {//column for modifyviewer
+                    "data": null,
+                    "defaultContent": modifyviewerlink
+                },
+                {//column for view detail-update-delete
+                    "data": null,
+                    "defaultContent": linkShow + linkUpdate + linkDelete
+                }
+            ],
             "language": {
                 "decimal": "",
                 "emptyTable": "Không kết quả nào được tìm thấy",
@@ -188,7 +260,7 @@ $("#enddate").change(function () {
     changeEnd();
 })
 
-function changeStart(){
+function changeStart() {
     $.ajax(
         {
             url: "/sfms/api/modify-feedback/start",
@@ -205,7 +277,7 @@ function changeStart(){
     );
 }
 
-function changeEnd(){
+function changeEnd() {
     $.ajax(
         {
             url: "/sfms/api/modify-feedback/end",
@@ -221,7 +293,6 @@ function changeEnd(){
         }
     );
 }
-
 
 
 $("#typeId").change(function () {
@@ -261,13 +332,15 @@ $("#semesterId").change(function () {
                 let endd = new Date(parseInt(data.endDate));
                 $("#startdate").attr(
                     {
-                        "min": $.datepicker.formatDate('yy-mm-dd',startd), "max": $.datepicker.formatDate('yy-mm-dd',endd)
+                        "min": $.datepicker.formatDate('yy-mm-dd', startd),
+                        "max": $.datepicker.formatDate('yy-mm-dd', endd)
                     }
                 );
                 $("#startdate").val('');
                 $("#enddate").attr(
                     {
-                        "min": $.datepicker.formatDate('yy-mm-dd',startd), "max": $.datepicker.formatDate('yy-mm-dd',endd)
+                        "min": $.datepicker.formatDate('yy-mm-dd', startd),
+                        "max": $.datepicker.formatDate('yy-mm-dd', endd)
                     }
                 );
                 $("#enddate").val('');

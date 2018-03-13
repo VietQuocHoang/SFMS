@@ -1,5 +1,8 @@
 package com.sample.sfms.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.sample.sfms.view.TargetView;
+
 import javax.persistence.*;
 
 /**
@@ -9,8 +12,11 @@ import javax.persistence.*;
 @Table(name = "major_course", schema = "capstone", catalog = "")
 @IdClass(MajorCoursePK.class)
 public class MajorCourse {
+    @JsonView(TargetView.basicTargetView.class)
     private int majorId;
+    @JsonView(TargetView.basicTargetView.class)
     private int courseId;
+    @JsonView(TargetView.basicTargetView.class)
     private Major majorByMajorId;
     private Course courseByCourseId;
 

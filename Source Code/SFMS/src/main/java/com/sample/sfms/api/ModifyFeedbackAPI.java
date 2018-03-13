@@ -9,9 +9,9 @@ import com.sample.sfms.entity.Feedback;
 //import com.sample.sfms.entity.Role;
 //import com.sample.sfms.entity.Semester;
 import com.sample.sfms.entity.Semester;
-import com.sample.sfms.entity.Type;
 //import com.sample.sfms.model.ModifyFeedbackModel;
 import com.sample.sfms.service.interf.ModifyFeedbackService;
+import com.sample.sfms.view.TargetView;
 import com.sample.sfms.view.SemesterView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,8 +24,6 @@ import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -48,21 +46,68 @@ public class ModifyFeedbackAPI {
         return modifyService.getFeedback(id);
     }
 
-    @GetMapping("/list/targets")
-    private String listTarget(HttpSession session) throws JsonProcessingException {
-        if(session.getAttribute("targetIds")==null)return null;
+    @JsonView(TargetView.basicTargetView.class)
+    @GetMapping("/list/targets/clazzes")
+    private ResponseEntity listClazzesTargets(HttpSession session){
+        if(session.getAttribute("targetIds")==null)return new ResponseEntity(HttpStatus.BAD_REQUEST);
         Feedback f = modifyService.getFeedback(Integer.parseInt(session.getAttribute("id").toString())).getBody();
-        if(f.getTypeByTypeId()==null) return null;
+        if(f.getTypeByTypeId()==null) return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
+        switch (f.getTypeByTypeId().getDescription()){
+            case "Chuyên ngành": return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
+            case "Môn học": return new ResponseEntity(new ArrayList<>(), HttpStatus.OK);
+            case "Lớp": return modifyService.loadClazzTargets((List<Integer>)session.getAttribute("targetIds"));
+            case "Phòng ban": return new ResponseEntity(new ArrayList<>(), HttpStatus.OK);
+            default: return new ResponseEntity(new ArrayList<>(), HttpStatus.OK);
+        }
+    }
+
+    @JsonView(TargetView.basicTargetView.class)
+    @GetMapping("/list/targets/departments")
+    private ResponseEntity listDepartmentTargets(HttpSession session) throws JsonProcessingException {
+        if(session.getAttribute("targetIds")==null)return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        Feedback f = modifyService.getFeedback(Integer.parseInt(session.getAttribute("id").toString())).getBody();
+        if(f.getTypeByTypeId()==null) return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
+        switch (f.getTypeByTypeId().getDescription()){
+            case "Chuyên ngành": return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
+            case "Môn học": return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
+            case "Lớp": return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
+            case "Phòng ban": return modifyService.loadDepartmentTargets((List<Integer>)session.getAttribute("targetIds"));
+            default: return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
+        }
+
+    }
+    @JsonView(TargetView.basicTargetView.class)
+    @GetMapping("/list/targets/majors")
+    private ResponseEntity listMajorTargets(HttpSession session) throws JsonProcessingException {
+        if(session.getAttribute("targetIds")==null)return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        Feedback f = modifyService.getFeedback(Integer.parseInt(session.getAttribute("id").toString())).getBody();
+        if(f.getTypeByTypeId()==null) return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
         List response;
         switch (f.getTypeByTypeId().getDescription()){
-            case "Chuyên ngành": response = modifyService.loadMajorTargets((List<Integer>)session.getAttribute("targetIds"));break;
-            case "Môn học": response = modifyService.loadCourseTargets((List<Integer>)session.getAttribute("targetIds"));break;
-            case "Lớp": response = modifyService.loadClazzTargets((List<Integer>)session.getAttribute("targetIds"));break;
-            case "Phòng ban": response = modifyService.loadDepartmentTargets((List<Integer>)session.getAttribute("targetIds"));break;
-            default: response = new ArrayList();break;
+            case "Chuyên ngành": return modifyService.loadMajorTargets((List<Integer>)session.getAttribute("targetIds"));
+            case "Môn học":return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
+            case "Lớp": return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
+            case "Phòng ban": return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
+            default: return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
         }
-        return ObjToJson(response);
+//        return ObjToJson(response);
     }
+    @JsonView(TargetView.basicTargetView.class)
+    @GetMapping("/list/targets/courses")
+    private ResponseEntity listCourseTargets(HttpSession session) throws JsonProcessingException {
+        if(session.getAttribute("targetIds")==null)return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        Feedback f = modifyService.getFeedback(Integer.parseInt(session.getAttribute("id").toString())).getBody();
+        if(f.getTypeByTypeId()==null) return new ResponseEntity(HttpStatus.OK);
+        switch (f.getTypeByTypeId().getDescription()){
+//            case "Chuyên ngành": return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
+            case "Môn học": return modifyService.loadCourseTargets((List<Integer>)session.getAttribute("targetIds"));
+//            case "Lớp": return new ResponseEntity(HttpStatus.OK);
+//            case "Phòng ban": return new ResponseEntity(HttpStatus.OK);
+            default: return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
+        }
+//        return ObjToJson(response);
+    }
+
 
     @PostMapping
     private ResponseEntity<Feedback> createFeedback(HttpSession session, @RequestParam("title") String title, @RequestParam("description") String description) {

@@ -57,13 +57,13 @@ public interface ModifyFeedbackService {
 
     public ResponseEntity loadViewers(int id);//id of feedback contains target
 
-    public List loadDepartmentTargets(List<Integer> targetIds);//ids of feedbacks contain targets
+    public ResponseEntity loadDepartmentTargets(List<Integer> targetIds);//ids of feedbacks contain targets
 
-    public List loadMajorTargets(List<Integer> targetIds);//ids of feedbacks contain targets
+    public ResponseEntity loadMajorTargets(List<Integer> targetIds);//ids of feedbacks contain targets
 
-    public List loadCourseTargets(List<Integer> targetIds);//ids of feedbacks contain targets
+    public ResponseEntity loadCourseTargets(List<Integer> targetIds);//ids of feedbacks contain targets
 
-    public List loadClazzTargets(List<Integer> targetIds);//ids of feedbacks contain targets
+    public ResponseEntity loadClazzTargets(List<Integer> targetIds);//ids of feedbacks contain targets
 
     public ResponseEntity loadTargets(List<Integer> targetIds);//ids of feedbacks contain targets
 

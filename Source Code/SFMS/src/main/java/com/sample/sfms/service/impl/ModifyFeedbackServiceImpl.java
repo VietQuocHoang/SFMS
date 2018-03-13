@@ -581,58 +581,58 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     }
 
     @Override
-    public List<Department> loadDepartmentTargets(List<Integer> ids) {
+    public ResponseEntity<List<Department>> loadDepartmentTargets(List<Integer> ids) {
         try {
             List<Department> results = new ArrayList<>();
             for (int id : ids) {
                 results.add(feedbackRepo.findOne(id).getDepartmentByDepartmentId());
             }
-            return results;
+            return new ResponseEntity<>(results, HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
-            return null;
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @Override
-    public List<Major> loadMajorTargets(List<Integer> ids) {
+    public ResponseEntity<List<Major>> loadMajorTargets(List<Integer> ids) {
         try {
             List<Major> results = new ArrayList<>();
             for (int id : ids) {
                 results.add(feedbackRepo.findOne(id).getMajorByMajorId());
             }
-            return results;
+            return new ResponseEntity<>(results, HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
-            return null;
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @Override
-    public List<Course> loadCourseTargets(List<Integer> ids) {
+    public ResponseEntity<List<Course>> loadCourseTargets(List<Integer> ids) {
         try {
             List<Course> results = new ArrayList<>();
             for (int id : ids) {
                 results.add(feedbackRepo.findOne(id).getCourseByCourseId());
             }
-            return results;
+            return new ResponseEntity<>(results, HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
-            return null;
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @Override
-    public List<Clazz> loadClazzTargets(List<Integer> ids) {
+    public ResponseEntity<List<Clazz>> loadClazzTargets(List<Integer> ids) {
         try {
             List<Clazz> results = new ArrayList<>();
             for (int id : ids) {
                 results.add(feedbackRepo.findOne(id).getClazzByClazzId());
             }
-            return results;
+            return new ResponseEntity<>(results, HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
-            return null;
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
