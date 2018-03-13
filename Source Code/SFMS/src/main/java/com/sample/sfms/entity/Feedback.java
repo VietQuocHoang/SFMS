@@ -140,7 +140,7 @@ public class Feedback {
     }
 
     @Basic
-    @Column(name = "is_published", nullable = true)
+    @Column(name = "is_published", nullable = false)
     public Boolean getIsPublished() {
         return isPublished;
     }

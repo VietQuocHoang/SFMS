@@ -43,29 +43,31 @@ public interface ModifyFeedbackService {
 
     public ResponseEntity<UserFeedback> removeViewer(int targetId, int userId);
 
-    public ResponseEntity<Feedback> saveFeedback(Feedback feedback);
+    public ResponseEntity saveFeedback(Feedback feedback);
 
-    public ResponseEntity<Feedback> updateSemester(int semesterId, int feedbackId);
+    public ResponseEntity updateSemester(int semesterId, int feedbackId);
 
-    public ResponseEntity<Feedback> updateType(int typeId, int feedbackId);
+    public ResponseEntity updateType(int typeId, int feedbackId);
 
-    public ResponseEntity<String> setStart(Date start, int feedbbackId);
+    public ResponseEntity setStart(Date start, int feedbbackId);
 
-    public ResponseEntity<String> setEnd(Date end, int feedbackId);
+    public ResponseEntity setEnd(Date end, int feedbackId);
 
-    public ResponseEntity<List<User>> loadConductors(int id);//id of feedback contains target
+    public ResponseEntity loadConductors(int id);//id of feedback contains target
 
-    public ResponseEntity<List<User>> loadViewers(int id);//id of feedback contains target
+    public ResponseEntity loadViewers(int id);//id of feedback contains target
 
-    public ResponseEntity<List<Department>> loadDepartmentTargets(List<Integer> targetIds);//ids of feedbacks contain targets
+    public List loadDepartmentTargets(List<Integer> targetIds);//ids of feedbacks contain targets
 
-    public ResponseEntity<List<Major>> loadMajorTargets(List<Integer> targetIds);//ids of feedbacks contain targets
+    public List loadMajorTargets(List<Integer> targetIds);//ids of feedbacks contain targets
 
-    public ResponseEntity<List<Course>> loadCourseTargets(List<Integer> targetIds);//ids of feedbacks contain targets
+    public List loadCourseTargets(List<Integer> targetIds);//ids of feedbacks contain targets
 
-    public ResponseEntity<List<Clazz>> loadClazzTargets(List<Integer> targetIds);//ids of feedbacks contain targets
+    public List loadClazzTargets(List<Integer> targetIds);//ids of feedbacks contain targets
 
-    public ResponseEntity<List<Feedback>> loadTargets(List<Integer> targetIds);//ids of feedbacks contain targets
+    public ResponseEntity loadTargets(List<Integer> targetIds);//ids of feedbacks contain targets
 
-    public ResponseEntity<List<Type>> loadAllTypes();
+    public ResponseEntity loadAllTypes();
+
+    public ResponseEntity loadAllSemesters();
 }

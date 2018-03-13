@@ -1,44 +1,67 @@
 package com.sample.sfms.api;
 
+//import com.fasterxml.jackson.core.JsonProcessingException;
+//import com.fasterxml.jackson.core.json.UTF8JsonGenerator;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sample.sfms.entity.Feedback;
-import com.sample.sfms.entity.Role;
+//import com.sample.sfms.entity.Role;
+//import com.sample.sfms.entity.Semester;
 import com.sample.sfms.entity.Semester;
 import com.sample.sfms.entity.Type;
-import com.sample.sfms.model.ModifyFeedbackModel;
+//import com.sample.sfms.model.ModifyFeedbackModel;
 import com.sample.sfms.service.interf.ModifyFeedbackService;
+import com.sample.sfms.view.SemesterView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+//import org.springframework.web.servlet.ModelAndView;
+//import sun.nio.cs.ISO_8859_2;
 
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 /**
  * Created by MyPC on 24/02/2018.
  */
-@RestController
-@SessionAttributes("MFModel")//modify feedback model
-@RequestMapping("/api/modify-feedback-targets")
-class ModifyFeedbackObjsAPI {
-    @Autowired
-    ModifyFeedbackService modifyService;
-
-
-}
 
 @RestController
 @SessionAttributes("MFModel")
 @RequestMapping("/api/modify-feedback")
-class ModifyFeedbackAPI {
+public class ModifyFeedbackAPI {
     @Autowired
     ModifyFeedbackService modifyService;
+
+    public static ObjectMapper om = new ObjectMapper();
+    private String title;
+    private HttpSession session;
 
     @GetMapping("/get/{id}")
     private ResponseEntity<Feedback> getFeedback(@PathVariable("id") int id) {
         return modifyService.getFeedback(id);
+    }
+
+    @GetMapping("/list/targets")
+    private String listTarget(HttpSession session) throws JsonProcessingException {
+        if(session.getAttribute("targetIds")==null)return null;
+        Feedback f = modifyService.getFeedback(Integer.parseInt(session.getAttribute("id").toString())).getBody();
+        if(f.getTypeByTypeId()==null) return null;
+        List response;
+        switch (f.getTypeByTypeId().getDescription()){
+            case "Chuyên ngành": response = modifyService.loadMajorTargets((List<Integer>)session.getAttribute("targetIds"));break;
+            case "Môn học": response = modifyService.loadCourseTargets((List<Integer>)session.getAttribute("targetIds"));break;
+            case "Lớp": response = modifyService.loadClazzTargets((List<Integer>)session.getAttribute("targetIds"));break;
+            case "Phòng ban": response = modifyService.loadDepartmentTargets((List<Integer>)session.getAttribute("targetIds"));break;
+            default: response = new ArrayList();break;
+        }
+        return ObjToJson(response);
     }
 
     @PostMapping
@@ -56,58 +79,89 @@ class ModifyFeedbackAPI {
     }
 
     @PutMapping("/title")
-    private ResponseEntity<String> editTitle(@RequestParam("title") String title, HttpSession session) {
+    private ResponseEntity editTitle(@RequestParam("title") String title, HttpSession session) {
         Feedback f = modifyService.getFeedback(Integer.parseInt(session.getAttribute("id").toString())).getBody();
         f.setFeedbackName(title);
-        return new ResponseEntity<>(modifyService.saveFeedback(f).getBody().getFeedbackName(), HttpStatus.OK);
+        return modifyService.saveFeedback(f);
     }
 
     @PutMapping("/description")
-    private ResponseEntity<String> editDescription(@RequestParam("description") String description, HttpSession session) {
+    private ResponseEntity<Feedback> editDescription(@RequestParam("description") String description, HttpSession session) {
         Feedback f = modifyService.getFeedback(Integer.parseInt(session.getAttribute("id").toString())).getBody();
         f.setFeedbackDes(description);
-        return new ResponseEntity<>(modifyService.saveFeedback(f).getBody().getFeedbackDes(), HttpStatus.OK);
+        return modifyService.saveFeedback(f);
     }
 
     @PutMapping("/start")
-    private ResponseEntity<String> editStart(@RequestParam("startdate") Date startdate, HttpSession session) {
-        return new ResponseEntity<>(modifyService.setStart(startdate,(int) session.getAttribute("id")).getBody(), HttpStatus.OK);
+    private ResponseEntity<Feedback> editStart(@RequestParam("startdate") String startdate, HttpSession session) {
+        try {
+            return modifyService.setStart(new SimpleDateFormat("yyyy-MM-dd").parse(startdate), (int) session.getAttribute("id"));
+        } catch (ParseException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/end")
-    private ResponseEntity<String> editEnd(@RequestParam("enddate") Date enddate, HttpSession session) {
-        Feedback f = modifyService.getFeedback((int) session.getAttribute("id")).getBody();
-        f.setEndDate(enddate);
-        return new ResponseEntity<>(modifyService.setEnd(enddate,(int) session.getAttribute("id")).getBody(), HttpStatus.OK);
+    private ResponseEntity<Feedback> editEnd(@RequestParam("enddate") String enddate, HttpSession session) {
+        try {
+            return modifyService.setEnd(new SimpleDateFormat("yyyy-MM-dd").parse(enddate), (int) session.getAttribute("id"));
+        } catch (ParseException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
+    @JsonView(SemesterView.basicSemesterView.class)
     @PutMapping("/semester")
-    private ResponseEntity<Semester> editSemester(@RequestParam("semesterId") int semesterId, HttpSession session) {
-        return new ResponseEntity<>(
-                modifyService.updateSemester(semesterId,
-                        (int) session.getAttribute("id")).getBody().getSemesterBySemesterId(),
-                HttpStatus.OK);
+    private ResponseEntity<Semester> editSemester(@RequestBody Semester semester, HttpSession session) {
+        return  modifyService.updateSemester(semester.getId(),(int) session.getAttribute("id"));
     }
 
     @PutMapping("/type")
-    private ResponseEntity<Type> editType(@RequestParam("typeId") int typeId, HttpSession session) {
-        modifyService.deleteFeedbacks((List<Integer>)session.getAttribute("targetIds"));
-        return new ResponseEntity<Type>(
-                modifyService.updateType(typeId,
-                        (int) session.getAttribute("id")).getBody().getTypeByTypeId(),
-                HttpStatus.OK);
+    private ResponseEntity editType(@RequestParam("typeId") int typeId, HttpSession session) {
+        modifyService.deleteFeedbacks((List<Integer>) session.getAttribute("targetIds"));
+        return modifyService.updateType(typeId, (int) session.getAttribute("id"));
     }
 
-    @PostMapping("/add-target")
+    @PostMapping("/add/target")
     private ResponseEntity<Integer> addTarget(@RequestParam("id") int id, HttpSession session) {
-        List<Integer> targetIds = (List<Integer>)session.getAttribute("targetIds");
-        Feedback response = modifyService.addTarget((int)session.getAttribute("id"),id, targetIds).getBody();
-        if(!targetIds.contains(response.getId()))targetIds.add(response.getId());
+        List<Integer> targetIds = (List<Integer>) session.getAttribute("targetIds");
+        if(targetIds==null)targetIds = new ArrayList<>();
+        Feedback response = modifyService.addTarget((int) session.getAttribute("id"), id, targetIds).getBody();
+        if (!targetIds.contains(response.getId())) targetIds.add(response.getId());
         session.setAttribute("targetIds", targetIds);
         return new ResponseEntity<>(response.getMajorByMajorId().getId(),
                 HttpStatus.OK);
     }
 
+    @PutMapping("/remove/target")
+    private ResponseEntity<Integer> removeTarget(@RequestParam("id") int id, HttpSession session) {
+        List<Integer> targetIds = (List<Integer>) session.getAttribute("targetIds");
+        Feedback response = modifyService.addTarget((int) session.getAttribute("id"), id, targetIds).getBody();
+        if (!targetIds.contains(response.getId())) targetIds.add(response.getId());
+        session.setAttribute("targetIds", targetIds);
+        return new ResponseEntity<>(response.getMajorByMajorId().getId(),
+                HttpStatus.OK);
+    }
+
+    @PostMapping("/add/conductor")
+    private ResponseEntity<Integer> addConductor(@RequestParam("id") int id, HttpSession session) {
+        List<Integer> targetIds = (List<Integer>) session.getAttribute("targetIds");
+        Feedback response = modifyService.addTarget((int) session.getAttribute("id"), id, targetIds).getBody();
+        if (!targetIds.contains(response.getId())) targetIds.add(response.getId());
+        session.setAttribute("targetIds", targetIds);
+        return new ResponseEntity<>(response.getMajorByMajorId().getId(),
+                HttpStatus.OK);
+    }
+
+    @PutMapping("/add/conductor")
+    private ResponseEntity<Integer> removeConductor(@RequestParam("id") int id, HttpSession session) {
+        List<Integer> targetIds = (List<Integer>) session.getAttribute("targetIds");
+        Feedback response = modifyService.addTarget((int) session.getAttribute("id"), id, targetIds).getBody();
+        if (!targetIds.contains(response.getId())) targetIds.add(response.getId());
+        session.setAttribute("targetIds", targetIds);
+        return new ResponseEntity<>(response.getMajorByMajorId().getId(),
+                HttpStatus.OK);
+    }
 
 
 //    @PostMapping("/add-conductor")
@@ -124,11 +178,7 @@ class ModifyFeedbackAPI {
         return modifyService.deleteFeedback(id);
     }
 
-//    @DeleteMapping
-//    private ResponseEntity<ModifyFeedbackModel> cancel
-
-
-//    @PutMapping
-//    private ResponseEntity<ModifyFeedbackModel> saveFeedbackModel (@RequestParam)
-
+    String ObjToJson(Object o) throws JsonProcessingException {
+        return om.writerWithDefaultPrettyPrinter().writeValueAsString(o);
+    }
 }
