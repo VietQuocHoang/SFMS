@@ -86,17 +86,32 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Override
     public ResponseEntity getNotConductedFeedbacksByUserId() {
         User user = getAuthorizedUser();
-        try {
-            List<UserFeedback> listUserFeedback = userFeedbackRepository.findNotConductedFeedbacksByUserId(user.getId());
-            if (null == listUserFeedback || listUserFeedback.isEmpty()) {
-                return new ResponseEntity(HttpStatus.NO_CONTENT);
-            } else {
-                return new ResponseEntity(listUserFeedback, HttpStatus.OK);
+        if (user != null) {
+            try {
+                List<UserFeedback> listUserFeedback = userFeedbackRepository.findNotConductedFeedbacksByUserId(user.getId());
+                if (null == listUserFeedback || listUserFeedback.isEmpty()) {
+                    return new ResponseEntity(HttpStatus.NO_CONTENT);
+                } else {
+                    return new ResponseEntity(listUserFeedback, HttpStatus.OK);
+                }
+            } catch (Exception e) {
+                logger.log(Level.FINE, e.toString());
+                e.printStackTrace();
+                return new ResponseEntity(HttpStatus.BAD_REQUEST);
             }
-        } catch (Exception e) {
-            logger.log(Level.FINE, e.toString());
-            e.printStackTrace();
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @Override
+    public List<UserFeedback> getFeedbacksByUserId() {
+        User user = getAuthorizedUser();
+        if (user != null) {
+            List<UserFeedback> userFeedbacks = userFeedbackRepository.findFeedbacksByUserId(user.getId());
+            return userFeedbacks;
+        } else {
+            return null;
         }
     }
 
