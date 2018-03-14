@@ -13,11 +13,11 @@ import java.util.Collection;
 @Entity
 @Table(name = "user", schema = "capstone", catalog = "")
 public class User {
-    @JsonView(TargetView.basicTargetView.class)
+    @JsonView(TargetView.basicClazzView.class)
     private int id;
     private String username;
     private String password;
-    @JsonView(TargetView.basicTargetView.class)
+    @JsonView(TargetView.basicClazzView.class)
     private String fullname;
     private String code;
     private String mail;

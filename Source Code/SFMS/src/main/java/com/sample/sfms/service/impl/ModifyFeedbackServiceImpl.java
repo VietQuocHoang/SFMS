@@ -298,7 +298,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
         try {
             Feedback target;
             List<Feedback> affected = new ArrayList<>();
-            if (ids!=null) {
+            if (!ids.isEmpty()) {
                 for (int id : ids) {
                     target = feedbackRepo.findOne(id);
                     if (target != null) {
@@ -470,7 +470,8 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
         try {
             Feedback feedback = feedbackRepo.findOne(feedbackId);
             feedback.setSemesterBySemesterId(semesterRepo.findOne(semesterId));
-//            feedback.setTypeByTypeId(null);
+            feedback.setStartDate(null);
+            feedback.setEndDate(null);
             return new ResponseEntity<>(feedbackRepo.save(feedback).getSemesterBySemesterId(), HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
@@ -480,11 +481,11 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     }
 
     @Override
-    public ResponseEntity<Type> updateType(int typeId, int feedbackId) {
+    public ResponseEntity<Feedback> updateType(int typeId, int feedbackId) {
         try {
             Feedback feedback = feedbackRepo.findOne(feedbackId);
             feedback.setTypeByTypeId(typeRepo.findOne(typeId));
-            return new ResponseEntity<>(feedbackRepo.save(feedback).getTypeByTypeId(), HttpStatus.OK);
+            return new ResponseEntity<>(feedbackRepo.save(feedback), HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -496,6 +497,9 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
         try {
             Feedback feedback = feedbackRepo.findOne(feedbackId);
             feedback.setStartDate(start);
+            if(feedback.getEndDate()!=null){
+                if(feedback.getEndDate().before(start))feedback.setEndDate(null);
+            }
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             return new ResponseEntity<>(feedbackRepo.save(feedback), HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {

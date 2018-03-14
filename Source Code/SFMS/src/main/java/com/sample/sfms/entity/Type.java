@@ -1,5 +1,9 @@
 package com.sample.sfms.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.sample.sfms.view.FeedbackView;
+import com.sample.sfms.view.TypeView;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -8,7 +12,9 @@ import java.util.Collection;
  */
 @Entity
 public class Type {
+    @JsonView({FeedbackView.overview.class, TypeView.basicTypeView.class})
     private int id;
+    @JsonView({FeedbackView.overview.class, TypeView.basicTypeView.class})
     private String description;
     private Collection<Feedback> feedbacksById;
 

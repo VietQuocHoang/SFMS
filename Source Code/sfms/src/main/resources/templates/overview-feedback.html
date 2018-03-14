@@ -121,7 +121,7 @@
                 </div>
                 <!--end closed at-->
                 <br>
-                <!--feedback target-->
+                <!--feedback type-->
                 <div class="row feedback-target">
                     <div class="col-sm-1"></div>
                     <div class="col-md-3">
@@ -132,34 +132,28 @@
                         <!--<input list="list-types" class="form-control" placeholder="Loại đối tượng"/>-->
                         <!--</div>-->
                         <select class="input-group input-group-sm" id="typeId">
-
+                            <!--if feedback type has been defined-->
                             <option th:if="${feedback.typeByTypeId != null}"
                                     th:each="type : ${alltypes}"
                                     th:value="${type.id}"
                                     th:text="${type.description}"
                                     data-toggle="tab" th:href="${'#nav-'+type.id}" role="tab"
                                     th:selected="${type.id==feedback.typeByTypeId.id}"></option>
+                            <!--if feedback type has not been defined-->
                             <option th:if="${feedback.typeByTypeId == null}"
                                     th:each="type : ${alltypes}"
                                     th:value="${type.id}"
                                     data-toggle="tab" href="#nav-lecturers" role="tab"
                                     th:text="${type.description}"></option>
-
-                            <!--<th:block th:each="type : ${alltypes}">-->
-                            <!-- <option th:each="type : ${alltypes}"
-                                     th:value="${type.id}"
-                                     th:text="${type.description}"
-                                     th:onclick=""
-                                     th:selected="${type.id==feedback.typeByTypeId.id}"></option>-->
-                            <!--</th:block>-->
-
                         </select>
+                        <!--end select feedback type-->
                     </div>
                 </div>
+                <!--end select feedback type-->
                 <div class="row form-row feedback-target">
                     <div class="tab-content" id="nav-tabContent">
                         <!--tab pane clazzes-->
-                        <div class="tab-pane fade show active" id="nav-3" role="tabpanel" aria-labelledby="nav-clazzes-tab">
+                        <div class="tab-pane fade" id="nav-clazz" role="tabpanel" aria-labelledby="nav-clazzes-tab">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="tbl-clazzes" width="100%" cellspacing="0">
                                     <thead>
@@ -193,8 +187,9 @@
                                 </table>
                             </div>
                         </div>
+                        <!--end tab pane clazzes-->
                         <!--tab pane departments-->
-                        <div class="tab-pane fade" id="nav-4" role="tabpanel"
+                        <div class="tab-pane fade" id="nav-department" role="tabpanel"
                              aria-labelledby="nav-departments-tab">
                             <!--table departments-->
                             <div class="row">
@@ -203,7 +198,7 @@
                                            cellspacing="0">
                                         <thead>
                                         <tr>
-                                            <th>Tên</th>
+                                            <th>Phòng ban</th>
                                             <th>Người làm feedback</th>
                                             <th>Người xem báo cáo</th>
                                             <th>Tùy chọn</th>
@@ -225,13 +220,14 @@
                             </div>
                             <!--end table departments-->
                         </div>
-                        <!--end tab pane department-->
+                        <!--end tab pane departments-->
                         <!--tab pane majors-->
-                        <div class="tab-pane fade" id="nav-1" role="tabpanel" aria-labelledby="nav-majors-tab">
+                        <div class="tab-pane fade" id="nav-major" role="tabpanel" aria-labelledby="nav-majors-tab">
                             <!--table majors-->
                             <div class="row">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered" id="tbl-majors" width="100%" cellspacing="0">
+                                    <table class="table table-bordered" id="tbl-majors" width="100%"
+                                           cellspacing="0">
                                         <thead>
                                         <tr>
                                             <th>Tên</th>
@@ -260,15 +256,16 @@
                         </div>
                         <!--end tab pane majors-->
                         <!--tab pane course-->
-                        <div class="tab-pane fade" id="nav-2" role="tabpanel"
+                        <div class="tab-pane fade" id="nav-course" role="tabpanel"
                              aria-labelledby="nav-courses-tab">
                             <!--table courses-->
                             <div class="row">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered" id="tbl-courses" width="100%" cellspacing="0">
+                                    <table class="table table-bordered" id="tbl-courses" width="100%"
+                                           cellspacing="0">
                                         <thead>
                                         <tr>
-                                            <th></th>
+                                            <!--<th></th>-->
                                             <th>Môn học</th>
                                             <th>Mã môn</th>
                                             <!--<th>Chuyên ngành</th>-->
@@ -279,7 +276,7 @@
                                         </thead>
                                         <tfoot>
                                         <tr>
-                                            <th></th>
+                                            <!--<th></th>-->
                                             <th>Môn học</th>
                                             <th>Mã môn</th>
                                             <!--<th>Chuyên ngành</th>-->
@@ -298,9 +295,11 @@
                         <!--end tab pane courses-->
                     </div>
                 </div>
+                <!--end target tables-->
                 <br>
                 <!--save options-->
                 <div class="row">
+                    <div class="col-sm-1"></div>
                     <div class="col-md-3">
                         <label class="lb-inf">Lưu feedback thành:</label>
                     </div>
@@ -755,7 +754,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!--end feedback content panel-->
                 <!--Save & publish options-->
                 <br>
@@ -777,7 +775,8 @@
         <script th:src="@{/js/sb-admin.min.js}"></script>
         <!-- /.content-wrapper-->
         <script th:src="@{/js/conduct-feedback.js}"></script>
-        <script th:src="@{/js/overview-feedback.js}"></script>
+        <script th:inline="javascript" th:src="@{/js/overview-feedback.js}"></script>
+
     </div>
 </div>
 </body>

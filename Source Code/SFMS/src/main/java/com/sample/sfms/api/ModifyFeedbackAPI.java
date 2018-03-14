@@ -10,9 +10,12 @@ import com.sample.sfms.entity.Feedback;
 //import com.sample.sfms.entity.Semester;
 import com.sample.sfms.entity.Semester;
 //import com.sample.sfms.model.ModifyFeedbackModel;
+import com.sample.sfms.entity.Type;
 import com.sample.sfms.service.interf.ModifyFeedbackService;
+import com.sample.sfms.view.FeedbackView;
 import com.sample.sfms.view.TargetView;
 import com.sample.sfms.view.SemesterView;
+import com.sample.sfms.view.TypeView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +49,7 @@ public class ModifyFeedbackAPI {
         return modifyService.getFeedback(id);
     }
 
-    @JsonView(TargetView.basicTargetView.class)
+    @JsonView(TargetView.basicClazzView.class)
     @GetMapping("/list/targets/clazzes")
     private ResponseEntity listClazzesTargets(HttpSession session){
         if(session.getAttribute("targetIds")==null)return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -61,7 +64,7 @@ public class ModifyFeedbackAPI {
         }
     }
 
-    @JsonView(TargetView.basicTargetView.class)
+    @JsonView(TargetView.basicDepartmentView.class)
     @GetMapping("/list/targets/departments")
     private ResponseEntity listDepartmentTargets(HttpSession session) throws JsonProcessingException {
         if(session.getAttribute("targetIds")==null)return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -76,7 +79,7 @@ public class ModifyFeedbackAPI {
         }
 
     }
-    @JsonView(TargetView.basicTargetView.class)
+    @JsonView(TargetView.basicMajorView.class)
     @GetMapping("/list/targets/majors")
     private ResponseEntity listMajorTargets(HttpSession session) throws JsonProcessingException {
         if(session.getAttribute("targetIds")==null)return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -92,7 +95,7 @@ public class ModifyFeedbackAPI {
         }
 //        return ObjToJson(response);
     }
-    @JsonView(TargetView.basicTargetView.class)
+    @JsonView(TargetView.basicCourseView.class)
     @GetMapping("/list/targets/courses")
     private ResponseEntity listCourseTargets(HttpSession session) throws JsonProcessingException {
         if(session.getAttribute("targetIds")==null)return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -122,21 +125,21 @@ public class ModifyFeedbackAPI {
         session.setAttribute("id", response.getBody().getId());
         return response;
     }
-
+    @JsonView({FeedbackView.overview.class})
     @PutMapping("/title")
     private ResponseEntity editTitle(@RequestParam("title") String title, HttpSession session) {
         Feedback f = modifyService.getFeedback(Integer.parseInt(session.getAttribute("id").toString())).getBody();
         f.setFeedbackName(title);
         return modifyService.saveFeedback(f);
     }
-
+    @JsonView({FeedbackView.overview.class})
     @PutMapping("/description")
     private ResponseEntity<Feedback> editDescription(@RequestParam("description") String description, HttpSession session) {
         Feedback f = modifyService.getFeedback(Integer.parseInt(session.getAttribute("id").toString())).getBody();
         f.setFeedbackDes(description);
         return modifyService.saveFeedback(f);
     }
-
+    @JsonView({FeedbackView.overview.class})
     @PutMapping("/start")
     private ResponseEntity<Feedback> editStart(@RequestParam("startdate") String startdate, HttpSession session) {
         try {
@@ -145,7 +148,7 @@ public class ModifyFeedbackAPI {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-
+    @JsonView({FeedbackView.overview.class})
     @PutMapping("/end")
     private ResponseEntity<Feedback> editEnd(@RequestParam("enddate") String enddate, HttpSession session) {
         try {
@@ -161,10 +164,12 @@ public class ModifyFeedbackAPI {
         return  modifyService.updateSemester(semester.getId(),(int) session.getAttribute("id"));
     }
 
+    @JsonView({FeedbackView.overview.class})
     @PutMapping("/type")
-    private ResponseEntity editType(@RequestParam("typeId") int typeId, HttpSession session) {
-        modifyService.deleteFeedbacks((List<Integer>) session.getAttribute("targetIds"));
-        return modifyService.updateType(typeId, (int) session.getAttribute("id"));
+    private ResponseEntity editType(@RequestBody Type type, HttpSession session) {
+//        modifyService.deleteFeedbacks((List<Integer>) session.getAttribute("targetIds"));
+        session.setAttribute("targetIds", new ArrayList<>());
+        return modifyService.updateType(type.getId(), (int) session.getAttribute("id"));
     }
 
     @PostMapping("/add/target")

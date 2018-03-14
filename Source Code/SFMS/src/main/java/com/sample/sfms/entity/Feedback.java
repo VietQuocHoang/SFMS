@@ -12,27 +12,33 @@ import java.util.Date;
  */
 @Entity
 public class Feedback {
-    @JsonView(FeedbackView.alertUserFeedbackView.class)
+    @JsonView({FeedbackView.alertUserFeedbackView.class, FeedbackView.overview.class})
     private int id;
     private Integer point;
+    @JsonView({FeedbackView.overview.class})
     private boolean isTemplate;
     private Date createDate;
+    @JsonView({FeedbackView.overview.class})
     private Date startDate;
+    @JsonView({FeedbackView.overview.class})
     private Date endDate;
-    @JsonView(FeedbackView.alertUserFeedbackView.class)
+    @JsonView({FeedbackView.alertUserFeedbackView.class, FeedbackView.overview.class})
     private String feedbackDes;
-    @JsonView(FeedbackView.alertUserFeedbackView.class)
+    @JsonView({FeedbackView.alertUserFeedbackView.class, FeedbackView.overview.class})
     private String feedbackName;
     private String templateDes;
     private String templateName;
+    @JsonView({FeedbackView.overview.class})
     private boolean isPublished;
     private User userByCreatorId;
     private Department departmentByDepartmentId;
     private Course courseByCourseId;
     private Major majorByMajorId;
     private Clazz clazzByClazzId;
+    @JsonView({FeedbackView.overview.class})
     private Type typeByTypeId;
     private Feedback feedbackByReferenceId;
+    @JsonView({FeedbackView.overview.class})
     private Semester semesterBySemesterId;
     private Collection<UserFeedback> userFeedbacksById;
     private Collection<Feedback> feedbacksById;
@@ -334,5 +340,9 @@ public class Feedback {
 
     public Feedback() {
 
+    }
+
+    public boolean hasTarget(){
+        return this.getDepartmentByDepartmentId()!=null||this.getClazzByClazzId()!=null||this.getCourseByCourseId()!=null||this.getMajorByMajorId()!=null;
     }
 }

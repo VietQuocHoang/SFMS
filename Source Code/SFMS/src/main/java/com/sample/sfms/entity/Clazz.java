@@ -12,19 +12,19 @@ import java.util.Collection;
  */
 @Entity
 public class Clazz {
-    @JsonView(TargetView.basicTargetView.class)
+    @JsonView(TargetView.basicClazzView.class)
     private int id;
-    @JsonView(TargetView.basicTargetView.class)
+    @JsonView(TargetView.basicClazzView.class)
     private Date endDate;
-    @JsonView(TargetView.basicTargetView.class)
+    @JsonView(TargetView.basicClazzView.class)
     private Date startDate;
-    @JsonView(TargetView.basicTargetView.class)
+    @JsonView(TargetView.basicClazzView.class)
     private String className;
-    @JsonView(TargetView.basicTargetView.class)
+    @JsonView(TargetView.basicClazzView.class)
     private Semester semesterBySemesterId;
-    @JsonView(TargetView.basicTargetView.class)
+    @JsonView(TargetView.basicClazzView.class)
     private User userByLecturerId;
-    @JsonView(TargetView.basicTargetView.class)
+    @JsonView(TargetView.basicClazzView.class)
     private Course courseByCourseId;
     private Collection<Feedback> feedbacksById;
     private Collection<StudentClazz> studentClazzesById;

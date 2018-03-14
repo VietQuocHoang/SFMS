@@ -12,9 +12,9 @@ import java.util.Collection;
  */
 @Entity
 public class Semester {
-    @JsonView(TargetView.basicTargetView.class)
+    @JsonView(TargetView.basicClazzView.class)
     private int id;
-    @JsonView(TargetView.basicTargetView.class)
+    @JsonView({TargetView.basicClazzView.class})
     private String title;
     private Date endDate;
     private Date startDate;

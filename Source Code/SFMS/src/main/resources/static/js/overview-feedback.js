@@ -6,7 +6,202 @@ var modifyviewerlink = "<a class='add-inf-item-link' href='modify-feedback-viewe
 var linkShow = "<a href='modify-feedback-target'><i class='fa fa-plus'></i></a>";
 var linkDelete = "<a href='#'><i class='fa fa-trash'></i></a>";
 var linkUpdate = "<a href='modify-feedback-target'><i class='fa fa-pencil'></i></a>";
+var showedTargetTab;
 $(document).ready(function () {
+    loadDepartmentTable();
+    loadMajorTable();
+    loadCourseTable();
+    loadClazzTable();
+    switch ($('#typeId').val()) {
+        case '1':
+            showedTargetTab = $('#nav-major');
+            showedTargetTab.addClass("show active");
+            break;
+        case '2':
+            showedTargetTab = $('#nav-course');
+            showedTargetTab.addClass("show active");
+            break;
+        case '3':
+            showedTargetTab = $('#nav-clazz');
+            showedTargetTab.addClass("show active");
+            break;
+        case '4':
+            showedTargetTab = $('#nav-department');
+            showedTargetTab.addClass("show active");
+            break;
+        default :
+            showedTargetTab = $('#nav-major');
+            showedTargetTab.addClass("show active");
+            break;
+    }
+    // loadDepartmentTable();
+    // loadMajorTable();
+    // loadCourseTable();
+    // loadClazzTable();
+});
+function loadDepartmentTable() {
+    $('#tbl-departments').DataTable().destroy();
+    $('#tbl-departments').DataTable(
+        {
+            "ajax": {
+                "url": "/sfms/api/modify-feedback/list/targets/departments",
+                "dataSrc": "",
+                "type": "GET"
+            },
+            "columns": [
+                {"data": "name"},
+                {//column for modify conductor
+                    "data": null,
+                    "defaultContent": modifyconductorlink
+                },
+                {//column for modifyviewer
+                    "data": null,
+                    "defaultContent": modifyviewerlink
+                },
+                {//column for view detail-update-delete
+                    "data": null,
+                    "defaultContent": linkShow + linkUpdate + linkDelete
+                }
+            ],
+            "language": {
+                "decimal": "",
+                "emptyTable": "Không kết quả nào được tìm thấy. <a href='/sfms/modify-feedback-target'>Thêm đối tượng</a>",
+                "info": "Hiển thị từ _START_ tới _END_ trong số _TOTAL_ kết quả",
+                "infoEmpty": "Hiển thị 0 tới 0 trong số 0 kết quả",
+                "infoFiltered": "(filtered from _MAX_ total entries)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "_MENU_ kết quả mỗi trang",
+                "loadingRecords": "Đang tải...",
+                "processing": "Đang xử lý...",
+                "search": "Tìm:",
+                "zeroRecords": "Không tìm thấy kết quả phù hợp",
+                "paginate": {
+                    "first": "Đầu",
+                    "last": "Cuối",
+                    "next": "Sau",
+                    "previous": "Trước"
+                },
+                "aria": {
+                    "sortAscending": ": kích hoạt để sắp xếp tăng dần",
+                    "sortDescending": ": kích hoạt để sắp xếp giảm dần"
+                }
+            }
+        }
+    );
+}
+function loadMajorTable() {
+    $('#tbl-majors').DataTable().destroy();
+    $('#tbl-majors').DataTable(
+        {
+            "ajax": {
+                "url": "/sfms/api/modify-feedback/list/targets/majors",
+                "dataSrc": "",
+                "type": "GET"
+            },
+            "columns": [
+                {"data": "name"},
+                {"data": "code"},
+                {//column for modify conductor
+                    "data": null,
+                    "defaultContent": modifyconductorlink
+                },
+                {//column for modifyviewer
+                    "data": null,
+                    "defaultContent": modifyviewerlink
+                },
+                {//column for view detail-update-delete
+                    "data": null,
+                    "defaultContent": linkShow + linkUpdate + linkDelete
+                }
+            ],
+            "language": {
+                "decimal": "",
+                "emptyTable": "Không kết quả nào được tìm thấy. <a href='/sfms/modify-feedback-target'>Thêm đối tượng</a>",
+                "info": "Hiển thị từ _START_ tới _END_ trong số _TOTAL_ kết quả",
+                "infoEmpty": "Hiển thị 0 tới 0 trong số 0 kết quả",
+                "infoFiltered": "(filtered from _MAX_ total entries)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "_MENU_ kết quả mỗi trang",
+                "loadingRecords": "Đang tải...",
+                "processing": "Đang xử lý...",
+                "search": "Tìm:",
+                "zeroRecords": "Không tìm thấy kết quả phù hợp",
+                "paginate": {
+                    "first": "Đầu",
+                    "last": "Cuối",
+                    "next": "Sau",
+                    "previous": "Trước"
+                },
+                "aria": {
+                    "sortAscending": ": kích hoạt để sắp xếp tăng dần",
+                    "sortDescending": ": kích hoạt để sắp xếp giảm dần"
+                }
+            }
+        }
+    );
+}
+function loadCourseTable() {
+    $('#tbl-courses').DataTable().destroy();
+    $('#tbl-courses').DataTable(
+        {
+            "ajax": {
+                "url": "/sfms/api/modify-feedback/list/targets/courses",
+                "dataSrc": "",
+                "type": "GET"
+            },
+            "columns": [
+                {"data": "name"},
+                {"data": "code"},
+                {//column for modify conductor
+                    "data": null,
+                    "defaultContent": modifyconductorlink
+                },
+                {//column for modifyviewer
+                    "data": null,
+                    "defaultContent": modifyviewerlink
+                },
+                {//column for view detail-update-delete
+                    "data": null,
+                    "defaultContent": linkShow + linkUpdate + linkDelete
+                }
+                // {
+                //     "data": "majorCoursesById",
+                //     "render": function(data, type, row, meta){
+                //
+                //     }
+                // }
+            ],
+            "language": {
+                "decimal": "",
+                "emptyTable": "Không kết quả nào được tìm thấy. <a href='/sfms/modify-feedback-target'>Thêm đối tượng</a>",
+                "info": "Hiển thị từ _START_ tới _END_ trong số _TOTAL_ kết quả",
+                "infoEmpty": "Hiển thị 0 tới 0 trong số 0 kết quả",
+                "infoFiltered": "(filtered from _MAX_ total entries)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "_MENU_ kết quả mỗi trang",
+                "loadingRecords": "Đang tải...",
+                "processing": "Đang xử lý...",
+                "search": "Tìm:",
+                "zeroRecords": "Không tìm thấy kết quả phù hợp",
+                "paginate": {
+                    "first": "Đầu",
+                    "last": "Cuối",
+                    "next": "Sau",
+                    "previous": "Trước"
+                },
+                "aria": {
+                    "sortAscending": ": kích hoạt để sắp xếp tăng dần",
+                    "sortDescending": ": kích hoạt để sắp xếp giảm dần"
+                }
+            }
+        }
+    );
+}
+function loadClazzTable() {
+    $('#tbl-clazzes').DataTable().destroy();
     $('#tbl-clazzes').DataTable(
         {
             "ajax": {
@@ -40,7 +235,7 @@ $(document).ready(function () {
             ],
             "language": {
                 "decimal": "",
-                "emptyTable": "Không kết quả nào được tìm thấy",
+                "emptyTable": "Không kết quả nào được tìm thấy. <a href='/sfms/modify-feedback-target'>Thêm đối tượng</a>",
                 "info": "Hiển thị từ _START_ tới _END_ trong số _TOTAL_ kết quả",
                 "infoEmpty": "Hiển thị 0 tới 0 trong số 0 kết quả",
                 "infoFiltered": "(filtered from _MAX_ total entries)",
@@ -64,160 +259,7 @@ $(document).ready(function () {
             }
         }
     );
-    $('#tbl-courses').DataTable(
-        {
-            "ajax": {
-                "url": "/sfms/api/modify-feedback/list/targets/courses",
-                "dataSrc": "",
-                "type": "GET"
-            },
-            "columns": [
-                {"data": "name"},
-                {"data": "code"},
-                {//column for modify conductor
-                    "data": null,
-                    "defaultContent": modifyconductorlink
-                },
-                {//column for modifyviewer
-                    "data": null,
-                    "defaultContent": modifyviewerlink
-                },
-                {//column for view detail-update-delete
-                    "data": null,
-                    "defaultContent": linkShow + linkUpdate + linkDelete
-                }
-                // {
-                //     "data": "majorCoursesById",
-                //     "render": function(data, type, row, meta){
-                //
-                //     }
-                // }
-            ],
-            "language": {
-                "decimal": "",
-                "emptyTable": "Không kết quả nào được tìm thấy",
-                "info": "Hiển thị từ _START_ tới _END_ trong số _TOTAL_ kết quả",
-                "infoEmpty": "Hiển thị 0 tới 0 trong số 0 kết quả",
-                "infoFiltered": "(filtered from _MAX_ total entries)",
-                "infoPostFix": "",
-                "thousands": ",",
-                "lengthMenu": "_MENU_ kết quả mỗi trang",
-                "loadingRecords": "Đang tải...",
-                "processing": "Đang xử lý...",
-                "search": "Tìm:",
-                "zeroRecords": "Không tìm thấy kết quả phù hợp",
-                "paginate": {
-                    "first": "Đầu",
-                    "last": "Trước",
-                    "next": "Sau",
-                    "previous": "Cuối"
-                },
-                "aria": {
-                    "sortAscending": ": kích hoạt để sắp xếp tăng dần",
-                    "sortDescending": ": kích hoạt để sắp xếp giảm dần"
-                }
-            }
-        }
-    );
-    $('#tbl-departments').DataTable(
-        {
-            "ajax": {
-                "url": "/sfms/api/modify-feedback/list/targets/departments",
-                "dataSrc": "",
-                "type": "GET"
-            },
-            "columns": [
-                {"data": "name"},
-                {//column for modify conductor
-                    "data": null,
-                    "defaultContent": modifyconductorlink
-                },
-                {//column for modifyviewer
-                    "data": null,
-                    "defaultContent": modifyviewerlink
-                },
-                {//column for view detail-update-delete
-                    "data": null,
-                    "defaultContent": linkShow + linkUpdate + linkDelete
-                }
-            ],
-            "language": {
-                "decimal": "",
-                "emptyTable": "Không kết quả nào được tìm thấy",
-                "info": "Hiển thị từ _START_ tới _END_ trong số _TOTAL_ kết quả",
-                "infoEmpty": "Hiển thị 0 tới 0 trong số 0 kết quả",
-                "infoFiltered": "(filtered from _MAX_ total entries)",
-                "infoPostFix": "",
-                "thousands": ",",
-                "lengthMenu": "_MENU_ kết quả mỗi trang",
-                "loadingRecords": "Đang tải...",
-                "processing": "Đang xử lý...",
-                "search": "Tìm:",
-                "zeroRecords": "Không tìm thấy kết quả phù hợp",
-                "paginate": {
-                    "first": "Đầu",
-                    "last": "Trước",
-                    "next": "Sau",
-                    "previous": "Cuối"
-                },
-                "aria": {
-                    "sortAscending": ": kích hoạt để sắp xếp tăng dần",
-                    "sortDescending": ": kích hoạt để sắp xếp giảm dần"
-                }
-            }
-        }
-    );
-    $('#tbl-majors').DataTable(
-        {
-            "ajax": {
-                "url": "/sfms/api/modify-feedback/list/targets/majors",
-                "dataSrc": "",
-                "type": "GET"
-            },
-            "columns": [
-                {"data": "name"},
-                {"data": "code"},
-                {//column for modify conductor
-                    "data": null,
-                    "defaultContent": modifyconductorlink
-                },
-                {//column for modifyviewer
-                    "data": null,
-                    "defaultContent": modifyviewerlink
-                },
-                {//column for view detail-update-delete
-                    "data": null,
-                    "defaultContent": linkShow + linkUpdate + linkDelete
-                }
-            ],
-            "language": {
-                "decimal": "",
-                "emptyTable": "Không kết quả nào được tìm thấy",
-                "info": "Hiển thị từ _START_ tới _END_ trong số _TOTAL_ kết quả",
-                "infoEmpty": "Hiển thị 0 tới 0 trong số 0 kết quả",
-                "infoFiltered": "(filtered from _MAX_ total entries)",
-                "infoPostFix": "",
-                "thousands": ",",
-                "lengthMenu": "_MENU_ kết quả mỗi trang",
-                "loadingRecords": "Đang tải...",
-                "processing": "Đang xử lý...",
-                "search": "Tìm:",
-                "zeroRecords": "Không tìm thấy kết quả phù hợp",
-                "paginate": {
-                    "first": "Đầu",
-                    "last": "Trước",
-                    "next": "Sau",
-                    "previous": "Cuối"
-                },
-                "aria": {
-                    "sortAscending": ": kích hoạt để sắp xếp tăng dần",
-                    "sortDescending": ": kích hoạt để sắp xếp giảm dần"
-                }
-            }
-        }
-    );
-});
-
+}
 $("#feedback-title").focusout(function () {
     $.ajax(
         {
@@ -260,53 +302,40 @@ $("#enddate").change(function () {
     changeEnd();
 })
 
-function changeStart() {
-    $.ajax(
-        {
-            url: "/sfms/api/modify-feedback/start",
-            type: "PUT",
-            dataType: 'application/json',
-            data: {"startdate": $("#startdate").val()},
-            success: function (result) {
-
-            },
-            error: function (result) {
-
-            }
-        }
-    );
-}
-
-function changeEnd() {
-    $.ajax(
-        {
-            url: "/sfms/api/modify-feedback/end",
-            type: "PUT",
-            dataType: 'application/json',
-            data: {"enddate": $("#enddate").val()},
-            success: function (result) {
-
-            },
-            error: function (result) {
-
-            }
-        }
-    );
-}
-
-
 $("#typeId").change(function () {
+    let typeData = {
+        "id": $("#typeId").val(),
+    }
     $.ajax(
         {
             url: "/sfms/api/modify-feedback/type",
             type: "PUT",
-            dataType: 'application/json',
-            data: {"typeId": $("#typeId").val()},
-            success: function (result) {
-
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(typeData),
+            success: function (data, status, xhr) {
+                switch (data.typeByTypeId.description) {
+                    case "Chuyên ngành":
+                        loadMajorTable();
+                        showedTargetTab.removeClass("show active");showedTargetTab=$('#nav-major'); showedTargetTab.addClass("show active");
+                        break;
+                    case "Môn học":
+                        loadCourseTable();
+                        showedTargetTab.removeClass("show active");showedTargetTab=$('#nav-course'); showedTargetTab.addClass("show active");
+                        break;
+                    case "Lớp":
+                        loadClazzTable();
+                        showedTargetTab.removeClass("show active");showedTargetTab=$('#nav-clazz'); showedTargetTab.addClass("show active");
+                        break;
+                    case "Phòng ban":
+                        loadDepartmentTable()
+                        showedTargetTab.removeClass("show active");showedTargetTab=$('#nav-department'); showedTargetTab.addClass("show active");
+                        break;
+                    default: break;
+                }
             },
             error: function (result) {
-
+                alert("fuck");
             }
         }
     );
@@ -352,7 +381,40 @@ $("#semesterId").change(function () {
     )
     ;
 })
-;
+
+function changeStart() {
+    $.ajax(
+        {
+            url: "/sfms/api/modify-feedback/start",
+            type: "PUT",
+            dataType: 'application/json',
+            data: {"startdate": $("#startdate").val()},
+            success: function (result) {
+
+            },
+            error: function (result) {
+
+            }
+        }
+    );
+}
+
+function changeEnd() {
+    $.ajax(
+        {
+            url: "/sfms/api/modify-feedback/end",
+            type: "PUT",
+            dataType: 'application/json',
+            data: {"enddate": $("#enddate").val()},
+            success: function (result) {
+
+            },
+            error: function (result) {
+
+            }
+        }
+    );
+}
 
 
 // $("#enddate").focusout(function () {

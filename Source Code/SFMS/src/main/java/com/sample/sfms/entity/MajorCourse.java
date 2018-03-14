@@ -12,12 +12,13 @@ import javax.persistence.*;
 @Table(name = "major_course", schema = "capstone", catalog = "")
 @IdClass(MajorCoursePK.class)
 public class MajorCourse {
-    @JsonView(TargetView.basicTargetView.class)
+    @JsonView({TargetView.basicClazzView.class, TargetView.basicCourseView.class, TargetView.basicMajorView.class})
     private int majorId;
-    @JsonView(TargetView.basicTargetView.class)
+    @JsonView({TargetView.basicClazzView.class, TargetView.basicCourseView.class, TargetView.basicMajorView.class})
     private int courseId;
-    @JsonView(TargetView.basicTargetView.class)
+    @JsonView({TargetView.basicClazzView.class, TargetView.basicCourseView.class})
     private Major majorByMajorId;
+    @JsonView({TargetView.basicMajorView.class})
     private Course courseByCourseId;
 
     @Id

@@ -11,15 +11,15 @@ import java.util.Collection;
  */
 @Entity
 public class Course {
-    @JsonView(TargetView.basicTargetView.class)
+    @JsonView({TargetView.basicClazzView.class, TargetView.basicCourseView.class})
     private int id;
-    @JsonView(TargetView.basicTargetView.class)
+    @JsonView({TargetView.basicClazzView.class, TargetView.basicCourseView.class})
     private String name;
-    @JsonView(TargetView.basicTargetView.class)
+    @JsonView({TargetView.basicClazzView.class, TargetView.basicCourseView.class})
     private String code;
     private Collection<Clazz> clazzesById;
     private Collection<Feedback> feedbacksById;
-    @JsonView(TargetView.basicTargetView.class)
+    @JsonView({TargetView.basicClazzView.class, TargetView.basicCourseView.class})
     private Collection<MajorCourse> majorCoursesById;
 
     @Id
