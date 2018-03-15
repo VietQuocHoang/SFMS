@@ -588,8 +588,10 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     public ResponseEntity<List<Department>> loadDepartmentTargets(List<Integer> ids) {
         try {
             List<Department> results = new ArrayList<>();
+            Department d;
             for (int id : ids) {
-                results.add(feedbackRepo.findOne(id).getDepartmentByDepartmentId());
+                d = feedbackRepo.findOne(id).getDepartmentByDepartmentId();
+                if(d!=null)results.add(d);
             }
             return new ResponseEntity<>(results, HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
@@ -602,8 +604,10 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     public ResponseEntity<List<Major>> loadMajorTargets(List<Integer> ids) {
         try {
             List<Major> results = new ArrayList<>();
+            Major m;
             for (int id : ids) {
-                results.add(feedbackRepo.findOne(id).getMajorByMajorId());
+                m = feedbackRepo.findOne(id).getMajorByMajorId();
+                if(m!=null)results.add(m);
             }
             return new ResponseEntity<>(results, HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
@@ -616,8 +620,10 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     public ResponseEntity<List<Course>> loadCourseTargets(List<Integer> ids) {
         try {
             List<Course> results = new ArrayList<>();
+            Course c;
             for (int id : ids) {
-                results.add(feedbackRepo.findOne(id).getCourseByCourseId());
+                c = feedbackRepo.findOne(id).getCourseByCourseId();
+                if (c!=null)results.add(c);
             }
             return new ResponseEntity<>(results, HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
@@ -630,8 +636,10 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     public ResponseEntity<List<Clazz>> loadClazzTargets(List<Integer> ids) {
         try {
             List<Clazz> results = new ArrayList<>();
+            Clazz c;
             for (int id : ids) {
-                results.add(feedbackRepo.findOne(id).getClazzByClazzId());
+                c = feedbackRepo.findOne(id).getClazzByClazzId();
+                if(c!=null)results.add(c);
             }
             return new ResponseEntity<>(results, HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {

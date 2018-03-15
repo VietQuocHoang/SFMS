@@ -34,6 +34,9 @@ $(document).ready(function () {
             showedTargetTab.addClass("show active");
             break;
     }
+    
+    // changeSemester(); 
+    // changeStart(); changeEnd();
     // loadDepartmentTable();
     // loadMajorTable();
     // loadCourseTable();
@@ -342,6 +345,10 @@ $("#typeId").change(function () {
 })
 
 $("#semesterId").change(function () {
+    changeSemester();
+})
+
+function changeSemester() {
     let semesterData = {
         "id": $("#semesterId").val(),
         // "title": '',
@@ -380,37 +387,50 @@ $("#semesterId").change(function () {
         }
     )
     ;
-})
+}
 
 function changeStart() {
+    let feedbackData = {
+        "startDate": $("#startdate").val()
+    }
     $.ajax(
         {
             url: "/sfms/api/modify-feedback/start",
             type: "PUT",
-            dataType: 'application/json',
-            data: {"startdate": $("#startdate").val()},
-            success: function (result) {
-
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(feedbackData),
+            success: function (data, status, xhr) {
+                $("#enddate").attr(
+                    {
+                        "min": $.datepicker.formatDate('yy-mm-dd', new Date(parseInt(data.startDate))),
+                    }
+                );
+                $("#enddate").val($.datepicker.formatDate('yy-mm-dd', new Date(parseInt(data.endDate))))
             },
-            error: function (result) {
-
+            error: function (xhr) {
+                alert("ihi")
             }
         }
     );
 }
 
 function changeEnd() {
+    let feedbackData = {
+        "endDate": $("#startdate").val()
+    }
     $.ajax(
         {
             url: "/sfms/api/modify-feedback/end",
             type: "PUT",
-            dataType: 'application/json',
-            data: {"enddate": $("#enddate").val()},
-            success: function (result) {
-
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(feedbackData),
+            success: function (data, status, xhr) {
+                alert("hehe")
             },
             error: function (result) {
-
+                alert("ihi")
             }
         }
     );

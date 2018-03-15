@@ -56,10 +56,10 @@ public class ModifyFeedbackAPI {
         Feedback f = modifyService.getFeedback(Integer.parseInt(session.getAttribute("id").toString())).getBody();
         if(f.getTypeByTypeId()==null) return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
         switch (f.getTypeByTypeId().getDescription()){
-            case "Chuyên ngành": return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
-            case "Môn học": return new ResponseEntity(new ArrayList<>(), HttpStatus.OK);
+//            case "Chuyên ngành": return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
+//            case "Môn học": return new ResponseEntity(new ArrayList<>(), HttpStatus.OK);
             case "Lớp": return modifyService.loadClazzTargets((List<Integer>)session.getAttribute("targetIds"));
-            case "Phòng ban": return new ResponseEntity(new ArrayList<>(), HttpStatus.OK);
+//            case "Phòng ban": return new ResponseEntity(new ArrayList<>(), HttpStatus.OK);
             default: return new ResponseEntity(new ArrayList<>(), HttpStatus.OK);
         }
     }
@@ -71,9 +71,9 @@ public class ModifyFeedbackAPI {
         Feedback f = modifyService.getFeedback(Integer.parseInt(session.getAttribute("id").toString())).getBody();
         if(f.getTypeByTypeId()==null) return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
         switch (f.getTypeByTypeId().getDescription()){
-            case "Chuyên ngành": return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
-            case "Môn học": return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
-            case "Lớp": return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
+//            case "Chuyên ngành": return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
+//            case "Môn học": return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
+//            case "Lớp": return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
             case "Phòng ban": return modifyService.loadDepartmentTargets((List<Integer>)session.getAttribute("targetIds"));
             default: return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
         }
@@ -88,9 +88,9 @@ public class ModifyFeedbackAPI {
         List response;
         switch (f.getTypeByTypeId().getDescription()){
             case "Chuyên ngành": return modifyService.loadMajorTargets((List<Integer>)session.getAttribute("targetIds"));
-            case "Môn học":return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
-            case "Lớp": return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
-            case "Phòng ban": return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
+//            case "Môn học":return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
+//            case "Lớp": return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
+//            case "Phòng ban": return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
             default: return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
         }
 //        return ObjToJson(response);
@@ -141,18 +141,18 @@ public class ModifyFeedbackAPI {
     }
     @JsonView({FeedbackView.overview.class})
     @PutMapping("/start")
-    private ResponseEntity<Feedback> editStart(@RequestParam("startdate") String startdate, HttpSession session) {
+    private ResponseEntity<Feedback> editStart(@RequestBody Feedback feedback, HttpSession session) {
         try {
-            return modifyService.setStart(new SimpleDateFormat("yyyy-MM-dd").parse(startdate), (int) session.getAttribute("id"));
+            return modifyService.setStart(new SimpleDateFormat("yyyy-MM-dd").parse(feedback.getStartDate().toString()), (int) session.getAttribute("id"));
         } catch (ParseException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
     @JsonView({FeedbackView.overview.class})
     @PutMapping("/end")
-    private ResponseEntity<Feedback> editEnd(@RequestParam("enddate") String enddate, HttpSession session) {
+    private ResponseEntity<Feedback> editEnd(@RequestBody Feedback feedback, HttpSession session) {
         try {
-            return modifyService.setEnd(new SimpleDateFormat("yyyy-MM-dd").parse(enddate), (int) session.getAttribute("id"));
+            return modifyService.setEnd(new SimpleDateFormat("yyyy-MM-dd").parse(feedback.getEndDate().toString()), (int) session.getAttribute("id"));
         } catch (ParseException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
