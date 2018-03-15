@@ -29,11 +29,17 @@ public class ConductFeedbackController {
         mav.addObject("feedbacks", feedbacks);
         return mav;
     }
+
     @GetMapping(value = "/{id}")
     private ModelAndView conductFeedback(@PathVariable("id") int feedbackId) {
-        ModelAndView mav = new ModelAndView("conduct-feedback");
-        Feedback feedback = feedbackService.findFeedbackById(feedbackId);
-        mav.addObject("feedback", feedback);
+        ModelAndView mav = new ModelAndView();
+        Feedback feedback = feedbackService.findFeedbackToConduct(feedbackId);
+        if (feedback == null) {
+            mav.setViewName("forbidden");
+        } else {
+            mav.setViewName("conduct-feedback");
+            mav.addObject("feedback", feedback);
+        }
         return mav;
     }
 
