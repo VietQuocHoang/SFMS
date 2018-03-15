@@ -26,4 +26,8 @@ public interface UserFeedbackRepository extends JpaRepository<UserFeedback, User
     @Modifying
     @Query("Select u from UserFeedback u where u.userByUserId.id=:userId")
     List<UserFeedback> findFeedbacksByUserId(@Param("userId") int id);
+
+
+    @Query("Select u from UserFeedback u where u.userByUserId.id=:userId and u.feedbackByFeedbackId.id=:feedbackId")
+    UserFeedback findUserFeedbackByUserAndFeedback(@Param("userId") int userId, @Param("feedbackId") int feedbackId);
 }

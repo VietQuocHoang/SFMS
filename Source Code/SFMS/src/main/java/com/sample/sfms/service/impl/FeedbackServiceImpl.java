@@ -115,6 +115,26 @@ public class FeedbackServiceImpl implements FeedbackService {
         }
     }
 
+    @Override
+    public Feedback findFeedbackToConduct(int feedbackId) {
+        //if user is logged in
+        User user = getAuthorizedUser();
+        if (user == null) {
+            return null;
+        }
+        UserFeedback userFeedback = userFeedbackRepository.findUserFeedbackByUserAndFeedback(user.getId(), feedbackId);
+        //if user doesn't have the right to to do this feedback or this feedback is conducted
+        if (userFeedback == null || !userFeedback.isConductor() || userFeedback.isConducted()) {
+            return null;
+        }
+        Feedback feedback = userFeedback.getFeedbackByFeedbackId();
+        //if feedback is overdue or not started yet
+        long currDate = System.currentTimeMillis();
+        if (currDate < feedback.getStartDate().getTime() || currDate > feedback.getEndDate().getTime()) {
+            return null;
+        } else return feedback;
+    }
+
     private User getAuthorizedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();

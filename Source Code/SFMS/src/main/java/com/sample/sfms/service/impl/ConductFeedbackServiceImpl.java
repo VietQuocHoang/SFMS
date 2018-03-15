@@ -1,14 +1,12 @@
 package com.sample.sfms.service.impl;
 
-import com.sample.sfms.entity.Answer;
-import com.sample.sfms.entity.Feedback;
-import com.sample.sfms.entity.Optionn;
-import com.sample.sfms.entity.User;
+import com.sample.sfms.entity.*;
 import com.sample.sfms.model.answer.ConductAnswer;
 import com.sample.sfms.model.answer.ConductAnswerWrapper;
 import com.sample.sfms.repository.AnswerRepository;
 import com.sample.sfms.repository.FeedbackRepository;
 import com.sample.sfms.repository.OptionnRepository;
+import com.sample.sfms.repository.UserFeedbackRepository;
 import com.sample.sfms.service.interf.ConductFeedbackService;
 import com.sample.sfms.service.interf.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +36,9 @@ public class ConductFeedbackServiceImpl implements ConductFeedbackService {
     @Autowired
     private OptionnRepository optionnRepository;
 
+    @Autowired
+    private UserFeedbackRepository userFeedbackRepository;
+
     @Override
     public ResponseEntity<Feedback> findFeedbackByid(int id) {
         Feedback feedback = feedbackRepository.findById(id);
@@ -57,7 +58,7 @@ public class ConductFeedbackServiceImpl implements ConductFeedbackService {
         try {
             Timestamp currDate = new Timestamp(System.currentTimeMillis());
             if (conductAnswerWrapper.getAnswers() != null) {
-                Optionn optionn;
+                Optionn optionn = null;
                 Answer answer;
                 for (ConductAnswer conductAnswer : conductAnswerWrapper.getAnswers()) {
                     optionn = optionnRepository.findOne(conductAnswer.getOptionnByOptionnId());
@@ -67,6 +68,12 @@ public class ConductFeedbackServiceImpl implements ConductFeedbackService {
                     answer.setUserByUserId(user);
                     answer.setAnswerContent(conductAnswer.getAnswerContent());
                     answerRepository.save(answer);
+                }
+                if (null != optionn) {
+                    int feedbackId = optionn.getQuestionByQuestionId().getFeedbackByFeedbackId().getId();
+                    UserFeedback userFeedback = userFeedbackRepository.findUserFeedbackByUserAndFeedback(user.getId(), feedbackId);
+                    userFeedback.setConducted(true);
+                    userFeedbackRepository.save(userFeedback);
                 }
             }
             return new ResponseEntity(HttpStatus.OK);

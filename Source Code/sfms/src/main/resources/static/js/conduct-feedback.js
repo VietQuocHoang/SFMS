@@ -194,10 +194,10 @@ if (allDone) {
             type: 'post',
             contentType: 'application/json',
             data: JSON.stringify({"answers": data}),
-            url: _ctx + "/conduct-feedback/save",lo
+        url: _ctx + "/conduct-feedback/save",
             success: (data, status, xhr) => {
             if (xhr.status === 200) {
-        window.location.href = _ctx + "/view-list-feedback" //TODO đổi lại cái này về trang list feedback
+                window.location.href = _ctx + "/conduct-feedback/list"
     } else if (xhr.status === 403) {
         window.location.href = _ctx + "/logout"
     } else {
