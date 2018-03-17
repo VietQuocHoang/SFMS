@@ -25,9 +25,8 @@
 <div th:insert="fragments/navbar-side"></div>
 <div class="content-wrapper">
     <div class="container-fluid">
-        <!-- Breadcrumbs-->
         <div layout:fragment="content">
-
+            <!-- Breadcrumbs-->
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="index.html">Dashboard</a>
@@ -309,26 +308,25 @@
                             <label class="lb-inf">Lưu feedback thành:</label>
                         </div>
                         <div class="col-md-3">
-                            <!--<div class="btn-group" role="group" aria-label="...">-->
-                            <!--<button type="button" class="btn btn-default">Lưu & tiến hành feedback</button>-->
-                            <!--<button type="button" class="btn btn-default">Lưu thành mẫu mới</button>-->
-                            <!--<button type="button" class="btn btn-default">Cập nhật mẫu đã chọn</button>-->
-                            <div class="radio">
-                                <label><input type="radio" name="optradio2" checked>Lưu & tiến hành feedback</label>
-                            </div>
-                            <div class="radio">
-                                <label><input type="radio" name="optradio2">Mẫu mới</label>
-                            </div>
-                            <div class="radio">
-                                <label><input type="radio" name="optradio2">Cập nhật mẫu đã chọn</label>
-                            </div>
-                            <!--</div>-->
+                            <form id="save-opt">
+                                <div class="radio">
+                                    <label><input type="radio" name="save-option" value="1" checked>Lưu & tiến hành
+                                        feedback</label>
+                                </div>
+                                <div class="radio">
+                                    <label><input type="radio" name="save-option" value="2">Mẫu mới</label>
+                                </div>
+                                <div class="radio">
+                                    <label><input type="radio" name="save-option" value="3">Cập nhật mẫu đã chọn</label>
+                                </div>
+                                <!--</div>-->
+                            </form>
                         </div>
                         <div class="col-md-2">
-                            <button class="btn btn-sm btn-save-opt" type="button">
+                            <button class="btn btn-sm btn-save-opt" type="button" id="btnSave">
                                 <i class="fa fa-save"></i> Lưu
                             </button>
-                            <button class="btn btn-sm btn-cancel" type="button">
+                            <button class="btn btn-sm btn-cancel" type="button" id="btnCancel">
                                 <i class="fa fa-trash"></i> Hủy
                             </button>
                         </div>

@@ -21,17 +21,19 @@ public interface ModifyFeedbackService {
 
     public ResponseEntity<Feedback> createFeedbackFromTemplate(int id);
 
-    public ResponseEntity<List<Feedback>> savePublishFeadbacks(int feedbackId, List<Integer>targetIds);
+    public ResponseEntity savePublishFeadbacks(int feedbackId, List<Integer>targetIds);
 
-    public ResponseEntity<List<Feedback>> saveTemplateFeadbacks(int feedbackId, List<Integer>targetIds);
+    public ResponseEntity saveTemplateFeadback(int feedbackId, List<Integer>targetIds);
 
-    public ResponseEntity<Feedback> updateSelectedTemplate(int feedbackId, List<Integer> targetIds);
+    public ResponseEntity updateSelectedTemplate(int feedbackId, List<Integer> targetIds);
 
-    public ResponseEntity<Feedback> deleteFeedback(int id);
+    public ResponseEntity deleteFeedback(int id);
+
+    public ResponseEntity cancelProcess(int id, List<Integer> targetIds);
 
     public ResponseEntity<Feedback> addTarget(int feedbackId, int targetId, List<Integer> targetIds);
 
-    public ResponseEntity<Feedback> removeTarget(int id, List<Integer> targetIds);
+    public ResponseEntity removeTarget(int id, List<Integer> targetIds);
 
     public ResponseEntity<List<Feedback>> deleteFeedbacks(List<Integer> targetIds);
 
@@ -70,4 +72,16 @@ public interface ModifyFeedbackService {
     public ResponseEntity loadAllTypes();
 
     public ResponseEntity loadAllSemesters();
+
+    public List filterMajors(String majorKey);
+
+    public List filterCourses(String majorKey);
+
+    public List filterDepartments();
+
+    public List filterLecturers(String majorKey, String courseKey);
+
+    public List filterClazz(String majorKey, String courseKey, String semesterkey, String lecturerKey);
+
+
 }

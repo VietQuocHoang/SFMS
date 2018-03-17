@@ -1,11 +1,11 @@
 /**
  * Created by MyPC on 27/02/2018.
  */
-var modifyconductorlink = "<a class='add-inf-item-link' href='modify-feedback-conductors'><i class='fa fa-pencil'></i> Chỉnh sửa </a>";
-var modifyviewerlink = "<a class='add-inf-item-link' href='modify-feedback-viewers'><i class='fa fa-pencil'></i> Chỉnh sửa </a>";
-var linkShow = "<a href='modify-feedback-target'><i class='fa fa-plus'></i></a>";
-var linkDelete = "<a href='#'><i class='fa fa-trash'></i></a>";
-var linkUpdate = "<a href='modify-feedback-target'><i class='fa fa-pencil'></i></a>";
+var modifyconductorlink = "<a class='add-inf-item-link' href='/sfms/modify-feedback-conductors'><i class='fa fa-pencil'></i> Chỉnh sửa </a>";
+var modifyviewerlink = "<a class='add-inf-item-link'    href='/sfms/modify-feedback-viewers'><i class='fa fa-pencil'></i> Chỉnh sửa </a>";
+var linkShow = "<a href='/sfms/modify-feedback/target'><i class='fa fa-plus' style='font-size: 24px'></i>    </a>";
+var linkDelete = "<a href='#'><i class='fa fa-trash' style='font-size: 24px'></i>    </a>";
+// var linkUpdate = "<a href='/sfms/modify-feedback/target'><i class='fa fa-pencil'></i></a>";
 var showedTargetTab;
 $(document).ready(function () {
     loadDepartmentTable();
@@ -34,13 +34,8 @@ $(document).ready(function () {
             showedTargetTab.addClass("show active");
             break;
     }
-    
-    // changeSemester(); 
-    // changeStart(); changeEnd();
-    // loadDepartmentTable();
-    // loadMajorTable();
-    // loadCourseTable();
-    // loadClazzTable();
+    setStartEndConstraint();
+    // changeStart();
 });
 function loadDepartmentTable() {
     $('#tbl-departments').DataTable().destroy();
@@ -63,12 +58,12 @@ function loadDepartmentTable() {
                 },
                 {//column for view detail-update-delete
                     "data": null,
-                    "defaultContent": linkShow + linkUpdate + linkDelete
+                    "defaultContent": linkShow +'  '+ linkDelete
                 }
             ],
             "language": {
                 "decimal": "",
-                "emptyTable": "Không kết quả nào được tìm thấy. <a href='/sfms/modify-feedback-target'>Thêm đối tượng</a>",
+                "emptyTable": "Không kết quả nào được tìm thấy. <a href='/sfms/modify-feedback/target'>Thêm đối tượng</a>",
                 "info": "Hiển thị từ _START_ tới _END_ trong số _TOTAL_ kết quả",
                 "infoEmpty": "Hiển thị 0 tới 0 trong số 0 kết quả",
                 "infoFiltered": "(filtered from _MAX_ total entries)",
@@ -115,12 +110,12 @@ function loadMajorTable() {
                 },
                 {//column for view detail-update-delete
                     "data": null,
-                    "defaultContent": linkShow + linkUpdate + linkDelete
+                    "defaultContent": linkShow +'  '+ linkDelete
                 }
             ],
             "language": {
                 "decimal": "",
-                "emptyTable": "Không kết quả nào được tìm thấy. <a href='/sfms/modify-feedback-target'>Thêm đối tượng</a>",
+                "emptyTable": "Không kết quả nào được tìm thấy. <a href='/sfms/modify-feedback/target'>Thêm đối tượng</a>",
                 "info": "Hiển thị từ _START_ tới _END_ trong số _TOTAL_ kết quả",
                 "infoEmpty": "Hiển thị 0 tới 0 trong số 0 kết quả",
                 "infoFiltered": "(filtered from _MAX_ total entries)",
@@ -167,7 +162,7 @@ function loadCourseTable() {
                 },
                 {//column for view detail-update-delete
                     "data": null,
-                    "defaultContent": linkShow + linkUpdate + linkDelete
+                    "defaultContent": linkShow +'  '+ linkDelete
                 }
                 // {
                 //     "data": "majorCoursesById",
@@ -178,7 +173,7 @@ function loadCourseTable() {
             ],
             "language": {
                 "decimal": "",
-                "emptyTable": "Không kết quả nào được tìm thấy. <a href='/sfms/modify-feedback-target'>Thêm đối tượng</a>",
+                "emptyTable": "Không kết quả nào được tìm thấy. <a href='/sfms/modify-feedback/target'>Thêm đối tượng</a>",
                 "info": "Hiển thị từ _START_ tới _END_ trong số _TOTAL_ kết quả",
                 "infoEmpty": "Hiển thị 0 tới 0 trong số 0 kết quả",
                 "infoFiltered": "(filtered from _MAX_ total entries)",
@@ -233,12 +228,12 @@ function loadClazzTable() {
                 },
                 {//column for view detail-update-delete
                     "data": null,
-                    "defaultContent": linkShow + linkUpdate + linkDelete
+                    "defaultContent": linkShow +'  '+ linkDelete
                 }
             ],
             "language": {
                 "decimal": "",
-                "emptyTable": "Không kết quả nào được tìm thấy. <a href='/sfms/modify-feedback-target'>Thêm đối tượng</a>",
+                "emptyTable": "Không kết quả nào được tìm thấy. <a href='/sfms/modify-feedback/target'>Thêm đối tượng</a>",
                 "info": "Hiển thị từ _START_ tới _END_ trong số _TOTAL_ kết quả",
                 "infoEmpty": "Hiển thị 0 tới 0 trong số 0 kết quả",
                 "infoFiltered": "(filtered from _MAX_ total entries)",
@@ -268,12 +263,13 @@ $("#feedback-title").focusout(function () {
         {
             url: "/sfms/api/modify-feedback/title",
             type: "PUT",
-            dataType: 'application/json',
-            data: {"title": $("#feedback-title").val()},
-            success: function (result) {
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify({"feedbackName": $("#feedback-title").val()}),
+            success: function (data, status, xhr) {
 
             },
-            error: function (result) {
+            error: function (data, status, xhr) {
 
             }
         }
@@ -285,12 +281,13 @@ $("#feedback-description").focusout(function () {
         {
             url: "/sfms/api/modify-feedback/description",
             type: "PUT",
-            dataType: 'application/json',
-            data: {"description": $("#feedback-description").val()},
-            success: function (result) {
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify({"feedbackDes": $("#feedback-description").val()}),
+            success: function (data, status, xhr) {
 
             },
-            error: function (result) {
+            error: function (data, status, xhr) {
 
             }
         }
@@ -320,21 +317,30 @@ $("#typeId").change(function () {
                 switch (data.typeByTypeId.description) {
                     case "Chuyên ngành":
                         loadMajorTable();
-                        showedTargetTab.removeClass("show active");showedTargetTab=$('#nav-major'); showedTargetTab.addClass("show active");
+                        showedTargetTab.removeClass("show active");
+                        showedTargetTab = $('#nav-major');
+                        showedTargetTab.addClass("show active");
                         break;
                     case "Môn học":
                         loadCourseTable();
-                        showedTargetTab.removeClass("show active");showedTargetTab=$('#nav-course'); showedTargetTab.addClass("show active");
+                        showedTargetTab.removeClass("show active");
+                        showedTargetTab = $('#nav-course');
+                        showedTargetTab.addClass("show active");
                         break;
                     case "Lớp":
                         loadClazzTable();
-                        showedTargetTab.removeClass("show active");showedTargetTab=$('#nav-clazz'); showedTargetTab.addClass("show active");
+                        showedTargetTab.removeClass("show active");
+                        showedTargetTab = $('#nav-clazz');
+                        showedTargetTab.addClass("show active");
                         break;
                     case "Phòng ban":
                         loadDepartmentTable()
-                        showedTargetTab.removeClass("show active");showedTargetTab=$('#nav-department'); showedTargetTab.addClass("show active");
+                        showedTargetTab.removeClass("show active");
+                        showedTargetTab = $('#nav-department');
+                        showedTargetTab.addClass("show active");
                         break;
-                    default: break;
+                    default:
+                        break;
                 }
             },
             error: function (result) {
@@ -345,6 +351,7 @@ $("#typeId").change(function () {
 })
 
 $("#semesterId").change(function () {
+
     changeSemester();
 })
 
@@ -417,7 +424,7 @@ function changeStart() {
 
 function changeEnd() {
     let feedbackData = {
-        "endDate": $("#startdate").val()
+        "endDate": $("#enddate").val()
     }
     $.ajax(
         {
@@ -427,7 +434,7 @@ function changeEnd() {
             contentType: 'application/json',
             data: JSON.stringify(feedbackData),
             success: function (data, status, xhr) {
-                alert("hehe")
+                // alert("hehe")
             },
             error: function (result) {
                 alert("ihi")
@@ -436,40 +443,73 @@ function changeEnd() {
     );
 }
 
+function setStartEndConstraint() {
+    $.ajax(
+        {
+            url: "/sfms/api/modify-feedback/get",
+            type: "GET",
+            dataType: 'json',
+            // contentType: 'application/json',
+            // data: JSON.stringify(semesterData),
+            success: function (data, status, xhr) {
+                let startd = new Date(parseInt(data.semesterBySemesterId.startDate));
+                let endd = new Date(parseInt(data.semesterBySemesterId.endDate));
+                $("#startdate").attr(
+                    {
+                        "min": $.datepicker.formatDate('yy-mm-dd', startd),
+                        "max": $.datepicker.formatDate('yy-mm-dd', endd)
+                    }
+                );
+                if (data.startDate != null) {
+                    let startd = new Date(parseInt(data.startDate))
+                }
+                $("#enddate").attr(
+                    {
+                        "min": $.datepicker.formatDate('yy-mm-dd', startd),
+                        "max": $.datepicker.formatDate('yy-mm-dd', endd)
+                    }
+                );
+            },
+            error: function (result) {
+                alert("fuck");
+            }
+        }
+    );
+}
 
-// $("#enddate").focusout(function () {
-//     $.ajax(
-//         {
-//             url: "/sfms/api/modify-feedback/title",
-//             type: "PUT",
-//             dataType: 'application/json',
-//             data: {"title": $("#enddate").val()},
-//             success: function (result) {
-//
-//             },
-//             error: function (result) {
-//
-//             }
-//         }
-//     );
-// })
+$("#btnSave").click(function () {
+    var opt = $('input[name=radioName]:checked', '#myForm').val();
+    alert(opt);
+    $.ajax({
+        url: '/sfms/api/save/' + opt,
+        type: 'PUT',
+        dataType: 'json',
+        success: function(data, status, xhr){
+            if (xhr.status === 200) {
+                window.location.href = "/sfms/view-list-feedback";
+            }
+        },
+        error: function(){
+            alert("fuck")
+        }
+    });
+})
 
-// $(".conductor-field").hover(function () {
-//     $(this).children(".add-inf-item-link").show();
-// })
-// $(".conductor-field").mouseout(function () {
-//     $(this).children(".add-inf-item-link").hide();
-// })
-// $(".viewer-field").hover(function () {
-//     $(this).children(".add-inf-item-link").show();
-// })
-// $(".viewer-field").mouseout(function () {
-//     $(this).children(".add-inf-item-link").hide();
-// })
-// $(".add-inf-item-link").hover(function () {
-//     $(this).show();
-// })
-// $(".add-inf-item-link").mouseout(function (){
-//     $(this).hide();
-// })
+$("#btnDelete").click(function(){
+    $.ajax({
+        url: '/sfms/api/cancel',
+        type: 'DELETE',
+        dataType: 'json',
+        success: function(data, status, xhr){
+            if (xhr.status === 200) {
+                window.location.href = "/sfms/view-list-feedback";
+            }
+        },
+        error: function(){
+            alert("fuck")
+        }
+    });
+})
+
+
 
