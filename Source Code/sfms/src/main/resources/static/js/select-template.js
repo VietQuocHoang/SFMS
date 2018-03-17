@@ -58,3 +58,6 @@ $(".template-thumbnail").on('mouseleave', (el)=>{
 $(".create-new-wrapper, .create-new-container").on('click', (el)=>{
     $("#modalCreateNew").modal('toggle');
 });
+$(".thumbnail-action").on('click', (el)=>{
+    $("#modalTemplate").modal('toggle');
+});

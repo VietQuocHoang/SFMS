@@ -38,8 +38,8 @@ public class FeedbackAPI {
     private QuestionService questionService;
 
     @GetMapping
-    private List<Feedback> getListTemplate(){
-        return feedbackService.getListTemplate(true);
+    private List<Feedback> getListTemplate(boolean isTemplate){
+        return feedbackService.getListTemplate(isTemplate);
     }
 
     @GetMapping("/{id}")
