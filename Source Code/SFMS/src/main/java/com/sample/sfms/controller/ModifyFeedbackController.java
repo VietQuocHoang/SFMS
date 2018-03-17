@@ -53,7 +53,7 @@ class ModifyFeedbackController {
     @GetMapping(value = "/overview")
     private ModelAndView getFeedbackOverview(HttpSession session) {
         ModelAndView mv = new ModelAndView("overview-feedback");
-        Feedback feedback = modifyService.getFeedback(Integer.parseInt(session.getAttribute("id").toString())).getBody();
+        Feedback feedback = modifyService.getFeedback((int)session.getAttribute("id")).getBody();
         if (session.getAttribute("targetIds") == ""||session.getAttribute("targetIds") == null)
             session.setAttribute("targetIds", new ArrayList<Integer>());
         mv.addObject("feedback", feedback);
@@ -88,13 +88,13 @@ class ModifyFeedbackController {
     @GetMapping(value = "/target")
     private ModelAndView getListAvailableTarget(HttpSession session) {
         ModelAndView mv = new ModelAndView("modify-feedback-target");
-        Feedback feedback = modifyService.getFeedback(Integer.parseInt(session.getAttribute("id").toString())).getBody();
+        Feedback feedback = modifyService.getFeedback((int)session.getAttribute("id")).getBody();
         mv.addObject("feedback", feedback);
 //        mv.addObject("alltypes", modifyService.loadAllTypes().getBody());
         mv.addObject("allSemesters", modifyService.loadAllSemesters().getBody());
         mv.addObject("allMajors", modifyService.filterMajors(""));
         mv.addObject("allCourses", modifyService.filterCourses(""));
-        mv.addObject("allLecturer", modifyService.filterLecturers("",""));
+        mv.addObject("allLecturers", modifyService.filterLecturers("",""));
         mv.addObject("targetIds", modifyService.loadTargets((List<Integer>) session.getAttribute("targetIds")));
         return mv;
     }

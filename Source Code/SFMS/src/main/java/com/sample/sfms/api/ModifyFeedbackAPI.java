@@ -6,6 +6,7 @@ package com.sample.sfms.api;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sample.sfms.entity.Clazz;
 import com.sample.sfms.entity.Feedback;
 //import com.sample.sfms.entity.Role;
 //import com.sample.sfms.entity.Semester;
@@ -190,41 +191,27 @@ public class ModifyFeedbackAPI {
     private ResponseEntity addTarget(@RequestParam("id") int id, HttpSession session) {
         List<Integer> targetIds = (List<Integer>) session.getAttribute("targetIds");
         if (targetIds == null) targetIds = new ArrayList<>();
-        Feedback response = modifyService.addTarget((int) session.getAttribute("id"), id, targetIds).getBody();
-        if (!targetIds.contains(response.getId())) targetIds.add(response.getId());
-        session.setAttribute("targetIds", targetIds);
-        return new ResponseEntity<>(response.getMajorByMajorId().getId(),
-                HttpStatus.OK);
+        ResponseEntity response = modifyService.addTarget((int) session.getAttribute("id"), id, targetIds);
+        session.setAttribute("targetIds", response.getBody());
+        return response;
     }
 
     @PutMapping("/remove/target")
-    private ResponseEntity<Integer> removeTarget(@RequestParam("id") int id, HttpSession session) {
+    private ResponseEntity removeClazzTarget(@RequestBody Clazz c, HttpSession session) {
         List<Integer> targetIds = (List<Integer>) session.getAttribute("targetIds");
-        Feedback response = modifyService.addTarget((int) session.getAttribute("id"), id, targetIds).getBody();
-        if (!targetIds.contains(response.getId())) targetIds.add(response.getId());
-        session.setAttribute("targetIds", targetIds);
-        return new ResponseEntity<>(response.getMajorByMajorId().getId(),
-                HttpStatus.OK);
+        ResponseEntity response = modifyService.removeTarget(c.getId(), targetIds);
+        session.setAttribute("targetIds", response.getBody());
+        return response;
     }
 
     @PostMapping("/add/conductor")
     private ResponseEntity<Integer> addConductor(@RequestParam("id") int id, HttpSession session) {
-        List<Integer> targetIds = (List<Integer>) session.getAttribute("targetIds");
-        Feedback response = modifyService.addTarget((int) session.getAttribute("id"), id, targetIds).getBody();
-        if (!targetIds.contains(response.getId())) targetIds.add(response.getId());
-        session.setAttribute("targetIds", targetIds);
-        return new ResponseEntity<>(response.getMajorByMajorId().getId(),
-                HttpStatus.OK);
+        return null;
     }
 
-    @PutMapping("/add/conductor")
+    @DeleteMapping("/remove/conductor")
     private ResponseEntity<Integer> removeConductor(@RequestParam("id") int id, HttpSession session) {
-        List<Integer> targetIds = (List<Integer>) session.getAttribute("targetIds");
-        Feedback response = modifyService.addTarget((int) session.getAttribute("id"), id, targetIds).getBody();
-        if (!targetIds.contains(response.getId())) targetIds.add(response.getId());
-        session.setAttribute("targetIds", targetIds);
-        return new ResponseEntity<>(response.getMajorByMajorId().getId(),
-                HttpStatus.OK);
+        return null;
     }
 
 

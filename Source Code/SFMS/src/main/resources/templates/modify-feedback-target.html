@@ -94,7 +94,7 @@
                                         <th>Mã ngành</th>
                                         <th>Người làm feedback</th>
                                         <th>Người xem báo cáo</th>
-                                        <th>Tùy chọn</th>
+                                        <!--<th>Tùy chọn</th>-->
                                     </tr>
                                     </thead>
                                     <tfoot>
@@ -104,7 +104,7 @@
                                         <th>Mã ngành</th>
                                         <th>Người làm feedback</th>
                                         <th>Người xem báo cáo</th>
-                                        <th>Tùy chọn</th>
+                                        <!--<th>Tùy chọn</th>-->
                                     </tr>
                                     </tfoot>
                                     <tbody>
@@ -130,7 +130,7 @@
                                         <th>Phòng ban</th>
                                         <th>Người làm feedback</th>
                                         <th>Người xem báo cáo</th>
-                                        <th>Tùy chọn</th>
+                                        <!--<th>Tùy chọn</th>-->
                                     </tr>
                                     </thead>
                                     <tfoot>
@@ -139,7 +139,7 @@
                                         <th>Tên</th>
                                         <th>Người làm feedback</th>
                                         <th>Người xem báo cáo</th>
-                                        <th>Tùy chọn</th>
+                                        <!--<th>Tùy chọn</th>-->
                                     </tr>
                                     </tfoot>
                                     <tbody>
@@ -185,7 +185,7 @@
                                         <!--<th>Chuyên ngành</th>-->
                                         <th>Người làm feedback</th>
                                         <th>Người xem báo cáo</th>
-                                        <th>Tùy chọn</th>
+                                        <!--<th>Tùy chọn</th>-->
                                     </tr>
                                     </thead>
                                     <tfoot>
@@ -196,7 +196,7 @@
                                         <!--<th>Chuyên ngành</th>-->
                                         <th>Người làm feedback</th>
                                         <th>Người xem báo cáo</th>
-                                        <th>Tùy chọn</th>
+                                        <!--<th>Tùy chọn</th>-->
                                     </tr>
                                     </tfoot>
                                     <tbody>
@@ -250,6 +250,7 @@
                             </div>
                             <!--end lecturer-->
                         </div>
+                        <br>
                         <!--end filter bar-->
                         <div class="row">
                             <div class="table-responsive">
@@ -264,7 +265,7 @@
                                         <th>Giảng viên</th>
                                         <th>Người làm feedback</th>
                                         <th>Người xem báo cáo</th>
-                                        <th>Tùy chọn</th>
+                                        <!--<th>Tùy chọn</th>-->
                                     </tr>
                                     </thead>
                                     <tfoot>
@@ -277,7 +278,7 @@
                                         <th>Giảng viên</th>
                                         <th>Người làm feedback</th>
                                         <th>Người xem báo cáo</th>
-                                        <th>Tùy chọn</th>
+                                        <!--<th>Tùy chọn</th>-->
                                     </tr>
                                     </tfoot>
                                     <tbody>
@@ -297,22 +298,18 @@
     <footer th:replace="fragments/footer"></footer>
     <datalist id="list-majors">
         <option th:each="major : ${allMajors}"
-                th:value="${major.id}"
                 th:text="${major.code + ' - ' + major.name}"></option>
     </datalist>
     <datalist id="list-semesters">
         <option th:each="semester : ${allSemesters}"
-                th:value="${semester.id}"
                 th:text="${semester.title}"></option>
     </datalist>
     <datalist id="list-courses">
         <option th:each="course : ${allCourses}"
-                th:value="${course.id}"
                 th:text="${course.name+'-'+course.code}"></option>
     </datalist>
     <datalist id="list-lecturers">
         <option th:each="lecturer : ${allLecturers}"
-                th:value="${lecturer.id}"
                 th:text="${lecturer.fullname+' - '+lecturer.code}"></option>
     </datalist>
     <!-- Bootstrap core JavaScript-->

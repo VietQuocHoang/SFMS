@@ -325,9 +325,16 @@ public class Feedback {
         this.typeByTypeId = typeByTypeId;
     }
 
+    public Feedback(String feedbackDes, String feedbackName, Type type) {
+        this.feedbackDes = feedbackDes;
+        this.feedbackName = feedbackName;
+        this.typeByTypeId = type;
+    }
+
     public Feedback(String feedbackDes, String feedbackName) {
         this.feedbackDes = feedbackDes;
         this.feedbackName = feedbackName;
+//        this.typeByTypeId = type;
     }
 
     public Feedback(String feedbackDes, String feedbackName, Department departmentByDepartmentId, Type typeByTypeId, Semester semesterBySemesterId) {

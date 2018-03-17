@@ -20,7 +20,7 @@ public class Major {
     @JsonView({TargetView.basicMajorView.class})
     private Major majorByReferenceId;
     private Collection<Major> majorsById;
-    private Collection<MajorCourse> majorCoursesById;
+    private Collection<Course> coursesById;
     private Collection<User> usersById;
 
     @Id
@@ -105,12 +105,12 @@ public class Major {
     }
 
     @OneToMany(mappedBy = "majorByMajorId")
-    public Collection<MajorCourse> getMajorCoursesById() {
-        return majorCoursesById;
+    public Collection<Course> getCoursesById() {
+        return coursesById;
     }
 
-    public void setMajorCoursesById(Collection<MajorCourse> majorCoursesById) {
-        this.majorCoursesById = majorCoursesById;
+    public void setCoursesById(Collection<Course> coursesById) {
+        this.coursesById = coursesById;
     }
 
     @OneToMany(mappedBy = "majorByMajorId")

@@ -20,7 +20,7 @@ public class Course {
     private Collection<Clazz> clazzesById;
     private Collection<Feedback> feedbacksById;
     @JsonView({TargetView.basicClazzView.class, TargetView.basicCourseView.class})
-    private Collection<MajorCourse> majorCoursesById;
+    private Major majorByMajorId;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -93,12 +93,13 @@ public class Course {
         this.feedbacksById = feedbacksById;
     }
 
-    @OneToMany(mappedBy = "courseByCourseId")
-    public Collection<MajorCourse> getMajorCoursesById() {
-        return majorCoursesById;
+    @ManyToOne
+    @JoinColumn(name = "major_id", referencedColumnName = "id")
+    public Major getMajorByMajorId() {
+        return majorByMajorId;
     }
 
-    public void setMajorCoursesById(Collection<MajorCourse> majorCoursesById) {
-        this.majorCoursesById = majorCoursesById;
+    public void setMajorByMajorId(Major majorByMajorId) {
+        this.majorByMajorId = majorByMajorId;
     }
 }

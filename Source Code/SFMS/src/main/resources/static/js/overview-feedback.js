@@ -4,9 +4,13 @@
 var modifyconductorlink = "<a class='add-inf-item-link' href='/sfms/modify-feedback-conductors'><i class='fa fa-pencil'></i> Chỉnh sửa </a>";
 var modifyviewerlink = "<a class='add-inf-item-link'    href='/sfms/modify-feedback-viewers'><i class='fa fa-pencil'></i> Chỉnh sửa </a>";
 var linkShow = "<a href='/sfms/modify-feedback/target'><i class='fa fa-plus' style='font-size: 24px'></i>    </a>";
-var linkDelete = "<a href='#'><i class='fa fa-trash' style='font-size: 24px'></i>    </a>";
+var linkDeleteClazz = "<a href='#' onclick='removeClazzTarget(this)'><i class='fa fa-trash' style='font-size: 24px'></i>    </a>";
+var linkDeleteCourse = "<a href='#' onclick='removeCourseTarget(this)'><i class='fa fa-trash' style='font-size: 24px'></i>    </a>";
+var linkDeleteMajor = "<a href='#' onclick='removeMajorTarget(this)'><i class='fa fa-trash' style='font-size: 24px'></i>    </a>";
+var linkDeleteDepartment = "<a href='#' onclick='removeDepartmentTarget(this)'><i class='fa fa-trash' style='font-size: 24px'></i>    </a>";
 // var linkUpdate = "<a href='/sfms/modify-feedback/target'><i class='fa fa-pencil'></i></a>";
 var showedTargetTab;
+var showedTable;
 $(document).ready(function () {
     loadDepartmentTable();
     loadMajorTable();
@@ -16,22 +20,27 @@ $(document).ready(function () {
         case '1':
             showedTargetTab = $('#nav-major');
             showedTargetTab.addClass("show active");
+            showedTable = $("#tbl-majors");
             break;
         case '2':
             showedTargetTab = $('#nav-course');
             showedTargetTab.addClass("show active");
+            showedTable = $("#tbl-courses");
             break;
         case '3':
             showedTargetTab = $('#nav-clazz');
             showedTargetTab.addClass("show active");
+            showedTable = $("#tbl-clazzes");
             break;
         case '4':
             showedTargetTab = $('#nav-department');
             showedTargetTab.addClass("show active");
+            showedTable = $("#tbl-departments");
             break;
         default :
             showedTargetTab = $('#nav-major');
             showedTargetTab.addClass("show active");
+            showedTable = $("#tbl-majors");
             break;
     }
     setStartEndConstraint();
@@ -58,7 +67,7 @@ function loadDepartmentTable() {
                 },
                 {//column for view detail-update-delete
                     "data": null,
-                    "defaultContent": linkShow +'  '+ linkDelete
+                    "defaultContent": linkShow +'  '+ linkDeleteDepartment
                 }
             ],
             "language": {
@@ -110,7 +119,7 @@ function loadMajorTable() {
                 },
                 {//column for view detail-update-delete
                     "data": null,
-                    "defaultContent": linkShow +'  '+ linkDelete
+                    "defaultContent": linkShow +'  '+ linkDeleteMajor
                 }
             ],
             "language": {
@@ -162,7 +171,7 @@ function loadCourseTable() {
                 },
                 {//column for view detail-update-delete
                     "data": null,
-                    "defaultContent": linkShow +'  '+ linkDelete
+                    "defaultContent": linkShow +'  '+ linkDeleteCourse
                 }
                 // {
                 //     "data": "majorCoursesById",
@@ -228,7 +237,7 @@ function loadClazzTable() {
                 },
                 {//column for view detail-update-delete
                     "data": null,
-                    "defaultContent": linkShow +'  '+ linkDelete
+                    "defaultContent": linkShow +'  '+ linkDeleteClazz
                 }
             ],
             "language": {
@@ -258,6 +267,33 @@ function loadClazzTable() {
         }
     );
 }
+// function reloadDepartmentTable() {
+//     setTimeout(function () {
+//         $('#tbl-deparments').DataTable().ajax.reload(null, false);// reload without come back to the first page
+//     }, 200); //reload the table after 0.2s
+// }
+// function reloadMajorTable() {
+//     setTimeout(function () {
+//         $('#tbl-majors').DataTable().ajax.reload(null, false);// reload without come back to the first page
+//     }, 200); //reload the table after 0.2s
+// }
+// function reloadCourseTable() {
+//     setTimeout(function () {
+//         $('#tbl-courses').DataTable().ajax.reload(null, false);// reload without come back to the first page
+//     }, 200); //reload the table after 0.2s
+// }
+// function reloadClazzTable() {
+//     setTimeout(function () {
+//         $('#tbl-clazzes').DataTable().ajax.reload(null, false);// reload without come back to the first page
+//     }, 200); //reload the table after 0.2s
+// }
+
+function reloadTable() {
+    setTimeout(function () {
+        showedTable.DataTable().ajax.reload(null, false);// reload without come back to the first page
+    }, 200); //reload the table after 0.2s
+}
+
 $("#feedback-title").focusout(function () {
     $.ajax(
         {
@@ -316,30 +352,43 @@ $("#typeId").change(function () {
             success: function (data, status, xhr) {
                 switch (data.typeByTypeId.description) {
                     case "Chuyên ngành":
-                        loadMajorTable();
+                        // loadMajorTable();
                         showedTargetTab.removeClass("show active");
                         showedTargetTab = $('#nav-major');
                         showedTargetTab.addClass("show active");
+                        showedTable = $('#tbl-majors');
+                        reloadTable();
                         break;
                     case "Môn học":
                         loadCourseTable();
                         showedTargetTab.removeClass("show active");
                         showedTargetTab = $('#nav-course');
                         showedTargetTab.addClass("show active");
+                        showedTable = $('#tbl-courses');
+                        reloadTable();
                         break;
                     case "Lớp":
                         loadClazzTable();
                         showedTargetTab.removeClass("show active");
                         showedTargetTab = $('#nav-clazz');
                         showedTargetTab.addClass("show active");
+                        showedTable = $('#tbl-clazzes');
+                        reloadTable();
                         break;
                     case "Phòng ban":
                         loadDepartmentTable()
                         showedTargetTab.removeClass("show active");
                         showedTargetTab = $('#nav-department');
                         showedTargetTab.addClass("show active");
+                        showedTable = $('#tbl-departments');
+                        reloadTable();
                         break;
                     default:
+                        showedTargetTab.removeClass("show active");
+                        showedTargetTab = $('#nav-major');
+                        showedTargetTab.addClass("show active");
+                        showedTable = $('#tbl-majors');
+                        reloadTable();
                         break;
                 }
             },
@@ -484,6 +533,7 @@ $("#btnSave").click(function () {
         url: '/sfms/api/save/' + opt,
         type: 'PUT',
         dataType: 'json',
+        contentType: 'application/json',
         success: function(data, status, xhr){
             if (xhr.status === 200) {
                 window.location.href = "/sfms/view-list-feedback";
@@ -495,11 +545,12 @@ $("#btnSave").click(function () {
     });
 })
 
-$("#btnDelete").click(function(){
+$("#btnCancel").click(function(){
     $.ajax({
         url: '/sfms/api/cancel',
         type: 'DELETE',
         dataType: 'json',
+        contentType: 'application/json',
         success: function(data, status, xhr){
             if (xhr.status === 200) {
                 window.location.href = "/sfms/view-list-feedback";
@@ -512,4 +563,43 @@ $("#btnDelete").click(function(){
 })
 
 
+function removeTarget(target){
+    $.ajax({
+        url: '/sfms/api/modify-feedback/remove/target',
+        type: 'DELETE',
+        dataType: 'json',
+        contentType: 'application/json',
+        dtaa: JSON.stringify(target),
+        success: function(data, status, xhr){
+            if (xhr.status === 200) {
+                reloadTable();
+            }
+        },
+        error: function(){
+            alert("fuck")
+        }
+    })
+}
+function removeClazzTarget(el){
+    var data = $("#tbl-clazzes").DataTable().row($(el).parents('tr')).data();
+    var clazz = {"id": data.id};
+    removeTarget(clazz);
+}
 
+function removeCourseTarget(el){
+    var data = $("#tbl-courses").DataTable().row($(el).parents('tr')).data();
+    var course = {"id": data.id};
+    removeTarget(course);
+}
+
+function removeMajorTarget(el){
+    var data = $("#tbl-majors").DataTable().row($(el).parents('tr')).data();
+    var major = {"id": data.id};
+    removeTarget(major);
+}
+
+function removeDepartmentTarget(el){
+    var data = $("#tbl-departments").DataTable().row($(el).parents('tr')).data();
+    var department = {"id": data.id};
+    removeTarget(department);
+}

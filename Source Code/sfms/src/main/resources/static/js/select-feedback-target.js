@@ -3,10 +3,16 @@
  */
 var modifyconductorlink = "<a class='add-inf-item-link' href='/sfms/modify-feedback-conductors'><i class='fa fa-pencil'></i> Chỉnh sửa </a>";
 var modifyviewerlink = "<a class='add-inf-item-link'    href='/sfms/modify-feedback-viewers'><i class='fa fa-pencil'></i> Chỉnh sửa </a>";
-var linkShow = "<a href='/sfms/modify-feedback/target'><i class='fa fa-plus' style='font-size: 24px'></i>    </a>";
-var linkDelete = "<a href='#'><i class='fa fa-trash' style='font-size: 24px'></i>    </a>";
-var selectedtarget;
+var btnAddClazz = "<input class='btn active btn-check-target' type='button' onclick='addClazzTarget(this)' value='Chọn'/>"
+var btnAddCourse = "<input class='btn active btn-check-target' type='button' onclick='addCourseTarget(this)' value='Chọn'/>"
+var btnAddMajor = "<input class='btn active btn-check-target' type='button' onclick='addMajorTarget(this)' value='Chọn'/>"
+var btnAddDepartment = "<input class='btn active btn-check-target' type='button' onclick='addDepartmentTarget(this)' value='Chọn'/>"
+var btnRemoveClazz = "<input class='btn active btn-check-target' type='button' onclick='removeClazzTarget(this)' value='Bỏ chọn'/>"
+var btnRemoveCourse = "<input class='btn active btn-check-target' type='button' onclick='removeCourseTarget(this)' value='Bỏ chọn'/>"
+var btnRemoveMajor = "<input class='btn active btn-check-target' type='button' onclick='removeMajorTarget(this)' value='Bỏ chọn'/>"
+var btnRemoveDepartment = "<input class='btn active btn-check-target' type='button' onclick='removeDepartmentTarget(this)' value='Bỏ chọn'/>"
 var showedTargetTab;
+var showedTable;
 var tmp;
 $(document).ready(function () {
     loadDepartmentTable();
@@ -17,25 +23,34 @@ $(document).ready(function () {
         case '1':
             showedTargetTab = $('#nav-major');
             showedTargetTab.addClass("show active");
+            showedTable = $("#tbl-majors");
             break;
         case '2':
             showedTargetTab = $('#nav-course');
             showedTargetTab.addClass("show active");
+            showedTable = $("#tbl-courses");
             break;
         case '3':
             showedTargetTab = $('#nav-clazz');
             showedTargetTab.addClass("show active");
+            showedTable = $("#tbl-clazzes");
             break;
         case '4':
             showedTargetTab = $('#nav-department');
             showedTargetTab.addClass("show active");
+            showedTable = $("#tbl-departments");
             break;
         default :
             showedTargetTab = $('#nav-major');
             showedTargetTab.addClass("show active");
+            showedTable = $("#tbl-majors");
             break;
     }
 });
+
+function selected_to_button(){
+    return btnAddClazz;
+}
 function loadDepartmentTable() {
     $('#tbl-departments').DataTable().destroy();
     $('#tbl-departments').DataTable(
@@ -48,6 +63,7 @@ function loadDepartmentTable() {
             "columns": [
                 {
                     "data": "id",
+                    "render": selected_to_button
                 },
                 {"data": "name"},
                 {//column for modify conductor
@@ -57,10 +73,6 @@ function loadDepartmentTable() {
                 {//column for modifyviewer
                     "data": null,
                     "defaultContent": modifyviewerlink
-                },
-                {//column for view detail-update-delete
-                    "data": null,
-                    "defaultContent": linkShow +'  '+ linkDelete
                 }
             ],
             "language": {
@@ -102,6 +114,7 @@ function loadMajorTable() {
             "columns": [
                 {
                     "data": "id",
+                    "render": selected_to_button
                 },
                 {"data": "name"},
                 {"data": "code"},
@@ -112,10 +125,6 @@ function loadMajorTable() {
                 {//column for modifyviewer
                     "data": null,
                     "defaultContent": modifyviewerlink
-                },
-                {//column for view detail-update-delete
-                    "data": null,
-                    "defaultContent": linkShow +'  '+ linkDelete
                 }
             ],
             "language": {
@@ -157,6 +166,7 @@ function loadCourseTable() {
             "columns": [
                 {
                     "data": "id",
+                    "render":selected_to_button
                 },
                 {"data": "name"},
                 {"data": "code"},
@@ -167,10 +177,6 @@ function loadCourseTable() {
                 {//column for modifyviewer
                     "data": null,
                     "defaultContent": modifyviewerlink
-                },
-                {//column for view detail-update-delete
-                    "data": null,
-                    "defaultContent": linkShow +'  '+ linkDelete
                 }
                 // {
                 //     "data": "majorCoursesById",
@@ -218,7 +224,8 @@ function loadClazzTable() {
             "columns": [ //define columns for the table
                 // data for the cell from the returned list
                 {
-                    "data": "id"
+                    "data": "id",
+                    "render": selected_to_button
                 },
                 {"data": "className"},
                 {"data": "courseByCourseId.name"},
@@ -232,10 +239,6 @@ function loadClazzTable() {
                 {//column for modifyviewer
                     "data": null,
                     "defaultContent": modifyviewerlink
-                },
-                {//column for view detail-update-delete
-                    "data": null,
-                    "defaultContent": linkShow +'  '+ linkDelete
                 }
             ],
             "language": {
@@ -265,23 +268,60 @@ function loadClazzTable() {
         }
     );
 }
-$(".btn-check-target").click(function () {
-    tmp = $(this).val();
-    if (selectedtarget != null) {
-        selectedtarget.removeClass("btn-checked");
-        selectedtarget.addClass("btn-check-target");
-        selectedtarget.val("Chọn");
-    }
-    if (tmp == "Chọn") {
-        selectedtarget = $(this);
-        selectedtarget.removeClass("btn-check-target");
-        selectedtarget.addClass("btn-checked");
-        selectedtarget.val("Đã chọn");
-    }
-});
+function removeTarget(target) {
+    $.ajax({
+        url: '/sfms/api/modify-feedback/remove/target',
+        type: 'DELETE',
+        dataType: 'json',
+        contentType: 'application/json',
+        dtaa: JSON.stringify(target),
+        success: function (data, status, xhr) {
+            if (xhr.status === 200) {
+                reloadTable();
+            }
+        },
+        error: function () {
+            alert("fuck")
+        }
+    })
+}
+function removeClazzTarget(el) {
+    var data = $("#tbl-clazzes").DataTable().row($(el).parents('tr')).data();
+    var clazz = {"id": data.id};
+    removeTarget(clazz);
+}
+function removeCourseTarget(el) {
+    var data = $("#tbl-courses").DataTable().row($(el).parents('tr')).data();
+    var course = {"id": data.id};
+    removeTarget(course);
+}
+function removeMajorTarget(el) {
+    var data = $("#tbl-majors").DataTable().row($(el).parents('tr')).data();
+    var major = {"id": data.id};
+    removeTarget(major);
+}
+function removeDepartmentTarget(el) {
+    var data = $("#tbl-departments").DataTable().row($(el).parents('tr')).data();
+    var department = {"id": data.id};
+    removeTarget(department);
+}
 // $(".btn-checked").click(function(){
 //     selectedtarget.removeClass("btn-checked");
 //     selectedtarget.addClass("btn-check-target");
 //     selectedtarget.text("Chọn");
 //     selectedtarget = null;
+// });
+// $(".btn-check-target").click(function () {
+//     tmp = $(this).val();
+//     if (selectedtarget != null) {
+//         selectedtarget.removeClass("btn-checked");
+//         selectedtarget.addClass("btn-check-target");
+//         selectedtarget.val("Chọn");
+//     }
+//     if (tmp == "Chọn") {
+//         selectedtarget = $(this);
+//         selectedtarget.removeClass("btn-check-target");
+//         selectedtarget.addClass("btn-checked");
+//         selectedtarget.val("Đã chọn");
+//     }
 // });

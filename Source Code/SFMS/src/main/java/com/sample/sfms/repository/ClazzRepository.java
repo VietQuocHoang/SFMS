@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 /**
@@ -15,12 +14,15 @@ import java.util.List;
 @Repository
 public interface ClazzRepository extends JpaRepository<Clazz, Integer> {
     @Query("select c from Clazz c where " +
+//            "c.courseByCourseId.majorCoursesById IN :majorCourses"+
             "CONCAT(c.courseByCourseId.name,' - ',c.courseByCourseId.code) LIKE :coursename " +
             "AND c.semesterBySemesterId.title LIKE :semestertitle " +
             "AND CONCAT(c.userByLecturerId.fullname,' - ',c.userByLecturerId.code) LIKE :lecturerfullname")
-    List<Clazz> filtering(@Param("coursename") String coursename,
+    List<Clazz> filtering(
+                            @Param("coursename") String coursename,
                           @Param("semestertitle") String semestertitle,
                           @Param("lecturerfullname") String lecturerfullname);
 
     List<Clazz> findByCourseByCourseId(Course courseByCourseId);
+
 }

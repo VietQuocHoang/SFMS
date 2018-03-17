@@ -31,9 +31,9 @@ public interface ModifyFeedbackService {
 
     public ResponseEntity cancelProcess(int id, List<Integer> targetIds);
 
-    public ResponseEntity<Feedback> addTarget(int feedbackId, int targetId, List<Integer> targetIds);
+    public ResponseEntity<List<Integer>> addTarget(int feedbackId, int targetId, List<Integer> targetIds);
 
-    public ResponseEntity removeTarget(int id, List<Integer> targetIds);
+    public ResponseEntity<List<Integer>> removeTarget(int id, List<Integer> targetIds);
 
     public ResponseEntity<List<Feedback>> deleteFeedbacks(List<Integer> targetIds);
 
@@ -75,13 +75,15 @@ public interface ModifyFeedbackService {
 
     public List filterMajors(String majorKey);
 
-    public List filterCourses(String majorKey);
+    public List filterCourses(String courseKey);
 
     public List filterDepartments();
 
-    public List filterLecturers(String majorKey, String courseKey);
+    public List filterLecturers(String majorKey, String nameKey);
 
     public List filterClazz(String majorKey, String courseKey, String semesterkey, String lecturerKey);
+
+    public List filterSemester(String title);
 
 
 }
