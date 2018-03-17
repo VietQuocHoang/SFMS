@@ -9,24 +9,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Xem danh sách Feedback</title>
-    <!--Core style-->
     <div th:replace="fragments/core-css"></div>
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="vendor/jquery-ui/jquery-ui.min.js"></script>
-    <!-- jQuery UI -->
-    <link href="vendor/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css">
     <!-- custom style -->
-    <link href="css/view-list-feedback.css" rel="stylesheet" type="text/css">
-    <!-- custom script -->
-    <script src="js/conduct-feedback.js"></script>
-    <!-- dataTable -->
-    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" type="text/css">
-    <link href="vendor/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css">
-    <!--  <script src="http://pagination.js.org/dist/2.1.2/pagination.js"></script>-->
+    <link th:href="@{/css/view-list-feedback.css}" rel="stylesheet" type="text/css">
+
 </head>
 
 <body class="fixed-nav sticky-footer" id="page-top">
@@ -54,8 +40,6 @@
 
             <!-- div feedback content col-sm-12 col-12 col-md-9 col-xl-9 col-lg-12-->
             <div class="col-12">
-
-
                 <h3 class="feedback-title" style="text-align: left">
                     Danh sách Feedbacks
                 </h3>
@@ -75,6 +59,8 @@
                         &nbsp;&nbsp;&nbsp;
                         Loại Feedback
                         <select id="filter-scope" style="height: 35px; border-radius: 0.25em" name="">
+                            <option value="All">Xem toàn bộ</option>
+                            <option value="Subject">Môn học</option>
                             <option value="Dep">Phòng ban</option>
                             <option value="Major">Ngành</option>
                             <option value="Class">Lớp</option>
@@ -94,89 +80,48 @@
                     </div>
 
                 </div>
-                <div class="col-sm-12 col-12 col-md-9 col-xl-9 col-lg-12 text-center feedback-content">
-
-                </div>
-                <th:block th:if="${#lists.isEmpty(feedbacks)}">
-                    <h3>No feedback</h3>
+                <th:block th:if="${feedbacks.isEmpty()}">
+                    <div class="empty-notify-holder">
+                        <p>Bạn không có feedback nào và lịch sử feedback đang trống</p>
+                    </div>
                 </th:block>
-                <th:block th:unless="${#lists.isEmpty(feedbacks)}">
-                    <form>
-                        <div class="feedback-page page-active">
-                            <div class="card-outer">
-                                <div class="card-block">
-                                    <br/>
-                                    <th:block th:switch="${type}">
-                                        <div th:case="Dep" id="dep" class="tab-content">
-                                            <table id="availableTemplate" style="width:90%" class="table table-responsive table-striped">
-                                                <thead>
-                                                <tr class="card-header">
-                                                    <th>#</th>
-                                                    <th>Phòng Ban</th>
-                                                    <th>Học Kỳ</th>
-                                                    <th>Tùy chọn</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr th:each="feedback, iterStat : ${feedbacks}">
-                                                    <td th:text="${iterStat.count}"></td>
-                                                    <td th:text="${feedback.departmentByDepartmentId.name}"></td>
-                                                    <td th:text="${feedback.semesterBySemesterId.title}"></td>
-                                                    <td><a th:href="@{'/conduct-feedback/' + ${feedback.id}}">Hoàn thành ngay</a></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-
-                                        <div th:case="Major" id="Major" class="tab-content">
-                                            <table id="availableTemplate" style="width:90%" class="table table-responsive table-striped">
-                                                <thead>
-                                                <tr class="card-header">
-                                                    <th>#</th>
-                                                    <th>Ngành</th>
-                                                    <th>Học Kỳ</th>
-                                                    <th>Tùy chọn</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr th:each="feedback, iterStat : ${feedbacks}">
-                                                    <td th:text="${iterStat.count}"></td>
-                                                    <td th:text="${feedback.majorByMajorId.name}"></td>
-                                                    <td th:text="${feedback.semesterBySemesterId.title}"></td>
-                                                    <td><a th:href="@{/conduct-feedback/${feedback.id}}" >Hoàn thành ngay</a></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div th:case="Class" id="Class" class="tab-content">
-                                            <table id="availableTemplate" style="width:90%" class="table table-responsive table-striped">
-                                                <thead>
-                                                <tr class="card-header">
-                                                    <th>#</th>
-                                                    <th>Lớp</th>
-                                                    <th>Học Kỳ</th>
-                                                    <th>Tùy chọn</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr th:each="feedback, iterStat : ${feedbacks}">
-                                                    <td th:text="${iterStat.count}"></td>
-                                                    <td th:text="${feedback.clazzByClazzId.class_name}"></td>
-                                                    <td th:text="${feedback.semesterBySemesterId.title}"></td>
-                                                    <td th:text="${feedback.semesterBySemesterId.title}"></td>
-                                                    <td><a th:href="/conduct-feedback/feedback.id" >Hoàn thành ngay</a></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </th:block>
-
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                <th:block th:unless="${feedbacks.isEmpty()}" th:with="currDate=${#dates.createNow()}">
+                    <div class="table-wrapper">
+                        <table id="tblSubject" class="table table-bordered table-striped table-responsive">
+                            <tr>
+                                <th>Tên</th>
+                                <th>Ngày bắt đầu</th>
+                                <th>Ngày kết thúc</th>
+                                <th>Loại Feedback</th>
+                                <th>Trạng thái</th>
+                                <td></td>
+                            </tr>
+                            <tr th:each="feedback:${feedbacks}">
+                                <td th:text="${feedback.feedbackByFeedbackId.feedbackName}"></td>
+                                <td th:text="${#dates.format(feedback.feedbackByFeedbackId.startDate, 'dd-MM-yyyy')}"></td>
+                                <td th:text="${#dates.format(feedback.feedbackByFeedbackId.endDate, 'dd-MM-yyyy')}"></td>
+                                <td th:text="${feedback.feedbackByFeedbackId.typeByTypeId.description}"></td>
+                                <td th:class="${feedback.conducted}?'text-success':'text-danger'"
+                                    th:text="${feedback.conducted?'Đã hoàn thành':'Chưa hoàn thành'}"></td>
+                                <!--switch case-->
+                                <td
+                                        th:if="${!feedback.conducted
+                                && (currDate.getTime() < feedback.feedbackByFeedbackId.endDate.getTime())
+                                && (currDate.getTime() > feedback.feedbackByFeedbackId.startDate.getTime())}">
+                                    <a class="btn btn-raised-primary"
+                                       th:href="@{/conduct-feedback/__${feedback.feedbackByFeedbackId.id}__}">Làm
+                                        feedback</a>
+                                </td>
+                                <td
+                                        th:unless="${!feedback.conducted
+                                && (currDate.getTime() < feedback.feedbackByFeedbackId.endDate.getTime())
+                                && (currDate.getTime() > feedback.feedbackByFeedbackId.startDate.getTime())}">
+                                </td>
+                                <!--end switch case-->
+                            </tr>
+                        </table>
+                    </div>
                 </th:block>
-
             </div>
             <!-- end div container -->
         </div>
@@ -187,13 +132,7 @@
 </div>
 </body>
 <div th:replace="fragments/core-script"></div>
-<!-- dataTable -->
-<script src="vendor/datatables/jquery.dataTables.js"></script>
-<script src="vendor/datatables/dataTables.bootstrap4.js"></script>
-<script src="vendor/datatables/dataTables.responsive.min.js"></script>
-<script src="vendor/datatables/responsive.bootstrap4.min.js"></script>
 
 <!-- Custom javascript -->
-<script src="js/view-report.js"></script>
-<script src="js/view-feedback.js"></script>
+<script th:src="@{/js/view-feedback.js}"></script>
 </html>

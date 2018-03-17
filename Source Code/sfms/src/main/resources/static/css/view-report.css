@@ -134,7 +134,7 @@ body {
 
 .input-group-btn {
     align-items: center;
-    vertical-align: middle;s
+    vertical-align: middle;
      background-color: #08AE9E;
 }
 
@@ -182,6 +182,12 @@ body {
 
 .table tbody tr td {
      font-size: 18px;
+}
+
+table {
+    table-layout: fixed;
+    width: 100%;
+    word-break: keep-all;
 }
 
 .form-group-suggest {
