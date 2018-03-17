@@ -25,6 +25,7 @@ function getNotification() {
                 dropDownItems.remove();
             }
             if (xhr.status === 200) {
+                $(".text-notification").css("display", "inline-block");
                 let dataArr = Array.from(data);
                 let length = dataArr.length;
                 $(".notification-header").html("Có " + length + " feedback chưa hoàn thành");
@@ -45,6 +46,7 @@ function getNotification() {
                     }
                 }
             } else if (xhr.status === 204) {
+                $(".text-notification").css("display", "none");
                 $(".notification-header").html("Không có thông báo");
                 $(".notification-num").html("0 thông báo")
             }
