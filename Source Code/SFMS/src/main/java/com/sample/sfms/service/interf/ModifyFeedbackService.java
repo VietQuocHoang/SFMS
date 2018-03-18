@@ -73,15 +73,17 @@ public interface ModifyFeedbackService {
 
     public ResponseEntity loadAllSemesters();
 
-    public List filterMajors(String majorKey);
+    public ResponseEntity<List<Major>> filterMajors(String majorKey);
 
-    public List filterCourses(String courseKey);
+    public ResponseEntity<List<Course>> filterCourses(String courseKey);
 
-    public List filterDepartments();
+    public ResponseEntity<List<Department>> filterDepartments();
 
-    public List filterLecturers(String majorKey, String nameKey);
+    public ResponseEntity<List<User>> filterLecturers(String majorKey, String nameKey);
 
-    public List filterClazz(String majorKey, String courseKey, String semesterkey, String lecturerKey);
+    public ResponseEntity<List<Clazz>> filterClazz(String majorKey, String courseKey, String semesterkey, String lecturerKey);
+
+    public ResponseEntity<List<Clazz>> filterClazz(int majorKey, int courseKey, int semesterkey, int lecturerKey);
 
     public List filterSemester(String title);
 

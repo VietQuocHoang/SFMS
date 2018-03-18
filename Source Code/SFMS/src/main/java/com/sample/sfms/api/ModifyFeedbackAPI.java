@@ -13,6 +13,7 @@ import com.sample.sfms.entity.Feedback;
 import com.sample.sfms.entity.Semester;
 //import com.sample.sfms.model.ModifyFeedbackModel;
 import com.sample.sfms.entity.Type;
+import com.sample.sfms.model.FilteringModel;
 import com.sample.sfms.service.interf.ModifyFeedbackService;
 import com.sample.sfms.view.FeedbackView;
 import com.sample.sfms.view.TargetView;
@@ -130,6 +131,28 @@ public class ModifyFeedbackAPI {
 //        return ObjToJson(response);
     }
 
+    @JsonView(TargetView.basicClazzView.class)
+    @GetMapping("/list/clazzes")
+    private ResponseEntity listClazzes(FilteringModel model, HttpSession session) {
+        String majorkey = model.majorName==null?"":model.majorName;
+        String coursekey = model.courseName==null?"":model.courseName;
+        String semesterkey = model.semesterTitle==null?"":model.semesterTitle;
+        String lecturerkey  = model.lecturerName==null?"":model.lecturerName;
+        return modifyService.filterClazz(majorkey,coursekey,semesterkey,lecturerkey);
+    }
+
+    @JsonView(TargetView.basicClazzView.class)
+    @GetMapping("/list/clazzes/{major}/{course}/{semester}/{lecturer}")
+    private ResponseEntity listClazzes(@PathVariable("major") String major,@PathVariable("course") String course,
+                                       @PathVariable("semester")String semester, @PathVariable("lecturer")String lecturer, HttpSession session) {
+
+        int majorKey = Integer.parseInt(major);
+        int courseKey = Integer.parseInt(course);
+        int semesterKey = Integer.parseInt(semester);
+        int lecturerKey = Integer.parseInt(lecturer);
+        return modifyService.filterClazz(majorKey,courseKey,semesterKey,lecturerKey);
+    }
+
     @PostMapping("/create/{id}")
     private ResponseEntity<Feedback> createFeedbackFromTemplate(@PathVariable("id") int id, HttpSession session) {
         ResponseEntity<Feedback> response = modifyService.createFeedbackFromTemplate(id);
@@ -233,9 +256,11 @@ public class ModifyFeedbackAPI {
             case 2:
                 return modifyService.saveTemplateFeadback((int) session.getAttribute("id"),
                         (List<Integer>) session.getAttribute("targetIds"));
-            case 3:return modifyService.updateSelectedTemplate((int) session.getAttribute("id"),
+            case 3:
+                return modifyService.updateSelectedTemplate((int) session.getAttribute("id"),
                         (List<Integer>) session.getAttribute("targetIds"));
-            default: return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            default:
+                return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -246,7 +271,7 @@ public class ModifyFeedbackAPI {
 
     @DeleteMapping("/cancel")
     private ResponseEntity canceProcess(HttpSession session) {
-        return modifyService.cancelProcess((int)session.getAttribute("id"), (List<Integer>)session.getAttribute("targetIds"));
+        return modifyService.cancelProcess((int) session.getAttribute("id"), (List<Integer>) session.getAttribute("targetIds"));
     }
 
     String ObjToJson(Object o) throws JsonProcessingException {

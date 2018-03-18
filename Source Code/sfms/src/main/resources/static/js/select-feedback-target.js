@@ -14,43 +14,60 @@ var btnRemoveDepartment = "<input class='btn active btn-check-target' type='butt
 var showedTargetTab;
 var showedTable;
 var tmp;
+var targets;
+// var ;
 $(document).ready(function () {
-    loadDepartmentTable();
-    loadMajorTable();
-    loadCourseTable();
-    loadClazzTable();
     switch ($('#typeId').val()) {
         case '1':
             showedTargetTab = $('#nav-major');
             showedTargetTab.addClass("show active");
-            showedTable = $("#tbl-majors");
+            loadMajorTable();
+            // showedTable = $("#tbl-majors");
             break;
         case '2':
             showedTargetTab = $('#nav-course');
             showedTargetTab.addClass("show active");
-            showedTable = $("#tbl-courses");
+            loadCourseTable();
+            // showedTable = $("#tbl-courses");
             break;
         case '3':
             showedTargetTab = $('#nav-clazz');
             showedTargetTab.addClass("show active");
-            showedTable = $("#tbl-clazzes");
+            loadClazzTable();
+            // showedTable = $("#tbl-clazzes");
             break;
         case '4':
             showedTargetTab = $('#nav-department');
             showedTargetTab.addClass("show active");
-            showedTable = $("#tbl-departments");
+            loadDepartmentTable();
+            // showedTable = $("#tbl-departments");
             break;
         default :
             showedTargetTab = $('#nav-major');
             showedTargetTab.addClass("show active");
-            showedTable = $("#tbl-majors");
+            loadMajorTable();
+            // showedTable = $("#tbl-majors");
             break;
     }
 });
-
-function selected_to_button(){
+function selected_to_button() {
     return btnAddClazz;
 }
+function reloadTable() {
+    alert("hehe");
+    setTimeout(function () {
+        showedTable.ajax.reload(null, false);// reload without come back to the first page
+    }, 200); //reload the table after 0.2s
+}
+
+$("#filter-clazz-lecturer").change(function () {loadClazzTable();});
+$("#filter-clazz-major").change(function () {loadClazzTable();});
+$("#filter-clazz-semester").change(function () {loadClazzTable();});
+$("#filter-clazz-course").change(function () {loadClazzTable();});
+// $("#filter-clazz-lecturer").change(function(){alert("hihi");loadClazzTable();});
+// $("#filter-clazz-major").change(function(){alert("hihi");loadClazzTable();});
+// $("#filter-clazz-semester").change(function(){alert("hihi");loadClazzTable();});
+// $("#filter-clazz-course").change(function(){alert("hihi");loadClazzTable();});
 function loadDepartmentTable() {
     $('#tbl-departments').DataTable().destroy();
     $('#tbl-departments').DataTable(
@@ -166,7 +183,7 @@ function loadCourseTable() {
             "columns": [
                 {
                     "data": "id",
-                    "render":selected_to_button
+                    "render": selected_to_button
                 },
                 {"data": "name"},
                 {"data": "code"},
@@ -214,12 +231,22 @@ function loadCourseTable() {
 }
 function loadClazzTable() {
     $('#tbl-clazzes').DataTable().destroy();
-    $('#tbl-clazzes').DataTable(
+    var filter = {
+        "majorName": $("#filter-clazz-major").val(),
+        "courseName": $("#filter-clazz-course").val(),
+        "semesterTitle": $("#filter-clazz-semester").val(),
+        "lecturerName": $("#filter-clazz-lecturer").val()
+    }
+    console.log(filter);
+    showedTable = $('#tbl-clazzes').DataTable(
         {
             "ajax": {
-                "url": "/sfms/api/modify-feedback/list/targets/clazzes",
+                "url": "/sfms/api/modify-feedback/list/clazzes/" + $("#filter-clazz-major").val() + "/" + $("#filter-clazz-course").val() + "/" + $("#filter-clazz-semester").val() + "/" + $("#filter-clazz-lecturer").val(),
                 "dataSrc": "",
-                "type": "GET"
+                "type": "GET",
+                "dataType": "json",
+                "contentType": "application/json",
+                "data": JSON.stringify(filter)
             },
             "columns": [ //define columns for the table
                 // data for the cell from the returned list
@@ -267,6 +294,9 @@ function loadClazzTable() {
             }
         }
     );
+}
+function loadClazzTargets(){
+    $.ajax()
 }
 function removeTarget(target) {
     $.ajax({

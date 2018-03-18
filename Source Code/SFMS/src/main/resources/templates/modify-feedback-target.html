@@ -69,14 +69,16 @@
                             <!--major-->
                             <div class="form-group col-sm-2">
                                 <div class="input-group input-group-sm">
-                                    <input list="list-majors" id = "filter-major-major" class="form-control" placeholder="Ngành"/>
+                                    <input list="list-majors" id="filter-major-major" class="form-control"
+                                           placeholder="Ngành"/>
                                 </div>
                             </div>
                             <!--end major-->
                             <!--course-->
                             <div class="form-group col-sm-2">
                                 <div class="input-group input-group-sm">
-                                    <input list="list-courses" id = "filter-major-course" class="form-control" placeholder="Ngành"/>
+                                    <input list="list-courses" id="filter-major-course" class="form-control"
+                                           placeholder="Ngành"/>
                                 </div>
                             </div>
                             <!--end courses-->
@@ -159,14 +161,16 @@
                             <!--major-->
                             <div class="form-group col-sm-2">
                                 <div class="input-group input-group-sm">
-                                    <input list="list-majors" id = "filter-course-major" class="form-control" placeholder="Chuyên ngành"/>
+                                    <input list="list-majors" id="filter-course-major" class="form-control"
+                                           placeholder="Chuyên ngành"/>
                                 </div>
                             </div>
                             <!--end major-->
                             <!--Lecturer-->
                             <div class="form-group col-sm-2">
                                 <div class="input-group input-group-sm">
-                                    <input list="list-lecturers" id = "filter-course-lecturer" class="form-control" placeholder="Giảng viên"/>
+                                    <input list="list-lecturers" id="filter-course-lecturer" class="form-control"
+                                           placeholder="Giảng viên"/>
                                 </div>
                             </div>
                             <!--end lecturer-->
@@ -213,36 +217,59 @@
                         <div class="form-row form-inline">
                             <!--major-->
                             <div class="form-group col-sm-2">
-                                <div class="input-group input-group-sm">
-                                    <input list="list-majors" id = "filter-clazz-major" class="form-control" placeholder="Chuyên ngành"/>
-                                </div>
+                                <!--<div class="input-group input-group-sm">-->
+                                <!--<input list="list-majors" id = "filter-clazz-major" class="form-control" placeholder="Chuyên ngành"/>-->
+                                <!--</div>-->
+                                <select id="filter-clazz-major" style="width: inherit">
+                                    <option value="0" selected>--Chuyên ngành--</option>
+                                    <option th:each="major : ${allMajors}"
+                                            th:text="${major.name+' - '+major.code}"
+                                            th:value="${major.id}"></option>
+                                </select>
                             </div>
                             <!--end major-->
                             <!--course-->
                             <div class="form-group col-sm-2">
-                                <div class="input-group input-group-sm">
-                                    <input list="list-courses" id = "filter-clazz-course" class="form-control" placeholder="Môn"/>
-                                </div>
+                                <!--<div class="input-group input-group-sm">-->
+                                <!--<input list="list-courses" id = "filter-clazz-course" class="form-control" placeholder="Môn"/>-->
+                                <!--</div>-->
+                                <select id="filter-clazz-course" style="width: inherit">
+                                    <option value="0" selected>--Môn học--</option>
+                                    <option th:each="course : ${allCourses}"
+                                            th:text="${course.name+'-'+course.code}"
+                                            th:value="${course.id}"></option>
+                                </select>
                             </div>
                             <!--end courses-->
                             <!--Semester-->
                             <div class="form-group col-sm-2">
-                                <div class="input-group input-group-sm">
-                                    <input list="list-semesters" id = "filter-clazz-semester" class="form-control" placeholder="Học kỳ"/>
-                                </div>
+                                <!--<div class="input-group input-group-sm">-->
+                                <!--<input list="list-semesters" id = "filter-clazz-semester" class="form-control" placeholder="Học kỳ"/>-->
+                                <!--</div>-->
+                                <select id="filter-clazz-semester" style="width: inherit">
+                                    <option selected value="0">--Học kỳ--</option>
+                                    <option th:each="semester : ${allSemesters}"
+                                            th:text="${semester.title}"
+                                            th:value="${semester.id}"></option>
+                                </select>
                             </div>
                             <!--end semester-->
                             <!--Lecturer-->
                             <div class="form-group col-sm-2">
-                                <div class="input-group input-group-sm">
-                                    <input list="list-lecturers" id = "filter-clazz-lecturer" class="form-control" placeholder="Giảng viên"/>
-                                </div>
+                                <!--<div class="input-group input-group-sm">-->
+                                <!--<input list="list-lecturers" id = "filter-clazz-lecturer" class="form-control" placeholder="Giảng viên"/>-->
+                                <!--</div>-->
+                                <select id="filter-clazz-lecturer" style="width: inherit">
+                                    <option selected value="0">--Giảng viên--</option>
+                                    <option th:each="lecturer : ${allLecturers}"
+                                            th:text="${lecturer.fullname+' - '+lecturer.code}"
+                                            th:value="${lecturer.id}"></option>
+                                </select>
                             </div>
-                            <!--end lecturer-->
                             <!--end semester-->
                             <!--Lecturer-->
                             <div class="form-group col-sm-2">
-                                <select id="displayOpt" class="form-">
+                                <select id="displayOpt">
                                     <option value="1" selected>Tất cả</option>
                                     <option value="2">Chưa chọn</option>
                                     <option value="3">Đã chọn</option>
@@ -296,22 +323,22 @@
     </div>
     <!-- /.container-fluid-->
     <footer th:replace="fragments/footer"></footer>
-    <datalist id="list-majors">
-        <option th:each="major : ${allMajors}"
-                th:text="${major.code + ' - ' + major.name}"></option>
-    </datalist>
-    <datalist id="list-semesters">
-        <option th:each="semester : ${allSemesters}"
-                th:text="${semester.title}"></option>
-    </datalist>
-    <datalist id="list-courses">
-        <option th:each="course : ${allCourses}"
-                th:text="${course.name+'-'+course.code}"></option>
-    </datalist>
-    <datalist id="list-lecturers">
-        <option th:each="lecturer : ${allLecturers}"
-                th:text="${lecturer.fullname+' - '+lecturer.code}"></option>
-    </datalist>
+    <!--<datalist id="list-majors">-->
+        <!--<option th:each="major : ${allMajors}"-->
+                <!--th:text="${major.name+' - '+major.code}"></option>-->
+    <!--</datalist>-->
+    <!--<datalist id="list-semesters">-->
+        <!--<option th:each="semester : ${allSemesters}"-->
+                <!--th:text="${semester.title}"></option>-->
+    <!--</datalist>-->
+    <!--<datalist id="list-courses">-->
+        <!--<option th:each="course : ${allCourses}"-->
+                <!--th:text="${course.name+'-'+course.code}"></option>-->
+    <!--</datalist>-->
+    <!--<datalist id="list-lecturers">-->
+        <!--<option th:each="lecturer : ${allLecturers}"-->
+                <!--th:text="${lecturer.fullname+' - '+lecturer.code}"></option>-->
+    <!--</datalist>-->
     <!-- Bootstrap core JavaScript-->
     <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
     <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>

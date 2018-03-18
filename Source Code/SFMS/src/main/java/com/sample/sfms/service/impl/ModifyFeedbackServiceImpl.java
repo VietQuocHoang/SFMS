@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -615,35 +616,116 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     }
 
     @Override
-    public List filterMajors(String majorKey) {
-        return majorRepo.findAll();
+    public ResponseEntity<List<Major>> filterMajors(String majorKey) {
+        try {
+            return new ResponseEntity<>(majorRepo.findAll(), HttpStatus.OK);
+        } catch (UnexpectedRollbackException e) {
+            logger.log(Level.FINE, e.toString());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override
-    public List filterCourses(String name) {
-        return courseRepo.findByNameContains(name);
+    public ResponseEntity<List<Course>> filterCourses(String name) {
+        try {
+            return new ResponseEntity<>(courseRepo.findByNameContains(name), HttpStatus.OK);
+        } catch (UnexpectedRollbackException e) {
+            logger.log(Level.FINE, e.toString());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override
-    public List filterDepartments() {
-        return null;
+    public ResponseEntity<List<Department>> filterDepartments() {
+        try {
+            return new ResponseEntity<>(departmentRepo.findAll(), HttpStatus.OK);
+        } catch (UnexpectedRollbackException e) {
+            logger.log(Level.FINE, e.toString());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override
-    public List<User> filterLecturers(String majorKey, String nameKey) {
-//        try {
+    public ResponseEntity<List<User>> filterLecturers(String majorKey, String nameKey) {
+        try {
 //            return userRepo.findByRoleByRoleId_RoleNameContainsAndFullnameContainsAndMajorByMajorId_NameContains("Giảng viên", nameKey, majorKey);
 //                return userRepo.findByRoleByRoleId_RoleName("Giảng viên");
-        return userRepo.findAll();
-//        } catch (UnexpectedRollbackException e) {
-//            logger.log(Level.FINE, e.toString());
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
+            return new ResponseEntity<>(userRepo.findAll(), HttpStatus.OK);
+        } catch (UnexpectedRollbackException e) {
+            logger.log(Level.FINE, e.toString());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override
-    public List<Clazz> filterClazz(String majorKey, String courseKey, String semesterkey, String lecturerKey) {
-        return clazzRepo.filtering(courseKey, semesterkey, lecturerKey);
+    public ResponseEntity<List<Clazz>> filterClazz(String majorKey, String courseKey, String semesterKey, String lecturerKey) {
+        try {
+//            return new ResponseEntity<>(clazzRepo.filteringver2(majorKey, courseKey, semesterKey, lecturerKey
+////                    , "Giảng viên, Trưởng ban, Trưởng phòng"
+//            ), HttpStatus.OK);
+            List<Major> majors = majorRepo.findByNameContainsOrCodeContains(majorKey, majorKey);
+            List<Course> courses = courseRepo.findByNameContainsOrCodeContains(courseKey, courseKey);
+//            List<Course> courses = courseRepo.findByNameContainsOrCodeContainsAndMajorByMajorId_NameContainsOrMajorByMajorId_CodeContains(courseKey, courseKey, majorKey, majorKey);
+            List<Semester> semesters = semesterRepo.findByTitleContains(semesterKey);
+            List<User> lecturers = userFilteringRepo.findByFullnameContainsOrCodeContains(lecturerKey, lecturerKey);
+            List<Clazz> clazzes = clazzRepo.findAll();
+            for (Course c : courses) {
+                if (!majors.contains(c.getMajorByMajorId())) courses.remove(c);
+            }
+            for (User u : lecturers) {
+                if (!u.getRoleByRoleId().getRoleName().equals("Giảng viên") &&
+                        !u.getRoleByRoleId().getRoleName().equals("Trưởng ban") &&
+                        !u.getRoleByRoleId().getRoleName().equals("Trưởng phòng") &&
+                        !u.getRoleByRoleId().getRoleName().equals("Tổ trưởng") &&
+                        !majors.contains(u.getMajorByMajorId())) lecturers.remove(u);
+            }
+            for (Clazz c : clazzRepo.findAll()) {
+                if (!courses.contains(c.getCourseByCourseId()) ||
+                        !semesters.contains(c.getSemesterBySemesterId()) ||
+                        !lecturers.contains(c.getUserByLecturerId())) clazzes.remove(c);
+            }
+            return new ResponseEntity<>(clazzes, HttpStatus.OK);
+//            List<Clazz> clazzes = clazzRepo.filteringver2(majorKey, courseKey, semesterKey, lecturerKey);
+//            return new ResponseEntity<>(clazzes, HttpStatus.OK);
+        } catch (UnexpectedRollbackException e) {
+            logger.log(Level.FINE, e.toString());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+
+    }
+
+    @Override
+    public ResponseEntity<List<Clazz>> filterClazz(int majorKey, int courseKey, int semesterkey, int lecturerKey) {
+        try {
+            Major major = null;
+            Semester semester = null;
+            User lecturer = null;
+            List<Course> courses = new ArrayList<>();
+            if (courseKey == 0) {
+                if (majorKey != 0) courses = (List<Course>) majorRepo.findOne(majorKey).getCoursesById();
+            } else courses.add(courseRepo.findOne(courseKey));
+            if (semesterkey != 0) semester = semesterRepo.findOne(semesterkey);
+            if (lecturerKey != 0) lecturer = userRepo.findOne(lecturerKey);
+            List<Clazz> clazzes = clazzRepo.findAll();
+            for (Clazz c : clazzRepo.findAll()) {
+                if (!courses.isEmpty()) {
+                    if (!courses.contains(c.getCourseByCourseId())) clazzes.remove(c);
+                }
+                if (semester != null) {
+                    if (c.getSemesterBySemesterId() != semester) clazzes.remove(c);
+                }
+                if (lecturer != null) {
+                    if (c.getUserByLecturerId() != lecturer) clazzes.remove(c);
+                }
+            }
+            return new ResponseEntity<>(clazzes, HttpStatus.OK);
+//            List<Clazz> clazzes = clazzRepo.filteringver2(majorKey, courseKey, semesterKey, lecturerKey);
+//            return new ResponseEntity<>(clazzes, HttpStatus.OK);
+        } catch (UnexpectedRollbackException e) {
+            logger.log(Level.FINE, e.toString());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override

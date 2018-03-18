@@ -92,9 +92,9 @@ class ModifyFeedbackController {
         mv.addObject("feedback", feedback);
 //        mv.addObject("alltypes", modifyService.loadAllTypes().getBody());
         mv.addObject("allSemesters", modifyService.loadAllSemesters().getBody());
-        mv.addObject("allMajors", modifyService.filterMajors(""));
-        mv.addObject("allCourses", modifyService.filterCourses(""));
-        mv.addObject("allLecturers", modifyService.filterLecturers("",""));
+        mv.addObject("allMajors", modifyService.filterMajors("").getBody());
+        mv.addObject("allCourses", modifyService.filterCourses("").getBody());
+        mv.addObject("allLecturers", modifyService.filterLecturers("","").getBody());
         mv.addObject("targetIds", modifyService.loadTargets((List<Integer>) session.getAttribute("targetIds")));
         return mv;
     }

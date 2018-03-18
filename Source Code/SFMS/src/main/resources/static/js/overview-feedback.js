@@ -12,35 +12,37 @@ var linkDeleteDepartment = "<a href='#' onclick='removeDepartmentTarget(this)'><
 var showedTargetTab;
 var showedTable;
 $(document).ready(function () {
-    loadDepartmentTable();
-    loadMajorTable();
-    loadCourseTable();
-    loadClazzTable();
     switch ($('#typeId').val()) {
+        case '1':
         case '1':
             showedTargetTab = $('#nav-major');
             showedTargetTab.addClass("show active");
-            showedTable = $("#tbl-majors");
+            loadMajorTable();
+            // showedTable = $("#tbl-majors");
             break;
         case '2':
             showedTargetTab = $('#nav-course');
             showedTargetTab.addClass("show active");
-            showedTable = $("#tbl-courses");
+            loadCourseTable();
+            // showedTable = $("#tbl-courses");
             break;
         case '3':
             showedTargetTab = $('#nav-clazz');
             showedTargetTab.addClass("show active");
-            showedTable = $("#tbl-clazzes");
+            loadClazzTable();
+            // showedTable = $("#tbl-clazzes");
             break;
         case '4':
             showedTargetTab = $('#nav-department');
             showedTargetTab.addClass("show active");
-            showedTable = $("#tbl-departments");
+            loadDepartmentTable();
+            // showedTable = $("#tbl-departments");
             break;
         default :
             showedTargetTab = $('#nav-major');
             showedTargetTab.addClass("show active");
-            showedTable = $("#tbl-majors");
+            loadMajorTable();
+            // showedTable = $("#tbl-majors");
             break;
     }
     setStartEndConstraint();
@@ -48,7 +50,7 @@ $(document).ready(function () {
 });
 function loadDepartmentTable() {
     $('#tbl-departments').DataTable().destroy();
-    $('#tbl-departments').DataTable(
+    showedTable = $('#tbl-departments').DataTable(
         {
             "ajax": {
                 "url": "/sfms/api/modify-feedback/list/targets/departments",
@@ -99,7 +101,7 @@ function loadDepartmentTable() {
 }
 function loadMajorTable() {
     $('#tbl-majors').DataTable().destroy();
-    $('#tbl-majors').DataTable(
+    showedTable = $('#tbl-majors').DataTable(
         {
             "ajax": {
                 "url": "/sfms/api/modify-feedback/list/targets/majors",
@@ -151,7 +153,7 @@ function loadMajorTable() {
 }
 function loadCourseTable() {
     $('#tbl-courses').DataTable().destroy();
-    $('#tbl-courses').DataTable(
+    showedTable = $('#tbl-courses').DataTable(
         {
             "ajax": {
                 "url": "/sfms/api/modify-feedback/list/targets/courses",
@@ -209,7 +211,7 @@ function loadCourseTable() {
 }
 function loadClazzTable() {
     $('#tbl-clazzes').DataTable().destroy();
-    $('#tbl-clazzes').DataTable(
+    showedTable = $('#tbl-clazzes').DataTable(
         {
             "ajax": {
                 "url": "/sfms/api/modify-feedback/list/targets/clazzes",
@@ -290,7 +292,7 @@ function loadClazzTable() {
 
 function reloadTable() {
     setTimeout(function () {
-        showedTable.DataTable().ajax.reload(null, false);// reload without come back to the first page
+        showedTable.ajax.reload(null, false);// reload without come back to the first page
     }, 200); //reload the table after 0.2s
 }
 
@@ -356,39 +358,34 @@ $("#typeId").change(function () {
                         showedTargetTab.removeClass("show active");
                         showedTargetTab = $('#nav-major');
                         showedTargetTab.addClass("show active");
-                        showedTable = $('#tbl-majors');
-                        reloadTable();
+                        loadCourseTable();
                         break;
                     case "Môn học":
                         loadCourseTable();
                         showedTargetTab.removeClass("show active");
                         showedTargetTab = $('#nav-course');
                         showedTargetTab.addClass("show active");
-                        showedTable = $('#tbl-courses');
-                        reloadTable();
+                        loadCourseTable();
                         break;
                     case "Lớp":
                         loadClazzTable();
                         showedTargetTab.removeClass("show active");
                         showedTargetTab = $('#nav-clazz');
                         showedTargetTab.addClass("show active");
-                        showedTable = $('#tbl-clazzes');
-                        reloadTable();
+                        loadClazzTable();
                         break;
                     case "Phòng ban":
                         loadDepartmentTable()
                         showedTargetTab.removeClass("show active");
                         showedTargetTab = $('#nav-department');
                         showedTargetTab.addClass("show active");
-                        showedTable = $('#tbl-departments');
-                        reloadTable();
+                        loadDepartmentTable()
                         break;
                     default:
                         showedTargetTab.removeClass("show active");
                         showedTargetTab = $('#nav-major');
                         showedTargetTab.addClass("show active");
-                        showedTable = $('#tbl-majors');
-                        reloadTable();
+                        loadMajorTable();
                         break;
                 }
             },
