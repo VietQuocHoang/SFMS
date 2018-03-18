@@ -171,6 +171,7 @@ public class ReportServiceImpl implements ReportService {
                                                 openAnswerReportModel = new OpenAnswerReportModel();
                                                 openAnswerReportModel.setAnswerContent(a.getAnswerContent());
                                                 openAnswerReportModel.setConductDate(a.getCreateDate());
+                                                ynAnswerReportModel.getListOptionsOther().add(openAnswerReportModel);
                                             }
                                         } else {
                                             totalPoint += (ynAnswerReportModel.getOptionPoint() * ynAnswerReportModel.getSelectedCount());
