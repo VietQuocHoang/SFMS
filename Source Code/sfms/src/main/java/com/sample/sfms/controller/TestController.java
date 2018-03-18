@@ -18,11 +18,6 @@ public class TestController {
         return new ModelAndView("login");
     }
 
-    @GetMapping(value = "/conduct-feedback")
-    private ModelAndView conductFeedback() {
-        return new ModelAndView("conduct-feedback");
-    }
-
     @GetMapping(value = "/overview-feedback")
     private ModelAndView overviewFeedback() {
         return new ModelAndView("overview-feedback");
@@ -76,12 +71,6 @@ public class TestController {
     @GetMapping(value = "/view-report-semester-details")
     private ModelAndView viewReportSemester(){
         return new ModelAndView("view-report-semester");
-    }
-
-
-    @GetMapping(value = "/view-report")
-    private ModelAndView viewReport(){
-        return new ModelAndView("view-report");
     }
 
     @GetMapping(value = "/view-report-details")
