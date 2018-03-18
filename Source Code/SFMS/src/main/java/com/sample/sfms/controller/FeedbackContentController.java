@@ -27,4 +27,17 @@ public class FeedbackContentController {
         mv.addObject("feedback", feedback);
         return mv;
     }
+
+    @GetMapping(value = "/preview-feedback/{id}")
+    private ModelAndView previewFeedback(@PathVariable("id") int feedbackId) {
+        ModelAndView mav = new ModelAndView();
+        Feedback feedback = feedbackService.findFeedbackToPreview(feedbackId);
+        if (feedback == null) {
+            mav.setViewName("forbidden");
+        } else {
+            mav.setViewName("preview-content");
+            mav.addObject("feedback", feedback);
+        }
+        return mav;
+    }
 }

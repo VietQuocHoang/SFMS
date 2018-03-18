@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="ctx" th:content="${#httpServletRequest.getContextPath()}"/>
     <title>Chọn template</title>
     <div th:replace="fragments/core-css"></div>
     <!-- dataTable -->
@@ -65,9 +66,12 @@
                             <p th:text="${templates.get(index).templateDes}"></p>
                         </div>
                         <div class="thumbnail-action">
-                            <button class="btn btn-secondary btn-preview" data-target="#modalTemplate" data-toggle="modal">Xem thử
+                            <input hidden id='templateID' type="text" th:attr="value=${templates.get(index).id}">
+                            <button data-remote="skeleton.html #modalTemplate" class="btn btn-secondary btn-preview" data-target="#modalTemplate" data-toggle="modal">Xem thử
                             </button>
+                            <a th:href="@{'/template/create/' + ${templates.get(index).id}}" target="_parent">
                             <button class="btn btn-raised-primary btn-select-feedback">Tiếp tục</button>
+                            </a>
                         </div>
                     </div>
                 </th:block>
@@ -173,14 +177,14 @@
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
-                <div class="modal-header">
+           <!--     <div class="modal-header">
                     <h3>Feedback cho giáo viên tiếng anh</h3>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
+                </div>-->
                 <div class="modal-body">
                     <!-- Tab panes -->
-                    <div class="container">
-                        <h4 class="question">1. Tốc độ giang dạy của giáo viên như thế nào?</h4>
+                    <div class="container" id = "modalTemplateContent">
+                      <!--  <h4 class="question">1. Tốc độ giang dạy của giáo viên như thế nào?</h4>
                         <div class="form-group">
                             <div class="form-check">
                                 <label class="form-check-label">
@@ -373,16 +377,27 @@
                                     <input class="form-check-input" type="radio" name="answer-1"/> Chậm
                                 </label>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
+
                 <div class="modal-footer">
-                    <div class="help-tip">
+                    <form th:action="@{/template/create}" method="post">
+                        <div class="form-group" id="modalTemplateFooter">
+                         <!--   <input hidden type="text" name="templateId" class="form-control" value="34">-->
+                        </div>
+               <!--     <div class="help-tip">
                         <p>Feedback này dành để đánh giá các giáo viên tiếng anh về khả năng nói, etc...</p>
-                    </div>
-                    <button type="button" class="btn btn-raised-primary btn-submit">Chọn template này</button>
+                    </div>-->
+                   <!-- <a th:href="@{/template/create}" target="_parent">-->
+                        <div class="form-group">
+                        <button class="btn btn-raised-primary btn-submit">Chọn template này</button>
+                   <!-- </a>-->
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        </div>
+                    </form>
                 </div>
+
             </div>
             <!--end div modal content-->
         </div>

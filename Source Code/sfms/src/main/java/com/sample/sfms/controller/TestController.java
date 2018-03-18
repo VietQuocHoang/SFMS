@@ -23,6 +23,11 @@ public class TestController {
         return new ModelAndView("conduct-feedback");
     }
 
+    @GetMapping(value = "/preview-content")
+    private ModelAndView previewFeedback() {
+        return new ModelAndView("preview-content");
+    }
+
     @GetMapping(value = "/overview-feedback")
     private ModelAndView overviewFeedback() {
         return new ModelAndView("overview-feedback");
