@@ -1,40 +1,88 @@
-$(document).ready(() => { //b�? vô document.ready để khi nào trang load xong thì sẽ bắt đầu render cái bảng
-    // Khởi tạo dataTable
-    $("#availableTemplate").DataTable({
-        // tùy chỉnh ngôn ngữ
-        "language": {
-            "lengthMenu": "_MENU_ bản ghi/trang", //Chỉnh lại chữ của cái thanh ch�?n số bản ghi hiển thị/trang
-            "emptyTable": "Không có dữ liệu nào trong bảng", // Bảng trống không có dữ liệu
-            "info": "_START_ - _END_ trên _TOTAL_ bản ghi", // dòng dưới bên trái cái bảng hiện thông tin v�? số record
-            "search": "", // cái dòng chữ bên trái thanh search
-            "zeroRecords": "Không tìm thấy bản ghi phù hợp", // Khi search k có kết quả thì sẽ trả v�? dòng này
-            "paginate": {
-                "first": "�?ầu", // nút quya lại trang đầu
-                "last": "Cuối", // nút tới trang cuối
-                "next": "Sau", // nút trang kế tiếp
-                "previous": "Trước" // nút trang trước
-            }
-        },
-        // Số record / trang
-        "lengthMenu": [[5, 10, 50, -1], [5, 10, 50, "Tất cả"]],
-        // responsive
-        "responsive": true
-    });
+var currentlySelectedTable = $("#tblDep");
+
+var depTable = $("#tblDep");
+var majorTable = $("#tblMajor");
+var courseTable = $("#tblCourse");
+var classTable = $("#tblClass");
+
+var filterSort = "Asc";
+
+$(document).ready(() => {
+    sortTable(filterSort);
 });
-$(window).resize(() => {
-    if ($(window).outerWidth() < 992) {
-        $(".preview-arrow").removeClass("fa-arrow-right")
-            .addClass("fa-arrow-down");
-    } else {
-        $(".preview-arrow").removeClass("fa-arrow-down")
-            .addClass("fa-arrow-right");
+
+function compareAsc(row1, row2) {
+    let v1, v2;
+    v1 = $(row1).find("td:eq(0)").text();
+    v2 = $(row2).find("td:eq(0)").text();
+    return v1.localeCompare(v2);
+}
+
+function compareDes(row1, row2) {
+    let v1, v2;
+    v1 = $(row1).find("td:eq(0)").text().toLowerCase();
+    v2 = $(row2).find("td:eq(0)").text().toLowerCase();
+    let result = v1.localeCompare(v2);
+    if (result !== 0) result = -result;
+    return result;
+}
+
+
+function sortTable(filterSort) {
+    let depRows = $("#tblDep tbody tr").detach().get();
+    let majorRows = $("#tblMajor tbody tr").detach().get();
+    let courseRows = $("#tblCourse tbody tr").detach().get();
+    let classesRows = $("#tblClass tbody tr").detach().get();
+    switch (filterSort) {
+        case 'Asc': {
+            depRows.sort(compareAsc);
+            majorRows.sort(compareAsc);
+            courseRows.sort(compareAsc);
+            classesRows.sort(compareAsc);
+            break;
+        }
+        case 'Des': {
+            depRows.sort(compareDes);
+            majorRows.sort(compareDes);
+            courseRows.sort(compareDes);
+            classesRows.sort(compareDes);
+            break;
+        }
     }
+    depTable.append(depRows);
+    majorTable.append(majorRows);
+    courseTable.append(courseRows);
+    classTable.append(classesRows);
+}
+
+
+$(document).on('change', "#filter-scope", (event) => {
+    let value = $(event.target).val();
+    currentlySelectedTable.fadeOut(100);
+    // currentlySelectedTable.css("display", "none");
+    switch (value) {
+        case 'Phòng ban': {
+            currentlySelectedTable = $("#tblDep");
+            break;
+        }
+        case 'Chuyên ngành': {
+            currentlySelectedTable = $("#tblMajor");
+            break;
+        }
+        case 'Môn học': {
+            currentlySelectedTable = $("#tblCourse");
+            break;
+        }
+        case 'Lớp': {
+            currentlySelectedTable = $("#tblClass");
+            break;
+        }
+    }
+    currentlySelectedTable.fadeIn(500);
 });
-$(".btn-preview").on('click', (el)=>{
-    $(".loading-container").addClass("container-active");
-    $(".template-container").addClass("container-fade");
-    setTimeout(()=>{
-        $(".loading-container").removeClass("container-active");
-        $(".template-container").removeClass("container-fade");
-    }, 3000)
+
+$(document).on('change', "#filter-sort", (event) => {
+    filterSort = $(event.target).val().trim();
+    sortTable(filterSort);
+
 });
