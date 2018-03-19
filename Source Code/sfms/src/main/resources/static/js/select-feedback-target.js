@@ -52,6 +52,7 @@ $(document).ready(function () {
 });
 
 var selected_clazz_to_button = function(data, type, full, meta) {
+    if(targets.length==0)return btnAddClazz;
     for (var c in targets){
         let target = targets[c];
         console.log(target["id"]);
@@ -70,7 +71,7 @@ var selected_to_button = function(data, type, full, meta) {
     return btnAddClazz;
 }
 function reloadTable() {
-    alert("hehe");
+    // alert("hehe");
     setTimeout(function () {
         showedTable.ajax.reload(null, false);// reload without come back to the first page
     }, 200); //reload the table after 0.2s

@@ -395,7 +395,7 @@ $("#typeId").change(function () {
                 }
             },
             error: function (xhr) {
-               // alert("fuck");
+               alert("fuck");
             }
         }
     );

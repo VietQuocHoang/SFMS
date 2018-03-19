@@ -70,7 +70,7 @@ public class ModifyFeedbackAPI {
 //            case "Chuyên ngành": return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
 //            case "Môn học": return new ResponseEntity(new ArrayList<>(), HttpStatus.OK);
             case "Lớp":
-                return modifyService.loadClazzTargets((List<Integer>) session.getAttribute("targetIds"));
+                return modifyService.loadClazzTargets((List<Integer>)   session.getAttribute("targetIds"));
 //            case "Phòng ban": return new ResponseEntity(new ArrayList<>(), HttpStatus.OK);
             default:
                 return new ResponseEntity(new ArrayList<>(), HttpStatus.OK);
@@ -206,7 +206,7 @@ public class ModifyFeedbackAPI {
     @JsonView({FeedbackView.overview.class})
     @PutMapping("/type")
     private ResponseEntity editType(@RequestBody Type type, HttpSession session) {
-//        modifyService.deleteFeedbacks((List<Integer>) session.getAttribute("targetIds"));
+        modifyService.deleteFeedbacks((List<Integer>) session.getAttribute("targetIds"));
         session.setAttribute("targetIds", new ArrayList<>());
         return modifyService.updateType(type.getId(), (int) session.getAttribute("id"));
     }

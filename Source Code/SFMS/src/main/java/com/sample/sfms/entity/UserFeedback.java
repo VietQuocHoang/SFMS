@@ -95,7 +95,7 @@ public class UserFeedback {
     }
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, insertable = false)
     public User getUserByUserId() {
         return userByUserId;
     }
@@ -105,7 +105,7 @@ public class UserFeedback {
     }
 
     @ManyToOne
-    @JoinColumn(name = "feedback_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "feedback_id", referencedColumnName = "id", nullable = false, insertable = false)
     public Feedback getFeedbackByFeedbackId() {
         return feedbackByFeedbackId;
     }
@@ -114,11 +114,24 @@ public class UserFeedback {
         this.feedbackByFeedbackId = feedbackByFeedbackId;
     }
 
+    public UserFeedback(User user, Feedback feedback, boolean isConductor, boolean isViewer, boolean isConducted) {
+        this.userByUserId = user;
+        this.feedbackByFeedbackId = feedback;
+        this.isConductor = isConductor;
+        this.isViewer = isViewer;
+        this.isConducted = isConducted;
+    }
+
     public UserFeedback(int userId, int feedbackId, boolean isConductor, boolean isViewer, boolean isConducted) {
         this.userId = userId;
         this.feedbackId = feedbackId;
         this.isConductor = isConductor;
         this.isViewer = isViewer;
         this.isConducted = isConducted;
+    }
+
+    public UserFeedback(User user, Feedback feedback){
+        this.userByUserId = user;
+        this.feedbackByFeedbackId = feedback;
     }
 }

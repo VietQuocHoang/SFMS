@@ -70,6 +70,9 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     @Autowired
     private SemesterRepository semesterRepo;
 
+    @Autowired
+    private AnswerRepository answerRepo;
+
     @Override
     public ResponseEntity getFeedback(int id) {
         Feedback fb = feedbackRepo.findOne(id);
@@ -292,7 +295,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     @Override
     public ResponseEntity<List<Integer>> removeTarget(int id, List<Integer> targetIds) {
         Feedback response = new Feedback();
-        List<Integer> newTargetIds = targetIds;
+        int removedId = 0;
         try {
             for (int targetId : targetIds) {
                 response = feedbackRepo.findOne(targetId);
@@ -300,28 +303,46 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                 switch (t.getDescription()) {
                     case "Chuyên ngành":
                         if (response.getMajorByMajorId().getId() == id)
-                            feedbackRepo.delete(response);
-                        newTargetIds.remove((Object) response.getId());
+                            userFeedbackRepo.delete(response.getUserFeedbacksById());
+                        feedbackRepo.delete(response);
+                        removedId = response.getId();
                         break;
                     case "Môn học":
                         if (response.getCourseByCourseId().getId() == id)
-                            feedbackRepo.delete(response);
-                        newTargetIds.remove((Object) response.getId());
+                            userFeedbackRepo.delete(response.getUserFeedbacksById());
+                        feedbackRepo.delete(response);
+                        removedId = response.getId();
                         break;
                     case "Lớp":
-                        if (response.getClazzByClazzId().getId() == id)
+                        if (response.getClazzByClazzId().getId() == id) {
+                            userFeedbackRepo.delete(response.getUserFeedbacksById());
+//                            response.setUserFeedbacksById(null);
+                            feedbackRepo.delete(response.getFeedbacksById());
+//                            response.setFeedbacksById(null);
+                            for (Question q : response.getQuestionsById()) {
+                                for (Optionn opt : q.getOptionsById()) {
+                                    answerRepo.delete(opt.getAnswersById());
+                                }
+                                optionRepo.delete(q.getOptionsById());
+                            }
+                            questionRepo.delete(response.getQuestionsById());
+//                            response.setQuestionsById(null);
+                            removedId = response.getId();
                             feedbackRepo.delete(response);
-                        newTargetIds.remove((Object) response.getId());
+                        }
                         break;
                     case "Phòng ban":
                         if (response.getDepartmentByDepartmentId().getId() == id)
-                            feedbackRepo.delete(response);
-                        newTargetIds.remove((Object) response.getId());
+                            userFeedbackRepo.delete(response.getUserFeedbacksById());
+                        feedbackRepo.delete(response);
+                        removedId = response.getId();
                         break;
                     default:
-                        return new ResponseEntity<>(newTargetIds, HttpStatus.BAD_REQUEST);
+                        return new ResponseEntity<>(targetIds, HttpStatus.BAD_REQUEST);
                 }
             }
+            if (removedId == 0) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            targetIds.remove((Object) removedId);
             return new ResponseEntity<>(targetIds, HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
@@ -406,15 +427,20 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
             default:
                 break;
         }
-        for (User u : conductors) {
-            userFeedbackRepo.save(new UserFeedback(u.getId(), f.getId(), true, false, false));
-        }
         UserFeedback uf;
+        for (User u : conductors) {
+            uf = userFeedbackRepo.save(new UserFeedback(u.getId(), f.getId(), true, false, false));
+//            uf.setConductor(true);
+//            userFeedbackRepo.save(uf);
+        }
         for (User u : viewers) {
             uf = userFeedbackRepo.findOne(new UserFeedbackPK(u.getId(), f.getId()));
             if (uf != null) {
                 uf.setViewer(true);
-            } else userFeedbackRepo.save(new UserFeedback(u.getId(), f.getId(), false, true, false));
+                userFeedbackRepo.save(uf);
+            } else {
+                uf = userFeedbackRepo.save(new UserFeedback(u, f, false, true, false));
+            }
         }
     }
 
@@ -426,11 +452,12 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                 selected.setConductor(true);
                 return new ResponseEntity<>(userFeedbackRepo.save(selected), HttpStatus.OK);
             }
-            return new ResponseEntity<>(
-                    userFeedbackRepo.save(new UserFeedback(
-                            feedbackRepo.findOne(targetId).getId()
-                            , userRepo.findOne(userId).getId(),
-                            true, false, false)), HttpStatus.OK);
+            User u = userRepo.findOne(userId);
+            Feedback f = feedbackRepo.findOne(targetId);
+//            UserFeedback uf = userFeedbackRepo.save(new UserFeedback(u.getId(), f.getId(), true, false, false));
+//            uf.setConductor(true);
+//            return new ResponseEntity<>(userFeedbackRepo.save(uf), HttpStatus.OK);
+            return new ResponseEntity<>(userFeedbackRepo.save(new UserFeedback(u.getId(), f.getId(), true, false, false)), HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -461,11 +488,11 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                 selected.setViewer(true);
                 userFeedbackRepo.save(selected);
             }
-            return new ResponseEntity<>(
-                    userFeedbackRepo.save(new UserFeedback(
-                            feedbackRepo.findOne(targetId).getId()
-                            , userRepo.findOne(userId).getId(),
-                            false, true, false)), HttpStatus.OK);
+            User u = userRepo.findOne(userId);
+            Feedback f = feedbackRepo.findOne(targetId);
+//            UserFeedback uf = userFeedbackRepo.save(new UserFeedback(u.getId(), f.getId(), false, true, false));
+//            uf.setViewer(true);
+            return new ResponseEntity<>(userFeedbackRepo.save(new UserFeedback(u.getId(), f.getId(), false, true, false)), HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
