@@ -47,6 +47,18 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
             "f.clazzByClazzId.id = c.id AND f.semesterBySemesterId.id = s.id")
     List<Feedback> getListClassFeedback();
 
+    @Query("select f from Feedback f where f.semesterBySemesterId.id=:semId and f.departmentByDepartmentId.id=:depId")
+    List<Feedback> getListFeedbackBySemIdAndDepId(@Param("semId") int semId, @Param("depId") int depId);
+
+    @Query("select f from Feedback f where f.semesterBySemesterId.id=:semId and f.majorByMajorId.id=:majorId")
+    List<Feedback> getListFeedbackBySemIdAndMajorId(@Param("semId") int semId, @Param("majorId") int majorId);
+
+    @Query("select f from Feedback f where f.semesterBySemesterId.id=:semId and f.clazzByClazzId.id=:classId")
+    List<Feedback> getListFeedbackBySemIdAndClassId(@Param("semId") int semId, @Param("classId") int classId);
+
+    @Query("select f from Feedback f where f.semesterBySemesterId.id=:semId and f.courseByCourseId.id=:courseId")
+    List<Feedback> getListFeedbackBySemIdAndCourseId(@Param("semId") int semId, @Param("courseId") int courseId);
+
     @Query("select f from Feedback f, Clazz c where " +
             "f.isTemplate = false AND f.clazzByClazzId.id = c.id AND "+
             "(f.typeByTypeId.id = :type OR :type = -1) AND "+
@@ -57,7 +69,7 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
                                     @Param("type")int type,
                                     @Param("semesterId")int semesterId);
 
-    @Query("select com.sample.sfms.model.FeedbackReport(c.criteria, sum(o.point), count(a.id)) " +
+    @Query("select com.sample.sfms.model.FeedbackReport (c.criteria, sum(o.point), count(a.id)) " +
             "from Question q, Optionn o, Answer a, Criteria c " +
             "where q.feedbackByFeedbackId.id  = :feedbackId and " +
             "q.criteriaByCriteriaId.id = c.id and " +

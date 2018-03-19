@@ -249,6 +249,7 @@ public class ModifyFeedbackAPI {
 //    }
 
     @PutMapping("/save/option/{opt}")
+    @JsonView({FeedbackView.overview.class})
     private ResponseEntity saveFeedback(@PathVariable("opt") int opt, HttpSession session) {
         switch (opt) {
             case 1:

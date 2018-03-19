@@ -99,7 +99,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                     affected.add(feedbackRepo.save(target));
                 }
             }
-            feedbackRepo.delete(template);
+            deleteFeedback(template);
             return new ResponseEntity<>(affected, HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
@@ -116,7 +116,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
             for (int targetId : targetIds) {
                 target = feedbackRepo.findOne(targetId);
                 if (target != null) {
-                    feedbackRepo.delete(target);
+                    deleteFeedback(target);
                 }
             }
             template.setIsTemplate(true);
@@ -292,6 +292,25 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
         }
     }
 
+    public void deleteFeedback(Feedback response){
+
+            userFeedbackRepo.delete(response.getUserFeedbacksById());
+//                            response.setUserFeedbacksById(null);
+            feedbackRepo.delete(response.getFeedbacksById());
+//                            response.setFeedbacksById(null);
+            for (Question q : response.getQuestionsById()) {
+                for (Optionn opt : q.getOptionsById()) {
+                    answerRepo.delete(opt.getAnswersById());
+                }
+                optionRepo.delete(q.getOptionsById());
+            }
+            questionRepo.delete(response.getQuestionsById());
+//                            response.setQuestionsById(null);
+
+            feedbackRepo.delete(response);
+
+    }
+
     @Override
     public ResponseEntity<List<Integer>> removeTarget(int id, List<Integer> targetIds) {
         Feedback response = new Feedback();
@@ -359,7 +378,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                 for (int id : ids) {
                     target = feedbackRepo.findOne(id);
                     if (target != null) {
-                        feedbackRepo.delete(id);
+                        deleteFeedback(target);
                         affected.add(target);
                     }
                 }
