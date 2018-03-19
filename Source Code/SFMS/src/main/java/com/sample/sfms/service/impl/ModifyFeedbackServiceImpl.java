@@ -292,6 +292,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     @Override
     public ResponseEntity<List<Integer>> removeTarget(int id, List<Integer> targetIds) {
         Feedback response = new Feedback();
+        List<Integer> newTargetIds = targetIds;
         try {
             for (int targetId : targetIds) {
                 response = feedbackRepo.findOne(targetId);
@@ -300,25 +301,25 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                     case "Chuyên ngành":
                         if (response.getMajorByMajorId().getId() == id)
                             feedbackRepo.delete(response);
-                        targetIds.remove((Object) response.getId());
+                        newTargetIds.remove((Object) response.getId());
                         break;
                     case "Môn học":
                         if (response.getCourseByCourseId().getId() == id)
                             feedbackRepo.delete(response);
-                        targetIds.remove((Object) response.getId());
+                        newTargetIds.remove((Object) response.getId());
                         break;
                     case "Lớp":
                         if (response.getClazzByClazzId().getId() == id)
                             feedbackRepo.delete(response);
-                        targetIds.remove((Object) response.getId());
+                        newTargetIds.remove((Object) response.getId());
                         break;
                     case "Phòng ban":
                         if (response.getDepartmentByDepartmentId().getId() == id)
                             feedbackRepo.delete(response);
-                        targetIds.remove((Object) response.getId());
+                        newTargetIds.remove((Object) response.getId());
                         break;
                     default:
-                        return new ResponseEntity<>(targetIds, HttpStatus.BAD_REQUEST);
+                        return new ResponseEntity<>(newTargetIds, HttpStatus.BAD_REQUEST);
                 }
             }
             return new ResponseEntity<>(targetIds, HttpStatus.OK);
@@ -358,7 +359,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
         switch (f.getTypeByTypeId().getDescription()) {
             case "Chuyên ngành":
                 conductors = userFilteringRepo.findByMajorByMajorId(f.getMajorByMajorId());
-                viewers = userFilteringRepo.findByRoleByRoleId_RoleNameAndMajorByMajorId("HeadOfAcademic", f.getMajorByMajorId());
+                viewers = userFilteringRepo.findByRoleByRoleIdAndMajorByMajorId(roleRepo.findByRoleName("Trưởng phòng"), f.getMajorByMajorId());
                 break;
             case "Môn học":
                 Course course = f.getCourseByCourseId();
@@ -375,10 +376,10 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                 }
 //                set default viewers
                 viewers.addAll(userFilteringRepo.findByRoleByRoleIdAndMajorByMajorId_CoursesByIdContains(
-                        roleRepo.findByRoleName("HeadOfAcademic"), course
+                        roleRepo.findByRoleName("Trưởng phòng"), course
                 ));
                 viewers.addAll(userFilteringRepo.findByRoleByRoleIdAndMajorByMajorId_CoursesByIdContains(
-                        roleRepo.findByRoleName("Lecturer"), course
+                        roleRepo.findByRoleName("Giảng viên"), course
                 ));
                 break;
             case "Lớp":
@@ -389,7 +390,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                 }
                 course = f.getClazzByClazzId().getCourseByCourseId();
                 viewers.addAll(userFilteringRepo.findByRoleByRoleIdAndMajorByMajorId_CoursesByIdContains(
-                        roleRepo.findByRoleName("HeadOfAcademic"), course
+                        roleRepo.findByRoleName("Trưởng phòng"), course
                 ));
                 break;
             case "Phòng ban":
@@ -399,8 +400,8 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                         if (conductor.getDepartmentByDepartmentId().getName().equals("IT"))
                             conductors.remove(conductor);
                     }
-                } else conductors.addAll(userRepo.findByRoleByRoleId_RoleName("Student"));
-                viewers = userFilteringRepo.findByRoleByRoleId_RoleNameAndMajorByMajorId("HeadOfAcademic", f.getMajorByMajorId());
+                } else conductors.addAll(userRepo.findByRoleByRoleId_RoleName("Học sinh"));
+                viewers = userFilteringRepo.findByRoleByRoleIdAndMajorByMajorId(roleRepo.findByRoleName("Trưởng phòng"), f.getMajorByMajorId());
                 break;
             default:
                 break;
