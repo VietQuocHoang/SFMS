@@ -93,3 +93,7 @@ span.label-default{
 .conductor-field > a{
     display: none;
 }
+
+.tab-content{
+    margin-left: 5%;
+}

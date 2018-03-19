@@ -1,5 +1,8 @@
 package com.sample.sfms.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.sample.sfms.view.TargetView;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -8,12 +11,16 @@ import java.util.Collection;
  */
 @Entity
 public class Course {
+    @JsonView({TargetView.basicClazzView.class, TargetView.basicCourseView.class})
     private int id;
+    @JsonView({TargetView.basicClazzView.class, TargetView.basicCourseView.class})
     private String name;
+    @JsonView({TargetView.basicClazzView.class, TargetView.basicCourseView.class})
     private String code;
     private Collection<Clazz> clazzesById;
     private Collection<Feedback> feedbacksById;
-    private Collection<MajorCourse> majorCoursesById;
+    @JsonView({TargetView.basicClazzView.class, TargetView.basicCourseView.class})
+    private Major majorByMajorId;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -86,12 +93,13 @@ public class Course {
         this.feedbacksById = feedbacksById;
     }
 
-    @OneToMany(mappedBy = "courseByCourseId")
-    public Collection<MajorCourse> getMajorCoursesById() {
-        return majorCoursesById;
+    @ManyToOne
+    @JoinColumn(name = "major_id", referencedColumnName = "id")
+    public Major getMajorByMajorId() {
+        return majorByMajorId;
     }
 
-    public void setMajorCoursesById(Collection<MajorCourse> majorCoursesById) {
-        this.majorCoursesById = majorCoursesById;
+    public void setMajorByMajorId(Major majorByMajorId) {
+        this.majorByMajorId = majorByMajorId;
     }
 }

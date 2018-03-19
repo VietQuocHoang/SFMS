@@ -2,6 +2,7 @@ package com.sample.sfms.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.sample.sfms.view.UserView;
+import com.sample.sfms.view.TargetView;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -13,10 +14,11 @@ import java.util.Collection;
 @Entity
 @Table(name = "user", schema = "capstone", catalog = "")
 public class User {
+    @JsonView(TargetView.basicClazzView.class)
     private int id;
     private String username;
     private String password;
-    @JsonView({UserView.authenticatedUser.class})
+    @JsonView({UserView.authenticatedUser.class,TargetView.basicClazzView.class})
     private String fullname;
     private String code;
     private String mail;

@@ -45,6 +45,7 @@
 // });
 
 var templateThumbnail = $(".template-thumbnail");
+var _ctx = $("meta[name='ctx']").attr("content");
 
 $(".thumbnail-content").on('mouseenter', (el)=>{
     // var currentlySelected = $(".template-thumbnail.active");
@@ -58,3 +59,42 @@ $(".template-thumbnail").on('mouseleave', (el)=>{
 $(".create-new-wrapper, .create-new-container").on('click', (el)=>{
     $("#modalCreateNew").modal('toggle');
 });
+
+//$(".btn-preview").on('click', (el)=>{
+$(".btn-preview").click(function() {
+   // alert('hello');
+   // let parentContainer = $(el.target).parents(".thumbnail-action");
+    var templateID = $(this).siblings('input').val();
+   // alert(test);
+   //alert($('button').siblings($('input[id="templateID"]')).val());
+   $.ajax({
+        url: _ctx +'/preview-feedback/' + templateID,
+        dataType: 'html',
+        success: function(data) {
+            $("#modalTemplateContent").innerHTML = "";
+            $("#modalTemplateFooter").innerHTML = "";
+            $("#modalTemplateFooter").append("<input hidden class='form-control' value='" + templateID + "' type='text' name='templateID'>");
+            $("#modalTemplateContent").append(data);
+            $('#modalTemplate').modal('toggle');
+        },
+        error: (err) => alert(err)
+    });
+
+   /* $.ajax({
+        url:_ctx +'/conduct-feedback/47',
+        dataType: 'html'
+    }).done(function(data){
+        $("#modalTemplateContent").load(_ctx +'/conduct-feedback/47 #conduct-feedback-container');
+        $('#modalTemplate').modal('toggle');
+    })*/
+
+      /*  success: function(response){
+            //do what ever you want here to extract the part you want
+            alert('hello 2');
+            $('#modalTemplateContent').load(url);
+            $('#modalTemplate').modal('toggle');
+        }'*/
+  //  });
+   // $("#modalTemplate").modal('toggle');
+});
+
