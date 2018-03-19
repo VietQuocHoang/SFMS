@@ -14,6 +14,7 @@ import com.sample.sfms.entity.Semester;
 //import com.sample.sfms.model.ModifyFeedbackModel;
 import com.sample.sfms.entity.Type;
 import com.sample.sfms.model.FilteringModel;
+import com.sample.sfms.model.Target;
 import com.sample.sfms.service.interf.ModifyFeedbackService;
 import com.sample.sfms.view.FeedbackView;
 import com.sample.sfms.view.TargetView;
@@ -211,18 +212,18 @@ public class ModifyFeedbackAPI {
     }
 
     @PostMapping("/add/target")
-    private ResponseEntity addTarget(@RequestParam("id") int id, HttpSession session) {
+    private ResponseEntity addTarget(@RequestBody Target t, HttpSession session) {
         List<Integer> targetIds = (List<Integer>) session.getAttribute("targetIds");
         if (targetIds == null) targetIds = new ArrayList<>();
-        ResponseEntity response = modifyService.addTarget((int) session.getAttribute("id"), id, targetIds);
+        ResponseEntity response = modifyService.addTarget((int) session.getAttribute("id"), t.id, targetIds);
         session.setAttribute("targetIds", response.getBody());
         return response;
     }
 
-    @PutMapping("/remove/target")
-    private ResponseEntity removeClazzTarget(@RequestBody Clazz c, HttpSession session) {
+    @DeleteMapping("/remove/target")
+    private ResponseEntity removeTarget(@RequestBody Target t, HttpSession session) {
         List<Integer> targetIds = (List<Integer>) session.getAttribute("targetIds");
-        ResponseEntity response = modifyService.removeTarget(c.getId(), targetIds);
+        ResponseEntity response = modifyService.removeTarget(t.id, targetIds);
         session.setAttribute("targetIds", response.getBody());
         return response;
     }

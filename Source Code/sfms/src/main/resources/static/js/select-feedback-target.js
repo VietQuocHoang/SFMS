@@ -7,10 +7,10 @@ var btnAddClazz = "<input class='btn active btn-check-target' type='button' oncl
 var btnAddCourse = "<input class='btn active btn-check-target' type='button' onclick='addCourseTarget(this)' value='Chọn'/>"
 var btnAddMajor = "<input class='btn active btn-check-target' type='button' onclick='addMajorTarget(this)' value='Chọn'/>"
 var btnAddDepartment = "<input class='btn active btn-check-target' type='button' onclick='addDepartmentTarget(this)' value='Chọn'/>"
-var btnRemoveClazz = "<input class='btn active btn-check-target' type='button' onclick='removeClazzTarget(this)' value='Bỏ chọn'/>"
-var btnRemoveCourse = "<input class='btn active btn-check-target' type='button' onclick='removeCourseTarget(this)' value='Bỏ chọn'/>"
-var btnRemoveMajor = "<input class='btn active btn-check-target' type='button' onclick='removeMajorTarget(this)' value='Bỏ chọn'/>"
-var btnRemoveDepartment = "<input class='btn active btn-check-target' type='button' onclick='removeDepartmentTarget(this)' value='Bỏ chọn'/>"
+var btnRemoveClazz = "<input class='btn active btn-checked' type='button' onclick='removeClazzTarget(this)' value='Bỏ chọn'/>"
+var btnRemoveCourse = "<input class='btn active btn-checked' type='button' onclick='removeCourseTarget(this)' value='Bỏ chọn'/>"
+var btnRemoveMajor = "<input class='btn active btn-checked' type='button' onclick='removeMajorTarget(this)' value='Bỏ chọn'/>"
+var btnRemoveDepartment = "<input class='btn active btn-checked' type='button' onclick='removeDepartmentTarget(this)' value='Bỏ chọn'/>"
 var showedTargetTab;
 var showedTable;
 var tmp;
@@ -50,7 +50,23 @@ $(document).ready(function () {
             break;
     }
 });
-function selected_to_button() {
+
+var selected_clazz_to_button = function(data, type, full, meta) {
+    for (var c in targets){
+        let target = targets[c];
+        console.log(target["id"]);
+        console.log(data);
+        if(data==target["id"])return btnRemoveClazz;
+    }
+    return btnAddClazz;
+    // $.each(targets, function(index, value){
+    //     if(data==value["id"])return btnRemoveClazz;
+    // })
+    // return btnAddClazz;
+}
+
+var selected_to_button = function(data, type, full, meta) {
+
     return btnAddClazz;
 }
 function reloadTable() {
@@ -60,10 +76,18 @@ function reloadTable() {
     }, 200); //reload the table after 0.2s
 }
 
-$("#filter-clazz-lecturer").change(function () {loadClazzTable();});
-$("#filter-clazz-major").change(function () {loadClazzTable();});
-$("#filter-clazz-semester").change(function () {loadClazzTable();});
-$("#filter-clazz-course").change(function () {loadClazzTable();});
+$("#filter-clazz-lecturer").change(function () {
+    loadClazzTable();
+});
+$("#filter-clazz-major").change(function () {
+    loadClazzTable();
+});
+$("#filter-clazz-semester").change(function () {
+    loadClazzTable();
+});
+$("#filter-clazz-course").change(function () {
+    loadClazzTable();
+});
 // $("#filter-clazz-lecturer").change(function(){alert("hihi");loadClazzTable();});
 // $("#filter-clazz-major").change(function(){alert("hihi");loadClazzTable();});
 // $("#filter-clazz-semester").change(function(){alert("hihi");loadClazzTable();});
@@ -231,28 +255,29 @@ function loadCourseTable() {
 }
 function loadClazzTable() {
     $('#tbl-clazzes').DataTable().destroy();
-    var filter = {
-        "majorName": $("#filter-clazz-major").val(),
-        "courseName": $("#filter-clazz-course").val(),
-        "semesterTitle": $("#filter-clazz-semester").val(),
-        "lecturerName": $("#filter-clazz-lecturer").val()
-    }
-    console.log(filter);
+    // var filter = {
+    //     "majorName": $("#filter-clazz-major").val(),
+    //     "courseName": $("#filter-clazz-course").val(),
+    //     "semesterTitle": $("#filter-clazz-semester").val(),
+    //     "lecturerName": $("#filter-clazz-lecturer").val()
+    // }
+    // console.log(filter);
+    loadClazzTargets();
     showedTable = $('#tbl-clazzes').DataTable(
         {
             "ajax": {
                 "url": "/sfms/api/modify-feedback/list/clazzes/" + $("#filter-clazz-major").val() + "/" + $("#filter-clazz-course").val() + "/" + $("#filter-clazz-semester").val() + "/" + $("#filter-clazz-lecturer").val(),
                 "dataSrc": "",
                 "type": "GET",
-                "dataType": "json",
-                "contentType": "application/json",
-                "data": JSON.stringify(filter)
+                // "dataType": "json",
+                // "contentType": "application/json",
+                // "data": JSON.stringify(filter)
             },
             "columns": [ //define columns for the table
                 // data for the cell from the returned list
                 {
                     "data": "id",
-                    "render": selected_to_button
+                    "render": selected_clazz_to_button
                 },
                 {"data": "className"},
                 {"data": "courseByCourseId.name"},
@@ -295,15 +320,45 @@ function loadClazzTable() {
         }
     );
 }
-function loadClazzTargets(){
-    // $.ajax({
-    //     url: '/sfms/api/modify-feedback/list/targets/courses',
-    //     type:'GET',
-    //     dataType: 'json',
-    //     contentType: 'application/json',
-    //
-    //     }
-    // )
+function loadClazzTargets() {
+    $.ajax({
+            url: '/sfms/api/modify-feedback/list/targets/clazzes',
+            type: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (data, status, xhr) {
+                targets = data;
+                console.log(targets);
+            },
+            error: function (xhr) {
+                alert(xhr.message);
+            }
+        }
+    )
+}
+function addTarget(target){
+    $.ajax({
+        url: '/sfms/api/modify-feedback/add/target',
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify(target),
+        success: function (data, status, xhr) {
+            if (xhr.status === 200) {
+                loadClazzTargets();
+                console.log("targets now"+targets)
+                reloadTable();
+            }
+        },
+        error: function () {
+            alert("fuck")
+        }
+    })
+}
+function addClazzTarget(el) {
+    var data = $("#tbl-clazzes").DataTable().row($(el).parents('tr')).data();
+    var clazz = {"id": data.id};
+    addTarget(clazz);
 }
 function removeTarget(target) {
     $.ajax({
@@ -314,6 +369,7 @@ function removeTarget(target) {
         data: JSON.stringify(target),
         success: function (data, status, xhr) {
             if (xhr.status === 200) {
+                loadClazzTargets();
                 reloadTable();
             }
         },

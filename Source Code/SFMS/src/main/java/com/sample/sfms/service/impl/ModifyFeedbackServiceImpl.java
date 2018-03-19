@@ -292,6 +292,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     @Override
     public ResponseEntity<List<Integer>> removeTarget(int id, List<Integer> targetIds) {
         Feedback response = new Feedback();
+        List<Integer> newTargetIds = targetIds;
         try {
             for (int targetId : targetIds) {
                 response = feedbackRepo.findOne(targetId);
@@ -300,25 +301,25 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                     case "Chuyên ngành":
                         if (response.getMajorByMajorId().getId() == id)
                             feedbackRepo.delete(response);
-                        targetIds.remove((Object) response.getId());
+                        newTargetIds.remove((Object) response.getId());
                         break;
                     case "Môn học":
                         if (response.getCourseByCourseId().getId() == id)
                             feedbackRepo.delete(response);
-                        targetIds.remove((Object) response.getId());
+                        newTargetIds.remove((Object) response.getId());
                         break;
                     case "Lớp":
                         if (response.getClazzByClazzId().getId() == id)
                             feedbackRepo.delete(response);
-                        targetIds.remove((Object) response.getId());
+                        newTargetIds.remove((Object) response.getId());
                         break;
                     case "Phòng ban":
                         if (response.getDepartmentByDepartmentId().getId() == id)
                             feedbackRepo.delete(response);
-                        targetIds.remove((Object) response.getId());
+                        newTargetIds.remove((Object) response.getId());
                         break;
                     default:
-                        return new ResponseEntity<>(targetIds, HttpStatus.BAD_REQUEST);
+                        return new ResponseEntity<>(newTargetIds, HttpStatus.BAD_REQUEST);
                 }
             }
             return new ResponseEntity<>(targetIds, HttpStatus.OK);
