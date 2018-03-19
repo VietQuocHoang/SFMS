@@ -14,8 +14,11 @@ var showedTable;
 var _ctx = $("meta[name='ctx']").attr("content");
 
 $(document).ready(function () {
+    loadMajorTable();
+    loadCourseTable();
+    loadClazzTable();
+    loadDepartmentTable();
     switch ($('#typeId').val()) {
-        case '1':
         case '1':
             showedTargetTab = $('#nav-major');
             showedTargetTab.addClass("show active");
@@ -71,7 +74,7 @@ function loadDepartmentTable() {
                 },
                 {//column for view detail-update-delete
                     "data": null,
-                    "defaultContent": linkShow +'  '+ linkDeleteDepartment
+                    "defaultContent": linkShow + '  ' + linkDeleteDepartment
                 }
             ],
             "language": {
@@ -123,7 +126,7 @@ function loadMajorTable() {
                 },
                 {//column for view detail-update-delete
                     "data": null,
-                    "defaultContent": linkShow +'  '+ linkDeleteMajor
+                    "defaultContent": linkShow + '  ' + linkDeleteMajor
                 }
             ],
             "language": {
@@ -175,7 +178,7 @@ function loadCourseTable() {
                 },
                 {//column for view detail-update-delete
                     "data": null,
-                    "defaultContent": linkShow +'  '+ linkDeleteCourse
+                    "defaultContent": linkShow + '  ' + linkDeleteCourse
                 }
                 // {
                 //     "data": "majorCoursesById",
@@ -241,7 +244,7 @@ function loadClazzTable() {
                 },
                 {//column for view detail-update-delete
                     "data": null,
-                    "defaultContent": linkShow +'  '+ linkDeleteClazz
+                    "defaultContent": linkShow + '  ' + linkDeleteClazz
                 }
             ],
             "language": {
@@ -391,8 +394,8 @@ $("#typeId").change(function () {
                         break;
                 }
             },
-            error: function (result) {
-            //    alert("fuck");
+            error: function (xhr) {
+               // alert("fuck");
             }
         }
     );
@@ -419,25 +422,37 @@ function changeSemester() {
             contentType: 'application/json',
             data: JSON.stringify(semesterData),
             success: function (data, status, xhr) {
-                let startd = new Date(parseInt(data.startDate));
-                let endd = new Date(parseInt(data.endDate));
-                $("#startdate").attr(
-                    {
-                        "min": $.datepicker.formatDate('yy-mm-dd', startd),
-                        "max": $.datepicker.formatDate('yy-mm-dd', endd)
-                    }
-                );
+                if (data.startDate != null) {
+                    let startd = new Date(parseInt(data.startDate));
+                    $("#startdate").attr(
+                        {
+                            "min": $.datepicker.formatDate('yy-mm-dd', startd),
+                        }
+                    );
+                    $("#enddate").attr(
+                        {
+                            "min": $.datepicker.formatDate('yy-mm-dd', startd),
+                        }
+                    );
+                }
+                if (data.endDate != null) {
+                    let endd = new Date(parseInt(data.endDate));
+                    $("#startdate").attr(
+                        {
+                            "max": $.datepicker.formatDate('yy-mm-dd', endd)
+                        }
+                    );
+                    $("#enddate").attr(
+                        {
+                            "max": $.datepicker.formatDate('yy-mm-dd', endd)
+                        }
+                    );
+                }
                 $("#startdate").val('');
-                $("#enddate").attr(
-                    {
-                        "min": $.datepicker.formatDate('yy-mm-dd', startd),
-                        "max": $.datepicker.formatDate('yy-mm-dd', endd)
-                    }
-                );
                 $("#enddate").val('');
             },
             error: function (result) {
-              //  alert("fuck");
+                //alert("fuck");
             }
         }
     )
@@ -456,12 +471,14 @@ function changeStart() {
             contentType: 'application/json',
             data: JSON.stringify(feedbackData),
             success: function (data, status, xhr) {
-                $("#enddate").attr(
-                    {
-                        "min": $.datepicker.formatDate('yy-mm-dd', new Date(parseInt(data.startDate))),
-                    }
-                );
-                $("#enddate").val($.datepicker.formatDate('yy-mm-dd', new Date(parseInt(data.endDate))))
+                if (data.startDate != null) {
+                    $("#enddate").attr(
+                        {
+                            "min": $.datepicker.formatDate('yy-mm-dd', new Date(parseInt(data.startDate))),
+                        }
+                    );
+                    $("#enddate").val($.datepicker.formatDate('yy-mm-dd', new Date(parseInt(data.endDate))))
+                }
             },
             error: function (xhr) {
               //  alert("ihi")
@@ -482,10 +499,10 @@ function changeEnd() {
             contentType: 'application/json',
             data: JSON.stringify(feedbackData),
             success: function (data, status, xhr) {
-                // alert("hehe")
+      //          alert("hehe")
             },
             error: function (result) {
-             //   alert("ihi")
+           //     alert("ihi")
             }
         }
     );
@@ -500,26 +517,28 @@ function setStartEndConstraint() {
             // contentType: 'application/json',
             // data: JSON.stringify(semesterData),
             success: function (data, status, xhr) {
-                let startd = new Date(parseInt(data.semesterBySemesterId.startDate));
-                let endd = new Date(parseInt(data.semesterBySemesterId.endDate));
-                $("#startdate").attr(
-                    {
-                        "min": $.datepicker.formatDate('yy-mm-dd', startd),
-                        "max": $.datepicker.formatDate('yy-mm-dd', endd)
+                if (data.semesterBySemesterId != null) {
+                    let startd = new Date(parseInt(data.semesterBySemesterId.startDate));
+                    let endd = new Date(parseInt(data.semesterBySemesterId.endDate));
+                    $("#startdate").attr(
+                        {
+                            "min": $.datepicker.formatDate('yy-mm-dd', startd),
+                            "max": $.datepicker.formatDate('yy-mm-dd', endd)
+                        }
+                    );
+                    if (data.startDate != null) {
+                        let startd = new Date(parseInt(data.startDate))
                     }
-                );
-                if (data.startDate != null) {
-                    let startd = new Date(parseInt(data.startDate))
+                    $("#enddate").attr(
+                        {
+                            "min": $.datepicker.formatDate('yy-mm-dd', startd),
+                            "max": $.datepicker.formatDate('yy-mm-dd', endd)
+                        }
+                    );
                 }
-                $("#enddate").attr(
-                    {
-                        "min": $.datepicker.formatDate('yy-mm-dd', startd),
-                        "max": $.datepicker.formatDate('yy-mm-dd', endd)
-                    }
-                );
             },
             error: function (result) {
-              ///  alert("fuck");
+               // alert("fuck");
             }
         }
     );
@@ -533,87 +552,87 @@ $("#btnSave").click(function () {
         type: 'PUT',
         dataType: 'json',
         contentType: 'application/json',
-        success: function(data, status, xhr){
+        success: function (data, status, xhr) {
             if (xhr.status === 200) {
                 window.location.href = "/sfms/view-list-feedback";
             }
         },
-        error: function(){
-         //   alert("fuck")
+        error: function () {
+            //alert("fuck")
         }
     });
 })
 
-$("#btnCancel").click(function(){
+$("#btnCancel").click(function () {
     $.ajax({
         url: '/sfms/api/cancel',
         type: 'DELETE',
         dataType: 'json',
         contentType: 'application/json',
-        success: function(data, status, xhr){
+        success: function (data, status, xhr) {
             if (xhr.status === 200) {
                 window.location.href = "/sfms/view-list-feedback";
             }
         },
-        error: function(){
-           // alert("fuck")
+        error: function () {
+       //    alert("fuck")
         }
     });
 })
 
-$("#previewContent").click(function() {
+$("#previewContent").click(function () {
     var feedbackID = document.getElementById("feedbackID").innerHTML;
     $.ajax({
-            url: _ctx +'/preview-feedback/' + feedbackID,
-            dataType: 'html',
-            success: function(data) {
-                $(".feedback-content").innerHTML = "";
-           //     $("#modalTemplateFooter").innerHTML = "";
+        url: _ctx + '/preview-feedback/' + feedbackID,
+        dataType: 'html',
+        success: function (data) {
+            $(".feedback-content").innerHTML = "";
+            //     $("#modalTemplateFooter").innerHTML = "";
             //    $("#modalTemplateFooter").append("<input hidden class='form-control' value='" + templateID + "' type='text' name='templateID'>");
-                $(".feedback-content").append(data);
-                $('#FBContentModal').modal('toggle');
-            },
-            error: (err) => alert(err)
-});
+            $(".feedback-content").append(data);
+            $('#FBContentModal').modal('toggle');
+        },
+        error: (err) => alert(err)
+    });
 });
 
 
-function removeTarget(target){
+function removeTarget(target) {
     $.ajax({
         url: '/sfms/api/modify-feedback/remove/target',
         type: 'DELETE',
         dataType: 'json',
         contentType: 'application/json',
         data: JSON.stringify(target),
-        success: function(data, status, xhr){
+        success: function (data, status, xhr) {
             if (xhr.status === 200) {
                 reloadTable();
             }
         },
-        error: function(){
-           // alert("fuck")
+        error: function () {
+          //  alert("fuck")
         }
     })
 }
-function removeClazzTarget(el){
+function removeClazzTarget(el) {
     var data = $("#tbl-clazzes").DataTable().row($(el).parents('tr')).data();
     var clazz = {"id": data.id};
     removeTarget(clazz);
 }
 
-function removeCourseTarget(el){
+function removeCourseTarget(el) {
     var data = $("#tbl-courses").DataTable().row($(el).parents('tr')).data();
     var course = {"id": data.id};
     removeTarget(course);
 }
 
-function removeMajorTarget(el){
+function removeMajorTarget(el) {
     var data = $("#tbl-majors").DataTable().row($(el).parents('tr')).data();
     var major = {"id": data.id};
     removeTarget(major);
 }
 
-function removeDepartmentTarget(el){
+function removeDepartmentTarget(el) {
     var data = $("#tbl-departments").DataTable().row($(el).parents('tr')).data();
     var department = {"id": data.id};
     removeTarget(department);
