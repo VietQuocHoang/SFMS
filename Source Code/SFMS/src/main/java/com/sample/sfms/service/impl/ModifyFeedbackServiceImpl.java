@@ -175,8 +175,8 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                     q.getCriteriaByCriteriaId(), target);
             question = questionRepo.save(question);
             for (Optionn o : q.getOptionsById()) {
-                optionn = new Optionn(o.getOptionnContent(), o.getPoint(), o.getQuestionByQuestionId());
-
+                optionn = new Optionn(o.getOptionnContent(), o.getPoint(), question);
+                optionn = optionRepo.save(optionn);
             }
         }
         return target;
