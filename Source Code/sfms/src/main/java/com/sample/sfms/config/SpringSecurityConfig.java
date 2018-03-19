@@ -34,7 +34,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
 //        web.debug(true)
-        web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/img/**", "/vendor/**");
+        web.ignoring().mvcMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/img/**", "/vendor/**");
     }
 
 
@@ -50,11 +50,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/login").permitAll()
-                .antMatchers("/roles/**").hasAuthority("EDIT_PERMISSION")
-                .antMatchers("/users/**").access("hasAuthority('EDIT_PERMISSION') or hasAuthority('EDIT_FEEDBACK')")
-                .antMatchers("/feedbacks/**").access("hasAuthority('EDIT_PERMISSION') or hasAuthority('EDIT_FEEDBACK')")
+                .mvcMatchers("/", "/login").permitAll()
+                .mvcMatchers("/roles/**").hasAuthority("EDIT_PERMISSION")
+                .mvcMatchers("/users/**").access("hasAuthority('EDIT_PERMISSION') or hasAuthority('EDIT_FEEDBACK')")
+                .mvcMatchers("/feedbacks/**").access("hasAuthority('EDIT_PERMISSION') or hasAuthority('EDIT_FEEDBACK')")
                 .mvcMatchers("/conduct-feedback/**").access("hasAuthority('CONDUCT_FEEDBACK')")
+                .mvcMatchers("/reports/**").access("hasAuthority('SEE_ALL_REPORT') or hasAuthority('SEE_SELF_REPORT')")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").failureUrl("/login?error=true")

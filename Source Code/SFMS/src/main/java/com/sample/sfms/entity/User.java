@@ -1,5 +1,8 @@
 package com.sample.sfms.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.sample.sfms.view.UserView;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Collection;
@@ -13,6 +16,7 @@ public class User {
     private int id;
     private String username;
     private String password;
+    @JsonView({UserView.authenticatedUser.class})
     private String fullname;
     private String code;
     private String mail;
@@ -24,6 +28,7 @@ public class User {
     private Collection<StudentClazz> studentClazzesById;
     private Collection<UserFeedback> userFeedbacksById;
     private Department departmentByDepartmentId;
+    @JsonView({UserView.authenticatedUser.class})
     private Role roleByRoleId;
     private Major majorByMajorId;
 

@@ -23,4 +23,6 @@ public interface ClazzRepository extends JpaRepository<Clazz, Integer> {
                           @Param("lecturerfullname") String lecturerfullname);
 
     List<Clazz> findByCourseByCourseId(Course courseByCourseId);
+
+    List<Clazz> findByUserByLecturerIdId(int lectureId);
 }
