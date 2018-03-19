@@ -57,6 +57,24 @@ function getNotification() {
     });
 }
 
+function getCurrentAuthenticatedUser() {
+    $.ajax({
+        url: _ctx + "/current",
+        method: 'GET',
+        dataType: 'json',
+        success: (data, status, xhr) => {
+            if (data == null) {
+                window.location.href = _ctx + "/logout";
+            } else {
+                console.log(data.fullname);
+                $(".fullname").append(data.fullname);
+                $(".userRole").append(data.roleByRoleId.roleName);
+            }
+        }
+    })
+}
+
 $(document).ready(function () {
     getNotification();
+    getCurrentAuthenticatedUser();
 });

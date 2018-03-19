@@ -71,8 +71,8 @@
                 <table id="tblDep" class="table table-bordered">
                     <thead>
                     <tr>
-                        <th>Tên phòng</th>
-                        <th></th>
+                        <th class="w-75">Tên phòng</th>
+                        <th class="w-25"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -84,7 +84,8 @@
                     <th:block th:unless="${feedbackTarget.departments.isEmpty()}">
                         <tr th:attr="data-name=${department.name}" th:each="department:${feedbackTarget.departments}">
                             <td th:text="${department.name}"></td>
-                            <td></td>
+                            <td class="text-center"><a th:href="@{/view-report-details}" class="btn btn-raised-primary">Xem
+                                báo cáo</a></td><!--TODO sửa đây ông eiii-->
                         </tr>
                     </th:block>
                     </tbody>
@@ -92,22 +93,23 @@
                 <table id="tblMajor" class="table table-bordered" style="display: none">
                     <thead>
                     <tr>
-                        <th>Tên</th>
-                        <th>Mã ngành</th>
-                        <th></th>
+                        <th class="w-50">Tên</th>
+                        <th class="w-25">Mã ngành</th>
+                        <th class="w-25"></th>
                     </tr>
                     </thead>
                     <tbody>
                     <th:block th:if="${feedbackTarget.majors.isEmpty()}">
                         <tr>
-                            <td>Hiện tại không có chuyên ngành nào trong danh sách</td>
+                            <td colspan="3">Hiện tại không có chuyên ngành nào trong danh sách</td>
                         </tr>
                     </th:block>
                     <th:block th:unless="${feedbackTarget.majors.isEmpty()}">
                         <tr th:attr="data-name=${major.name}" th:each="major:${feedbackTarget.majors}">
                             <td th:text="${major.name}"></td>
                             <td th:text="${major.code}"></td>
-                            <td></td>
+                            <td class="text-center"><a th:href="@{/view-report-details}" class="btn btn-raised-primary">Xem
+                                báo cáo</a></td><!--TODO sửa đây ông eiii-->
                         </tr>
                     </th:block>
                     </tbody>
@@ -115,9 +117,9 @@
                 <table id="tblCourse" class="table table-bordered" style="display: none">
                     <thead>
                     <tr>
-                        <th>Tên</th>
-                        <th>Mã môn</th>
-                        <th></th>
+                        <th class="w-50">Tên</th>
+                        <th class="w-25">Mã môn</th>
+                        <th class="w-25"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -130,7 +132,8 @@
                         <tr th:attr="data-name=${course.name}" th:each="course:${feedbackTarget.courses}">
                             <td th:text="${course.name}"></td>
                             <td th:text="${course.code}"></td>
-                            <td></td>
+                            <td class="text-center"><a th:href="@{/view-report-details}" class="btn btn-raised-primary">Xem
+                                báo cáo</a></td><!--TODO sửa đây ông eiii-->
                         </tr>
                     </th:block>
                     </tbody>
@@ -138,16 +141,16 @@
                 <table id="tblClass" class="table table-bordered" style="display: none">
                     <thead>
                     <tr>
-                        <th>Tên lớp</th>
-                        <th>Giảng viên</th>
-                        <th>Môn học</th>
-                        <th></th>
+                        <th class="w-25">Tên lớp</th>
+                        <th class="w-25">Giảng viên</th>
+                        <th class="w-25">Môn học</th>
+                        <th class="w-25"></th>
                     </tr>
                     </thead>
                     <tbody>
                     <th:block th:if="${feedbackTarget.classes.isEmpty()}">
                         <tr>
-                            <td colspan="5">Hiện tại không có danh phòng ban nào trong danh sách</td>
+                            <td colspan="4">Hiện tại không có danh phòng ban nào trong danh sách</td>
                         </tr>
                     </th:block>
                     <th:block th:unless="${feedbackTarget.classes.isEmpty()}">
@@ -155,7 +158,8 @@
                             <td th:text="${class.className}"></td>
                             <td th:text="${class.userByLecturerId.fullname}"></td>
                             <td th:text="${class.courseByCourseId.name}"></td>
-                            <td></td>
+                            <td class="text-center"><a th:href="@{/view-report-details}" class="btn btn-raised-primary">Xem
+                                báo cáo</a></td><!--TODO sửa đây ông eiii-->
                         </tr>
                     </th:block>
                     </tbody>

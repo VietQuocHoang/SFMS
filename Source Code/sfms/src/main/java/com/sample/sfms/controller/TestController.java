@@ -73,9 +73,9 @@ public class TestController {
         return new ModelAndView("edit-feedback-content");
     }
 
-    @GetMapping(value = "/view-report-semester-details")
-    private ModelAndView viewReportSemester(){
-        return new ModelAndView("view-report-semester");
+    @GetMapping(value = "/my-report")
+    private ModelAndView myReport() {
+        return new ModelAndView("view-my-report");
     }
 
     @GetMapping(value = "/view-report-details")

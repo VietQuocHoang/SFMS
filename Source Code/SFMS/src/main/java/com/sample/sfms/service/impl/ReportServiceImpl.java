@@ -228,6 +228,12 @@ public class ReportServiceImpl implements ReportService {
         }
     }
 
+    @Override
+    public List<Clazz> findClazzByLectureId(int lectureId) {
+        List<Clazz> clazzList = clazzRepository.findByUserByLecturerIdId(lectureId);
+        return clazzList;
+    }
+
     private void calculateCriteriaAvg(List<CriteriaReportModel> criteriaReportModels) {
         for (CriteriaReportModel c : criteriaReportModels) {
             double totalQuestionPoint = 0;
