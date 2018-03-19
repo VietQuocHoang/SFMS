@@ -31,4 +31,5 @@ public class UserAPI {
     private void deleteUser(@RequestParam("id") int id){
         userService.delete(id);
     }
+
 }

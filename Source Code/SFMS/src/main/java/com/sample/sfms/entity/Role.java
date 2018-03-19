@@ -1,5 +1,8 @@
 package com.sample.sfms.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.sample.sfms.view.UserView;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -9,6 +12,7 @@ import java.util.Collection;
 @Entity
 public class Role {
     private int id;
+    @JsonView({UserView.authenticatedUser.class})
     private String roleName;
     private Collection<PrivilegeRole> privilegeRolesById;
     private Collection<User> usersById;

@@ -23,6 +23,8 @@ public interface ClazzRepository extends JpaRepository<Clazz, Integer> {
                           @Param("semestertitle") String semestertitle,
                           @Param("lecturerfullname") String lecturerfullname);
 
+    List<Clazz> findByUserByLecturerIdId(int lectureId);
+
     @Query("select c from Clazz c where " +
             "c.courseByCourseId IN " +
             "(select co from Course co where CONCAT(co.name,' ',co.code) LIKE :coursekey AND co.majorByMajorId IN " +
