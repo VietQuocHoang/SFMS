@@ -545,7 +545,7 @@ function setStartEndConstraint() {
 }
 
 $("#btnSave").click(function () {
-    var opt = $('input[name=radioName]:checked', '#myForm').val();
+    var opt = $("input[name='save-option']:checked", '#myForm').val();
     alert(opt);
     $.ajax({
         url: '/sfms/api/save/' + opt,

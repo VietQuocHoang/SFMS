@@ -2,6 +2,7 @@ package com.sample.sfms.service.impl;
 
 import com.sample.sfms.define.QuestionType;
 import com.sample.sfms.entity.*;
+import com.sample.sfms.model.FeedbackReport;
 import com.sample.sfms.model.feedback.FeedbackTargetWrapper;
 import com.sample.sfms.model.report.reportSemester.*;
 import com.sample.sfms.repository.*;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -68,6 +70,25 @@ public class ReportServiceImpl implements ReportService {
                 break;
         }
         return results;
+    }
+
+    public List<FeedbackReport> loadReportDetail(int courseId, int userId, int type, int semesterId) {
+        List<Feedback> feedbacks = feedbackRepository.findByUserCource(courseId, userId, type, semesterId);
+        HashMap<String, FeedbackReport> reportHashMap = new HashMap<>();
+        for (Feedback f : feedbacks) {
+            List<FeedbackReport> reports = feedbackRepository.statistics(f.getId());
+            for (FeedbackReport report : reports) {
+                String key = report.getCriteria();
+                if (reportHashMap.containsKey(key)) {
+                    FeedbackReport r = reportHashMap.get(key);
+                    r.addCount(report.getCount());
+                    r.addSum(report.getSum());
+                } else {
+                    reportHashMap.put(key, report);
+                }
+            }
+        }
+        return new ArrayList<>(reportHashMap.values());
     }
 
     @Override
@@ -179,7 +200,11 @@ public class ReportServiceImpl implements ReportService {
                                         }
                                         ynQuestionReportModel.getYnAnswerReportModelList().add(ynAnswerReportModel);
                                     }
-                                    questionAvgPoint = totalPoint / totalSelected;
+                                    if(totalSelected == 0){
+                                        questionAvgPoint = 0;
+                                    } else {
+                                        questionAvgPoint = totalPoint/totalSelected;
+                                    }
                                     ynQuestionReportModel.setQuestionAvgPoint(questionAvgPoint);
                                     CriteriaReportModel tmp = findCriteriaReportModelByCriteriaId(
                                             criteriaReportModels, q.getCriteriaByCriteriaId().getId());
@@ -243,7 +268,11 @@ public class ReportServiceImpl implements ReportService {
                     totalQuestionPoint += q.getQuestionAvgPoint();
                 }
                 double numOfYNQuestion = ynQuestionReportModels.size();
-                c.setAverageCriteriaPoint(totalQuestionPoint / numOfYNQuestion);
+                if(numOfYNQuestion == 0){
+                    c.setAverageCriteriaPoint(0);
+                } else{
+                    c.setAverageCriteriaPoint(totalQuestionPoint / numOfYNQuestion);
+                }
             }
         }
     }
@@ -254,7 +283,11 @@ public class ReportServiceImpl implements ReportService {
         for (CriteriaReportModel c : reportSemesterModel.getCriteriaReportModelList()) {
             totalCriteriaPoint += c.getAverageCriteriaPoint();
         }
-        semAvgPoint = totalCriteriaPoint / reportSemesterModel.getCriteriaReportModelList().size();
+        if(null == reportSemesterModel.getCriteriaReportModelList() || reportSemesterModel.getCriteriaReportModelList().isEmpty()){
+            semAvgPoint = 0;
+        } else {
+            semAvgPoint = totalCriteriaPoint / reportSemesterModel.getCriteriaReportModelList().size();
+        }
         reportSemesterModel.setAverageSemPoint(semAvgPoint);
     }
 

@@ -36,7 +36,7 @@
                 </h3>
                 <hr style="border: 2px dashed #08AE9E; width:50%">
                 <h3><b>Điểm trung bình: <span class="point-text"
-                                              th:text="${#numbers.formatDecimal(report.averageSemPoint,0,1) + '/5'}"></span></b>
+                                              th:text="${#numbers.formatDecimal(report.averageSemPoint,1,1) + '/5'}"></span></b>
                 </h3>
             </div>
         </div>
@@ -47,7 +47,7 @@
                 <th:block th:unless="${report == null}">
                     <div class="card criteria-card" th:each="criteria:${report.criteriaReportModelList}">
                         <div class="card-header">
-                            <h4 th:text="${criteria.criteriaName+'-'+#numbers.formatDecimal(criteria.averageCriteriaPoint,0,1)+'/5'}"></h4>
+                            <h4 th:text="${criteria.criteriaName+'-'+#numbers.formatDecimal(criteria.averageCriteriaPoint,1,1)+'/5'}"></h4>
                         </div>
                         <div class="card-block question-card yn-question"
                              th:each="ynQuestion:${criteria.ynQuestionReportModels}">

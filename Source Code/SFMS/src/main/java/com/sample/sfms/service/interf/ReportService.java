@@ -1,6 +1,7 @@
 package com.sample.sfms.service.interf;
 
 import com.sample.sfms.entity.Clazz;
+import com.sample.sfms.model.FeedbackReport;
 import com.sample.sfms.model.feedback.FeedbackTargetWrapper;
 import com.sample.sfms.model.report.reportSemester.ReportSemesterModel;
 
@@ -12,6 +13,8 @@ import java.util.List;
 
 public interface ReportService {
     List<Object> loadListReport (String type);
+
+    List<FeedbackReport> loadReportDetail(int courseId, int userId, int type, int semesterId);
 
     FeedbackTargetWrapper loadListFeedbackTargetWrapper();
 
