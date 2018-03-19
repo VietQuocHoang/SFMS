@@ -15,7 +15,7 @@ var _ctx = $("meta[name='ctx']").attr("content");
 
 $(document).ready(function () {
     loadMajorTable();
-    loadCourseTable();
+    // loadCourseTable();
     loadClazzTable();
     loadDepartmentTable();
     switch ($('#typeId').val()) {
@@ -545,20 +545,20 @@ function setStartEndConstraint() {
 }
 
 $("#btnSave").click(function () {
-    var opt = $('input[name=radioName]:checked', '#myForm').val();
+    var opt = $('input[name="save-option"]:checked', '#save-opt').val();
     alert(opt);
     $.ajax({
-        url: '/sfms/api/save/' + opt,
+        url: '/sfms/api/modify-feedback/save/option/' + opt,
         type: 'PUT',
         dataType: 'json',
         contentType: 'application/json',
         success: function (data, status, xhr) {
             if (xhr.status === 200) {
-                window.location.href = "/sfms/view-list-feedback";
+                window.location.href = "/sfms/conduct-feedback/list";
             }
         },
         error: function () {
-            //alert("fuck")
+            alert("fuck")
         }
     });
 })
