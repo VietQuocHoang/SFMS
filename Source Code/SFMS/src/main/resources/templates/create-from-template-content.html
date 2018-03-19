@@ -50,6 +50,7 @@
                            </p>
 
                        </th:block>-->
+                    <th:block th:if="${template.questionsById.size() > 0}">
                     <th:block th:each="index: ${#numbers.sequence(0, (template.questionsById.size() - 1))}">
 
                         <th:block th:switch="${template.questionsById.get(index).type}">
@@ -671,6 +672,7 @@
 
                              </tr>
                          </table>-->
+                    </th:block>
                     </th:block>
                 </div>
             </div>
