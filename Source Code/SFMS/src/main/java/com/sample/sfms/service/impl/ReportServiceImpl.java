@@ -75,7 +75,7 @@ public class ReportServiceImpl implements ReportService {
     public List<FeedbackReport> loadReportDetail(int courseId, int userId, int type, int semesterId) {
         List<Feedback> feedbacks = feedbackRepository.findByUserCource(courseId, userId, type, semesterId);
         HashMap<String, FeedbackReport> reportHashMap = new HashMap<>();
-        for (Feedback f : feedbacks) {
+      /*  for (Feedback f : feedbacks) {
             List<FeedbackReport> reports = feedbackRepository.statistics(f.getId());
             for (FeedbackReport report : reports) {
                 String key = report.getCriteria();
@@ -87,7 +87,7 @@ public class ReportServiceImpl implements ReportService {
                     reportHashMap.put(key, report);
                 }
             }
-        }
+        }*/
         return new ArrayList<>(reportHashMap.values());
     }
 

@@ -69,11 +69,11 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
                                     @Param("type")int type,
                                     @Param("semesterId")int semesterId);
 
-    @Query("select com.sample.sfms.model.FeedbackReport (c.criteria, sum(o.point), count(a.id)) " +
+    /*@Query("select com.sample.sfms.model.FeedbackReport (c.criteria, sum(o.point), count(a.id)) " +
             "from Question q, Optionn o, Answer a, Criteria c " +
             "where q.feedbackByFeedbackId.id  = :feedbackId and " +
             "q.criteriaByCriteriaId.id = c.id and " +
             "q.id = o.questionByQuestionId.id and " +
             "o.id = a.optionnByOptionnId.id")
-    List<FeedbackReport> statistics(@Param("feedbackId")int feedbackId);
+    List<FeedbackReport> statistics(@Param("feedbackId")int feedbackId);*/
 }
