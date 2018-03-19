@@ -135,6 +135,18 @@ public class FeedbackServiceImpl implements FeedbackService {
         } else return feedback;
     }
 
+    @Override
+    public Feedback findFeedbackToPreview(int feedbackId) {
+        //if user is logged in
+        User user = getAuthorizedUser();
+        if (user == null) {
+            return null;
+        }
+        Feedback feedback = feedbackRepository.findById(feedbackId);
+        //if feedback is overdue or not started yet
+        return feedback;
+    }
+
     private User getAuthorizedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();

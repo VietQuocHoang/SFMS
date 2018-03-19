@@ -22,5 +22,7 @@ public interface FeedbackService {
     List<UserFeedback> getFeedbacksByUserId();
 
     Feedback findFeedbackToConduct(int id);
+
+    Feedback findFeedbackToPreview(int feedbackId);
 }
 

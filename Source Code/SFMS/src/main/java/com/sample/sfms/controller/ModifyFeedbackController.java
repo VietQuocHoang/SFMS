@@ -42,7 +42,7 @@ class ModifyFeedbackController {
     }
 
     @PostMapping(value = "/create/{id}")
-    private ModelAndView createFeedback(@PathVariable("templateId") int templateId, HttpSession session) {
+    private ModelAndView createFeedback(@PathVariable("id") int templateId, HttpSession session) {
         ModelAndView mv = new ModelAndView("create-feedback-content");
         Feedback response = modifyService.createFeedbackFromTemplate(templateId).getBody();
         session.setAttribute("id", response.getId());
