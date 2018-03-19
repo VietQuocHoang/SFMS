@@ -24,4 +24,6 @@ public class ReportAPI  {
     {
         return reportService.loadListReport(type);
     }
+
+
 }

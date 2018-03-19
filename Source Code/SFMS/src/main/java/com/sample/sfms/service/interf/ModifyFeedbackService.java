@@ -21,17 +21,19 @@ public interface ModifyFeedbackService {
 
     public ResponseEntity<Feedback> createFeedbackFromTemplate(int id);
 
-    public ResponseEntity<List<Feedback>> savePublishFeadbacks(int feedbackId, List<Integer>targetIds);
+    public ResponseEntity savePublishFeadbacks(int feedbackId, List<Integer>targetIds);
 
-    public ResponseEntity<List<Feedback>> saveTemplateFeadbacks(int feedbackId, List<Integer>targetIds);
+    public ResponseEntity saveTemplateFeadback(int feedbackId, List<Integer>targetIds);
 
-    public ResponseEntity<Feedback> updateSelectedTemplate(int feedbackId, List<Integer> targetIds);
+    public ResponseEntity updateSelectedTemplate(int feedbackId, List<Integer> targetIds);
 
-    public ResponseEntity<Feedback> deleteFeedback(int id);
+    public ResponseEntity deleteFeedback(int id);
 
-    public ResponseEntity<Feedback> addTarget(int feedbackId, int targetId, List<Integer> targetIds);
+    public ResponseEntity cancelProcess(int id, List<Integer> targetIds);
 
-    public ResponseEntity<Feedback> removeTarget(int id, List<Integer> targetIds);
+    public ResponseEntity<List<Integer>> addTarget(int feedbackId, int targetId, List<Integer> targetIds);
+
+    public ResponseEntity<List<Integer>> removeTarget(int id, List<Integer> targetIds);
 
     public ResponseEntity<List<Feedback>> deleteFeedbacks(List<Integer> targetIds);
 
@@ -57,17 +59,33 @@ public interface ModifyFeedbackService {
 
     public ResponseEntity loadViewers(int id);//id of feedback contains target
 
-    public List loadDepartmentTargets(List<Integer> targetIds);//ids of feedbacks contain targets
+    public ResponseEntity loadDepartmentTargets(List<Integer> targetIds);//ids of feedbacks contain targets
 
-    public List loadMajorTargets(List<Integer> targetIds);//ids of feedbacks contain targets
+    public ResponseEntity loadMajorTargets(List<Integer> targetIds);//ids of feedbacks contain targets
 
-    public List loadCourseTargets(List<Integer> targetIds);//ids of feedbacks contain targets
+    public ResponseEntity loadCourseTargets(List<Integer> targetIds);//ids of feedbacks contain targets
 
-    public List loadClazzTargets(List<Integer> targetIds);//ids of feedbacks contain targets
+    public ResponseEntity loadClazzTargets(List<Integer> targetIds);//ids of feedbacks contain targets
 
     public ResponseEntity loadTargets(List<Integer> targetIds);//ids of feedbacks contain targets
 
     public ResponseEntity loadAllTypes();
 
     public ResponseEntity loadAllSemesters();
+
+    public ResponseEntity<List<Major>> filterMajors(String majorKey);
+
+    public ResponseEntity<List<Course>> filterCourses(String courseKey);
+
+    public ResponseEntity<List<Department>> filterDepartments();
+
+    public ResponseEntity<List<User>> filterLecturers(String majorKey, String nameKey);
+
+    public ResponseEntity<List<Clazz>> filterClazz(String majorKey, String courseKey, String semesterkey, String lecturerKey);
+
+    public ResponseEntity<List<Clazz>> filterClazz(int majorKey, int courseKey, int semesterkey, int lecturerKey);
+
+    public List filterSemester(String title);
+
+
 }

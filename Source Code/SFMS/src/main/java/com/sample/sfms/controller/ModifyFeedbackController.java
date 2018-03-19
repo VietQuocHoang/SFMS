@@ -49,14 +49,16 @@ class ModifyFeedbackController {
         mv.addObject("MFModel", response);
         return mv;
     }
+
     @GetMapping(value = "/overview")
     private ModelAndView getFeedbackOverview(HttpSession session) {
         ModelAndView mv = new ModelAndView("overview-feedback");
-        Feedback feedback = modifyService.getFeedback(Integer.parseInt(session.getAttribute("id").toString())).getBody();
-        if(session.getAttribute("targetIds")==null)session.setAttribute("targetIds", new ArrayList<Integer>());
+        Feedback feedback = modifyService.getFeedback((int)session.getAttribute("id")).getBody();
+        if (session.getAttribute("targetIds") == ""||session.getAttribute("targetIds") == null)
+            session.setAttribute("targetIds", new ArrayList<Integer>());
         mv.addObject("feedback", feedback);
-        mv.addObject("startdate", feedback.getStartDate()==null?"":new SimpleDateFormat("yyyy-MM-dd").format(feedback.getStartDate()));
-        mv.addObject("enddate", feedback.getEndDate()==null?"":new SimpleDateFormat("yyyy-MM-dd").format(feedback.getEndDate()));
+        mv.addObject("startdate", feedback.getStartDate() == null ? "" : new SimpleDateFormat("yyyy-MM-dd").format(feedback.getStartDate()));
+        mv.addObject("enddate", feedback.getEndDate() == null ? "" : new SimpleDateFormat("yyyy-MM-dd").format(feedback.getEndDate()));
         mv.addObject("alltypes", modifyService.loadAllTypes().getBody());
         mv.addObject("allSemesters", modifyService.loadAllSemesters().getBody());
 //        mv.addObject("targets", modifyService.loadTargets((int[])session.getAttribute("targetIds")));
@@ -68,16 +70,32 @@ class ModifyFeedbackController {
         ModelAndView mv = new ModelAndView("overview-feedback");
         Feedback feedback = modifyService.getFeedback(id).getBody();
         session.setAttribute("id", feedback.getId());
-        List<Integer> targetIds = new ArrayList<>();
-        if(feedback.getDepartmentByDepartmentId()!=null||feedback.getMajorByMajorId()!=null
-                ||feedback.getCourseByCourseId()!=null||feedback.getClazzByClazzId()!=null)targetIds.add(feedback.getId());
-        session.setAttribute("targetIds", targetIds);
+        if (session.getAttribute("targetIds") == ""||session.getAttribute("targetIds") == null) {
+            List<Integer> targetIds = new ArrayList<>();
+            if (feedback.hasTarget())
+                targetIds.add(feedback.getId());
+            session.setAttribute("targetIds", targetIds);
+        }
         mv.addObject("feedback", feedback);
-        mv.addObject("startdate", feedback.getStartDate()==null?"":new SimpleDateFormat("yyyy-MM-dd").format(feedback.getStartDate()));
-        mv.addObject("enddate", feedback.getEndDate()==null?"":new SimpleDateFormat("yyyy-MM-dd").format(feedback.getEndDate()));
+        mv.addObject("startdate", feedback.getStartDate() == null ? "" : new SimpleDateFormat("yyyy-MM-dd").format(feedback.getStartDate()));
+        mv.addObject("enddate", feedback.getEndDate() == null ? "" : new SimpleDateFormat("yyyy-MM-dd").format(feedback.getEndDate()));
         mv.addObject("alltypes", modifyService.loadAllTypes().getBody());
         mv.addObject("allSemesters", modifyService.loadAllSemesters().getBody());
 //        mv.addObject("targets", modifyService.loadTargets((int[])session.getAttribute("targetIds")));
+        return mv;
+    }
+
+    @GetMapping(value = "/target")
+    private ModelAndView getListAvailableTarget(HttpSession session) {
+        ModelAndView mv = new ModelAndView("modify-feedback-target");
+        Feedback feedback = modifyService.getFeedback((int)session.getAttribute("id")).getBody();
+        mv.addObject("feedback", feedback);
+//        mv.addObject("alltypes", modifyService.loadAllTypes().getBody());
+        mv.addObject("allSemesters", modifyService.loadAllSemesters().getBody());
+        mv.addObject("allMajors", modifyService.filterMajors("").getBody());
+        mv.addObject("allCourses", modifyService.filterCourses("").getBody());
+        mv.addObject("allLecturers", modifyService.filterLecturers("","").getBody());
+        mv.addObject("targetIds", modifyService.loadTargets((List<Integer>) session.getAttribute("targetIds")));
         return mv;
     }
 }

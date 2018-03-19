@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -9,32 +9,7 @@
     <meta name="author" content="">
     <title>Xem kết quả báo cáo theo kỳ</title>
     <div th:replace="fragments/core-css"></div>
-    <style>
-        .point-text {
-            color: #08AE9E;
-        }
-
-        .card-header {
-            background-color: #08AE9E;
-            color: #fff;
-        }
-
-        .piechart {
-            width: 500px;
-            height: 500px;
-        }
-
-        .content-wrapper {
-            overflow: visible;
-        }
-
-        .feedback-title {
-            color: #fff;
-            background-color: #08AE9E;
-            padding: 5px;
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/view-report-semester.css}">
 </head>
 
 <body class="fixed-nav sticky-footer" id="page-top">
@@ -54,83 +29,104 @@
         </ol>
 
         <!-- Div header && Breadcrumb -->
-        <div class="row justify-content-center">
-            <div class="col-8 text-center">
-                <h3 class="feedback-title">Kết quả feedback phòng IT - Spring 2018</h3>
+        <div class="row">
+            <div class="col-8 text-center offset-2">
+                <h3 class="feedback-title">Kết quả feedback <span class="target-name"
+                                                                  th:text="${report.type+' '+report.target+' - '+report.semester}"></span>
+                </h3>
                 <hr style="border: 2px dashed #08AE9E; width:50%">
-                <h3><b>Điểm trung bình: <span class="point-text">3.3/5</span></b></h3>
+                <h3><b>Điểm trung bình: <span class="point-text"
+                                              th:text="${#numbers.formatDecimal(report.averageSemPoint,0,1) + '/5'}"></span></b>
+                </h3>
             </div>
         </div>
         <!-- End div header && breadcrumb -->
         <!-- Div content -->
-        <div class="row justify-content-center">
-            <div class="col-8">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Chất lượng - 3.5/5 điểm</h4>
+        <div class="row">
+            <div class="col-8 offset-2">
+                <th:block th:unless="${report == null}">
+                    <div class="card criteria-card" th:each="criteria:${report.criteriaReportModelList}">
+                        <div class="card-header">
+                            <h4 th:text="${criteria.criteriaName+'-'+#numbers.formatDecimal(criteria.averageCriteriaPoint,0,1)+'/5'}"></h4>
+                        </div>
+                        <div class="card-block question-card yn-question"
+                             th:each="ynQuestion:${criteria.ynQuestionReportModels}">
+                            <p><b>Lời khuyên: </b>
+                            <div th:text="${ynQuestion.suggestion}" th:remove="tag"></div>
+                            </p>
+                            <p><b th:text="${ynQuestion.questionContent}"></b><br>
+                            <div th:text="${ynQuestion.responseCount}" th:remove="tag"></div>
+                            </p>
+                            <div th:id="'chart-'+${#dates.createNow().getTime()}"
+                                 class="piechart"></div>
+                            <div th:attr="data-option-content=${ynAnswer.optionContent}, data-selected-count=${ynAnswer.selectedCount}, style=${ynAnswer.optionPoint==0}?'display:block':'display:none'"
+                                 class="chart-data" th:each="ynAnswer:${ynQuestion.ynAnswerReportModelList}">
+                                <th:block th:if="${ynAnswer.optionPoint == 0}">
+                                    <div class="answer-content-container" style="display: none;">
+                                        <div class="answer-content-wrapper">
+                                            <table class="table table-bordered table-answer">
+                                                <thead>
+                                                <tr>
+                                                    <th>Ngày nhập</th>
+                                                    <th>Nội dung</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="openAnswer:${ynAnswer.listOptionsOther}">
+                                                    <td th:text="${#dates.format(openAnswer.conductDate.getTime(), 'dd-MM-yyyy HH:mm')}"></td>
+                                                    <td th:text="${openAnswer.answerContent}"></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="toggle-answer-content-container">
+                                        <div class="toggle-answer-content-holder">
+                                            Xem các ý kiến Khác
+                                        </div>
+                                        <div class="toggle-answer-content-wrapper">
+                                            <span class="toggle-answer-content fa fa-chevron-down"></span>
+                                        </div>
+                                    </div>
+                                </th:block>
+                            </div>
+                        </div>
+                        <div class="card-block question-card open-question"
+                             th:each="openQuestion:${criteria.openQuestionReportModels}">
+                            <p><b>Lời khuyên: </b>
+                            <div th:text="${openQuestion.suggestion}" th:remove="tag"></div>
+                            <p><b th:text="${openQuestion.questionContent}"></b><br>
+                            <div th:text="${openQuestion.responseCount}" th:remove="tag"></div>
+                            </p>
+                            <div class="answer-content-container" style="display: none;">
+                                <div class="answer-content-wrapper">
+                                    <table class="table table-bordered table-answer">
+                                        <thead>
+                                        <tr>
+                                            <th>Ngày nhập</th>
+                                            <th>Nội dung</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="openAnswer:${openQuestion.openAnswerReportModels}">
+                                            <td th:text="${#dates.format(openAnswer.conductDate.getTime(), 'dd-MM-yyyy HH:mm')}"></td>
+                                            <td th:text="${openAnswer.answerContent}"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="toggle-answer-content-container">
+                                <div class="toggle-answer-content-holder">
+                                    Xem nội dung các câu trả lời
+                                </div>
+                                <div class="toggle-answer-content-wrapper">
+                                    <span class="toggle-answer-content fa fa-chevron-down"></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="card-block">
-                    <p><b>Lời khuyên: </b> Phòng đang làm việc tốt</p>
-                </div>
-                <div class="card-block">
-                    <p><b>Anh/chị có thường cần trợ giúp từ phòng IT?</b><br>127 phản hồi</p>
-                    <div id="piechart-1" class="piechart"></div>
-                </div>
-                <div class="card-block">
-                    <p><b>Anh/chị có thường đến phòng IT vì những nguyên nhân gì?</b><br>127 phản hồi</p>
-                    <div id="piechart-2" class="piechart"></div>
-                </div>
-                <div class="card-block">
-                    <p><b>Anh/chị đánh giá mức độ hữu ích của phòng IT trong việc hỗ trợ sinh viên ra sao?</b><br>127
-                        phản hồi</p>
-                    <div id="piechart-3" class="piechart"></div>
-                </div>
-            </div>
-            <div class="col-8">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Thái độ - 3/5 điểm</h4>
-                    </div>
-                    <div class="card-block">
-                        <p><b>Lời khuyên: </b> Nên thái độ thân thiện</p>
-                    </div>
-                    <div class="card-block">
-                        <p><b>Anh/chị cảm thấy thái độ của nhân viên IT?</b><br>127 phản hồi</p>
-                        <div id="piechart-4" class="piechart"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-8">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Ý kiến khác</h4>
-                    </div>
-                    <div class="card-block">
-                        <table class="table table-striped table-bordered">
-                            <tbody>
-                            <tr>
-                                <td class="w-25">2018-01-22 9:35</td>
-                                <td class="w-50">N/A</td>
-                            </tr>
-                            <tr>
-                                <td class="w-25">2018-01-22 11:31</td>
-                                <td class="w-50">Em thấy phòng IT làm việc rất tốt</td>
-                            </tr>
-                            <tr>
-                                <td class="w-25">2018-01-22 13:04</td>
-                                <td class="w-50">Em thấy phòng IT làm việc không hiệu quả lắm, có thể giúp gì hơn là cài
-                                    lại Win k?
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="w-25">2018-01-22 16:25</td>
-                                <td class="w-50">Gud</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                </th:block>
             </div>
         </div>
         <!-- End div content -->
@@ -143,55 +139,5 @@
 <div th:replace="fragments/core-script"></div>
 <!-- Google chart -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-    google.charts.load('current', {'packages': ['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
-
-    function drawChart() {
-
-        var options = {
-            title: ''
-        };
-        //chart 1
-        var data1 = google.visualization.arrayToDataTable([
-            ['', ''],
-            ['Có', 1],
-            ['Không', 2]
-        ]);
-        var chart1 = new google.visualization.PieChart(document.getElementById('piechart-1'));
-        chart1.draw(data1, options);
-
-        //chart 2
-        var data2 = google.visualization.arrayToDataTable([
-            ['', ''],
-            ['Không vào được phần mềm thi', 3],
-            ['Không kết nối được mạng trường', 3],
-            ['Khác', 1]
-        ]);
-        var chart2 = new google.visualization.PieChart(document.getElementById('piechart-2'));
-        chart2.draw(data2, options);
-
-        //chart 3
-        var data3 = google.visualization.arrayToDataTable([
-            ['', ''],
-            ['Rất hữu ích', 2],
-            ['Không hữu ích', 2],
-            ['Hữu ích', 2],
-            ['Chả được việc gì', 1]
-        ]);
-        var chart3 = new google.visualization.PieChart(document.getElementById('piechart-3'));
-        chart3.draw(data3, options);
-
-        //chart 4
-        var data4 = google.visualization.arrayToDataTable([
-            ['', ''],
-            ['Thân thiện', 4],
-            ['Bình thường, không thân thiện lắm', 2],
-            ['Khó chịu', 1],
-        ]);
-        var chart4 = new google.visualization.PieChart(document.getElementById('piechart-4'));
-        chart4.draw(data4, options);
-    }
-</script>
-
+<script type="text/javascript" th:src="@{/js/view-report-semester.js}"></script>
 </html>

@@ -2,10 +2,10 @@ var filters = {
     status: null,
     scope: null,
 };
-var filterSort = "asc";
+var filterSort = "Asc";
 var table = $("#tblFeedback");
 $(document).ready(() => {
-    sortTable('Asc');
+    sortTable(filterSort);
 });
 
 function compareAsc(row1, row2) {
