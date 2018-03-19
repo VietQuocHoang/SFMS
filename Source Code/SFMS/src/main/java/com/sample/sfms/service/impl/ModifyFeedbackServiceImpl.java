@@ -359,7 +359,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
         switch (f.getTypeByTypeId().getDescription()) {
             case "Chuyên ngành":
                 conductors = userFilteringRepo.findByMajorByMajorId(f.getMajorByMajorId());
-                viewers = userFilteringRepo.findByRoleByRoleId_RoleNameAndMajorByMajorId("HeadOfAcademic", f.getMajorByMajorId());
+                viewers = userFilteringRepo.findByRoleByRoleIdAndMajorByMajorId(roleRepo.findByRoleName("Trưởng phòng"), f.getMajorByMajorId());
                 break;
             case "Môn học":
                 Course course = f.getCourseByCourseId();
@@ -376,10 +376,10 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                 }
 //                set default viewers
                 viewers.addAll(userFilteringRepo.findByRoleByRoleIdAndMajorByMajorId_CoursesByIdContains(
-                        roleRepo.findByRoleName("HeadOfAcademic"), course
+                        roleRepo.findByRoleName("Trưởng phòng"), course
                 ));
                 viewers.addAll(userFilteringRepo.findByRoleByRoleIdAndMajorByMajorId_CoursesByIdContains(
-                        roleRepo.findByRoleName("Lecturer"), course
+                        roleRepo.findByRoleName("Giảng viên"), course
                 ));
                 break;
             case "Lớp":
@@ -390,7 +390,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                 }
                 course = f.getClazzByClazzId().getCourseByCourseId();
                 viewers.addAll(userFilteringRepo.findByRoleByRoleIdAndMajorByMajorId_CoursesByIdContains(
-                        roleRepo.findByRoleName("HeadOfAcademic"), course
+                        roleRepo.findByRoleName("Trưởng phòng"), course
                 ));
                 break;
             case "Phòng ban":
@@ -400,8 +400,8 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                         if (conductor.getDepartmentByDepartmentId().getName().equals("IT"))
                             conductors.remove(conductor);
                     }
-                } else conductors.addAll(userRepo.findByRoleByRoleId_RoleName("Student"));
-                viewers = userFilteringRepo.findByRoleByRoleId_RoleNameAndMajorByMajorId("HeadOfAcademic", f.getMajorByMajorId());
+                } else conductors.addAll(userRepo.findByRoleByRoleId_RoleName("Học sinh"));
+                viewers = userFilteringRepo.findByRoleByRoleIdAndMajorByMajorId(roleRepo.findByRoleName("Trưởng phòng"), f.getMajorByMajorId());
                 break;
             default:
                 break;

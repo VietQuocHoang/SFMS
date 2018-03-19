@@ -18,7 +18,7 @@ public interface UserFilteringRepository extends JpaRepository<User, Integer> {
     List<User> findByClazzesByIdContains(List<Clazz> clazz);
     List<User> findByStudentClazzesById(List<StudentClazz> studentClazzes);
 
-    List<User> findByRoleByRoleId_RoleNameAndMajorByMajorId(String roleName, Major major);
+    List<User> findByRoleByRoleIdAndMajorByMajorId(Role role, Major major);
     List<User> findByRoleByRoleId_RoleNameAndAndDepartmentByDepartmentId(String roleName, Department department);
     List<User> findByRoleByRoleId_RoleNameAndClazzesByIdContains(String roleName, List<Clazz> clazzes);
     List<User> findByRoleByRoleIdAndMajorByMajorId_CoursesByIdContains(Role role, Course courses);
