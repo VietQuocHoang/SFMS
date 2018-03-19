@@ -566,7 +566,7 @@ function removeTarget(target){
         type: 'DELETE',
         dataType: 'json',
         contentType: 'application/json',
-        dtaa: JSON.stringify(target),
+        data: JSON.stringify(target),
         success: function(data, status, xhr){
             if (xhr.status === 200) {
                 reloadTable();

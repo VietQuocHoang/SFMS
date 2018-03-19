@@ -296,7 +296,14 @@ function loadClazzTable() {
     );
 }
 function loadClazzTargets(){
-    $.ajax()
+    // $.ajax({
+    //     url: '/sfms/api/modify-feedback/list/targets/courses',
+    //     type:'GET',
+    //     dataType: 'json',
+    //     contentType: 'application/json',
+    //
+    //     }
+    // )
 }
 function removeTarget(target) {
     $.ajax({
@@ -304,7 +311,7 @@ function removeTarget(target) {
         type: 'DELETE',
         dataType: 'json',
         contentType: 'application/json',
-        dtaa: JSON.stringify(target),
+        data: JSON.stringify(target),
         success: function (data, status, xhr) {
             if (xhr.status === 200) {
                 reloadTable();
