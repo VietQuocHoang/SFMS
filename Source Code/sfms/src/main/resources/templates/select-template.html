@@ -67,7 +67,7 @@
                         </div>
                         <div class="thumbnail-action">
                             <input hidden id='templateID' type="text" th:attr="value=${templates.get(index).id}">
-                            <button data-remote="skeleton.html #modalTemplate" class="btn btn-secondary btn-preview" data-target="#modalTemplate" data-toggle="modal">Xem thử
+                            <button class="btn btn-secondary btn-preview" data-target="#modalTemplate" data-toggle="modal">Xem thử
                             </button>
                             <a th:href="@{'/template/create/' + ${templates.get(index).id}}" target="_parent">
                             <button class="btn btn-raised-primary btn-select-feedback">Tiếp tục</button>

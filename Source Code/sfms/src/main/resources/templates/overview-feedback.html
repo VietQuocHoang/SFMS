@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="ctx" th:content="${#httpServletRequest.getContextPath()}"/>
     <title>Modify Feedback - Overview
     </title>
     <!--Core style-->
@@ -35,6 +36,7 @@
                 <li class="breadcrumb-item active">Tạo mới</li>
             </ol>
             <br>
+            <p hidden id="feedbackID" th:text="${session.id}"></p>
             <h4 class="overview-title">Vui lòng kiểm tra & hoàn tất những thông tin sau</h4>
             <!--Overview content-->
             <br>
@@ -105,7 +107,7 @@
                         <div class="col-sm-1"></div>
                         <!--review content-->
                         <div class="form-group col-sm-5">
-                            <a class="add-inf-item-link" href="#" data-toggle="modal" data-target="#FBContentModal"><i
+                            <a id="previewContent" class="add-inf-item-link" href="#" data-toggle="modal" data-target="#FBContentModal"><i
                                     class="fa fa-eye"></i> Xem nội dung feedback
                             </a>
                             <br>
@@ -352,7 +354,7 @@
                                 <div class="modal-body">
                                     <div class="row justify-content-center">
                                         <div class="col-sm-12 col-12 col-md-6 col-xl-11 col-lg-12 text-center feedback-content">
-                                            <h3 class="feedback-title">Feedback cho môn học PRJ321 lớp SE1067</h3>
+                                           <!-- <h3 class="feedback-title">Feedback cho môn học PRJ321 lớp SE1067</h3>
                                             <hr>
                                             <p>Vui lòng hoàn thành các câu hỏi </p>
                                             <form>
@@ -738,12 +740,12 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </form>
+                                            </form>-->
                                         </div>
                                     </div>
                                     <!-- end div feedback content -->
                                     <!-- div pagination -->
-                                    <div class="row justify-content-around" style="margin-top: 10px">
+                                 <!--   <div class="row justify-content-around" style="margin-top: 10px">
                                         <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center">
                                             <button class="btn btn-pagination" value="back" disabled>
                                                 <span class="fa fa-fw fa-backward"></span> Quay lại
@@ -753,10 +755,10 @@
                                                 <span class="fa fa-fw fa-forward"></span>
                                             </button>
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <!-- end div pagination -->
                                     <!-- div progress bar-->
-                                    <div class="row justify-content-center" style="margin-top: 10px">
+                             <!--       <div class="row justify-content-center" style="margin-top: 10px">
                                         <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-12 btn-group text-center">
                                             <div class="col-2"></div>
                                             <div class="col-8">
@@ -765,7 +767,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <!-- end div progress bar-->
                                 </div>
                                 <div class="modal-footer">

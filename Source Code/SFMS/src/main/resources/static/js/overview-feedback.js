@@ -11,6 +11,8 @@ var linkDeleteDepartment = "<a href='#' onclick='removeDepartmentTarget(this)'><
 // var linkUpdate = "<a href='/sfms/modify-feedback/target'><i class='fa fa-pencil'></i></a>";
 var showedTargetTab;
 var showedTable;
+var _ctx = $("meta[name='ctx']").attr("content");
+
 $(document).ready(function () {
     switch ($('#typeId').val()) {
         case '1':
@@ -390,7 +392,7 @@ $("#typeId").change(function () {
                 }
             },
             error: function (result) {
-                alert("fuck");
+            //    alert("fuck");
             }
         }
     );
@@ -435,7 +437,7 @@ function changeSemester() {
                 $("#enddate").val('');
             },
             error: function (result) {
-                alert("fuck");
+              //  alert("fuck");
             }
         }
     )
@@ -462,7 +464,7 @@ function changeStart() {
                 $("#enddate").val($.datepicker.formatDate('yy-mm-dd', new Date(parseInt(data.endDate))))
             },
             error: function (xhr) {
-                alert("ihi")
+              //  alert("ihi")
             }
         }
     );
@@ -483,7 +485,7 @@ function changeEnd() {
                 // alert("hehe")
             },
             error: function (result) {
-                alert("ihi")
+             //   alert("ihi")
             }
         }
     );
@@ -517,7 +519,7 @@ function setStartEndConstraint() {
                 );
             },
             error: function (result) {
-                alert("fuck");
+              ///  alert("fuck");
             }
         }
     );
@@ -537,7 +539,7 @@ $("#btnSave").click(function () {
             }
         },
         error: function(){
-            alert("fuck")
+         //   alert("fuck")
         }
     });
 })
@@ -554,10 +556,26 @@ $("#btnCancel").click(function(){
             }
         },
         error: function(){
-            alert("fuck")
+           // alert("fuck")
         }
     });
 })
+
+$("#previewContent").click(function() {
+    var feedbackID = document.getElementById("feedbackID").innerHTML;
+    $.ajax({
+            url: _ctx +'/preview-feedback/' + feedbackID,
+            dataType: 'html',
+            success: function(data) {
+                $(".feedback-content").innerHTML = "";
+           //     $("#modalTemplateFooter").innerHTML = "";
+            //    $("#modalTemplateFooter").append("<input hidden class='form-control' value='" + templateID + "' type='text' name='templateID'>");
+                $(".feedback-content").append(data);
+                $('#FBContentModal').modal('toggle');
+            },
+            error: (err) => alert(err)
+});
+});
 
 
 function removeTarget(target){
@@ -573,7 +591,7 @@ function removeTarget(target){
             }
         },
         error: function(){
-            alert("fuck")
+           // alert("fuck")
         }
     })
 }
