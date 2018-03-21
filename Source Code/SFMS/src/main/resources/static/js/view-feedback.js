@@ -1,96 +1,46 @@
-var filters = {
-    status: null,
-    scope: null,
-};
-var filterSort = "Asc";
-var table = $("#tblFeedback");
+var table;
 $(document).ready(() => {
-    sortTable(filterSort);
-});
-
-function compareAsc(row1, row2) {
-    let v1, v2;
-    v1 = $(row1).find("td:eq(0)").text();
-    v2 = $(row2).find("td:eq(0)").text();
-    return v1.localeCompare(v2);
-}
-
-function compareDes(row1, row2) {
-    let v1, v2;
-    v1 = $(row1).find("td:eq(0)").text().toLowerCase();
-    v2 = $(row2).find("td:eq(0)").text().toLowerCase();
-    let result = v1.localeCompare(v2);
-    if (result !== 0) result = -result;
-    return result;
-}
-
-function compareSemAsc(row1, row2) {
-    let v1, v2;
-    v1 = parseInt($(row1).find("td:eq(1)").data("start-date"));
-    v2 = parseInt($(row2).find("td:eq(1)").data("start-date"));
-    return v1 - v2;
-}
-
-function compareSemDes(row1, row2) {
-    let v1, v2;
-    v1 = parseInt($(row1).find("td:eq(1)").data("start-date"));
-    v2 = parseInt($(row2).find("td:eq(1)").data("start-date"));
-    return v2 - v1;
-}
-
-function updateFilter() {
-    // let row = $(".feedback-table-row");
-    $('.feedback-table-row').hide().filter(function () {
-        let
-            self = $(this),
-            result = true; // not guilty until proven guilty
-        console.log(self);
-        Object.keys(filters).forEach(function (filter) {
-            if (filters[filter] && (filters[filter] != 'All')) {
-                result = result && filters[filter] === self.data(filter);
+    table = $("#tblFeedback").DataTable({
+        "lengthMenu": [[5, 20, 50, -1], [5, 20, 50, "Toàn bộ"]],
+        "columnDefs": [
+            // {"targets": [4], "visible": false},
+            // {"targets":[]}
+        ],
+        "language": {
+            "decimal": "",
+            "emptyTable": "Không kết quả nào được tìm thấy",
+            "info": "Hiển thị từ _START_ tới _END_ trong số _TOTAL_ kết quả",
+            "infoEmpty": "Hiển thị 0 tới 0 trong số 0 kết quả",
+            "infoFiltered": "(lọc từ _MAX_ kết quả)",
+            "infoPostFix": "",
+            "thousands": ",",
+            "lengthMenu": "Hiển thị _MENU_ kết quả mỗi trang",
+            "loadingRecords": "Đang tải...",
+            "processing": "Đang xử lý...",
+            "search": "Tìm:",
+            "zeroRecords": "Không tìm thấy kết quả phù hợp",
+            "paginate": {
+                "first": "Đầu",
+                "last": "Cuối",
+                "next": "Sau",
+                "previous": "Trước"
+            },
+            "aria": {
+                "sortAscending": ": kích hoạt để sắp xếp tăng dần",
+                "sortDescending": ": kích hoạt để sắp xếp giảm dần"
             }
-        });
-
-        return result;
-    }).show();
-}
-
-function changeFilter(filterName) {
-    filters[filterName] = $(this).val();
-    updateFilter();
-}
-
-$(document).on('change', '#filter-scope', (event) => {
-    changeFilter.call($(event.target), 'scope');
-});
-$(document).on('change', '#filter-status', (event) => {
-    changeFilter.call($(event.target), 'status');
+        }
+    });
 });
 
-function sortTable(filterSort) {
-    let rows = $(".feedback-table-row").detach().get();
-    switch (filterSort) {
-        case 'Asc': {
-            rows.sort(compareAsc);
-            break;
-        }
-        case 'Des': {
-            rows.sort(compareDes);
-            break;
-        }
-        case 'semAsc': {
-            rows.sort(compareSemAsc);
-            break;
-        }
-        case 'semDes': {
-            rows.sort(compareSemDes);
-            break;
-        }
-    }
-    table.append(rows);
-}
-
-$(document).on('change', "#filter-sort", (event) => {
-    filterSort = $(event.target).val().trim();
-    sortTable(filterSort);
+$(document).on('click', '.btn-filter', (event) => {
+    let value = $(event.target).val();
+    table.column(4).search(value).draw();
+    $(".btn-filter.active").removeClass("active");
+    $(event.target).addClass("active");
 });
+
+// $(document).on('change', '#filter-scope', (event)=>{
+//     let value = $(event.target).val();
+//     table.column(4).search(value).draw();
+// });
