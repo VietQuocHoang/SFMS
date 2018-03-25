@@ -12,15 +12,15 @@ import java.util.Date;
  */
 @Entity
 public class Feedback {
-    @JsonView({FeedbackView.alertUserFeedbackView.class, FeedbackView.overview.class})
+    @JsonView({FeedbackView.alertUserFeedbackView.class, FeedbackView.overview.class, FeedbackView.conductFeedbackView.class})
     private int id;
     private Integer point;
-    @JsonView({FeedbackView.overview.class})
+    @JsonView({FeedbackView.overview.class, FeedbackView.conductFeedbackView.class})
     private boolean isTemplate;
     private Date createDate;
-    @JsonView({FeedbackView.overview.class})
+    @JsonView({FeedbackView.overview.class, FeedbackView.conductFeedbackView.class})
     private Date startDate;
-    @JsonView({FeedbackView.overview.class})
+    @JsonView({FeedbackView.overview.class, FeedbackView.conductFeedbackView.class})
     private Date endDate;
     @JsonView({FeedbackView.alertUserFeedbackView.class, FeedbackView.overview.class})
     private String feedbackDes;
@@ -28,7 +28,7 @@ public class Feedback {
     private String feedbackName;
     private String templateDes;
     private String templateName;
-    @JsonView({FeedbackView.overview.class})
+    @JsonView({FeedbackView.overview.class, FeedbackView.conductFeedbackView.class})
     private boolean isPublished;
     private User userByCreatorId;
     private Department departmentByDepartmentId;
@@ -42,6 +42,7 @@ public class Feedback {
     private Semester semesterBySemesterId;
     private Collection<UserFeedback> userFeedbacksById;
     private Collection<Feedback> feedbacksById;
+    @JsonView({FeedbackView.conductFeedbackView.class})
     private Collection<Question> questionsById;
 
     @Id

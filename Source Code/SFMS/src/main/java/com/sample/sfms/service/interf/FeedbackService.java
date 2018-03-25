@@ -24,5 +24,7 @@ public interface FeedbackService {
     Feedback findFeedbackToConduct(int id);
 
     Feedback findFeedbackToPreview(int feedbackId);
+
+    List<Feedback> findAllFeedback();
 }
 

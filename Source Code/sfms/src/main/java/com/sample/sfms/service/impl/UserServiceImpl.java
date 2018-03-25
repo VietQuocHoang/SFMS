@@ -1,7 +1,12 @@
 package com.sample.sfms.service.impl;
 
+import com.sample.sfms.entity.Department;
+import com.sample.sfms.entity.Major;
 import com.sample.sfms.entity.Role;
 import com.sample.sfms.entity.User;
+import com.sample.sfms.model.user.SaveUserModel;
+import com.sample.sfms.repository.DepartmentRepository;
+import com.sample.sfms.repository.MajorRepository;
 import com.sample.sfms.repository.RoleRepository;
 import com.sample.sfms.repository.UserRepository;
 import com.sample.sfms.service.interf.UserService;
@@ -28,6 +33,10 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private DepartmentRepository departmentRepository;
+    @Autowired
+    private MajorRepository majorRepository;
 
     @Override
     public User findUserByMail(String email) {
@@ -36,17 +45,49 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity saveUser(User user) {
-        String encryptPassword = bCryptPasswordEncoder.encode(user.getPassword());
-        user.setPassword(encryptPassword);
-        if (user.getId() != 0) {
-            User curr = userRepository.findOne(user.getId());
-            if (null == curr) {
-                return new ResponseEntity(HttpStatus.NOT_FOUND);
+    public ResponseEntity saveUser(SaveUserModel userModel) {
+        User user;
+        if (userModel.getId() != 0) {
+            user = userRepository.findOne(userModel.getId());
+            if (user != null) {
+                if (userModel.getPassword() != null && userModel.getPassword().length() > 0) {
+                    String encodedPassword = bCryptPasswordEncoder.encode(userModel.getPassword());
+                    user.setPassword(encodedPassword);
+                }
+            } else {
+                return new ResponseEntity(HttpStatus.BAD_REQUEST);
             }
+        } else {
+            user = new User();
+            String encodedPassword = bCryptPasswordEncoder.encode(userModel.getPassword());
+            user.setPassword(encodedPassword);
+            user.setUsername(userModel.getUsername());
         }
+        if (userModel.getRoleByRoleId() > 0) {
+            Role role = roleRepository.findOne(userModel.getRoleByRoleId());
+            user.setRoleByRoleId(role);
+        }
+        if (userModel.getDepartmentByDepartmentId() > 0) {
+            Department department = departmentRepository.findOne(userModel.getDepartmentByDepartmentId());
+            user.setDepartmentByDepartmentId(department);
+        } else {
+            user.setDepartmentByDepartmentId(null);
+        }
+        if (userModel.getMajorByMajorId() > 0) {
+            Major major = majorRepository.findOne(userModel.getMajorByMajorId());
+            user.setMajorByMajorId(major);
+        } else {
+            user.setMajorByMajorId(null);
+        }
+        user.setMail(userModel.getMail());
+        user.setCode(userModel.getCode());
+        user.setFullname(userModel.getFullname());
+        user.setBirth(userModel.getBirth());
+        user.setMale(userModel.isMale());
+        user.setStatus((byte) (userModel.isStatus() ? 1 : 0));
+        user.setCode(userModel.getCode());
         try {
-            userRepository.save(user);
+            user = userRepository.save(user);
             return new ResponseEntity(HttpStatus.OK);
         } catch (RollbackException e) {
             logger.log(Level.FINE, e.toString());
@@ -62,7 +103,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Iterable<User> findAll() {
+    public List<User> findAll() {
         return userRepository.findAll();
     }
 
@@ -91,6 +132,36 @@ public class UserServiceImpl implements UserService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public ResponseEntity checkExistedEmail(String email) {
+        User user = userRepository.findByMail(email);
+        if (user == null) {
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @Override
+    public ResponseEntity checkExistedCode(String code) {
+        User user = userRepository.findByCode(code);
+        if (user == null) {
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @Override
+    public ResponseEntity checkExistedUsername(String username) {
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }
     }
 
 }

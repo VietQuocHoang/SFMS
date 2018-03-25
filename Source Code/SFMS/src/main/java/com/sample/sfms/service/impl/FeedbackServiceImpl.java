@@ -147,6 +147,11 @@ public class FeedbackServiceImpl implements FeedbackService {
         return feedback;
     }
 
+    @Override
+    public List<Feedback> findAllFeedback() {
+        return feedbackRepository.findAll();
+    }
+
     private User getAuthorizedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();

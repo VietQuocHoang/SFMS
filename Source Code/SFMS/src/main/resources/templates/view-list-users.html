@@ -7,12 +7,17 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>List User Page</title>
+    <title>Danh sách người dùng</title>
     <div th:replace="fragments/core-css"></div>
     <!-- Page level plugin CSS-->
     <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <link th:href="@{/vendor/datatables/dataTables.bootstrap4.css}" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
     <link href="css/view-list-users.css" rel="stylesheet">
+    <link th:href="@{/vendor/datatables/dataTables.bootstrap4.css}" rel="stylesheet">
+    <link th:href="@{/css/view-list-users.css}" rel="stylesheet">
+    <link th:href="@{/vendor/chosen/chosen.min.css}" rel="stylesheet">
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -75,12 +80,36 @@
                         </datalist>
                     </div>
 
+                <div class="add-new-user-wrapper">
+                    <a th:href="@{/users/add}" class="btn btn-raised-primary btn-add-user"><i
+                            class="fa fa-plus"></i> Thêm người dùng
+                    </a>
+                </div>
+                <div class="toggle-bar-wrapper">
+                    <select class="filter-box" id="list-roles">
+                        <option value="">Tất cả phân quyền</option>
+                        <option th:each="role:${roleList}" th:text="${role.roleName}"
+                                th:value="${role.roleName}"></option>
+                    </select>
+                    <!--Department-->
+                    <select class="filter-box" id="list-departments">
+                        <!--<datalist id="list-departments" th:each="department : ${departments}">-->
+                        <!--<option th:utext="${department.name}">...</option>-->
+                        <option value="">Tất cả phòng</option>
+                        <option value="N/A">Học sinh</option>
+                        <option th:each="department:${departmentList}" th:text="${department.name}"></option>
+                    </select>
+                    <select class="filter-box" id="list-majors">
+                        <option value="">Tất cả chuyên ngành</option>
+                        <option th:each="major:${majorList}" th:text="${major.name}" th:value="${major.name}"></option>
+                    </select>
                     <!--major-->
                     <div class="form-group col-sm-2">
                         <div class="input-group input-group-sm">
                             <input list="list-roles" class="form-control" placeholder="Phân quyền"/>
                         </div>
-                        <datalist id="list-roles">
+                        <datalist id="list-roles"
+                        ">
                         <!--<datalist id="list-roles" th:each="role : ${roles}">-->
                         <!--<option th:utext="${role.name}">...</option>-->
                         <option>Head of Academic</option>
@@ -100,6 +129,11 @@
                             <option>Deactivate</option>
                         </datalist>
                     </div>
+                    <select class="filter-box" id="list-status">
+                        <option value="">Tất cả</option>
+                        <option>Đang hoạt động</option>
+                        <option>Ngưng hoạt động</option>
+                    </select>
                     <!--end Subjects-->
                 </div>
                 <div class="table-responsive">
@@ -110,18 +144,24 @@
                             <th>Phân quyền</th>
                             <th>Phòng ban</th>
                             <th>Chuyên ngành</th>
+                            <th>Email</th>
                             <th>Trạng thái</th>
                             <th>Email</th>
+                            <th></th>
                         </tr>
                         </thead>
+                        <tbody>
+                        </tbody>
                         <tfoot>
                         <tr>
                             <th>Họ & Tên</th>
                             <th>Phân quyền</th>
                             <th>Phòng ban</th>
                             <th>Chuyên ngành</th>
+                            <th>Email</th>
                             <th>Trạng thái</th>
                             <th>Email</th>
+                            <th></th>
                         </tr>
                         </tfoot>
                         <tbody>
@@ -256,4 +296,10 @@
 </div>
 </body>
 
+<div th:replace="fragments/core-script"></div>
+<!-- Custom javascript -->
+<script th:src="@{/vendor/datatables/jquery.dataTables.js}"></script>
+<script th:src="@{/vendor/datatables/dataTables.bootstrap4.js}"></script>
+<script th:src="@{/vendor/chosen/chosen.jquery.js}"></script>
+<script th:src="@{/js/view-list-users.js}"></script>
 </html>
