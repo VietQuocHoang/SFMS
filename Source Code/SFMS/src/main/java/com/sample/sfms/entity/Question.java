@@ -1,5 +1,8 @@
 package com.sample.sfms.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.sample.sfms.view.FeedbackView;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -8,11 +11,15 @@ import java.util.Collection;
  */
 @Entity
 public class Question {
+    @JsonView(FeedbackView.conductFeedbackView.class)
     private int id;
     private String type;
     private String suggestion;
+    @JsonView(FeedbackView.conductFeedbackView.class)
     private boolean isRequied;
+    @JsonView(FeedbackView.conductFeedbackView.class)
     private String questionContent;
+    @JsonView(FeedbackView.conductFeedbackView.class)
     private Collection<Optionn> optionsById;
     private Criteria criteriaByCriteriaId;
     private Feedback feedbackByFeedbackId;

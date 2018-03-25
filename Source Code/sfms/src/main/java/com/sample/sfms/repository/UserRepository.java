@@ -13,4 +13,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> findByRoleByRoleId_RoleName(String roleName);
     List<User> findByRoleByRoleId_RoleNameContainsAndFullnameContainsAndMajorByMajorId_NameContains(String rolename, String fullname, String major);
     User findByUsername(String username);
+
+    User findByCode(String code);
 }

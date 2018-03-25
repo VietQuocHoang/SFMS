@@ -131,4 +131,17 @@ public class FeedbackAPI {
     public ResponseEntity getListNotConductedFeedbackByAuthorizedUser() {
         return feedbackService.getNotConductedFeedbacksByUserId();
     }
+
+    @JsonView(FeedbackView.alertUserFeedbackView.class)
+    @GetMapping("/conduct")
+    public ResponseEntity getListFeedbackOfAuthorizedUser() {
+        return feedbackService.getNotConductedFeedbacksByUserId();
+    }
+
+    @JsonView(FeedbackView.conductFeedbackView.class)
+    @GetMapping("/conduct/{id}")
+    public Feedback conductFeedback(@PathVariable("id") int id) {
+        return feedbackService.findFeedbackToConduct(id);
+    }
+
 }

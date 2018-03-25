@@ -4,5 +4,6 @@ public class UserView {
     public class authenticatedUser {
     }
 
-    ;
+    public class listUserView {
+    }
 }

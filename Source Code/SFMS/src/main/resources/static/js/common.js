@@ -67,8 +67,8 @@ function getCurrentAuthenticatedUser() {
                 window.location.href = _ctx + "/logout";
             } else {
                 console.log(data.fullname);
-                $(".fullname").append(data.fullname);
-                $(".userRole").append(data.roleByRoleId.roleName);
+                $(".fullname").html(data.fullname);
+                $(".userRole").html(data.roleByRoleId.roleName);
             }
         }
     })

@@ -1,8 +1,8 @@
 package com.sample.sfms.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.sample.sfms.view.UserView;
 import com.sample.sfms.view.TargetView;
+import com.sample.sfms.view.UserView;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -14,24 +14,29 @@ import java.util.Collection;
 @Entity
 @Table(name = "user", schema = "capstone", catalog = "")
 public class User {
-    @JsonView(TargetView.basicClazzView.class)
+    @JsonView({TargetView.basicClazzView.class, UserView.listUserView.class})
     private int id;
     private String username;
     private String password;
-    @JsonView({UserView.authenticatedUser.class,TargetView.basicClazzView.class})
+    @JsonView({UserView.authenticatedUser.class, TargetView.basicClazzView.class, UserView.listUserView.class})
     private String fullname;
     private String code;
+    @JsonView({UserView.listUserView.class})
     private String mail;
     private Date birth;
+    @JsonView({UserView.listUserView.class})
     private Byte status;
+    private boolean male;
     private Collection<Answer> answersById;
     private Collection<Clazz> clazzesById;//clazzes whose be taught by a lecturer
     private Collection<Feedback> feedbacksById;
     private Collection<StudentClazz> studentClazzesById;
     private Collection<UserFeedback> userFeedbacksById;
+    @JsonView({UserView.listUserView.class})
     private Department departmentByDepartmentId;
-    @JsonView({UserView.authenticatedUser.class})
+    @JsonView({UserView.authenticatedUser.class, UserView.listUserView.class})
     private Role roleByRoleId;
+    @JsonView({UserView.listUserView.class})
     private Major majorByMajorId;
 
     @Id
@@ -113,6 +118,16 @@ public class User {
 
     public void setStatus(Byte status) {
         this.status = status;
+    }
+
+    @Basic
+    @Column(name = "male", nullable = true)
+    public boolean isMale() {
+        return male;
+    }
+
+    public void setMale(boolean male) {
+        this.male = male;
     }
 
     @Override

@@ -107,3 +107,11 @@ hr {
   background: red;
 }
 
+.form-control.error {
+    border-color: red;
+}
+
+small.text-danger {
+    padding-left: 15px;
+}
+
