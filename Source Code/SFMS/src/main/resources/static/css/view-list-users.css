@@ -6,8 +6,24 @@
     color: deepskyblue;
     font-size: 12px
 }
-.btn-add-user{
-    color: #08AE9E;
-    background-color: #FFFFFF;
-    border: 1px solid #08AE9E;
+
+.add-new-user-wrapper {
+    width: 100%;
+    float: left;
+    padding-left: 15px;
+}
+
+.toggle-bar-wrapper {
+    width: 100%;
+    float: left;
+    padding: 10px 15px;
+}
+
+.filter-box {
+    width: auto;
+    margin-left: 10px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-radius: 0.2rem;
+    border-color: lightgrey;
 }

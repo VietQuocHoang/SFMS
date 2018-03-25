@@ -83,18 +83,8 @@ public class TestController {
         return new ModelAndView("view-report-details");
     }
 
-    @GetMapping(value = "/view-list-users")
-    private ModelAndView viewListUsers(){
-        return new ModelAndView("view-list-users");
-    }
-
     @GetMapping(value = "/modify-user-details")
     private ModelAndView modifySelectedUser(){
         return new ModelAndView("modify-user-details");
-    }
-
-    @GetMapping(value = "/create-user")
-    private ModelAndView createUsers(){
-        return new ModelAndView("create-user");
     }
 }
