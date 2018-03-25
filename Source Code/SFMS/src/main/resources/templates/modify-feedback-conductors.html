@@ -11,9 +11,9 @@
     <!-- Bootstrap core CSS-->
     <div th:replace="fragments/core-css"></div>
     <!-- Custom styles for this template-->
-    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-    <link href="css/progressbar-feedback.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/modify-feedback-select-conductors.css">
+    <link th:href="@{/vendor/datatables/dataTables.bootstrap4.css}" rel="stylesheet">
+    <link th:href="@{/css/progressbar-feedback.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/modify-feedback-select-conductors.css}">
 </head>
 
 <body class="fixed-nav sticky-footer" id="page-top">
@@ -28,6 +28,7 @@
             </li>
             <li class="breadcrumb-item active">Quản lí feedback</li>
             <li class="breadcrumb-item active">Tạo mới</li>
+            <li class="breadcrumb-item active">Chọn người làm feedback</li>
         </ol>
         <!--&lt;!&ndash;Progress-Bar&ndash;&gt;-->
         <!--<div class="modify-feedback-progressbar">-->
@@ -74,7 +75,7 @@
                 </a>
             </div>
             <div class="col-sm-4">
-                <h5 class="overview-title">Chọn những ai được gửi phản hồi</h5>
+                <h5 class="overview-title">Chọn những người được làm feedback</h5>
             </div>
             <!--<div class="col-sm-4">-->
                 <!--<button class="btn btn-to-select-viewers">Chọn những ai được xem báo cáo <i-->
