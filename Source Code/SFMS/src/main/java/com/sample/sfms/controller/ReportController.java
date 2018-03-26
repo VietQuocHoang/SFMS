@@ -19,6 +19,9 @@ import java.util.List;
 @RequestMapping("/reports")
 public class ReportController {
     private static String SEE_SELF_REPORT = "SEE_SELF_REPORT";
+    private static String SEE_ALL_REPORT = "SEE_ALL_REPORT";
+    private static String SEE_DEPARTMENT_REPORT = "SEE_DEPARTMENT_REPORT";
+
     @Autowired
     private ReportService reportService;
 
@@ -32,20 +35,20 @@ public class ReportController {
         if (list.isEmpty()) {
             return new ModelAndView("forbidden");
         }
-        boolean flag = false;
+        ModelAndView mav = new ModelAndView("forbidden");
         for (PrivilegeRole p : list) {
-            if (p.getPrivilege().getName().equals(SEE_SELF_REPORT)) {
-                flag = true;
+            if (p.getPrivilege().getName().equals(SEE_ALL_REPORT)) {
+                mav.setViewName("view-report");
+                mav.addObject("feedbackTarget", reportService.loadListFeedbackTargetWrapper());
+            } else if (p.getPrivilege().getName().equals(SEE_SELF_REPORT)) {
+                mav.addObject("clazzes", user.getClazzesById());
+                mav.setViewName("view-my-report");
+            } else if (p.getPrivilege().getName().equals(SEE_DEPARTMENT_REPORT)) {
+                mav.addObject("department", user.getDepartmentByDepartmentId());
+                mav.setViewName("view-my-report");
             }
         }
-        ModelAndView mav = new ModelAndView();
-        if (flag) {
-            mav.addObject("clazzes", reportService.findClazzByLectureId(user.getId()));
-            mav.setViewName("view-my-report");
-        } else {
-            mav.setViewName("view-report");
-            mav.addObject("feedbackTarget", reportService.loadListFeedbackTargetWrapper());
-        }
+
         return mav;
     }
 

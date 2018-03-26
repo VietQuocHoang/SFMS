@@ -264,10 +264,12 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                     targetIds.add(response.getId());
                     break;
                 case "Lớp":
-                    for (int id : targetIds) {
-                        response = feedbackRepo.findOne(id);
-                        if (response.getClazzByClazzId().getId() == targetId)
-                            return new ResponseEntity<>(targetIds, HttpStatus.ALREADY_REPORTED);
+                    if (!targetIds.isEmpty()) {
+                        for (int id : targetIds) {
+                            response = feedbackRepo.findOne(id);
+                            if (response.getClazzByClazzId().getId() == targetId)
+                                return new ResponseEntity<>(targetIds, HttpStatus.ALREADY_REPORTED);
+                        }
                     }
                     response = feedbackRepo.save(new Feedback(null, null, null, clazzRepo.findOne(targetId), t));
                     targetIds.add(response.getId());
@@ -292,33 +294,34 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
         }
     }
 
-    public void deleteFeedback(Feedback response){
+    public void deleteFeedback(Feedback response) {
 
-            userFeedbackRepo.delete(response.getUserFeedbacksById());
+        userFeedbackRepo.delete(response.getUserFeedbacksById());
 //                            response.setUserFeedbacksById(null);
-            feedbackRepo.delete(response.getFeedbacksById());
+        feedbackRepo.delete(response.getFeedbacksById());
 //                            response.setFeedbacksById(null);
-            for (Question q : response.getQuestionsById()) {
-                for (Optionn opt : q.getOptionsById()) {
-                    answerRepo.delete(opt.getAnswersById());
-                }
-                optionRepo.delete(q.getOptionsById());
+        for (Question q : response.getQuestionsById()) {
+            for (Optionn opt : q.getOptionsById()) {
+                answerRepo.delete(opt.getAnswersById());
             }
-            questionRepo.delete(response.getQuestionsById());
+            optionRepo.delete(q.getOptionsById());
+        }
+        questionRepo.delete(response.getQuestionsById());
 //                            response.setQuestionsById(null);
 
-            feedbackRepo.delete(response);
+        feedbackRepo.delete(response);
 
     }
 
     @Override
     public ResponseEntity<List<Integer>> removeTarget(int id, List<Integer> targetIds) {
         Feedback response = new Feedback();
+        Type t;
         int removedId = 0;
         try {
             for (int targetId : targetIds) {
                 response = feedbackRepo.findOne(targetId);
-                Type t = response.getTypeByTypeId();
+                t = response.getTypeByTypeId();
                 switch (t.getDescription()) {
                     case "Chuyên ngành":
                         if (response.getMajorByMajorId().getId() == id)
@@ -463,16 +466,43 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
         }
     }
 
+    Feedback findTarget(int id, List<Integer> targetIds) {
+        Feedback tmp; Type t;
+
+        for (int i : targetIds) {
+            tmp = feedbackRepo.findOne(i);
+            t = tmp.getTypeByTypeId();
+            switch (t.getDescription()) {
+                case "Chuyên ngành":
+                    break;
+                case "Phòng ban":
+                    break;
+                case "Môn học":
+                    break;
+                case "Lớp":
+                    if (tmp.getClazzByClazzId().getId() == id) {
+                        return tmp;
+                    }
+                    break;
+                default:
+                    break ;
+            }
+        }
+
+        return null;
+    }
+
     @Override
-    public ResponseEntity<UserFeedback> addConductor(int targetId, int userId) {
+    public ResponseEntity<UserFeedback> addConductor(int targetId, int userId, List<Integer> targetIds) {
         try {
-            UserFeedback selected = userFeedbackRepo.findOne(new UserFeedbackPK(userId, targetId));
+            Feedback f = findTarget(targetId, targetIds);
+            UserFeedback selected = userFeedbackRepo.findOne(new UserFeedbackPK(userId, f.getId()));
             if (selected != null) {
                 selected.setConductor(true);
                 return new ResponseEntity<>(userFeedbackRepo.save(selected), HttpStatus.OK);
             }
             User u = userRepo.findOne(userId);
-            Feedback f = feedbackRepo.findOne(targetId);
+//            Feedback f = feedbackRepo.findOne(targetId);
 //            UserFeedback uf = userFeedbackRepo.save(new UserFeedback(u.getId(), f.getId(), true, false, false));
 //            uf.setConductor(true);
 //            return new ResponseEntity<>(userFeedbackRepo.save(uf), HttpStatus.OK);
@@ -484,9 +514,10 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     }
 
     @Override
-    public ResponseEntity<UserFeedback> removeConductor(int targetId, int userId) {
+    public ResponseEntity removeConductor(int targetId, int userId, List<Integer> targetIds) {
         try {
-            UserFeedback selected = userFeedbackRepo.findOne(new UserFeedbackPK(userId, targetId));
+            Feedback f = findTarget(targetId, targetIds);
+            UserFeedback selected = userFeedbackRepo.findOne(new UserFeedbackPK(userId, f.getId()));
             if (selected.isViewer()) {
                 selected.setConductor(false);
                 return new ResponseEntity<>(userFeedbackRepo.save(selected), HttpStatus.OK);
@@ -601,12 +632,36 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
 
 
     @Override
-    public ResponseEntity<List<User>> loadConductors(int id) {
-        List<User> conductors = new ArrayList<>();
+    public ResponseEntity<List<User>> loadConductors(int id, List<Integer> targetIds) {
         try {
-            for (UserFeedback uf : feedbackRepo.findOne(id).getUserFeedbacksById()) {
-                conductors.add(uf.getUserByUserId());
+            List<User> conductors = new ArrayList<>();
+            Feedback tmp;
+            Type t;
+            for (int i : targetIds) {
+                tmp = feedbackRepo.findOne(i);
+                t = tmp.getTypeByTypeId();
+                switch (t.getDescription()) {
+                    case "Chuyên ngành":
+                        break;
+                    case "Phòng ban":
+                        break;
+                    case "Môn học":
+                        break;
+                    case "Lớp":
+                        if (tmp.getClazzByClazzId().getId() == id) {
+                            List<UserFeedback> ufs = (List) tmp.getUserFeedbacksById();
+                            if (!(ufs.isEmpty() || ufs == null)) {
+                                for (UserFeedback uf : ufs) {
+                                    conductors.add(uf.getUserByUserId());
+                                }
+                            }
+                        }
+                        break;
+                    default:
+                        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
             }
+
             return new ResponseEntity<>(conductors, HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
@@ -778,6 +833,16 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     @Override
     public List filterSemester(String title) {
         return semesterRepo.findByTitleContains(title);
+    }
+
+    @Override
+    public List<User> getAllStudents() {
+        List<User> l = userRepo.findAll();
+        List<User> result = userRepo.findAll();
+        for(User u: l){
+            if(!u.getRoleByRoleId().getRoleName().equals("Học sinh")) result.remove(u);
+        }
+        return result;
     }
 
     @Override

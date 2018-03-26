@@ -2,6 +2,7 @@ package com.sample.sfms.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.sample.sfms.view.TargetView;
+import com.sample.sfms.view.UserView;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -12,19 +13,19 @@ import java.util.Collection;
  */
 @Entity
 public class Clazz {
-    @JsonView(TargetView.basicClazzView.class)
+    @JsonView({TargetView.basicClazzView.class, UserView.listUserView.class})
     private int id;
     @JsonView(TargetView.basicClazzView.class)
     private Date endDate;
     @JsonView(TargetView.basicClazzView.class)
     private Date startDate;
-    @JsonView(TargetView.basicClazzView.class)
+    @JsonView({TargetView.basicClazzView.class, UserView.listUserView.class})
     private String className;
-    @JsonView(TargetView.basicClazzView.class)
+    @JsonView({TargetView.basicClazzView.class, UserView.listUserView.class})
     private Semester semesterBySemesterId;
-    @JsonView(TargetView.basicClazzView.class)
+    @JsonView({TargetView.basicClazzView.class, UserView.listUserView.class})
     private User userByLecturerId;
-    @JsonView(TargetView.basicClazzView.class)
+    @JsonView({TargetView.basicClazzView.class, UserView.listUserView.class})
     private Course courseByCourseId;
     private Collection<Feedback> feedbacksById;
     private Collection<StudentClazz> studentClazzesById;

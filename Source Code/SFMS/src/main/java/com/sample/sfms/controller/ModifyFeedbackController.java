@@ -98,6 +98,13 @@ class ModifyFeedbackController {
         mv.addObject("targetIds", modifyService.loadTargets((List<Integer>) session.getAttribute("targetIds")));
         return mv;
     }
+
+    @GetMapping(value = "/conductor/{id}")
+    private ModelAndView getListConductor(@PathVariable("id") int id, HttpSession session) {
+        ModelAndView mv = new ModelAndView("modify-feedback-conductors");
+        mv.addObject("targetId", id);
+        return mv;
+    }
 }
 
   /*  @PostMapping(value = "/save-question")

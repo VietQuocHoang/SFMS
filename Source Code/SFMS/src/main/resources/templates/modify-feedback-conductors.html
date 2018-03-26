@@ -11,9 +11,9 @@
     <!-- Bootstrap core CSS-->
     <div th:replace="fragments/core-css"></div>
     <!-- Custom styles for this template-->
-    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-    <link href="css/progressbar-feedback.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/modify-feedback-select-conductors.css">
+    <link th:href="@{/vendor/datatables/dataTables.bootstrap4.css}" rel="stylesheet">
+    <link th:href="@{/css/progressbar-feedback.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/modify-feedback-select-conductors.css}">
 </head>
 
 <body class="fixed-nav sticky-footer" id="page-top">
@@ -28,57 +28,29 @@
             </li>
             <li class="breadcrumb-item active">Quản lí feedback</li>
             <li class="breadcrumb-item active">Tạo mới</li>
+            <li class="breadcrumb-item active">Chọn người làm feedback</li>
         </ol>
-        <!--&lt;!&ndash;Progress-Bar&ndash;&gt;-->
-        <!--<div class="modify-feedback-progressbar">-->
-            <!--<div class="row">-->
-                <!--<div class="col-sm-10">-->
-                    <!--&lt;!&ndash;nav wizard&ndash;&gt;-->
-                    <!--<ul class="nav nav-wizard">-->
-                        <!--<li class="progress-item"><a href="#"><span class="badge badge-step">1</span> Chọn mẫu</a></li>-->
-                        <!--<li class="progress-item"><a href="#"><span class="badge badge-step">2</span> Tùy chỉnh nội dung</a>-->
-                        <!--</li>-->
-                        <!--<li class="progress-item active">-->
-                            <!--<a href="#"><span class="badge badge-step">3</span> Chọn các đối tượng</a>-->
-                        <!--</li>-->
-                        <!--<li class="progress-item"><a href="modify-feedback-suggested-improvement"><span class="badge badge-step">4</span> Thêm đề xuất</a>-->
-                        <!--</li>-->
-                        <!--<li class="progress-item">-->
-                            <!--<a href="#"><span class="badge badge-step">5</span>Hoàn tất thông tin feedback</a>-->
-                        <!--</li>-->
-                    <!--</ul>-->
-                    <!--&lt;!&ndash;end nav-wizard&ndash;&gt;-->
-                <!--</div>-->
-                <!--<div class="col-sm-2">-->
-                    <!--<button class="btn btn-group-sm to-previous-step">-->
-                        <!--<i class="fa fa-angle-left" aria-hidden="true"></i>-->
-                    <!--</button>-->
-                    <!--<button class="btn btn-group-sm to-next-step">-->
-                        <!--<i class="fa fa-angle-right" aria-hidden="true"></i>-->
-                    <!--</button>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--&lt;!&ndash;end progress bar&ndash;&gt;-->
+        <input type="hidden" id="targetId" th:value="${targetId}"/>
         <br>
         <!--title-->
         <div class="row">
             <!--<div class="col-sm-4">-->
-                <!--<button class="btn btn-to-select-target"><i class="fa fa-caret-left" aria-hidden="true"></i> Chọn đối tượng đánh giá của feedback-->
-                <!--</button>-->
+            <!--<button class="btn btn-to-select-target"><i class="fa fa-caret-left" aria-hidden="true"></i> Chọn đối tượng đánh giá của feedback-->
+            <!--</button>-->
             <!--</div>-->
             <div class="col-sm-4">
-                <a href="overview-feedback">
-                <button class="btn btn-to-select-viewers"><i class="fa fa-caret-left" aria-hidden="true"></i> Hoàn tất
-                </button>
+                <a href="/sfms/modify-feedback/overview">
+                    <button class="btn btn-to-select-viewers"><i class="fa fa-caret-left" aria-hidden="true"></i> Hoàn
+                        tất
+                    </button>
                 </a>
             </div>
             <div class="col-sm-4">
-                <h5 class="overview-title">Chọn những ai được gửi phản hồi</h5>
+                <h5 class="overview-title">Chọn những người được làm feedback</h5>
             </div>
             <!--<div class="col-sm-4">-->
-                <!--<button class="btn btn-to-select-viewers">Chọn những ai được xem báo cáo <i-->
-                        <!--class="fa fa-caret-right" aria-hidden="true"></i></button>-->
+            <!--<button class="btn btn-to-select-viewers">Chọn những ai được xem báo cáo <i-->
+            <!--class="fa fa-caret-right" aria-hidden="true"></i></button>-->
             <!--</div>-->
         </div>
         <!--end title bar-->
@@ -87,19 +59,16 @@
             <div class="col-sm-12">
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link" id="nav-departments-tab" data-toggle="tab" href="#nav-departments"
-                           role="tab"
-                           aria-controls="nav-profile" aria-selected="false">Phòng ban</a>
+
                         <a class="nav-item nav-link" id="nav-lecturers-tab" data-toggle="tab" href="#nav-lecturers"
                            role="tab"
-                           aria-controls="nav-home" aria-selected="true">Giảng viên </a>
+                           aria-controls="nav-home" aria-selected="true">Giảng viên</a>
+
                         <a class="nav-item nav-link" id="nav-staffs-tab" data-toggle="tab" href="#nav-staffs"
                            role="tab"
                            aria-controls="nav-contact" aria-selected="false">Nhân viên</a>
-                        <a class="nav-item nav-link active" id="classes-tab" data-toggle="tab" href="#nav-classes"
-                           role="tab"
-                           aria-controls="nav-contact" aria-selected="false">Lớp</a>
-                        <a class="nav-item nav-link" id="students-tab" data-toggle="tab" href="#nav-students"
+
+                        <a class="nav-item nav-link show active" id="students-tab" data-toggle="tab" href="#nav-students"
                            role="tab"
                            aria-controls="nav-contact" aria-selected="false">Sinh viên</a>
                     </div>
@@ -176,113 +145,27 @@
                                 <table class="table table-bordered" id="tbl-lecturers" width="100%" cellspacing="0">
                                     <thead>
                                     <tr>
-                                        <th><input class="btn btn-check-all" type="button" name="target"  value="Chọn tất cả"/></th>
+                                        <th><input class="btn btn-check-all" type="button" name="target"
+                                                   id="btn-all-lecturer1" value="Chọn tất cả"/></th>
                                         <th>Họ & tên</th>
                                         <th>Ngành</th>
-                                        <th>Phòng ban/Chuyên ngành</th>
+                                        <th>Phòng ban</th>
                                         <th>Chức vụ</th>
                                         <th>Môn đảm nhiệm</th>
                                     </tr>
                                     </thead>
                                     <tfoot>
                                     <tr>
-                                        <th><input class="btn btn-check-all" type="button" name="target"  value="Chọn tất cả"/></th>
+                                        <th><input class="btn btn-check-all" type="button" name="target"
+                                                   id="btn-all-lecturer2" value="Chọn tất cả"/></th>
                                         <th>Họ & tên</th>
                                         <th>Ngành</th>
-                                        <th>Phòng ban/Chuyên ngành</th>
+                                        <th>Phòng ban</th>
                                         <th>Chức vụ</th>
                                         <th>Môn đảm nhiệm</th>
                                     </tr>
                                     </tfoot>
                                     <tbody>
-                                    <tr>
-                                        <td>
-                                            <input class="btn active btn-check-target" type="button" name="target"
-                                                   value="Chọn"/>
-                                        </td>
-                                        <td>Nguyễn Huy Hùng</td>
-                                        <td>SE</td>
-                                        <td>Software Engineering</td>
-                                        <td>Trưởng ban</td>
-                                        <td>SWM301, OOP202, PRX3011</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input class="btn active btn-check-target" type="button" name="target"
-                                                   value="Chọn"/>
-                                        </td>
-                                        <td>Thân Văn Sử</td>
-                                        <td>SE</td>
-                                        <td>Software Engineering</td>
-                                        <td>Trưởng ban</td>
-                                        <td>SWM301, OOP202, PRX3011</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input class="btn active btn-check-target" type="button" name="target"
-                                                   value="Chọn"/>
-                                        </td>
-                                        <td>Hồ Hoàn Kiếm</td>
-                                        <td>SE</td>
-                                        <td>Software Engineering</td>
-                                        <td>Trưởng ban</td>
-                                        <td>SWM301, OOP202, PRX3011</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input class="btn active btn-check-target" type="button" name="target"
-                                                   value="Chọn"/>
-                                        </td>
-                                        <td>Kiều Trọng Khánh</td>
-                                        <td>SE</td>
-                                        <td>Software Engineering</td>
-                                        <td>Trưởng ban</td>
-                                        <td>SWM301, OOP202, PRX3011</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input class="btn active btn-check-target" type="button" name="target"
-                                                   value="Chọn"/>
-                                        </td>
-                                        <td>Lâm Hữu Khánh Phương</td>
-                                        <td>SE</td>
-                                        <td>Software Engineering</td>
-                                        <td>Trưởng ban</td>
-                                        <td>SWM301, OOP202, PRX3011</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input class="btn active btn-check-target" type="button" name="target"
-                                                   value="Chọn"/>
-                                        </td>
-                                        <td>Ngô Đặng Hà An</td>
-                                        <td>SE</td>
-                                        <td>Software Engineering</td>
-                                        <td>Giảng viên, Nhân Viên</td>
-                                        <td>SWM301, OOP202, PRX3011</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input class="btn active btn-check-target" type="button" name="target"
-                                                   value="Chọn"/>
-                                        </td>
-                                        <td>Nguyễn Trọng Tài</td>
-                                        <td>SE</td>
-                                        <td>Software Engineering</td>
-                                        <td>Giảng viên, Nhân Viên</td>
-                                        <td>SWM301, OOP202, PRX3011</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input class="btn active btn-check-target" type="button" name="target"
-                                                   value="Chọn"/>
-                                        </td>
-                                        <td>Lại Đức Hùng</td>
-                                        <td>SE</td>
-                                        <td>Software Engineering</td>
-                                        <td>Giảng viên, Nhân Viên</td>
-                                        <td>SWM301, OOP202, PRX3011</td>
-                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -346,7 +229,8 @@
                                 <table class="table table-bordered" id="tbl-staffs" width="100%" cellspacing="0">
                                     <thead>
                                     <tr>
-                                        <th><input class="btn btn-check-all" type="button" name="target"  value="Chọn tất cả"/></th>
+                                        <th><input class="btn btn-check-all" type="button" name="target" id="btn-all-staff1"
+                                                   value="Chọn tất cả"/></th>
                                         <th>Họ & tên</th>
                                         <th>Phòng ban/Chuyên ngành</th>
                                         <th>Chức vụ</th>
@@ -354,85 +238,14 @@
                                     </thead>
                                     <tfoot>
                                     <tr>
-                                        <th><input class="btn btn-check-all" type="button" name="target"  value="Chọn tất cả"/></th>
+                                        <th><input class="btn btn-check-all" type="button" name="target" id="btn-all-staff2"
+                                                   value="Chọn tất cả"/></th>
                                         <th>Họ & tên</th>
                                         <th>Phòng ban/Chuyên ngành</th>
                                         <th>Chức vụ</th>
                                     </tr>
                                     </tfoot>
                                     <tbody>
-                                    <tr>
-                                        <td>
-                                            <input class="btn active btn-check-target" type="button" name="target"
-                                                   value="Chọn"/>
-                                        </td>
-                                        <td>Nguyễn Huy Hùng</td>
-                                        <td>Software Engineering</td>
-                                        <td>Trưởng ban</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input class="btn active btn-check-target" type="button" name="target"
-                                                   value="Chọn"/>
-                                        </td>
-                                        <td>Thân Văn Sử</td>
-                                        <td>Software Engineering</td>
-                                        <td>Trưởng ban</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input class="btn active btn-check-target" type="button" name="target"
-                                                   value="Chọn"/>
-                                        </td>
-                                        <td>Hồ Hoàn Kiếm</td>
-                                        <td>Software Engineering</td>
-                                        <td>Trưởng ban</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input class="btn active btn-check-target" type="button" name="target"
-                                                   value="Chọn"/>
-                                        </td>
-                                        <td>Kiều Trọng Khánh</td>
-                                        <td>Software Engineering</td>
-                                        <td>Trưởng ban</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input class="btn active btn-check-target" type="button" name="target"
-                                                   value="Chọn"/>
-                                        </td>
-                                        <td>Lâm Hữu Khánh Phương</td>
-                                        <td>Software Engineering</td>
-                                        <td>Trưởng ban</td>td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input class="btn active btn-check-target" type="button" name="target"
-                                                   value="Chọn"/>
-                                        </td>
-                                        <td>Ngô Đặng Hà An</td>
-                                        <td>Software Engineering</td>
-                                        <td>Giảng viên, Nhân Viên</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input class="btn active btn-check-target" type="button" name="target"
-                                                   value="Chọn"/>
-                                        </td>
-                                        <td>Nguyễn Trọng Tài</td>
-                                        <td>Software Engineering</td>
-                                        <td>Giảng viên, Nhân Viên</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input class="btn active btn-check-target" type="button" name="target"
-                                                   value="Chọn"/>
-                                        </td>
-                                        <td>Lại Đức Hùng</td>
-                                        <td>Software Engineering</td>
-                                        <td>Giảng viên, Nhân Viên</td>
-                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -440,294 +253,74 @@
                         <!--end table lecturers-->
                     </div>
                     <!--end tab pane staffs-->
-                    <!--tab panne departments-->
-                    <div class="tab-pane fade" id="nav-departments" role="tabpanel"
-                         aria-labelledby="nav-departments-tab">
-                        <!--filter bar-->
-                        <div class="form-row">
-                            <!--major-->
-                            <div class="form-group col-sm-2">
-                                <select class="form-control">
-                                    <option selected>--Ngành/ Chức năng--</option>
-                                    <option>Tất cả</option>
-                                    <option>An toàn thông tin</option>
-                                    <option>Kỹ thuật phần mềm</option>
-                                    <option>Quản trị kinh doanh</option>
-                                    <option>Thiết kế - Đồ họa</option>
-                                    <option>Ngôn ngữ Nhật</option>
-                                    <option>Khác</option>
-                                </select>
-                            </div>
-                            <!--end major-->
-                            <!--SubMajor-->
-                        </div>
-                        <!--table departments-->
-                        <div class="row">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="tbl-departments" width="100%" cellspacing="0">
-                                    <thead>
-                                    <tr>
-                                        <th><input class="btn btn-check-all" type="button" name="target"  value="Chọn tất cả"/></th>
-                                        <th>Tên</th>
-                                        <th>Ngành/ Chức năng</th>
-                                    </tr>
-                                    </thead>
-                                    <tfoot>
-                                    <tr>
-                                        <th><input class="btn btn-check-all" type="button" name="target"  value="Chọn tất cả"/></th>
-                                        <th>Tên</th>
-                                        <th>Ngành/ Chức năng</th>
-                                    </tr>
-                                    </tfoot>
-                                    <tbody>
-                                    <tr>
-                                        <td>
-                                            <input class="btn active btn-check-target" type="button" name="target"
-                                                   value="Chọn"/>
-                                        </td>
-                                        <td>Phòng Đào tạo</td>
-                                        <td>Khác</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input class="btn active btn-check-target" type="button" name="target"
-                                                   value="Chọn"/>
-                                        </td>
-                                        <td>Phòng Công tác sinh viên</td>
-                                        <td>Khác</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input class="btn active btn-check-target" type="button" name="target"
-                                                   value="Chọn"/>
-                                        </td>
-                                        <td>Phòng Khảo thí</td>
-                                        <td>Khác</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input class="btn active btn-check-target" type="button" name="target"
-                                                   value="Chọn"/>
-                                        </td>
-                                        <td>Phòng IT</td>
-                                        <td>Khác</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <!--end table departments-->
-                    </div>
-                    <!--end tab pane department-->
-                    <!--tab pane classes-->
-                    <div class="tab-pane fade show active" id="nav-classes" role="tabpanel" aria-labelledby="nav-subjects-tab">
-                        <!--filter bar-->
-                        <div class="form-row">
-                            <!--major-->
-                            <div class="form-group col-sm-2">
-                                <select class="form-control">
-                                    <option selected>--Ngành--</option>
-                                    <option>An toàn thông tin</option>
-                                    <option>Kỹ thuật phần mềm</option>
-                                    <option>Thiết kế - đồ họa</option>
-                                    <option>Quản trị kinh doanh</option>
-                                    <option>Ngôn ngữ Nhật</option>
-                                </select>
-                            </div>
-                            <!--&lt;!&ndash;end major&ndash;&gt;-->
-                            <!---->
-                            <!--SubMajor-->
-                            <div class="form-group col-sm-2">
-                                <select class="form-control">
-                                    <option selected>--Chuyên ngành--</option>
-                                    <option>Computing Fundamentals</option>
-                                    <option>Software Engineering</option>
-                                    <option>Japanese</option>
-                                </select>
-                            </div>
-                            <!--Semester-->
-                            <div class="form-group col-sm-2">
-                                <select class="form-control">
-                                    <option selected>--Học kỳ--</option>
-                                    <option>Fall 2018</option>
-                                    <option>Summer 2018</option>
-                                    <option>Spring 2018</option>
-                                    <option>Fall 2017</option>
-                                    <option>Summer 2017</option>
-                                    <option>Spring 2017</option>
-                                    <option>Fall 2016</option>
-                                    <option>Summer 2016</option>
-                                    <option>Spring 2016</option>
-                                </select>
-                            </div>
-                            <!--Subject-->
-                            <div class="form-group col-sm-2">
-                                <select class="form-control">
-                                    <option selected>--Môn học--</option>
-                                    <option>Database Warehouse - DBW301</option>
-                                    <option>Capstone Project-DBW301</option>
-                                    <option>Cloud Computing - PRC391</option>
-                                    <option>Digital Fundamentals - DGT201</option>
-                                    <option>E-Commerce - ISC301</option>
-                                    <option>Embedded Software Development - ESS301</option>
-                                    <option>Human Computer Interaction - HCI201</option>
-                                </select>
-                            </div>
-                            <!--Lecturer-->
-                            <div class="form-group col-sm-2">
-                                <select class="form-control">
-                                    <option selected>--Giảng viên--</option>
-                                    <option>Nguyễn Huy Hùng - HungNH</option>
-                                    <option>Kiều Trọng Khánh - KhanhKT</option>
-                                    <option>Thân Văn Sử - SuTV</option>
-                                    <option>Lâm Hữu Khánh Phương - PhuongLHK</option>
-                                    <option>Nguyễn Trọng Tài - TaiNT</option>
-                                    <option>Ngô Đặng Hà An - AnNDH</option>
-                                    <option>Dương Thiên Tứ - TuDT</option>
-                                    <option>Lại Đức Hùng - HungLD</option>
-                                </select>
-                            </div>
-                        </div>
-                        <!--table classes-->
-                        <div class="row">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="tbl-classes" width="100%" cellspacing="0">
-                                    <thead>
-                                    <tr>
-                                        <th><input class="btn btn-check-all" type="button" name="target"  value="Chọn tất cả"/></th>
-                                        <th>Môn</th>
-                                        <th>Chuyên ngành</th>
-                                        <th>Học kỳ</th>
-                                        <th>Giảng viên</th>
-                                        <!--<th>Giảng viên</th>-->
-                                    </tr>
-                                    </thead>
-                                    <tfoot>
-                                    <tr>
-                                        <th><input class="btn btn-check-all" type="button" name="target"  value="Chọn tất cả"/></th>
-                                        <th>Môn</th>
-                                        <th>Chuyên ngành</th>
-                                        <th>Học kỳ</th>
-                                        <th>Giảng viên</th>
-                                        <!--<th>Giảng viên</th>-->
-                                    </tr>
-                                    </tfoot>
-                                    <tbody>
-                                    <tr>
-                                        <td>
-                                            <input class="btn active btn-check-target" type="button" name="target"
-                                                   value="Chọn"/>
-                                        </td>
-                                        <td>OOP201</td>
-                                        <td>Computing fundamentals</td>
-                                        <td>Spring 2017</td>
-                                        <td>Kiều Trọng Khánh</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input class="btn active btn-check-target" type="button" name="target"
-                                                   value="Chọn"/>
-                                        </td>
-                                        <td>PRX301</td>
-                                        <td>Software Engineering</td>
-                                        <td>Spring 2017</td>
-                                        <td>Kiều Trọng Khánh</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input class="btn active btn-check-target" type="button" name="target"
-                                                   value="Chọn"/>
-                                        </td>
-                                        <td>JAV101</td>
-                                        <td>Japanese</td>
-                                        <td>Spring 2017</td>
-                                        <td>Nguyễn Thị Cẩm</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input class="btn active btn-check-target" type="button" name="target"
-                                                   value="Chọn"/>
-                                        </td>
-                                        <td>JAV201</td>
-                                        <td>Japanese</td>
-                                        <td>Spring 2017</td>
-                                        <td>Nguyễn Thị Kiều</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <!--end table classes-->
-                    </div>
-                    <!--end tab pane classes-->
                     <!--tab pane students-->
-                    <div class="tab-pane fade" id="nav-students" role="tabpanel"
+                    <div class="tab-pane fade show active" id="nav-students" role="tabpanel"
                          aria-labelledby="nav-students-tab">
                         <!--filter bar-->
                         <div class="form-row">
                             <!--major-->
-                            <div class="form-group col-sm-2">
-                                <select class="form-control">
-                                    <option selected>--Ngành--</option>
-                                    <option>An toàn thông tin</option>
-                                    <option>Kỹ thuật phần mềm</option>
-                                    <option>Thiết kế - đồ họa</option>
-                                    <option>Quản trị kinh doanh</option>
-                                    <option>Ngôn ngữ Nhật</option>
-                                </select>
+                            <div class="form-group col-sm-2" id="filterStudentMajor">
+                                <!--<select class="form-control">-->
+                                    <!--<option selected>&#45;&#45;Ngành&#45;&#45;</option>-->
+                                    <!--<option>An toàn thông tin</option>-->
+                                    <!--<option>Kỹ thuật phần mềm</option>-->
+                                    <!--<option>Thiết kế - đồ họa</option>-->
+                                    <!--<option>Quản trị kinh doanh</option>-->
+                                    <!--<option>Ngôn ngữ Nhật</option>-->
+                                <!--</select>-->
                             </div>
                             <!--&lt;!&ndash;end major&ndash;&gt;-->
                             <!---->
                             <!--SubMajor-->
-                            <div class="form-group col-sm-2">
-                                <select class="form-control">
-                                    <option selected>--Chuyên ngành--</option>
-                                    <option>Computing Fundamentals</option>
-                                    <option>Software Engineering</option>
-                                    <option>Japanese</option>
-                                </select>
+                            <div class="form-group col-sm-2" id="filterStudentCourse">
+                                <!--<select class="form-control">-->
+                                    <!--<option selected>&#45;&#45;Chuyên ngành&#45;&#45;</option>-->
+                                    <!--<option>Computing Fundamentals</option>-->
+                                    <!--<option>Software Engineering</option>-->
+                                    <!--<option>Japanese</option>-->
+                                <!--</select>-->
                             </div>
                             <!--Semester-->
-                            <div class="form-group col-sm-2">
-                                <select class="form-control">
-                                    <option selected>--Học kỳ--</option>
-                                    <option>Fall 2018</option>
-                                    <option>Summer 2018</option>
-                                    <option>Spring 2018</option>
-                                    <option>Fall 2017</option>
-                                    <option>Summer 2017</option>
-                                    <option>Spring 2017</option>
-                                    <option>Fall 2016</option>
-                                    <option>Summer 2016</option>
-                                    <option>Spring 2016</option>
-                                </select>
+                            <div class="form-group col-sm-2" id="filterStudentSemester">
+                                <!--<select class="form-control">-->
+                                    <!--<option selected>&#45;&#45;Học kỳ&#45;&#45;</option>-->
+                                    <!--<option>Fall 2018</option>-->
+                                    <!--<option>Summer 2018</option>-->
+                                    <!--<option>Spring 2018</option>-->
+                                    <!--<option>Fall 2017</option>-->
+                                    <!--<option>Summer 2017</option>-->
+                                    <!--<option>Spring 2017</option>-->
+                                    <!--<option>Fall 2016</option>-->
+                                    <!--<option>Summer 2016</option>-->
+                                    <!--<option>Spring 2016</option>-->
+                                <!--</select>-->
                             </div>
                             <!--Subject-->
-                            <div class="form-group col-sm-2">
-                                <select class="form-control">
-                                    <option selected>--Môn học--</option>
-                                    <option>Database Warehouse - DBW301</option>
-                                    <option>Capstone Project-DBW301</option>
-                                    <option>Cloud Computing - PRC391</option>
-                                    <option>Digital Fundamentals - DGT201</option>
-                                    <option>E-Commerce - ISC301</option>
-                                    <option>Embedded Software Development - ESS301</option>
-                                    <option>Human Computer Interaction - HCI201</option>
-                                </select>
+                            <div class="form-group col-sm-2" id="filterStudentClazz">
+                                <!--<select class="form-control">-->
+                                    <!--<option selected>&#45;&#45;Môn học&#45;&#45;</option>-->
+                                    <!--<option>Database Warehouse - DBW301</option>-->
+                                    <!--<option>Capstone Project-DBW301</option>-->
+                                    <!--<option>Cloud Computing - PRC391</option>-->
+                                    <!--<option>Digital Fundamentals - DGT201</option>-->
+                                    <!--<option>E-Commerce - ISC301</option>-->
+                                    <!--<option>Embedded Software Development - ESS301</option>-->
+                                    <!--<option>Human Computer Interaction - HCI201</option>-->
+                                <!--</select>-->
                             </div>
                             <!--Lecturer-->
-                            <div class="form-group col-sm-2">
-                                <select class="form-control">
-                                    <option selected>--Giảng viên--</option>
-                                    <option>Nguyễn Huy Hùng - HungNH</option>
-                                    <option>Kiều Trọng Khánh - KhanhKT</option>
-                                    <option>Thân Văn Sử - SuTV</option>
-                                    <option>Lâm Hữu Khánh Phương - PhuongLHK</option>
-                                    <option>Nguyễn Trọng Tài - TaiNT</option>
-                                    <option>Ngô Đặng Hà An - AnNDH</option>
-                                    <option>Dương Thiên Tứ - TuDT</option>
-                                    <option>Lại Đức Hùng - HungLD</option>
-                                </select>
+                            <div class="form-group col-sm-2" id="filterStudentLecturer">
+                                <!--<select class="form-control">-->
+                                    <!--<option selected>&#45;&#45;Giảng viên&#45;&#45;</option>-->
+                                    <!--<option>Nguyễn Huy Hùng - HungNH</option>-->
+                                    <!--<option>Kiều Trọng Khánh - KhanhKT</option>-->
+                                    <!--<option>Thân Văn Sử - SuTV</option>-->
+                                    <!--<option>Lâm Hữu Khánh Phương - PhuongLHK</option>-->
+                                    <!--<option>Nguyễn Trọng Tài - TaiNT</option>-->
+                                    <!--<option>Ngô Đặng Hà An - AnNDH</option>-->
+                                    <!--<option>Dương Thiên Tứ - TuDT</option>-->
+                                    <!--<option>Lại Đức Hùng - HungLD</option>-->
+                                <!--</select>-->
                             </div>
                         </div>
                         <!--table students-->
@@ -736,80 +329,32 @@
                                 <table class="table table-bordered" id="tbl-students" width="100%" cellspacing="0">
                                     <thead>
                                     <tr>
-                                        <th><input class="btn btn-check-all" type="button" name="target"  value="Chọn tất cả"/></th>
+                                        <th><input class="btn btn-check-all" type="button" name="target"
+                                                   value="Chọn tất cả"/></th>
                                         <th>Họ & tên</th>
                                         <th>MSSV</th>
-                                        <th>Ngành</th>
                                         <th>Chuyên ngành</th>
-                                        <th>Khóa đang học</th>
+                                        <th>Môn đã đăng kí</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>Lớp đã đăng kí</th>
                                     </tr>
                                     </thead>
                                     <tfoot>
                                     <tr>
-                                        <th><input class="btn btn-check-all" type="button" name="target"  value="Chọn tất cả"/></th>
+                                        <th><input class="btn btn-check-all" type="button" name="target"
+                                                   value="Chọn tất cả"/></th>
                                         <th>Họ & tên</th>
                                         <th>MSSV</th>
-                                        <th>Ngành</th>
                                         <th>Chuyên ngành</th>
-                                        <th>Khóa đang học</th>
+                                        <th>Môn đã đăng kí</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>Lớp đã đăng kí</th>
                                     </tr>
                                     </tfoot>
                                     <tbody>
-                                    <tr>
-                                        <td>
-                                            <input class="btn active btn-check-target" type="button" name="target"
-                                                   value="Chọn"/>
-                                        </td>
-                                        <td>Trần Hồ Minh Thuấn</td>
-                                        <td>SE61882</td>
-                                        <td>SE</td>
-                                        <td>IS</td>
-                                        <td>OOP201-KhanhKT<br>PRX301-KhanhKT</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input class="btn active btn-check-target" type="button" name="target"
-                                                   value="Chọn"/>
-                                        </td>
-                                        <td>Hoàng Quốc Việt</td>
-                                        <td>SE61235</td>
-                                        <td>SE</td>
-                                        <td>IS</td>
-                                        <td>OOP201-KhanhKT<br>PRX301-KhanhKT</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input class="btn active btn-check-target" type="button" name="target"
-                                                   value="Chọn"/>
-                                        </td>
-                                        <td>Park Hang Seo</td>
-                                        <td>SE12333</td>
-                                        <td>SE</td>
-                                        <td>IS</td>
-                                        <td>PRM301-HungNH<br>OOP201-KhanhKT<br>PRX301-KhanhKT</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input class="btn active btn-check-target" type="button" name="target"
-                                                   value="Chọn"/>
-                                        </td>
-                                        <td>Trịnh Gia Bình</td>
-                                        <td>SE11663</td>
-                                        <td>SE</td>
-                                        <td>IS</td>
-                                        <td>OOP201-KhanhKT</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input class="btn active btn-check-target" type="button" name="target"
-                                                   value="Chọn"/>
-                                        </td>
-                                        <td>Đặng Thế Anh</td>
-                                        <td>SE99999</td>
-                                        <td>SE</td>
-                                        <td>TokyoHot</td>
-                                        <td>OOP201-KhanhKT</td>
-                                    </tr>
+
                                     </tbody>
                                 </table>
                             </div>
@@ -826,18 +371,18 @@
     <footer th:replace="fragments/footer"></footer>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
     <!-- Page level plugin JavaScript-->
-    <script src="vendor/datatables/jquery.dataTables.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+    <script th:src="@{/vendor/datatables/jquery.dataTables.js}"></script>
+    <script th:src="@{/vendor/datatables/dataTables.bootstrap4.js}"></script>
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin.min.js"></script>
+    <script th:src="@{/js/sb-admin.min.js}"></script>
     <!-- Custom scripts for this page-->
-    <script src="js/sb-admin-datatables.min.js"></script>
-    <script src="js/select-feedback-conductors.js"></script>
+    <script th:src="@{/js/sb-admin-datatables.min.js}"></script>
+    <script th:src="@{/js/select-feedback-conductors.js}"></script>
 </div>
 </body>
 

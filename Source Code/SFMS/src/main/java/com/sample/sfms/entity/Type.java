@@ -1,6 +1,7 @@
 package com.sample.sfms.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.sample.sfms.view.CriteriaView;
 import com.sample.sfms.view.FeedbackView;
 import com.sample.sfms.view.TypeView;
 
@@ -12,11 +13,12 @@ import java.util.Collection;
  */
 @Entity
 public class Type {
-    @JsonView({FeedbackView.overview.class, TypeView.basicTypeView.class})
+    @JsonView({FeedbackView.overview.class, TypeView.basicTypeView.class, CriteriaView.basicCriteriaView.class})
     private int id;
-    @JsonView({FeedbackView.overview.class, TypeView.basicTypeView.class})
+    @JsonView({FeedbackView.overview.class, TypeView.basicTypeView.class, CriteriaView.basicCriteriaView.class})
     private String description;
     private Collection<Feedback> feedbacksById;
+    private Collection<Criteria> criteriasById;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,5 +68,14 @@ public class Type {
 
     public void setFeedbacksById(Collection<Feedback> feedbacksById) {
         this.feedbacksById = feedbacksById;
+    }
+
+    @OneToMany(mappedBy = "typeByTypeId")
+    public Collection<Criteria> getCriteriasById() {
+        return criteriasById;
+    }
+
+    public void setCriteriasById(Collection<Criteria> criteriasById) {
+        this.criteriasById = criteriasById;
     }
 }
