@@ -52,7 +52,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .mvcMatchers("/", "/login").permitAll()
                 .mvcMatchers("/roles/**").hasAuthority("EDIT_PERMISSION")
-                .mvcMatchers("/users/**").access("hasAuthority('EDIT_USER')")
+                .mvcMatchers("/users/**").access("hasAuthority('EDIT USER')")
                 .mvcMatchers("/feedbacks/**").access("hasAuthority('EDIT_PERMISSION') or hasAuthority('EDIT_FEEDBACK')")
                 .mvcMatchers("/conduct-feedback/**").access("hasAuthority('CONDUCT_FEEDBACK')")
                 .mvcMatchers("/reports/**").access("hasAuthority('SEE_ALL_REPORT') or hasAuthority('SEE_SELF_REPORT') or hasAuthority('SEE_DEPARTMENT_REPORT')")
