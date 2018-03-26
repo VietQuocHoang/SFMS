@@ -1,5 +1,8 @@
 package com.sample.sfms.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.sample.sfms.view.UserView;
+
 import javax.persistence.*;
 
 /**
@@ -9,9 +12,12 @@ import javax.persistence.*;
 @Table(name = "student_clazz", schema = "capstone", catalog = "")
 @IdClass(StudentClazzPK.class)
 public class StudentClazz {
+    @JsonView({UserView.listUserView.class})
     private int userId;
+    @JsonView({UserView.listUserView.class})
     private int clazzId;
     private User userByUserId;
+    @JsonView({UserView.listUserView.class})
     private Clazz clazzByClazzId;
 
     @Id

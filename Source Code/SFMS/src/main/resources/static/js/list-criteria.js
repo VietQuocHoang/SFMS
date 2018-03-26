@@ -92,12 +92,13 @@ $("#btnSave").click(function () {
         "criteria": $("#critName").val(),
         "typeByTypeId": {"id": $("#critType").val()},
         "status": status
-    }
+    };
+    console.log(criteria);
     $.ajax({
         url: '/sfms/api/criteria/' + saveOpt,
         type: method,
         dataType: 'json',
-        contentType: 'application/json',
+        contentType: 'application/json;charset=UTF-8',
         data: JSON.stringify(criteria),
         success: function (data, status, xhr) {
             if (xhr.status === 200) {

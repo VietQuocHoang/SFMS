@@ -1,5 +1,6 @@
 package com.sample.sfms.repository;
 
+import com.sample.sfms.entity.Role;
 import com.sample.sfms.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -13,6 +14,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> findByRoleByRoleId_RoleName(String roleName);
     List<User> findByRoleByRoleId_RoleNameContainsAndFullnameContainsAndMajorByMajorId_NameContains(String rolename, String fullname, String major);
     User findByUsername(String username);
-
+    List<User> findByRoleByRoleId(Role r);
     User findByCode(String code);
 }

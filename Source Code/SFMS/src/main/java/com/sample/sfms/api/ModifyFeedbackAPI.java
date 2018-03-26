@@ -6,20 +6,14 @@ package com.sample.sfms.api;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sample.sfms.entity.Clazz;
-import com.sample.sfms.entity.Feedback;
+import com.sample.sfms.entity.*;
 //import com.sample.sfms.entity.Role;
 //import com.sample.sfms.entity.Semester;
-import com.sample.sfms.entity.Semester;
 //import com.sample.sfms.model.ModifyFeedbackModel;
-import com.sample.sfms.entity.Type;
 import com.sample.sfms.model.FilteringModel;
 import com.sample.sfms.model.Target;
 import com.sample.sfms.service.interf.ModifyFeedbackService;
-import com.sample.sfms.view.FeedbackView;
-import com.sample.sfms.view.TargetView;
-import com.sample.sfms.view.SemesterView;
-import com.sample.sfms.view.TypeView;
+import com.sample.sfms.view.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -153,6 +147,17 @@ public class ModifyFeedbackAPI {
         int lecturerKey = Integer.parseInt(lecturer);
         return modifyService.filterClazz(majorKey,courseKey,semesterKey,lecturerKey);
     }
+    @JsonView(UserView.listUserView.class)
+    @GetMapping("/list/conductors/{id}")
+    private ResponseEntity listConductors(@PathVariable("id") int id, HttpSession session) {
+        return modifyService.loadConductors(id, (List<Integer>)session.getAttribute("targetIds"));
+    }
+
+    @JsonView(UserView.listUserView.class)
+    @GetMapping("/list/students")
+    private Iterable<User> getAllStudents(){
+        return modifyService.getAllStudents();
+    }
 
     @PostMapping("/create/{id}")
     private ResponseEntity<Feedback> createFeedbackFromTemplate(@PathVariable("id") int id, HttpSession session) {
@@ -228,14 +233,14 @@ public class ModifyFeedbackAPI {
         return response;
     }
 
-    @PostMapping("/add/conductor")
-    private ResponseEntity<Integer> addConductor(@RequestParam("id") int id, HttpSession session) {
-        return null;
+    @PostMapping("/add/conductor/{id}")
+    private ResponseEntity addConductor(@PathVariable("id") int targetId, @RequestBody User conductor, HttpSession session) {
+        return modifyService.addConductor(targetId, conductor.getId(), (List<Integer>) session.getAttribute("targetIds"));
     }
 
-    @DeleteMapping("/remove/conductor")
-    private ResponseEntity<Integer> removeConductor(@RequestParam("id") int id, HttpSession session) {
-        return null;
+    @DeleteMapping("/remove/conductor/{id}")
+    private ResponseEntity removeConductor(@PathVariable("id") int id, @RequestBody User conductor, HttpSession session) {
+        return modifyService.removeConductor(id, conductor.getId(),(List<Integer>) session.getAttribute("targetIds"));
     }
 
 
@@ -253,15 +258,19 @@ public class ModifyFeedbackAPI {
     private ResponseEntity saveFeedback(@PathVariable("opt") int opt, HttpSession session) {
         switch (opt) {
             case 1:
+                session.setAttribute("targetIds", null);
                 return modifyService.savePublishFeadbacks((int) session.getAttribute("id"),
                         (List<Integer>) session.getAttribute("targetIds"));
             case 2:
+                session.setAttribute("targetIds", null);
                 return modifyService.saveTemplateFeadback((int) session.getAttribute("id"),
                         (List<Integer>) session.getAttribute("targetIds"));
             case 3:
+                session.setAttribute("targetIds", null);
                 return modifyService.updateSelectedTemplate((int) session.getAttribute("id"),
                         (List<Integer>) session.getAttribute("targetIds"));
             default:
+                session.setAttribute("targetIds", null);
                 return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
     }

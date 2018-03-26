@@ -1,7 +1,9 @@
 /**
  * Created by MyPC on 27/02/2018.
  */
-var modifyconductorlink = "<a class='add-inf-item-link' href='/sfms/modify-feedback-conductors'><i class='fa fa-pencil'></i> Chỉnh sửa </a>";
+var modifyconductorlink = function(data, type, full, meta){
+    return "<a class='add-inf-item-link' href='/sfms/modify-feedback/conductor/"+data+"'><i class='fa fa-pencil'></i> Chỉnh sửa </a>"
+};
 var modifyviewerlink = "<a class='add-inf-item-link'    href='/sfms/modify-feedback-viewers'><i class='fa fa-pencil'></i> Chỉnh sửa </a>";
 var linkShow = "<a href='/sfms/modify-feedback/target'><i class='fa fa-plus' style='font-size: 24px'></i>    </a>";
 var linkDeleteClazz = "<a href='#' onclick='removeClazzTarget(this)'><i class='fa fa-trash' style='font-size: 24px'></i>    </a>";
@@ -65,8 +67,8 @@ function loadDepartmentTable() {
             "columns": [
                 {"data": "name"},
                 {//column for modify conductor
-                    "data": null,
-                    "defaultContent": modifyconductorlink
+                    "data": "id",
+                    "render": modifyconductorlink
                 },
                 {//column for modifyviewer
                     "data": null,
@@ -117,8 +119,8 @@ function loadMajorTable() {
                 {"data": "name"},
                 {"data": "code"},
                 {//column for modify conductor
-                    "data": null,
-                    "defaultContent": modifyconductorlink
+                    "data": "id",
+                    "render": modifyconductorlink
                 },
                 {//column for modifyviewer
                     "data": null,
@@ -169,8 +171,8 @@ function loadCourseTable() {
                 {"data": "name"},
                 {"data": "code"},
                 {//column for modify conductor
-                    "data": null,
-                    "defaultContent": modifyconductorlink
+                    "data": "id",
+                    "render": modifyconductorlink
                 },
                 {//column for modifyviewer
                     "data": null,
@@ -235,11 +237,11 @@ function loadClazzTable() {
                 {"data": "className"},
                 {"data": "userByLecturerId.fullname"},
                 {//column for modify conductor
-                    "data": null,
-                    "defaultContent": modifyconductorlink
+                    "data": "id",
+                    "render": modifyconductorlink
                 },
                 {//column for modifyviewer
-                    "data": null,
+                    "data": "id",
                     "defaultContent": modifyviewerlink
                 },
                 {//column for view detail-update-delete
