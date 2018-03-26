@@ -30,8 +30,8 @@
             <div class="card text-center log-in-card">
                 <div class="card-block">
                     <h4 class="card-title" style="color:#08AE9E">Vui lòng đăng nhập vào hệ thống</h4>
-                    <p th:if="${param.error}">
-                        ${param.error}
+                    <p th:if="${param.error}" class="text-danger">
+                        Tên hoặc mật khẩu không đúng
                     </p>
                     <hr/>
                     <form th:action="@{/login}" method="post">
