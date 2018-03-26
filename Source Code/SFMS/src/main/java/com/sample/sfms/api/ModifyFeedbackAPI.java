@@ -256,22 +256,27 @@ public class ModifyFeedbackAPI {
     @PutMapping("/save/option/{opt}")
     @JsonView({FeedbackView.overview.class})
     private ResponseEntity saveFeedback(@PathVariable("opt") int opt, HttpSession session) {
+        ResponseEntity response;
         switch (opt) {
             case 1:
-                session.setAttribute("targetIds", null);
-                return modifyService.savePublishFeadbacks((int) session.getAttribute("id"),
+                response = modifyService.savePublishFeadbacks((int) session.getAttribute("id"),
                         (List<Integer>) session.getAttribute("targetIds"));
+                session.setAttribute("targetIds", null);
+                return response;
             case 2:
-                session.setAttribute("targetIds", null);
-                return modifyService.saveTemplateFeadback((int) session.getAttribute("id"),
+                response =  modifyService.saveTemplateFeadback((int) session.getAttribute("id"),
                         (List<Integer>) session.getAttribute("targetIds"));
+                session.setAttribute("targetIds", null);
+                return response;
             case 3:
-                session.setAttribute("targetIds", null);
-                return modifyService.updateSelectedTemplate((int) session.getAttribute("id"),
+                response =  modifyService.updateSelectedTemplate((int) session.getAttribute("id"),
                         (List<Integer>) session.getAttribute("targetIds"));
-            default:
                 session.setAttribute("targetIds", null);
-                return new ResponseEntity(HttpStatus.BAD_REQUEST);
+                return response;
+            default:
+                response = new ResponseEntity(HttpStatus.BAD_REQUEST);
+                session.setAttribute("targetIds", null);
+                return response;
         }
     }
 
