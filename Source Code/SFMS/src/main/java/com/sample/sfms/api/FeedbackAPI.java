@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.sample.sfms.api.responseModel.Response;
 import com.sample.sfms.entity.Feedback;
 import com.sample.sfms.entity.Question;
+import com.sample.sfms.model.FeedbackModifySuggestionModel;
+import com.sample.sfms.model.ModifySuggestionModel;
 import com.sample.sfms.model.feedback.FeedbackCreateModel;
 import com.sample.sfms.model.feedback.FeedbackUpdateModel;
 import com.sample.sfms.model.option.OptionCreateModel;
@@ -88,6 +90,11 @@ public class FeedbackAPI {
                         AddQuestionModel addQuestion = new AddQuestionModel();
                         addQuestion.setFeedbackId(feedbackId);
                         addQuestion.setType(question.getType());
+                      /*  if (question.getSuggestion() == null) {
+                            addQuestion.setSuggestion("");
+                        } else {
+                            addQuestion.setSuggestion(question.getSuggestion());
+                        }*/
                         addQuestion.setSuggestion(question.getSuggestion());
                         addQuestion.setCriteriaId(question.getCriteriaId());
                         addQuestion.setQuestionContent(question.getQuestionContent());
@@ -125,6 +132,33 @@ public class FeedbackAPI {
         return new Response(false,"Xin kiểm tra lại feedback đã hợp lệ chưa");
     }
 
+    @RequestMapping(value = "/modify-suggestion", method = RequestMethod.POST)
+    @Transactional
+    public Response modifySuggestion(@RequestBody FeedbackModifySuggestionModel model) {
+        if(model.valid()) {
+            try {
+                //int feedbackId = feedbackService.save(model);
+                int feedbackId = model.getId();
+            //    List<Question> listExistedQuestion = questionService.findByFeedbackId(feedbackId);
+                List<ModifySuggestionModel> listSuggestionQuestion = model.getQuestions();
+             //   List<Integer> listModifyQuestionID = new ArrayList<>();
+                for (ModifySuggestionModel question : listSuggestionQuestion) {
+                      //  Question existedQuestion = questionService.findByQuestionID(question.getQuestionId());
+                            questionService.modifySuggestion(question.getSuggestion(),question.getQuestionId());
+                        //question.setFeedbackId(feedbackId);
+                        //questionService.modifySuggestion(question);
+                     //   listModifyQuestionID.add(question.getQuestionId());
+
+                }
+
+                return new Response(true, feedbackId + "");
+            } catch (Exception ex) {
+                return new Response(false, ex.getMessage());
+            }
+
+        }
+        return new Response(false,"Xin kiểm tra lại feedback đã hợp lệ chưa");
+    }
 
     @JsonView(FeedbackView.alertUserFeedbackView.class)
     @GetMapping("/undone-by-authorized-user")

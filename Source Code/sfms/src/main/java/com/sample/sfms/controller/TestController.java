@@ -43,9 +43,9 @@ public class TestController {
         return new ModelAndView("modify-feedback-viewers");
     }
 
-    @GetMapping(value = "/modify-feedback-suggested-improvement")
+    @GetMapping(value = "/create-feedback-suggested-improvement")
     private ModelAndView ModifyFeedbackSuggestedImprovement() {
-        return new ModelAndView("modify-feedback-suggested-improvement");
+        return new ModelAndView("create-feedback-suggested-improvement");
     }
 
     @GetMapping(value = "/skeleton")

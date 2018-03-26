@@ -889,8 +889,8 @@ function getQuestions() {
     let feedback = new Feedback(feedbackID); ////// HARD CODE /////////////
 
     //Lấy hết các div chứa question
-    let allQuestions = $("div[class='question-container']");
-
+    let allQuestions = $("div[class='']");
+    question-container
     for (var i = 0; i < allQuestions.length; ++i) {
         //Lấy id của div để biết thuộc loại question nào
         let id = allQuestions[i].getAttribute("id");

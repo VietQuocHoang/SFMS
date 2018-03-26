@@ -2,6 +2,7 @@ package com.sample.sfms.service.impl;
 
 import com.sample.sfms.define.QuestionType;
 import com.sample.sfms.entity.*;
+import com.sample.sfms.model.FeedbackReportModel;
 import com.sample.sfms.model.feedback.FeedbackTargetWrapper;
 import com.sample.sfms.model.report.reportSemester.*;
 import com.sample.sfms.repository.*;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -68,6 +70,60 @@ public class ReportServiceImpl implements ReportService {
                 break;
         }
         return results;
+    }
+
+    @Override
+    public List<Semester> findAllSemester() {
+        List<Semester> semesters = new ArrayList<>();
+        semesters = semesterRepository.findAllSemesters();
+        return semesters;
+    }
+
+    public List<FeedbackReportModel> loadReportDetail(int courseId, int userId, int type, int semesterId) {
+        List<Feedback> feedbacks = feedbackRepository.findByUserCource(courseId, userId, type);
+        HashMap<String, FeedbackReportModel> reportHashMap = new HashMap<>();
+        List<FeedbackReportModel> reports = new ArrayList<>();
+        HashMap<String, Integer> sumMap = new HashMap<>();
+        HashMap<String, Integer> countMap = new HashMap<>();
+        List<Criteria> criteriaList = criteriaRepository.findAll();
+        for (Criteria c : criteriaList) {
+             List<Answer> answers = new ArrayList<>();
+             for (Feedback f : feedbacks) {
+                 answers.addAll(answerRepository.getAllHaveScoresOptionByFeedbackIdAndCriteriaId(f.getId(),c.getId()));
+             }
+             double count = answers.size();
+             double sum = 0;
+             for (Answer a : answers) {
+                 sum += a.getOptionnByOptionnId().getPoint();
+             }
+             FeedbackReportModel report = new FeedbackReportModel(c.getCriteria(),sum,count);
+             reports.add(report);
+        }
+
+        for (FeedbackReportModel report : reports) {
+            String key = report.getCriteria();
+            if (reportHashMap.containsKey(key)) {
+                FeedbackReportModel r = reportHashMap.get(key);
+                r.addCount(report.getCount());
+                r.addSum(report.getSum());
+            } else {
+                reportHashMap.put(key, report);
+            }
+        }
+      /*  for (Feedback f : feedbacks) {
+            List<FeedbackReportModel> reports = feedbackRepository.statistics(f.getId());
+            for (FeedbackReportModel report : reports) {
+                String key = report.getCriteria();
+                if (reportHashMap.containsKey(key)) {
+                    FeedbackReportModel r = reportHashMap.get(key);
+                    r.addCount(report.getCount());
+                    r.addSum(report.getSum());
+                } else {
+                    reportHashMap.put(key, report);
+                }
+            }
+        }*/
+        return new ArrayList<>(reportHashMap.values());
     }
 
     @Override
@@ -243,7 +299,11 @@ public class ReportServiceImpl implements ReportService {
                     totalQuestionPoint += q.getQuestionAvgPoint();
                 }
                 double numOfYNQuestion = ynQuestionReportModels.size();
-                c.setAverageCriteriaPoint(totalQuestionPoint / numOfYNQuestion);
+                if(numOfYNQuestion == 0){
+                    c.setAverageCriteriaPoint(0);
+                } else{
+                    c.setAverageCriteriaPoint(totalQuestionPoint / numOfYNQuestion);
+                }
             }
         }
     }
@@ -254,7 +314,11 @@ public class ReportServiceImpl implements ReportService {
         for (CriteriaReportModel c : reportSemesterModel.getCriteriaReportModelList()) {
             totalCriteriaPoint += c.getAverageCriteriaPoint();
         }
-        semAvgPoint = totalCriteriaPoint / reportSemesterModel.getCriteriaReportModelList().size();
+        if(null == reportSemesterModel.getCriteriaReportModelList() || reportSemesterModel.getCriteriaReportModelList().isEmpty()){
+            semAvgPoint = 0;
+        } else {
+            semAvgPoint = totalCriteriaPoint / reportSemesterModel.getCriteriaReportModelList().size();
+        }
         reportSemesterModel.setAverageSemPoint(semAvgPoint);
     }
 
