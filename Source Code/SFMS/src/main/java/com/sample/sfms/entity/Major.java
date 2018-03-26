@@ -13,7 +13,7 @@ import java.util.Collection;
 @Entity
 public class Major {
     private int id;
-    @JsonView({TargetView.basicClazzView.class, TargetView.basicMajorView.class})
+    @JsonView({TargetView.basicClazzView.class, TargetView.basicMajorView.class, UserView.listUserView.class})
     private String code;
     @JsonView({TargetView.basicClazzView.class, TargetView.basicMajorView.class, UserView.listUserView.class})
     private String name;

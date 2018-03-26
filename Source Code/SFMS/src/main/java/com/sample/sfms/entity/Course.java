@@ -2,6 +2,7 @@ package com.sample.sfms.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.sample.sfms.view.TargetView;
+import com.sample.sfms.view.UserView;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -11,11 +12,11 @@ import java.util.Collection;
  */
 @Entity
 public class Course {
-    @JsonView({TargetView.basicClazzView.class, TargetView.basicCourseView.class})
+    @JsonView({TargetView.basicClazzView.class, TargetView.basicCourseView.class, UserView.listUserView.class})
     private int id;
-    @JsonView({TargetView.basicClazzView.class, TargetView.basicCourseView.class})
+    @JsonView({TargetView.basicClazzView.class, TargetView.basicCourseView.class, UserView.listUserView.class})
     private String name;
-    @JsonView({TargetView.basicClazzView.class, TargetView.basicCourseView.class})
+    @JsonView({TargetView.basicClazzView.class, TargetView.basicCourseView.class, UserView.listUserView.class})
     private String code;
     private Collection<Clazz> clazzesById;
     private Collection<Feedback> feedbacksById;

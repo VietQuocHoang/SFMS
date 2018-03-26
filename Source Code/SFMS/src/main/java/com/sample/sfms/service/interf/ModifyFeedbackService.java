@@ -37,9 +37,9 @@ public interface ModifyFeedbackService {
 
     public ResponseEntity<List<Feedback>> deleteFeedbacks(List<Integer> targetIds);
 
-    public ResponseEntity<UserFeedback> addConductor(int targetId, int userId);
+    public ResponseEntity<UserFeedback> addConductor(int targetId, int userId, List<Integer> targetIds);
 
-    public ResponseEntity<UserFeedback> removeConductor(int targetId, int userId);
+    public ResponseEntity removeConductor(int targetId, int userId, List<Integer> targetIds);
 
     public ResponseEntity<UserFeedback> addViewer(int targetId, int userId);
 
@@ -55,7 +55,7 @@ public interface ModifyFeedbackService {
 
     public ResponseEntity setEnd(Date end, int feedbackId);
 
-    public ResponseEntity loadConductors(int id);//id of feedback contains target
+    public ResponseEntity loadConductors(int id, List<Integer> targetIds);//id of feedback contains target
 
     public ResponseEntity loadViewers(int id);//id of feedback contains target
 
@@ -87,5 +87,6 @@ public interface ModifyFeedbackService {
 
     public List filterSemester(String title);
 
+    List<User> getAllStudents();
 
 }

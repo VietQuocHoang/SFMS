@@ -20,6 +20,7 @@ public class User {
     private String password;
     @JsonView({UserView.authenticatedUser.class, TargetView.basicClazzView.class, UserView.listUserView.class})
     private String fullname;
+    @JsonView({UserView.listUserView.class})
     private String code;
     @JsonView({UserView.listUserView.class})
     private String mail;
@@ -30,6 +31,7 @@ public class User {
     private Collection<Answer> answersById;
     private Collection<Clazz> clazzesById;//clazzes whose be taught by a lecturer
     private Collection<Feedback> feedbacksById;
+    @JsonView({UserView.listUserView.class})
     private Collection<StudentClazz> studentClazzesById;
     private Collection<UserFeedback> userFeedbacksById;
     @JsonView({UserView.listUserView.class})

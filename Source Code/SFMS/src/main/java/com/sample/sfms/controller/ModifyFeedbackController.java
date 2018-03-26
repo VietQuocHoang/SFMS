@@ -99,9 +99,10 @@ class ModifyFeedbackController {
         return mv;
     }
 
-    @GetMapping(value = "/conductor")
-    private ModelAndView getListConductor(HttpSession session) {
-        ModelAndView mv = new ModelAndView("modify-feedback-conductor");
+    @GetMapping(value = "/conductor/{id}")
+    private ModelAndView getListConductor(@PathVariable("id") int id, HttpSession session) {
+        ModelAndView mv = new ModelAndView("modify-feedback-conductors");
+        mv.addObject("targetId", id);
         return mv;
     }
 }
