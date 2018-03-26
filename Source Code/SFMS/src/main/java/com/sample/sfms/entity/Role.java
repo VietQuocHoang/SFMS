@@ -12,7 +12,7 @@ import java.util.Collection;
 @Entity
 public class Role {
     private int id;
-    @JsonView({UserView.authenticatedUser.class})
+    @JsonView({UserView.authenticatedUser.class, UserView.listUserView.class})
     private String roleName;
     private Collection<PrivilegeRole> privilegeRolesById;
     private Collection<User> usersById;

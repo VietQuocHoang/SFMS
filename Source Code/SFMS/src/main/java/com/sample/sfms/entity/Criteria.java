@@ -1,5 +1,8 @@
 package com.sample.sfms.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.sample.sfms.view.CriteriaView;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -8,9 +11,16 @@ import java.util.Collection;
  */
 @Entity
 public class Criteria {
+
+    @JsonView({CriteriaView.basicCriteriaView.class})
     private int id;
+    @JsonView({CriteriaView.basicCriteriaView.class})
     private String criteria;
+    @JsonView({CriteriaView.basicCriteriaView.class})
+    private boolean status;
     private Collection<Question> questionsById;
+    @JsonView({CriteriaView.basicCriteriaView.class})
+    private Type typeByTypeId;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +41,16 @@ public class Criteria {
 
     public void setCriteria(String criteria) {
         this.criteria = criteria;
+    }
+
+    @Basic
+    @Column(name = "status", nullable = false)
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     @Override
@@ -60,5 +80,15 @@ public class Criteria {
 
     public void setQuestionsById(Collection<Question> questionsById) {
         this.questionsById = questionsById;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "type_id", referencedColumnName = "id")
+    public Type getTypeByTypeId() {
+        return typeByTypeId;
+    }
+
+    public void setTypeByTypeId(Type typeByTypeId) {
+        this.typeByTypeId = typeByTypeId;
     }
 }

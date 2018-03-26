@@ -2,6 +2,7 @@ package com.sample.sfms.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.sample.sfms.view.TargetView;
+import com.sample.sfms.view.UserView;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -13,7 +14,7 @@ import java.util.Collection;
 public class Department {
     @JsonView({TargetView.basicClazzView.class, TargetView.basicDepartmentView.class})
     private int id;
-    @JsonView({TargetView.basicClazzView.class, TargetView.basicDepartmentView.class})
+    @JsonView({TargetView.basicClazzView.class, TargetView.basicDepartmentView.class, UserView.listUserView.class})
     private String name;
     private Collection<Feedback> feedbacksById;
     private Collection<User> usersById;

@@ -1,5 +1,8 @@
 package com.sample.sfms.entity;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.sample.sfms.view.FeedbackView;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -9,8 +12,11 @@ import java.util.Collection;
 @Entity
 @Table(name = "optionn", schema = "capstone", catalog = "")
 public class Optionn {
+    @JsonView(FeedbackView.conductFeedbackView.class)
     private int id;
+    @JsonView(FeedbackView.conductFeedbackView.class)
     private String optionnContent;
+    @JsonView(FeedbackView.conductFeedbackView.class)
     private Double point;
     private Collection<Answer> answersById;
     private Question questionByQuestionId;
