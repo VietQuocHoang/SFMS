@@ -71,9 +71,8 @@ $(".btn-preview").click(function() {
         url: _ctx +'/preview-feedback/' + templateID,
         dataType: 'html',
         success: function(data) {
+            document.getElementById('templateID').value = templateID;
             $("#modalTemplateContent").innerHTML = "";
-            $("#modalTemplateFooter").innerHTML = "";
-            $("#modalTemplateFooter").append("<input hidden class='form-control' value='" + templateID + "' type='text' name='templateID'>");
             $("#modalTemplateContent").append(data);
             $('#modalTemplate').modal('toggle');
         },

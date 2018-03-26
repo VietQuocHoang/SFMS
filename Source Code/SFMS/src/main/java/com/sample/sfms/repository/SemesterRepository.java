@@ -2,6 +2,7 @@ package com.sample.sfms.repository;
 
 import com.sample.sfms.entity.Semester;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,4 +15,7 @@ import java.util.List;
 @Repository
 public interface SemesterRepository extends JpaRepository<Semester, Integer> {
     List<Semester> findByTitleContains(String title);
+
+    @Query("select s from Semester s")
+    List<Semester> findAllSemesters();
 }

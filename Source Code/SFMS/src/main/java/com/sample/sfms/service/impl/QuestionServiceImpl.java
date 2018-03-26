@@ -1,6 +1,7 @@
 package com.sample.sfms.service.impl;
 
 import com.sample.sfms.entity.*;
+import com.sample.sfms.model.ModifySuggestionModel;
 import com.sample.sfms.model.option.OptionCreateModel;
 import com.sample.sfms.model.option.OptionUpdateModel;
 import com.sample.sfms.model.question.AddQuestionModel;
@@ -60,6 +61,11 @@ public class QuestionServiceImpl implements QuestionService {
         question.setIsRequied(model.isRequired());
         question.setQuestionContent(model.getQuestionContent());
         question.setSuggestion(model.getSuggestion());
+       /* if (model.getSuggestion() == null) {
+            question.setSuggestion("");
+        } else {
+            question.setSuggestion(model.getSuggestion());
+        }*/
         question.setType(model.getType());
 
 
@@ -99,6 +105,29 @@ public class QuestionServiceImpl implements QuestionService {
         }
 
 
+    }
+
+    @Override
+    @Transactional
+    public void modifySuggestion(String suggestion, int questionId) throws Exception {
+        if (questionId == 0) {
+            throw new Exception("Xin chọn câu hỏi để update");
+        }
+
+        try {
+            int result = questionRepo.updateSuggestion(suggestion, questionId);
+            /*Question question = this.questionRepo.getOne(model.getQuestionId());
+            question.setSuggestion(model.getSuggestion());
+
+            Feedback feedback = feedbackRepository.findById(model.getFeedbackId());
+
+            question.setFeedbackByFeedbackId(feedback);
+
+            this.questionRepo.save(question);*/
+
+        } catch (Exception ex) {
+            throw ex;
+        }
     }
 
     @Override
@@ -172,6 +201,11 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public List<Question> findByFeedbackId(int feedbackId) {
         return questionRepo.findByFeedbackId(feedbackId);
+    }
+
+    @Override
+    public Question findByQuestionID(int questionID) {
+        return questionRepo.findByQuestionId(questionID);
     }
 
     /*---------------Private methods------------------*/

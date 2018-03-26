@@ -2,7 +2,7 @@ package com.sample.sfms.service.impl;
 
 import com.sample.sfms.define.QuestionType;
 import com.sample.sfms.entity.*;
-import com.sample.sfms.model.FeedbackReport;
+import com.sample.sfms.model.FeedbackReportModel;
 import com.sample.sfms.model.feedback.FeedbackTargetWrapper;
 import com.sample.sfms.model.report.reportSemester.*;
 import com.sample.sfms.repository.*;
@@ -72,15 +72,50 @@ public class ReportServiceImpl implements ReportService {
         return results;
     }
 
-    public List<FeedbackReport> loadReportDetail(int courseId, int userId, int type, int semesterId) {
-        List<Feedback> feedbacks = feedbackRepository.findByUserCource(courseId, userId, type, semesterId);
-        HashMap<String, FeedbackReport> reportHashMap = new HashMap<>();
+    @Override
+    public List<Semester> findAllSemester() {
+        List<Semester> semesters = new ArrayList<>();
+        semesters = semesterRepository.findAllSemesters();
+        return semesters;
+    }
+
+    public List<FeedbackReportModel> loadReportDetail(int courseId, int userId, int type, int semesterId) {
+        List<Feedback> feedbacks = feedbackRepository.findByUserCource(courseId, userId, type);
+        HashMap<String, FeedbackReportModel> reportHashMap = new HashMap<>();
+        List<FeedbackReportModel> reports = new ArrayList<>();
+        HashMap<String, Integer> sumMap = new HashMap<>();
+        HashMap<String, Integer> countMap = new HashMap<>();
+        List<Criteria> criteriaList = criteriaRepository.findAll();
+        for (Criteria c : criteriaList) {
+             List<Answer> answers = new ArrayList<>();
+             for (Feedback f : feedbacks) {
+                 answers.addAll(answerRepository.getAllHaveScoresOptionByFeedbackIdAndCriteriaId(f.getId(),c.getId()));
+             }
+             double count = answers.size();
+             double sum = 0;
+             for (Answer a : answers) {
+                 sum += a.getOptionnByOptionnId().getPoint();
+             }
+             FeedbackReportModel report = new FeedbackReportModel(c.getCriteria(),sum,count);
+             reports.add(report);
+        }
+
+        for (FeedbackReportModel report : reports) {
+            String key = report.getCriteria();
+            if (reportHashMap.containsKey(key)) {
+                FeedbackReportModel r = reportHashMap.get(key);
+                r.addCount(report.getCount());
+                r.addSum(report.getSum());
+            } else {
+                reportHashMap.put(key, report);
+            }
+        }
       /*  for (Feedback f : feedbacks) {
-            List<FeedbackReport> reports = feedbackRepository.statistics(f.getId());
-            for (FeedbackReport report : reports) {
+            List<FeedbackReportModel> reports = feedbackRepository.statistics(f.getId());
+            for (FeedbackReportModel report : reports) {
                 String key = report.getCriteria();
                 if (reportHashMap.containsKey(key)) {
-                    FeedbackReport r = reportHashMap.get(key);
+                    FeedbackReportModel r = reportHashMap.get(key);
                     r.addCount(report.getCount());
                     r.addSum(report.getSum());
                 } else {
@@ -200,11 +235,7 @@ public class ReportServiceImpl implements ReportService {
                                         }
                                         ynQuestionReportModel.getYnAnswerReportModelList().add(ynAnswerReportModel);
                                     }
-                                    if(totalSelected == 0){
-                                        questionAvgPoint = 0;
-                                    } else {
-                                        questionAvgPoint = totalPoint/totalSelected;
-                                    }
+                                    questionAvgPoint = totalPoint / totalSelected;
                                     ynQuestionReportModel.setQuestionAvgPoint(questionAvgPoint);
                                     CriteriaReportModel tmp = findCriteriaReportModelByCriteriaId(
                                             criteriaReportModels, q.getCriteriaByCriteriaId().getId());

@@ -1,7 +1,6 @@
 package com.sample.sfms.repository;
 
 import com.sample.sfms.entity.Feedback;
-import com.sample.sfms.model.FeedbackReport;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -62,18 +61,16 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
     @Query("select f from Feedback f, Clazz c where " +
             "f.isTemplate = false AND f.clazzByClazzId.id = c.id AND "+
             "(f.typeByTypeId.id = :type OR :type = -1) AND "+
-            "f.semesterBySemesterId.id = :semesterId AND "+
             "c.courseByCourseId.id = :courseId AND c.userByLecturerId.id = :userId")
     List<Feedback> findByUserCource(@Param("courseId")int courseId,
-                                    @Param("courseId")int userId,
-                                    @Param("type")int type,
-                                    @Param("semesterId")int semesterId);
+                                    @Param("userId")int userId,
+                                    @Param("type")int type);
 
-    /*@Query("select com.sample.sfms.model.FeedbackReport (c.criteria, sum(o.point), count(a.id)) " +
+   /* @Query("select new com.sample.sfms.model.FeedbackReportModel(c.criteria, sum(o.point), count(a.id))" +
             "from Question q, Optionn o, Answer a, Criteria c " +
             "where q.feedbackByFeedbackId.id  = :feedbackId and " +
             "q.criteriaByCriteriaId.id = c.id and " +
             "q.id = o.questionByQuestionId.id and " +
             "o.id = a.optionnByOptionnId.id")
-    List<FeedbackReport> statistics(@Param("feedbackId")int feedbackId);*/
+    List<FeedbackReportModel> statistics(@Param("feedbackId")int feedbackId);*/
 }

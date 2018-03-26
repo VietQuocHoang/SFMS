@@ -24,4 +24,10 @@ public interface AnswerRepository extends JpaRepository<Answer, Integer> {
 
     List<Answer> getAllByOptionnByOptionnIdId(int id);
 
+    @Query(value = "select a from Answer a, Feedback f, Question q, Optionn o where "
+            + "f.id = :feedbackId and f.id = q.feedbackByFeedbackId.id "
+            + "and q.id = o.questionByQuestionId.id and o.id = a.optionnByOptionnId.id and "
+            + "(q.type = 'Radio' or q.type = 'CheckBox' or q.type = 'Star') and q.criteriaByCriteriaId.id = :critId")
+    List<Answer> getAllHaveScoresOptionByFeedbackIdAndCriteriaId (@Param("feedbackId") int feedbackId, @Param("critId") int critId);
+
 }
