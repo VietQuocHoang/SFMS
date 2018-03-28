@@ -291,8 +291,8 @@ $(".question-list-wrapper").sortable({
                     "                                                                </div>" +
                     "                                                                <div class='input-edit-answer-holder'>" +
                     "                                                                    <input type='text' class='answer-content-input'" +
-                    "                                                                           placeholder='Đáp án 1'>" +
-                    "                                                                    Trọng số: <input type='number' min='0'" +
+                    "                                                                           value='Đáp án 1'>" +
+                    "                                                                    Trọng số: <input type='number' min='1' value='1'" +
                     "                                                                                     class='weight-input'>" +
                     "                                                                </div>" +
                     "                                                                <div class='remove-answer-holder'>" +
@@ -307,8 +307,8 @@ $(".question-list-wrapper").sortable({
                     "                                                                </div>" +
                     "                                                                <div class='input-edit-answer-holder'>" +
                     "                                                                    <input type='text' class='answer-content-input'" +
-                    "                                                                           placeholder='Đáp án 2'>" +
-                    "                                                                    Trọng số: <input type='number' min='0'" +
+                    "                                                                           value='Đáp án 2'>" +
+                    "                                                                    Trọng số: <input type='number' min='1' value='1'" +
                     "                                                                                     class='weight-input'>" +
                     "                                                                </div>" +
                     "                                                                <div class='remove-answer-holder'>" +
@@ -323,8 +323,8 @@ $(".question-list-wrapper").sortable({
                     "                                                                </div>" +
                     "                                                                <div class='input-edit-answer-holder'>" +
                     "                                                                    <input type='text' class='answer-content-input'" +
-                    "                                                                           placeholder='Đáp án 3'>" +
-                    "                                                                    Trọng số: <input type='number' min='0'" +
+                    "                                                                           value='Đáp án 3'>" +
+                    "                                                                    Trọng số: <input type='number' min='1' value='1'" +
                     "                                                                                     class='weight-input'>" +
                     "                                                                </div>" +
                     "                                                                <div class='remove-answer-holder'>" +
@@ -428,8 +428,8 @@ $(".question-list-wrapper").sortable({
                     "                                                                </div>" +
                     "                                                                <div class='input-edit-answer-holder'>" +
                     "                                                                    <input type='text' class='answer-content-input'" +
-                    "                                                                           placeholder='Đáp án 1'>" +
-                    "                                                                    Trọng số: <input type='number' min='0'" +
+                    "                                                                           value='Đáp án 1'>" +
+                    "                                                                    Trọng số: <input type='number' min='1' value='1'" +
                     "                                                                                     class='weight-input'>" +
                     "                                                                </div>" +
                     "                                                                <div class='remove-answer-holder'>" +
@@ -605,7 +605,7 @@ $(document).on("click", ".add-new-answer-option", (event) => {
         "</div>" +
         "<div class='input-edit-answer-holder'>" +
         "<input type='text' class='answer-content-input' value='Đáp án " + (listEditAnswer.find("li").length + 1) + "'>" +
-        " Trọng số: <input type='number' min='0' class='weight-input' value='1'>" +
+        " Trọng số: <input type='number' min='1' value='1' class='weight-input' value='1'>" +
         "</div>" +
         "<div class='remove-answer-holder'>" +
         "<i class='fa fa-close'></i>" +
@@ -632,7 +632,7 @@ $(document).on("click", ".add-new-answer-checkbox", (event) => {
         "</div>" +
         "<div class='input-edit-answer-holder'>" +
         "<input type='text' class='answer-content-input' value='Đáp án " + (listEditAnswer.find("li").length + 1) + "'>" +
-        " Trọng số: <input type='number' min='0' class='weight-input' value='1'>" +
+        " Trọng số: <input type='number' min='1' value='1' class='weight-input' value='1'>" +
         "</div>" +
         "<div class='remove-answer-holder'>" +
         "<i class='fa fa-close'></i>" +

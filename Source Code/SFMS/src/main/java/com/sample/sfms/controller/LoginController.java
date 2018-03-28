@@ -15,6 +15,16 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
+    @GetMapping(value = {"/", "/login"})
+    private ModelAndView login() {
+        User user = userService.getCurrentAuthenticatedUser();
+        if (user == null) {
+            return new ModelAndView("login");
+        } else {
+            return new ModelAndView("redirect:/home");
+        }
+    }
+
     @GetMapping("/access-denied")
     private ModelAndView accessDenied() {
         return new ModelAndView("forbidden");
