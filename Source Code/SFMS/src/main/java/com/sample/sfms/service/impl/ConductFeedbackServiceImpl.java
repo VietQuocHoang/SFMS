@@ -3,19 +3,22 @@ package com.sample.sfms.service.impl;
 import com.sample.sfms.entity.*;
 import com.sample.sfms.model.answer.ConductAnswer;
 import com.sample.sfms.model.answer.ConductAnswerWrapper;
-import com.sample.sfms.repository.AnswerRepository;
-import com.sample.sfms.repository.FeedbackRepository;
-import com.sample.sfms.repository.OptionnRepository;
-import com.sample.sfms.repository.UserFeedbackRepository;
+import com.sample.sfms.model.feedback.conduct.EditFeedbackConductAnswerModel;
+import com.sample.sfms.model.feedback.conduct.EditFeedbackConductModel;
+import com.sample.sfms.model.feedback.conduct.EditFeedbackConductOptionModel;
+import com.sample.sfms.model.feedback.conduct.EditFeedbackConductQuestionModel;
+import com.sample.sfms.repository.*;
 import com.sample.sfms.service.interf.ConductFeedbackService;
-import com.sample.sfms.service.interf.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.RollbackException;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,7 +31,7 @@ public class ConductFeedbackServiceImpl implements ConductFeedbackService {
     private FeedbackRepository feedbackRepository;
 
     @Autowired
-    private UserService userService;
+    private UserRepository userRepository;
 
     @Autowired
     private AnswerRepository answerRepository;
@@ -51,11 +54,12 @@ public class ConductFeedbackServiceImpl implements ConductFeedbackService {
 
     @Override
     public ResponseEntity saveAnswer(ConductAnswerWrapper conductAnswerWrapper) {
-        User user = userService.getCurrentAuthenticatedUser();
+        User user = getCurrentAuthenticatedUser();
         if (user == null) {
             return new ResponseEntity(HttpStatus.FORBIDDEN);
         }
         try {
+            answerRepository.removeAllAnswerByUserAndFeedback(user.getId(), conductAnswerWrapper.getFeedbackId());
             Timestamp currDate = new Timestamp(System.currentTimeMillis());
             if (conductAnswerWrapper.getAnswers() != null) {
                 Optionn optionn = null;
@@ -83,4 +87,59 @@ public class ConductFeedbackServiceImpl implements ConductFeedbackService {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
     }
+
+    @Override
+    public ResponseEntity findFeedbackToEdit(int feedbackId) {
+        User user = getCurrentAuthenticatedUser();
+        UserFeedback userFeedback = userFeedbackRepository.findUserFeedbackByUserAndFeedback(user.getId(), feedbackId);
+        if (userFeedback == null) {
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
+        } else {
+            List<Answer> answerList = answerRepository.getAllAnswerByUserIdAndFeedbackId(user.getId(), feedbackId);
+            if (answerList == null || answerList.isEmpty()) {
+                return new ResponseEntity(HttpStatus.NO_CONTENT);
+            } else {
+                Feedback feedback = feedbackRepository.findById(feedbackId);
+                EditFeedbackConductModel editFeedbackConductModel = new EditFeedbackConductModel();
+                editFeedbackConductModel.setFeedbackName(feedback.getFeedbackName());
+                editFeedbackConductModel.setId(feedback.getId());
+                EditFeedbackConductQuestionModel questionModel;
+                for (Question q : feedback.getQuestionsById()) {
+                    questionModel = new EditFeedbackConductQuestionModel();
+                    questionModel.setType(q.getType());
+                    questionModel.setId(q.getId());
+                    questionModel.setRequied(q.getIsRequied());
+                    questionModel.setQuestionContent(q.getQuestionContent());
+                    EditFeedbackConductOptionModel optionModel;
+                    for (Optionn o : q.getOptionsById()) {
+                        optionModel = new EditFeedbackConductOptionModel();
+                        optionModel.setOptionnContent(o.getOptionnContent());
+                        optionModel.setId(o.getId());
+                        optionModel.setPoint(o.getPoint());
+                        questionModel.getOptionList().add(optionModel);
+                        EditFeedbackConductAnswerModel answerModel;
+                        for (Answer a : answerList) {
+                            if (a.getOptionnByOptionnId().getId() == o.getId()) {
+                                answerModel = new EditFeedbackConductAnswerModel();
+                                answerModel.setId(a.getId());
+                                answerModel.setOptionnId(o.getId());
+                                answerModel.setAnswerContent(a.getAnswerContent());
+                                optionModel.setAnswer(answerModel);
+                                optionModel.setAnswered(true);
+                            }
+                        }
+                    }
+                    editFeedbackConductModel.getQuestionList().add(questionModel);
+                }
+                return new ResponseEntity<>(editFeedbackConductModel, HttpStatus.OK);
+            }
+        }
+    }
+
+    private User getCurrentAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        return userRepository.findByUsername(username);
+    }
+
 }
