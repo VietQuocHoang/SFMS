@@ -6,6 +6,7 @@ import com.sample.sfms.model.answer.ConductAnswerWrapper;
 import com.sample.sfms.service.interf.ConductFeedbackService;
 import com.sample.sfms.service.interf.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -46,6 +47,21 @@ public class ConductFeedbackController {
     @PostMapping(value = "/save", consumes = "application/json", produces = "application/json")
     private ResponseEntity saveConductedFeedback(@RequestBody ConductAnswerWrapper conductAnswerWrapper) {
         return conductFeedbackService.saveAnswer(conductAnswerWrapper);
+    }
+
+    @GetMapping(value = "/edit/{id}")
+    private ModelAndView editConductFeedback(@PathVariable("id") int feedbackId) {
+        ModelAndView mav = new ModelAndView();
+        ResponseEntity response = conductFeedbackService.findFeedbackToEdit(feedbackId);
+        if (response.getStatusCode() == HttpStatus.OK) {
+            mav.addObject("feedback", response.getBody());
+            mav.setViewName("edit-conduct-feedback");
+        } else if (response.getStatusCode() == HttpStatus.FORBIDDEN) {
+            mav.setViewName("forbidden");
+        } else if (response.getStatusCode() == HttpStatus.NO_CONTENT) {
+            mav.setViewName("redirect:/conduct-feedback/" + feedbackId);
+        }
+        return mav;
     }
 
 }
