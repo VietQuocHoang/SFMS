@@ -57,7 +57,7 @@ function saveSuggestion(feedback) {
         type: 'POST',
         data: JSON.stringify(feedback),
         success: function(data) {
-            alert(data.message);
+            //alert(data.message);
             window.location.href = _ctx + "/modify-feedback/overview";
         },
         error: (err) => alert(err)
