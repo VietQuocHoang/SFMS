@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.sample.sfms.view.FeedbackView;
 import com.sample.sfms.view.SemesterView;
 import com.sample.sfms.view.TargetView;
+import com.sample.sfms.view.UserView;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -14,9 +15,9 @@ import java.util.Collection;
  */
 @Entity
 public class Semester {
-    @JsonView({FeedbackView.overview.class, TargetView.basicClazzView.class, SemesterView.basicSemesterView.class})
+    @JsonView({FeedbackView.overview.class, TargetView.basicClazzView.class, SemesterView.basicSemesterView.class, UserView.listUserView.class})
     private int id;
-    @JsonView({FeedbackView.overview.class, TargetView.basicClazzView.class, SemesterView.basicSemesterView.class})
+    @JsonView({FeedbackView.overview.class, TargetView.basicClazzView.class, SemesterView.basicSemesterView.class, UserView.listUserView.class})
     private String title;
     @JsonView({FeedbackView.overview.class, TargetView.basicClazzView.class, SemesterView.basicSemesterView.class})
     private Date endDate;

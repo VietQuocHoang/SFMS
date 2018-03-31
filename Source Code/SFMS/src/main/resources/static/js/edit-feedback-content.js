@@ -1,6 +1,27 @@
 var wscrolltop = 0;
 var _ctx = $("meta[name='ctx']").attr("content");
 
+var selectBox;
+
+$(document).ready(() => {
+    $.ajax({
+        type: 'GET',
+        url: _ctx + "/api/criteria/list",
+        dataType: 'json',
+        success: (data, status, xhr) => {
+            selectBox = "<select class='form-control select-list-criteria'>";
+            for (let i = 0; i < data.length; i++) {
+                let option = "<option value='" + data[i].id + "'>" + data[i].criteria + "</option>";
+                selectBox += option;
+            }
+            selectBox += "</select>";
+        },
+        error: (data, status, xhr) => {
+
+        }
+    });
+});
+
 $.getScript("models.js", () => { alert('Error loading front-end models') });
 
 //use to generate uniqueId
@@ -168,13 +189,7 @@ receive: (ev, ui) => {
                 "                                            </div>" +
                 "                                            <div class='form-group row'>" +
                 "                                                <label class='col-4 col-form-label text-right'>Loại đánh giá: </label>" +
-                "                                                <div class='col-8'>" +
-                "                                                    <select class='form-control select-list-criteria'>" +
-                "                                                        <option value='1'>Chuyên cần</option>" +
-                "                                                        <option value='2'>Tác phong</option>" +
-                "                                                        <option value='3'>Thái độ</option>" +
-                "                                                        <option value='4'>Chuyên môn</option>" +
-                "                                                    </select>" +
+                "                                                <div class='col-8'>" + selectBox +
                 "                                                </div>" +
                 "                                            </div>" +
                 "                                        </div>" +
@@ -255,13 +270,7 @@ receive: (ev, ui) => {
                 "                                            </div>" +
                 "                                            <div class='form-group row'>" +
                 "                                                <label class='col-4 col-form-label text-right'>Loại đánh giá: </label>" +
-                "                                                <div class='col-8'>" +
-                "                                                    <select class='form-control select-list-criteria'>" +
-                "                                                        <option value='1'>Chuyên cần</option>" +
-                "                                                        <option value='2'>Tác phong</option>" +
-                "                                                        <option value='3'>Thái độ</option>" +
-                "                                                        <option value='4'>Chuyên môn</option>" +
-                "                                                    </select>" +
+                "                                                <div class='col-8'>" + selectBox +
                 "                                                </div>" +
                 "                                            </div>" +
                 "                                            <div class='form-group row'>" +
@@ -397,13 +406,7 @@ receive: (ev, ui) => {
                 "                                            </div>" +
                 "                                            <div class='form-group row'>" +
                 "                                                <label class='col-4 col-form-label text-right'>Loại đánh giá: </label>" +
-                "                                                <div class='col-8'>" +
-                "                                                    <select class='form-control select-list-criteria'>" +
-                "                                                        <option value='1'>Chuyên cần</option>" +
-                "                                                        <option value='2'>Tác phong</option>" +
-                "                                                        <option value='3'>Thái độ</option>" +
-                "                                                        <option value='4'>Chuyên môn</option>" +
-                "                                                    </select>" +
+                "                                                <div class='col-8'>" + selectBox +
                 "                                                </div>" +
                 "                                            </div>" +
                 "                                            <div class='form-group row'>" +
@@ -498,13 +501,7 @@ receive: (ev, ui) => {
                 "                                            </div>" +
                 "                                            <div class='form-group row'>" +
                 "                                                <label class='col-4 col-form-label text-right'>Loại đánh giá: </label>" +
-                "                                                <div class='col-8'>" +
-                "                                                    <select class='form-control select-list-criteria'>" +
-                "                                                        <option value='1'>Chuyên cần</option>" +
-                "                                                        <option value='2'>Tác phong</option>" +
-                "                                                        <option value='3'>Thái độ</option>" +
-                "                                                        <option value='4'>Chuyên môn</option>" +
-                "                                                    </select>" +
+                "                                                <div class='col-8'>" + selectBox +
                 "                                                </div>" +
                 "                                            </div>" +
                 "                                        </div>" +
@@ -569,13 +566,7 @@ receive: (ev, ui) => {
                 "                                            </div>" +
                 "                                            <div class='form-group row'>" +
                 "                                                <label class='col-4 col-form-label text-right'>Loại đánh giá: </label>" +
-                "                                                <div class='col-8'>" +
-                "                                                    <select class='form-control select-list-criteria'>" +
-                "                                                        <option value='1'>Chuyên cần</option>" +
-                "                                                        <option value='2'>Tác phong</option>" +
-                "                                                        <option value='3'>Thái độ</option>" +
-                "                                                        <option value='4'>Chuyên môn</option>" +
-                "                                                    </select>" +
+                "                                                <div class='col-8'>" + selectBox +
                 "                                                </div>" +
                 "                                            </div>" +
                 "                                        </div>" +

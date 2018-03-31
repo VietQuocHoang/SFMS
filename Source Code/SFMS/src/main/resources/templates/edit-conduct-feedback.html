@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <meta name="ctx" th:content="${#httpServletRequest.getContextPath()}"/>
-    <title>Làm feedback</title>
+    <title>Làm lại feedback</title>
     <div th:replace="fragments/core-css"></div>
     <!-- custom style -->
     <link th:href="@{/css/conduct-feedback.css}" rel="stylesheet" type="text/css"/>
@@ -28,75 +28,83 @@
     <!-- div feedback content -->
     <div class="row justify-content-center">
         <div class="col-sm-12 col-12 col-md-6 col-xl-6 col-lg-6 text-center feedback-content">
-            <!--<th:block th:with="numOfPage = ${feedback.questionsById.size()%3==0}?${feedback.questionsById.size()/3}:${(feedback.questionsById.size()/3) + 1}">-->
+            <!--<th:block th:with="numOfPage = ${feedback.questionList.size()%3==0}?${feedback.questionList.size()/3}:${(feedback.questionList.size()/3) + 1}">-->
             <!--<form>-->
             <!---->
             <!--</form>-->
             <!--</th:block>-->
-            <th:block th:each="index:${#numbers.sequence(0,feedback.questionsById.size()-1,3)}">
+            <th:block th:each="index:${#numbers.sequence(0,feedback.questionList.size()-1,3)}">
                 <div th:class="${index==0}?'feedback-page page-active':'feedback-page'">
                     <div class="card"
-                         th:classappend="${'question-' + feedback.questionsById.get(index).id} + (${feedback.questionsById.get(index).isRequied}?' required': '')">
+                         th:classappend="${'question-' + feedback.questionList.get(index).id} + (${feedback.questionList.get(index).requied}?' required': '')">
                         <div class="card-header">
                             Câu hỏi <p th:text="${index+1}" th:remove="tag"></p>
-                            <span th:class="${feedback.questionsById.get(index).isRequied}?'required-question active':'required-question'">*</span>
+                            <span th:class="${feedback.questionList.get(index).requied}?'required-question active':'required-question'">*</span>
                             <!--TODO sửa lại cái này -->
                         </div>
                         <div class="card-block">
-                            <p class="card-text" th:text="${feedback.questionsById.get(index).questionContent}">
+                            <p class="card-text" th:text="${feedback.questionList.get(index).questionContent}">
                             </p>
-                            <div class="answer-block" th:classappend="${feedback.questionsById.get(index).type}">
-                                <th:block th:switch="${feedback.questionsById.get(index).type}">
+                            <div class="answer-block" th:classappend="${feedback.questionList.get(index).type}">
+                                <th:block th:switch="${feedback.questionList.get(index).type}">
                                     <div th:case="CheckBox" th:remove="tag">
-                                        <div th:each="option: ${feedback.questionsById.get(index).optionsById}"
+                                        <div th:each="option: ${feedback.questionList.get(index).optionList}"
                                              th:class="form-check">
                                             <label class="form-check-label">
                                                 <input th:class="${option.point==0}?'form-check-input other-option':'form-check-input'"
                                                        type="checkbox" th:value="${option.id}"
-                                                       th:name="${feedback.questionsById.get(index).id}"/>
+                                                       th:attr="checked=${option.answered}"
+                                                       th:name="${feedback.questionList.get(index).id}"/>
                                                 <p th:text="${option.optionnContent}"></p>
                                             </label>
                                             <th:block th:if="${option.point == 0}">
-                                                <div class="other-option-input-wrapper">
+                                                <div class="other-option-input-wrapper"
+                                                     th:classappend="${option.answered}?'checked':''">
                                                     <input type="text" class="other-option-input" th:name="${option.id}"
+                                                           th:value="${(option.answer!=null?option.answer.answerContent:'')}"
                                                            placeholder="Nhập câu trả lời của bạn vào đây">
                                                 </div>
                                             </th:block>
                                         </div>
                                     </div>
                                     <div th:case="Radio" th:remove="tag">
-                                        <div th:each="option: ${feedback.questionsById.get(index).optionsById}"
+                                        <div th:each="option: ${feedback.questionList.get(index).optionList}"
                                              th:class="form-check">
                                             <label class="form-check-label">
                                                 <input th:class="${option.point==0}?'form-check-input other-option':'form-check-input'"
                                                        type="radio" th:value="${option.id}"
-                                                       th:name="${feedback.questionsById.get(index).id}"/>
+                                                       th:attr="checked=${option.answered}"
+                                                       th:name="${feedback.questionList.get(index).id}"/>
                                                 <p th:text="${option.optionnContent}"></p>
                                             </label>
                                             <th:block th:if="${option.point == 0}">
-                                                <div class="other-option-input-wrapper">
+                                                <div class="other-option-input-wrapper"
+                                                     th:classappend="${option.answered}?'checked':''">
                                                     <input type="text" class="other-option-input" th:name="${option.id}"
+                                                           th:value="${(option.answer!=null?option.answer.answerContent:'')}"
                                                            placeholder="Nhập câu trả lời của bạn vào đây">
                                                 </div>
                                             </th:block>
                                         </div>
                                     </div>
                                     <div th:case="TextArea" th:class="form-group">
-                                        <div th:each="option:${feedback.questionsById.get(index).optionsById}"
+                                        <div th:each="option:${feedback.questionList.get(index).optionList}"
                                              th:remove="tag">
-                                            <textarea class="form-control" th:name="${option.id}"></textarea>
+                                            <textarea class="form-control" th:name="${option.id}"
+                                                      th:text="${option.answered?(option.answer!=null?option.answer.answerContent:''):''}"></textarea>
                                         </div>
                                     </div>
                                     <div th:case="Text" th:class="form-group">
-                                        <div th:each="option:${feedback.questionsById.get(index).optionsById}"
+                                        <div th:each="option:${feedback.questionList.get(index).optionList}"
                                              th:remove="tag">
-                                            <input type="text" class="form-control" th:name="${option.id}">
+                                            <input type="text" class="form-control" th:name="${option.id}"
+                                                   th:value="${option.answered?(option.answer!=null?option.answer.answerContent:''):''}">
                                         </div>
                                     </div>
                                     <div th:case="Star" th:class="form-rating">
-                                        <label th:each="option:${feedback.questionsById.get(index).optionsById}">
-                                            <input type="radio" class="input-star"
-                                                   th:name="${feedback.questionsById.get(index).id}" hidden
+                                        <label th:each="option:${feedback.questionList.get(index).optionList}">
+                                            <input type="radio" class="input-star" th:attr="checked=${option.answered}"
+                                                   th:name="${feedback.questionList.get(index).id}" hidden
                                                    th:value="${option.id}">
                                             <span class="star-rating">★</span>
                                         </label>
@@ -106,68 +114,76 @@
                         </div>
                     </div>
                     <div class="card"
-                         th:classappend="${'question-' + feedback.questionsById.get(index+1).id} + (${feedback.questionsById.get(index+1).isRequied}?' required': '')"
-                         th:if="${(index+1)<feedback.questionsById.size()}">
+                         th:classappend="${'question-' + feedback.questionList.get(index+1).id} + (${feedback.questionList.get(index+1).requied}?' required': '')"
+                         th:if="${(index+1)<feedback.questionList.size()}">
                         <div class="card-header">
                             Câu hỏi <p th:text="${index+2}" th:remove="tag"></p>
-                            <span th:class="${feedback.questionsById.get(index+1).isRequied}?'required-question active':'required-question'">*</span>
+                            <span th:class="${feedback.questionList.get(index+1).requied}?'required-question active':'required-question'">*</span>
                             <!--TODO sửa lại cái này -->
                         </div>
                         <div class="card-block">
-                            <p class="card-text" th:text="${feedback.questionsById.get(index+1).questionContent}">
+                            <p class="card-text" th:text="${feedback.questionList.get(index+1).questionContent}">
                             </p>
-                            <div class="answer-block" th:classappend="${feedback.questionsById.get(index+1).type}">
-                                <th:block th:switch="${feedback.questionsById.get(index+1).type}">
+                            <div class="answer-block" th:classappend="${feedback.questionList.get(index+1).type}">
+                                <th:block th:switch="${feedback.questionList.get(index+1).type}">
                                     <div th:case="CheckBox" th:remove="tag">
-                                        <div th:each="option: ${feedback.questionsById.get(index+1).optionsById}"
+                                        <div th:each="option: ${feedback.questionList.get(index+1).optionList}"
                                              th:class="form-check">
                                             <label class="form-check-label">
                                                 <input th:class="${option.point==0}?'form-check-input other-option':'form-check-input'"
                                                        type="checkbox" th:value="${option.id}"
-                                                       th:name="${feedback.questionsById.get(index+1).id}"/>
+                                                       th:attr="checked=${option.answered}"
+                                                       th:name="${feedback.questionList.get(index+1).id}"/>
                                                 <p th:text="${option.optionnContent}"></p>
                                             </label>
                                             <th:block th:if="${option.point == 0}">
-                                                <div class="other-option-input-wrapper">
+                                                <div class="other-option-input-wrapper"
+                                                     th:classappend="${option.answered}?'checked':''">
                                                     <input type="text" class="other-option-input" th:name="${option.id}"
+                                                           th:value="${(option.answer!=null?option.answer.answerContent:'')}"
                                                            placeholder="Nhập câu trả lời của bạn vào đây">
                                                 </div>
                                             </th:block>
                                         </div>
                                     </div>
                                     <div th:case="Radio" th:remove="tag">
-                                        <div th:each="option: ${feedback.questionsById.get(index+1).optionsById}"
+                                        <div th:each="option: ${feedback.questionList.get(index+1).optionList}"
                                              th:class="form-check">
                                             <label class="form-check-label">
                                                 <input th:class="${option.point==0}?'form-check-input other-option':'form-check-input'"
                                                        type="radio" th:value="${option.id}"
-                                                       th:name="${feedback.questionsById.get(index+1).id}"/>
+                                                       th:attr="checked=${option.answered}"
+                                                       th:name="${feedback.questionList.get(index+1).id}"/>
                                                 <p th:text="${option.optionnContent}"></p>
                                             </label>
                                             <th:block th:if="${option.point == 0}">
-                                                <div class="other-option-input-wrapper">
+                                                <div class="other-option-input-wrapper"
+                                                     th:classappend="${option.answered}?'checked':''">
                                                     <input type="text" class="other-option-input" th:name="${option.id}"
+                                                           th:value="${(option.answer!=null?option.answer.answerContent:'')}"
                                                            placeholder="Nhập câu trả lời của bạn vào đây">
                                                 </div>
                                             </th:block>
                                         </div>
                                     </div>
                                     <div th:case="TextArea" th:class="form-group">
-                                        <div th:each="option:${feedback.questionsById.get(index+1).optionsById}"
+                                        <div th:each="option:${feedback.questionList.get(index+1).optionList}"
                                              th:remove="tag">
-                                            <textarea class="form-control" th:name="${option.id}"></textarea>
+                                            <textarea class="form-control" th:name="${option.id}"
+                                                      th:text="${option.answered?(option.answer!=null?option.answer.answerContent:''):''}"></textarea>
                                         </div>
                                     </div>
                                     <div th:case="Text" th:class="form-group">
-                                        <div th:each="option:${feedback.questionsById.get(index+1).optionsById}"
+                                        <div th:each="option:${feedback.questionList.get(index+1).optionList}"
                                              th:remove="tag">
-                                            <input type="text" class="form-control" th:name="${option.id}">
+                                            <input type="text" class="form-control" th:name="${option.id}"
+                                                   th:value="${option.answered?(option.answer!=null?option.answer.answerContent:''):''}">
                                         </div>
                                     </div>
                                     <div th:case="Star" th:class="form-rating">
-                                        <label th:each="option:${feedback.questionsById.get(index+1).optionsById}">
-                                            <input type="radio" class="input-star"
-                                                   th:name="${feedback.questionsById.get(index+1).id}" hidden
+                                        <label th:each="option:${feedback.questionList.get(index+1).optionList}">
+                                            <input type="radio" class="input-star" th:attr="checked=${option.answered}"
+                                                   th:name="${feedback.questionList.get(index+1).id}" hidden
                                                    th:value="${option.id}">
                                             <span class="star-rating">★</span>
                                         </label>
@@ -177,68 +193,76 @@
                         </div>
                     </div>
                     <div class="card"
-                         th:classappend="${'question-' + feedback.questionsById.get(index+2).id} + (${feedback.questionsById.get(index+2).isRequied}?' required': '')"
-                         th:if="${(index+2)<feedback.questionsById.size()}">
+                         th:classappend="${'question-' + feedback.questionList.get(index+2).id} + (${feedback.questionList.get(index+2).requied}?' required': '')"
+                         th:if="${(index+2)<feedback.questionList.size()}">
                         <div class="card-header">
                             Câu hỏi <p th:text="${index+3}" th:remove="tag"></p>
-                            <span th:class="${feedback.questionsById.get(index+2).isRequied}?'required-question active':'required-question'">*</span>
+                            <span th:class="${feedback.questionList.get(index+2).requied}?'required-question active':'required-question'">*</span>
                             <!--TODO sửa lại cái này -->
                         </div>
                         <div class="card-block">
-                            <p class="card-text" th:text="${feedback.questionsById.get(index+2).questionContent}">
+                            <p class="card-text" th:text="${feedback.questionList.get(index+2).questionContent}">
                             </p>
-                            <div class="answer-block" th:classappend="${feedback.questionsById.get(index+2).type}">
-                                <th:block th:switch="${feedback.questionsById.get(index+2).type}">
+                            <div class="answer-block" th:classappend="${feedback.questionList.get(index+2).type}">
+                                <th:block th:switch="${feedback.questionList.get(index+2).type}">
                                     <div th:case="CheckBox" th:remove="tag">
-                                        <div th:each="option: ${feedback.questionsById.get(index+2).optionsById}"
+                                        <div th:each="option: ${feedback.questionList.get(index+2).optionList}"
                                              th:class="form-check">
                                             <label class="form-check-label">
                                                 <input th:class="${option.point==0}?'form-check-input other-option':'form-check-input'"
                                                        type="checkbox" th:value="${option.id}"
-                                                       th:name="${feedback.questionsById.get(index+2).id}"/>
+                                                       th:attr="checked=${option.answered}"
+                                                       th:name="${feedback.questionList.get(index+2).id}"/>
                                                 <p th:text="${option.optionnContent}"></p>
                                             </label>
                                             <th:block th:if="${option.point == 0}">
-                                                <div class="other-option-input-wrapper">
+                                                <div class="other-option-input-wrapper"
+                                                     th:classappend="${option.answered}?'checked':''">
                                                     <input type="text" class="other-option-input" th:name="${option.id}"
+                                                           th:value="${(option.answer!=null?option.answer.answerContent:'')}"
                                                            placeholder="Nhập câu trả lời của bạn vào đây">
                                                 </div>
                                             </th:block>
                                         </div>
                                     </div>
                                     <div th:case="Radio" th:remove="tag">
-                                        <div th:each="option: ${feedback.questionsById.get(index+2).optionsById}"
+                                        <div th:each="option: ${feedback.questionList.get(index+2).optionList}"
                                              th:class="form-check">
                                             <label class="form-check-label">
                                                 <input th:class="${option.point==0}?'form-check-input other-option':'form-check-input'"
                                                        type="radio" th:value="${option.id}"
-                                                       th:name="${feedback.questionsById.get(index+2).id}"/>
+                                                       th:attr="checked=${option.answered}"
+                                                       th:name="${feedback.questionList.get(index+2).id}"/>
                                                 <p th:text="${option.optionnContent}"></p>
                                             </label>
                                             <th:block th:if="${option.point == 0}">
-                                                <div class="other-option-input-wrapper">
+                                                <div class="other-option-input-wrapper"
+                                                     th:classappend="${option.answered}?'checked':''">
                                                     <input type="text" class="other-option-input" th:name="${option.id}"
+                                                           th:value="${(option.answer!=null?option.answer.answerContent:'')}"
                                                            placeholder="Nhập câu trả lời của bạn vào đây">
                                                 </div>
                                             </th:block>
                                         </div>
                                     </div>
                                     <div th:case="TextArea" th:class="form-group">
-                                        <div th:each="option:${feedback.questionsById.get(index+2).optionsById}"
+                                        <div th:each="option:${feedback.questionList.get(index+2).optionList}"
                                              th:remove="tag">
-                                            <textarea class="form-control" th:name="${option.id}"></textarea>
+                                            <textarea class="form-control" th:name="${option.id}"
+                                                      th:text="${option.answered?(option.answer!=null?option.answer.answerContent:''):''}"></textarea>
                                         </div>
                                     </div>
                                     <div th:case="Text" th:class="form-group">
-                                        <div th:each="option:${feedback.questionsById.get(index+2).optionsById}"
+                                        <div th:each="option:${feedback.questionList.get(index+2).optionList}"
                                              th:remove="tag">
-                                            <input type="text" class="form-control" th:name="${option.id}">
+                                            <input type="text" class="form-control" th:name="${option.id}"
+                                                   th:value="${option.answered?(option.answer!=null?option.answer.answerContent:''):''}">
                                         </div>
                                     </div>
                                     <div th:case="Star" th:class="form-rating">
-                                        <label th:each="option:${feedback.questionsById.get(index+2).optionsById}">
-                                            <input type="radio" class="input-star"
-                                                   th:name="${feedback.questionsById.get(index+2).id}" hidden
+                                        <label th:each="option:${feedback.questionList.get(index+2).optionList}">
+                                            <input type="radio" class="input-star" th:attr="checked=${option.answered}"
+                                                   th:name="${feedback.questionList.get(index+2).id}" hidden
                                                    th:value="${option.id}">
                                             <span class="star-rating">★</span>
                                         </label>
@@ -260,7 +284,7 @@
                 <span class="fa fa-fw fa-backward"></span> Quay lại
             </button>
             <button class="btn btn-pagination" value="next">
-                Tiếp tục
+                Tiếp
                 <span class="fa fa-fw fa-forward"></span>
             </button>
         </div>

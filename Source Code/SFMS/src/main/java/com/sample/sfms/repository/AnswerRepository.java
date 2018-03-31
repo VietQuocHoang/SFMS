@@ -2,10 +2,12 @@ package com.sample.sfms.repository;
 
 import com.sample.sfms.entity.Answer;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
@@ -24,10 +26,21 @@ public interface AnswerRepository extends JpaRepository<Answer, Integer> {
 
     List<Answer> getAllByOptionnByOptionnIdId(int id);
 
+    @Query(value = "select a from Answer a where a.userByUserId.id=:userId AND a.optionnByOptionnId.questionByQuestionId.feedbackByFeedbackId.id=:feedbackId")
+    List<Answer> getAllAnswerByUserIdAndFeedbackId(@Param("userId") int userId, @Param("feedbackId") int feedbackId);
+
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE a.* " +
+            "from capstone.answer a inner join capstone.optionn o on (a.option_id=o.id) " +
+            "inner join capstone.question q on (o.question_id = q.id) " +
+            "inner join capstone.feedback f on (q.feedback_id = f.id) " +
+            "where a.user_id=:userId and f.id=:feedbackId", nativeQuery = true)
+    int removeAllAnswerByUserAndFeedback(@Param("userId") int userId, @Param("feedbackId") int feedbackId);
+
     @Query(value = "select a from Answer a, Feedback f, Question q, Optionn o where "
             + "f.id = :feedbackId and f.id = q.feedbackByFeedbackId.id "
             + "and q.id = o.questionByQuestionId.id and o.id = a.optionnByOptionnId.id and "
             + "(q.type = 'Radio' or q.type = 'CheckBox' or q.type = 'Star') and q.criteriaByCriteriaId.id = :critId")
     List<Answer> getAllHaveScoresOptionByFeedbackIdAndCriteriaId (@Param("feedbackId") int feedbackId, @Param("critId") int critId);
-
 }

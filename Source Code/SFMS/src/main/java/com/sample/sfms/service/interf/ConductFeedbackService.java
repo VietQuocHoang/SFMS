@@ -10,4 +10,6 @@ public interface ConductFeedbackService {
 
     ResponseEntity saveAnswer(ConductAnswerWrapper answerWrapper);
 
+    ResponseEntity findFeedbackToEdit(int feedbackId);
+
 }
