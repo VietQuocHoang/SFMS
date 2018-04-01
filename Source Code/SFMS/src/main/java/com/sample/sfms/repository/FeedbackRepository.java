@@ -61,10 +61,11 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
     @Query("select f from Feedback f, Clazz c where " +
             "f.isTemplate = false AND f.clazzByClazzId.id = c.id AND "+
             "(f.typeByTypeId.id = :type OR :type = -1) AND "+
-            "c.courseByCourseId.id = :courseId AND c.userByLecturerId.id = :userId")
+            "c.courseByCourseId.id = :courseId AND c.userByLecturerId.id = :userId and f.semesterBySemesterId.id = :semId")
     List<Feedback> findByUserCource(@Param("courseId")int courseId,
                                     @Param("userId")int userId,
-                                    @Param("type")int type);
+                                    @Param("type")int type,
+                                    @Param("semId") int semId);
 
    /* @Query("select new com.sample.sfms.model.FeedbackReportModel(c.criteria, sum(o.point), count(a.id))" +
             "from Question q, Optionn o, Answer a, Criteria c " +

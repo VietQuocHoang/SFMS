@@ -8,6 +8,8 @@ import com.sample.sfms.model.report.reportSemester.*;
 import com.sample.sfms.repository.*;
 import com.sample.sfms.service.interf.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -80,7 +82,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
     public List<FeedbackReportModel> loadReportDetail(int courseId, int userId, int type, int semesterId) {
-        List<Feedback> feedbacks = feedbackRepository.findByUserCource(courseId, userId, type);
+        List<Feedback> feedbacks = feedbackRepository.findByUserCource(courseId, userId, type,semesterId);
         HashMap<String, FeedbackReportModel> reportHashMap = new HashMap<>();
         List<FeedbackReportModel> reports = new ArrayList<>();
         HashMap<String, Integer> sumMap = new HashMap<>();
@@ -100,7 +102,7 @@ public class ReportServiceImpl implements ReportService {
              reports.add(report);
         }
 
-        for (FeedbackReportModel report : reports) {
+        /*for (FeedbackReportModel report : reports) {
             String key = report.getCriteria();
             if (reportHashMap.containsKey(key)) {
                 FeedbackReportModel r = reportHashMap.get(key);
@@ -109,7 +111,7 @@ public class ReportServiceImpl implements ReportService {
             } else {
                 reportHashMap.put(key, report);
             }
-        }
+        }*/
       /*  for (Feedback f : feedbacks) {
             List<FeedbackReportModel> reports = feedbackRepository.statistics(f.getId());
             for (FeedbackReportModel report : reports) {
@@ -123,7 +125,7 @@ public class ReportServiceImpl implements ReportService {
                 }
             }
         }*/
-        return new ArrayList<>(reportHashMap.values());
+        return reports;
     }
 
     @Override

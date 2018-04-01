@@ -15,9 +15,9 @@ import java.util.Collection;
  */
 @Entity
 public class Semester {
-    @JsonView({FeedbackView.overview.class, TargetView.basicClazzView.class, SemesterView.basicSemesterView.class, UserView.listUserView.class})
+    @JsonView({FeedbackView.overview.class, TargetView.basicClazzView.class, SemesterView.basicSemesterView.class, UserView.listUserView.class, SemesterView.reportAllSemesterView.class})
     private int id;
-    @JsonView({FeedbackView.overview.class, TargetView.basicClazzView.class, SemesterView.basicSemesterView.class, UserView.listUserView.class})
+    @JsonView({FeedbackView.overview.class, TargetView.basicClazzView.class, SemesterView.basicSemesterView.class, UserView.listUserView.class, SemesterView.reportAllSemesterView.class})
     private String title;
     @JsonView({FeedbackView.overview.class, TargetView.basicClazzView.class, SemesterView.basicSemesterView.class})
     private Date endDate;

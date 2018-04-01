@@ -5,6 +5,7 @@ import com.sample.sfms.entity.Semester;
 import com.sample.sfms.model.FeedbackReportModel;
 import com.sample.sfms.model.feedback.FeedbackTargetWrapper;
 import com.sample.sfms.model.report.reportSemester.ReportSemesterModel;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 

@@ -12,29 +12,18 @@
         <title>Xem báo cáo</title>
         <!--Core style-->
         <div th:replace="fragments/core-css"></div>
-        <!-- Bootstrap core JavaScript-->
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <!-- Core plugin JavaScript-->
-        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-        <script src="vendor/jquery-ui/jquery-ui.min.js"></script>
         <!-- jQuery UI -->
-        <link href="vendor/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css">
+        <link th:href="@{/vendor/jquery-ui/jquery-ui.min.css}" rel="stylesheet" type="text/css">
         <!-- custom style -->
-        <link href="css/view-report.css" rel="stylesheet" type="text/css">
-        <!-- custom script -->
-        <script src="js/view-report.js"></script>
+        <link th:href="@{/css/view-report-details.css}" rel="stylesheet" type="text/css">
+
         <!-- dataTable -->
-        <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" type="text/css">
-        <link href="vendor/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css">
+        <link th:href="@{/vendor/datatables/dataTables.bootstrap4.css}" rel="stylesheet" type="text/css">
+        <link th:href="@{/vendor/datatables/responsive.bootstrap4.min.css}" rel="stylesheet" type="text/css">
         <!--  <script src="http://pagination.js.org/dist/2.1.2/pagination.js"></script>-->
-
         <!-- Load c3.css -->
-        <link href="c3-0.4.18/c3.css" rel="stylesheet">
+        <link th:href="@{/c3-0.4.18/c3.css}" rel="stylesheet">
 
-        <!-- Load d3.js and c3.js -->
-        <script src="https://d3js.org/d3.v3.js"></script>
-        <script src="c3-0.4.18/c3.min.js"></script>
     </head>
 
     <body class="fixed-nav sticky-footer" id="page-top">
@@ -121,19 +110,33 @@
         <div th:replace="fragments/footer"></div>
     </div>
     </body>
+
     <div th:replace="fragments/core-script"></div>
     <!-- dataTable -->
-    <script src="vendor/datatables/jquery.dataTables.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
-    <script src="vendor/datatables/dataTables.responsive.min.js"></script>
-    <script src="vendor/datatables/responsive.bootstrap4.min.js"></script>
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin.min.js"></script>
-    <!-- Custom javascript -->
-    <script src="js/select-template.js"></script>
+    <script th:src="@{/vendor/datatables/jquery.dataTables.js}"></script>
+    <script th:src="@{/vendor/datatables/dataTables.bootstrap4.js}"></script>
+    <script th:src="@{/vendor/datatables/dataTables.responsive.min.js}"></script>
+    <script th:src="@{/vendor/datatables/responsive.bootstrap4.min.js}"></script>
+    <!-- Core plugin JavaScript-->
+    <script th:src="@{/vendor/jquery-ui/jquery-ui.min.js}"></script>
+        <!-- Custom javascript -->
+    <script th:src="@{/js/select-template.js}"></script>
+    <!-- custom script -->
+    <script th:src="@{/js/view-report.js}"></script>
+    <!-- Load d3.js and c3.js -->
+    <script src="https://d3js.org/d3.v3.js" charset="utf-8"></script>
+    <script th:src="@{/c3-0.4.18/c3.min.js}"></script>
+
     <script type="text/javascript">
         var _ctx = $("meta[name='ctx']").attr("content");
+
+        function round(value, precision) {
+            var multiplier = Math.pow(10, precision || 0);
+            return Math.round(value * multiplier) / multiplier;
+        }
+
         function callAjax(elementId, value) {
+            console.log("callAjax");
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
@@ -145,7 +148,8 @@
         }
 
         function loadSemesterStatistic(semesterIds, userId, courseId, callback) {
-            var url = "semesterStatistic.json" +
+            console.log("loadSemesterStatistic");
+            var url = _ctx + "/api/reports/semesterStatistic" + //"./semesterStatistic" +
                 "?userId=" + userId +
                 "&courseId=" + courseId;
             for (var i = 0; i < semesterIds.length; i++) {
@@ -155,6 +159,7 @@
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     var data = JSON.parse(xhttp.responseText);
+                   console.log(data);
                     callback(data);
                 }
             };
@@ -163,6 +168,7 @@
         }
 
         function bindDropDownEvent() {
+            console.log("bindDropDownEvent");
             $('#frorm-semester,#to-semester').on('change', function () {
                 var fromId = $('#frorm-semester').val();
                 var toId = $('#to-semester').val();
@@ -195,34 +201,60 @@
                         data = sData[ii].data;
                         var average = 0;
                         var sIndex = window.semesterMapping[sData[ii].id];
+                        console.log(sIndex);
                         if (sIndex) {
                             //re-construct statistic data
                             for (var i = 0; i < data.length; i++) {
                                 var statistic = data[i];
                                 if (window.criteria[statistic.criteria] || window.criteria[statistic.criteria] === 0) {
                                     var index = window.criteria[statistic.criteria];
-                                    window.chartColumns[index][sIndex] = statistic.sum / statistic.count;
+                                    if (statistic.count != 0) {
+                                        window.chartColumns[index][sIndex] = round(statistic.sum / statistic.count,1);
+                                    } else {
+                                        window.chartColumns[index][sIndex] = 0;
+                                    }
+
                                 } else {
                                     var column = [statistic.criteria];
-                                    column[sIndex] = statistic.sum / statistic.count;
+                                    if (statistic.count != 0) {
+                                        column[sIndex] = round(statistic.sum / statistic.count,1);
+                                    } else {
+                                        column[sIndex] = 0;
+                                    }
+
                                     window.criteria[statistic.criteria] = window.chartColumns.length;
                                     window.chartColumns.push(column);
                                 }
-                                average += statistic.sum / statistic.count;
+                                if (statistic.count != 0) {
+                                    average += round(statistic.sum / statistic.count,1);
+                                }
+
+                             //   console.log(window.criteria[statistic.criteria] + "-" + statistic.sum + "-" + statistic.count);
+                             //   console.log("average: " + average);
                             }
+                          //  console.log(statistic.sum + "-" + statistic.count);
+                          //   console.log("average final: " + average);
                             //calculate average
                             var averageColumn = 'Trung bình';
                             if (window.criteria[averageColumn]) {
                                 var index = window.criteria[averageColumn];
-                                window.chartColumns[index][sIndex] = average / data.length;
+                                if (data.length != 0) {
+                                    window.chartColumns[index][sIndex] = round(average / data.length,1);
+                                } else {
+                                    window.chartColumns[index][sIndex] = 0;
+                                }
+
+                              //  console.log("average length 1: " + average / data.length);
                             } else {
                                 var column = [averageColumn];
                                 column[sIndex] = average / data.length;
+                            //    console.log("average length 2: " + average / data.length);
                                 window.criteria[averageColumn] = window.chartColumns.length;
                                 window.chartColumns.push(column);
                             }
                         }
                     }
+                    console.log(window.chartColumns);
                     //refill empty cells
                     for (var i = 0; i < window.chartColumns.length; i++) {
                         var row = window.chartColumns[i];
@@ -251,11 +283,13 @@
         }
 
         function loadSemesters() {
-            var url = _ctx + "/api/reports/loadAllSemesters"; //"semester.json";
+            console.log("loadSemesters");
+            var url = _ctx + "/api/reports/loadAllSemesters"; //"./semester";
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     var data = JSON.parse(xhttp.responseText);
+                   // console.log(data);
                     $('#frorm-semester').empty();
                     $('#to-semester').empty();
                     window.semesters = data;
@@ -299,13 +333,17 @@
                 bindto: '#report-detail-chart',
                 data: {
                     onclick: function (d, element) {
-                        window.open("view-report-semester" +
+                      /*  window.open("view-report-semester" +
                             "?userId=" + window.userId +
                             "&courseId=" + window.courseId +
                             "&semesterId=" + window.loadingSemesters[d.x + 1]
-                        );
+                        );*/
                     },
-                    columns: [],
+                    columns: [
+                /*        ['Chất lượng', 1.2, 2.5, 3.1, 4.1, 3.8, 3, 4],
+                        ['Thái độ', 2.2, 3.1, 2.1, 3.1, 4.8, 4, 3],
+                        ['Trung bình', 1.7, 2.8, 2.6, 3.6, 4.3, 3.5, 3.5]*/
+                    ],
                     type: 'bar',
                     types: {
                         'Trung bình': 'line'
@@ -322,10 +360,10 @@
                 },
                 axis: {
                     x: {
-                        type: 'category',
-                        categories: ['Spring 2016', 'Summer 2016', 'Fall 2016', 'Spring 2017', 'Summer 2017', 'Fall 2017', 'Spring 2018']
+                        type: 'category'
+                     //   categories: ['Spring 2016', 'Summer 2016', 'Fall 2016', 'Spring 2017', 'Summer 2017', 'Fall 2017', 'Spring 2018']
                     }
-                },
+                }
                 /*  color: {
                  pattern: ['#08AE9E']
                  }*/
