@@ -158,7 +158,8 @@
                             <td th:text="${class.className}"></td>
                             <td th:text="${class.userByLecturerId.fullname}"></td>
                             <td th:text="${class.courseByCourseId.name}"></td>
-                            <td class="text-center"><a th:href="@{/view-report-details}" class="btn btn-raised-primary">Xem
+                            <td class="text-center">
+                                <a th:href="@{/view-report-details(typeId=3,userId=${class.userByLecturerId.id},courseId=${class.courseByCourseId.id})}" class="btn btn-raised-primary">Xem
                                 báo cáo</a></td><!--TODO sửa đây ông eiii-->
                         </tr>
                     </th:block>
