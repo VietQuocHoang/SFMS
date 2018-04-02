@@ -1,8 +1,8 @@
 /**
  * Created by MyPC on 27/02/2018.
  */
-var btnActive = "<input class='btn active btn-check-target' type='button' onclick='activeCriteria(this)' value='Mở'/>"
-var btnDeactive = "<input class='btn active btn-checked' type='button' onclick='deactiveCriteria(this)' value='Đóng'/>"
+var btnActive = "<input class='btn active btn-check-target' type='button' onclick='activeCriteria(this)' value='Kích hoạt'/>"
+var btnDeactive = "<input class='btn active btn-checked' type='button' onclick='deactiveCriteria(this)' value='Đã kích hoạt'/>"
 var linkShow = "<a href='#' onclick='initNewForm()' data-toggle='modal' data-target='#InfoModal'><i class='fa fa-plus' style='font-size: 20px'></i>    </a>";
 var linkUpdate = "<a href='#' onclick='initUpdateForm(this)' data-toggle='modal' data-target='#InfoModal'><i class='fa fa-pencil' style='font-size: 20px'></i>    </a>";
 var linkDelete = "<a href='#'><i class='fa fa-trash' style='font-size: 20px'></i>    </a>";
@@ -32,7 +32,7 @@ function initUpdateForm(el) {
 }
 var status_to_button = function (data, type, full, meta) {
     // console.log(data);
-    if (data == true)return btnActive;
+    if (data == false)return btnActive;
     return btnDeactive;
 }
 var getTypeName = function (data, type, full, meta) {
@@ -161,10 +161,10 @@ function loadCriteriaTable() {
             initComplete: function () {
                 this.api().columns([0]).every(function () {
                     var column = this;
-                    var select = $('<datalist id="listCrit"></datalist>').appendTo($(column.header()));
+                    var select = $('<datalist id="listCrit"></datalist>').appendTo($("#filterName").empty());
                     select.append('<option value=""></option>');
-                    var input = $('<input type="text" value="" list="listCrit"/>')
-                        .appendTo($(column.header()))
+                    var input = $('<input type="text" value="" list="listCrit" placeholder="Tiêu chí"/>')
+                        .appendTo($("#filterName"))
                         .on("keyup keydown change", function () {
                             var val = $.fn.dataTable.util.escapeRegex(
                                 $(this).val()
@@ -191,8 +191,8 @@ function loadCriteriaTable() {
                 });
                 this.api().columns([1]).every(function () {
                     var column = this;
-                    var input = $('<input type="text" value="" list="listType"/>')
-                            .appendTo($(column.header()))
+                    var input = $('<input type="text" value="" list="listType" placeholder="Đối tượng"/>')
+                            .appendTo($("#filterType").empty())
                             .on('change keyup keydown', function () {
                                 var val = $.fn.dataTable.util.escapeRegex(
                                     $(this).val()
@@ -204,7 +204,7 @@ function loadCriteriaTable() {
                             })
                         ;
                     var opts = new Array(column.data().length);
-                    var datalist = $('<datalist id="listType"></datalist>').appendTo($(column.header()))
+                    var datalist = $('<datalist id="listType"></datalist>').appendTo($("#filterType"))
                         .on("change", function () {
                             var val = $.fn.dataTable.util.escapeRegex(
                                 $(this).val()
