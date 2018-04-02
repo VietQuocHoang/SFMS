@@ -61,7 +61,6 @@ class ModifyFeedbackController {
         mv.addObject("enddate", feedback.getEndDate() == null ? "" : new SimpleDateFormat("yyyy-MM-dd").format(feedback.getEndDate()));
         mv.addObject("alltypes", modifyService.loadAllTypes().getBody());
         mv.addObject("allSemesters", modifyService.loadAllSemesters().getBody());
-//        mv.addObject("targets", modifyService.loadTargets((int[])session.getAttribute("targetIds")));
         return mv;
     }
 
@@ -90,12 +89,6 @@ class ModifyFeedbackController {
         ModelAndView mv = new ModelAndView("modify-feedback-target");
         Feedback feedback = modifyService.getFeedback((int)session.getAttribute("id")).getBody();
         mv.addObject("feedback", feedback);
-//        mv.addObject("alltypes", modifyService.loadAllTypes().getBody());
-        mv.addObject("allSemesters", modifyService.loadAllSemesters().getBody());
-        mv.addObject("allMajors", modifyService.filterMajors("").getBody());
-        mv.addObject("allCourses", modifyService.filterCourses("").getBody());
-        mv.addObject("allLecturers", modifyService.filterLecturers("","").getBody());
-        mv.addObject("targetIds", modifyService.loadTargets((List<Integer>) session.getAttribute("targetIds")));
         return mv;
     }
 

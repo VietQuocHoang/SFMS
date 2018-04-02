@@ -12,10 +12,11 @@ import java.util.Collection;
  */
 @Entity
 public class Major {
+    @JsonView({TargetView.basicMajorView.class, UserView.listUserView.class})
     private int id;
-    @JsonView({TargetView.basicClazzView.class, TargetView.basicMajorView.class, UserView.listUserView.class})
+    @JsonView({TargetView.basicClazzView.class, TargetView.basicMajorView.class, TargetView.basicCourseView.class, UserView.listUserView.class})
     private String code;
-    @JsonView({TargetView.basicClazzView.class, TargetView.basicMajorView.class, UserView.listUserView.class})
+    @JsonView({TargetView.basicClazzView.class, TargetView.basicMajorView.class, TargetView.basicCourseView.class, UserView.listUserView.class})
     private String name;
     private Collection<Feedback> feedbacksById;
     @JsonView({TargetView.basicMajorView.class})

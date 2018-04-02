@@ -57,6 +57,7 @@
                 </div>
             </th:block>
         </div>
+        <br>
         <!--end title bar-->
         <!--tab content-->
         <div class="row">
@@ -64,55 +65,32 @@
                 <div class="tab-content" id="nav-tabContent">
                     <!--tab pane majors-->
                     <div class="tab-pane fade" id="nav-major" role="tabpanel" aria-labelledby="nav-majors-tab">
-                        <!--filter bar-->
-                        <div class="form-row">
-                            <!--major-->
-                            <div class="form-group col-sm-2">
-                                <div class="input-group input-group-sm">
-                                    <input list="list-majors" id="filter-major-major" class="form-control"
-                                           placeholder="Ngành"/>
-                                </div>
-                            </div>
-                            <!--end major-->
-                            <!--course-->
-                            <div class="form-group col-sm-2">
-                                <div class="input-group input-group-sm">
-                                    <input list="list-courses" id="filter-major-course" class="form-control"
-                                           placeholder="Ngành"/>
-                                </div>
-                            </div>
-                            <!--end courses-->
-                        </div>
-                        <!--end filter bar-->
                         <!--table majors-->
                         <div class="row">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="tbl-majors" width="100%"
-                                       cellspacing="0">
-                                    <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Tên</th>
-                                        <th>Mã ngành</th>
-                                        <th>Người làm feedback</th>
-                                        <th>Người xem báo cáo</th>
-                                        <!--<th>Tùy chọn</th>-->
-                                    </tr>
-                                    </thead>
-                                    <tfoot>
-                                    <tr>
-                                        <th></th>
-                                        <th>Tên</th>
-                                        <th>Mã ngành</th>
-                                        <th>Người làm feedback</th>
-                                        <th>Người xem báo cáo</th>
-                                        <!--<th>Tùy chọn</th>-->
-                                    </tr>
-                                    </tfoot>
-                                    <tbody>
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-7">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="tbl-majors" width="100%"
+                                           cellspacing="0">
+                                        <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Chuyên ngành</th>
+                                            <th>Mã ngành</th>
+                                        </tr>
+                                        </thead>
+                                        <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th>Chuyên ngành</th>
+                                            <th>Mã ngành</th>
+                                        </tr>
+                                        </tfoot>
+                                        <tbody>
 
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                         <!--end table majors-->
@@ -123,31 +101,28 @@
                          aria-labelledby="nav-departments-tab">
                         <!--table departments-->
                         <div class="row">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="tbl-departments" width="100%"
-                                       cellspacing="0">
-                                    <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Phòng ban</th>
-                                        <th>Người làm feedback</th>
-                                        <th>Người xem báo cáo</th>
-                                        <!--<th>Tùy chọn</th>-->
-                                    </tr>
-                                    </thead>
-                                    <tfoot>
-                                    <tr>
-                                        <th></th>
-                                        <th>Tên</th>
-                                        <th>Người làm feedback</th>
-                                        <th>Người xem báo cáo</th>
-                                        <!--<th>Tùy chọn</th>-->
-                                    </tr>
-                                    </tfoot>
-                                    <tbody>
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-6">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="tbl-departments" width="100%"
+                                           cellspacing="0">
+                                        <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Phòng ban</th>
+                                        </tr>
+                                        </thead>
+                                        <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th>Phòng ban</th>
+                                        </tr>
+                                        </tfoot>
+                                        <tbody>
 
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                         <!--end table departments-->
@@ -156,56 +131,38 @@
                     <!--tab pane course-->
                     <div class="tab-pane fade" id="nav-course" role="tabpanel"
                          aria-labelledby="nav-courses-tab">
-                        <!--filter bar-->
-                        <div class="form-row">
-                            <!--major-->
-                            <div class="form-group col-sm-2">
-                                <div class="input-group input-group-sm">
-                                    <input list="list-majors" id="filter-course-major" class="form-control"
-                                           placeholder="Chuyên ngành"/>
-                                </div>
-                            </div>
-                            <!--end major-->
-                            <!--Lecturer-->
-                            <div class="form-group col-sm-2">
-                                <div class="input-group input-group-sm">
-                                    <input list="list-lecturers" id="filter-course-lecturer" class="form-control"
-                                           placeholder="Giảng viên"/>
-                                </div>
-                            </div>
-                            <!--end lecturer-->
-                        </div>
-                        <!--end filter bar-->
                         <!--table courses-->
                         <div class="row">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="tbl-courses" width="100%"
-                                       cellspacing="0">
-                                    <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Môn học</th>
-                                        <th>Mã môn</th>
-                                        <!--<th>Chuyên ngành</th>-->
-                                        <th>Người làm feedback</th>
-                                        <th>Người xem báo cáo</th>
-                                        <!--<th>Tùy chọn</th>-->
-                                    </tr>
-                                    </thead>
-                                    <tfoot>
-                                    <tr>
-                                        <th></th>
-                                        <th>Môn học</th>
-                                        <th>Mã môn</th>
-                                        <!--<th>Chuyên ngành</th>-->
-                                        <th>Người làm feedback</th>
-                                        <th>Người xem báo cáo</th>
-                                        <!--<th>Tùy chọn</th>-->
-                                    </tr>
-                                    </tfoot>
-                                    <tbody>
-                                    </tbody>
-                                </table>
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-8">
+                                <div class="row" id="filter-course-bar">
+                                    <!--major-->
+                                    <div class="col-sm-4"></div>
+                                    <div class="col-sm-2" id="filter-course-major"></div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="tbl-courses" width="100%"
+                                           cellspacing="0">
+                                        <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Môn học</th>
+                                            <th>Mã môn</th>
+                                            <th>Chuyên ngành</th>
+                                        </tr>
+                                        </thead>
+                                        <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th>Môn học</th>
+                                            <th>Mã môn</th>
+                                            <th>Chuyên ngành</th>
+                                        </tr>
+                                        </tfoot>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                         <!--end table courses-->
@@ -214,144 +171,110 @@
                     <!--tab pane clazzes-->
                     <div class="tab-pane fade" id="nav-clazz" role="tabpanel" aria-labelledby="nav-clazzes-tab">
                         <!--filter bar-->
-                        <div class="form-row form-inline">
-                            <!--major-->
-                            <div class="form-group col-sm-2">
-                                <!--<div class="input-group input-group-sm">-->
-                                <!--<input list="list-majors" id = "filter-clazz-major" class="form-control" placeholder="Chuyên ngành"/>-->
-                                <!--</div>-->
-                                <select id="filter-clazz-major" style="width: inherit">
-                                    <option value="0" selected>--Chuyên ngành--</option>
-                                    <option th:each="major : ${allMajors}"
-                                            th:text="${major.name+' - '+major.code}"
-                                            th:value="${major.id}"></option>
-                                </select>
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
+                                <div class="row" id="filter-clazz-bar">
+                                    <!--major-->
+                                    <div class="col-sm-2" id="filter-clazz-major"></div>
+                                    <!--course-->
+                                    <div class="col-sm-2" id="filter-clazz-course"></div>
+                                    <!--end courses-->
+                                    <!--Semester-->
+                                    <div class="col-sm-2" id="filter-clazz-semester"></div>
+                                    <!--end semester-->
+                                    <!--class name-->
+                                    <div class="col-sm-2" id="filter-clazz-name"></div>
+                                    <!--end classname-->
+                                    <!--Lecturer-->
+                                    <div class="col-sm-2" id="filter-clazz-lecturer"></div>
+                                    <!--end lecturer-->
+                                    <div class="col-sm-1">
+                                        <select id="displayOpt">
+                                            <option value="1" selected>Tất cả</option>
+                                            <option value="2">Chưa chọn</option>
+                                            <option value="3">Đã chọn</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                            <!--end major-->
-                            <!--course-->
-                            <div class="form-group col-sm-2">
-                                <!--<div class="input-group input-group-sm">-->
-                                <!--<input list="list-courses" id = "filter-clazz-course" class="form-control" placeholder="Môn"/>-->
-                                <!--</div>-->
-                                <select id="filter-clazz-course" style="width: inherit">
-                                    <option value="0" selected>--Môn học--</option>
-                                    <option th:each="course : ${allCourses}"
-                                            th:text="${course.name+'-'+course.code}"
-                                            th:value="${course.id}"></option>
-                                </select>
-                            </div>
-                            <!--end courses-->
-                            <!--Semester-->
-                            <div class="form-group col-sm-2">
-                                <!--<div class="input-group input-group-sm">-->
-                                <!--<input list="list-semesters" id = "filter-clazz-semester" class="form-control" placeholder="Học kỳ"/>-->
-                                <!--</div>-->
-                                <select id="filter-clazz-semester" style="width: inherit">
-                                    <option selected value="0">--Học kỳ--</option>
-                                    <option th:each="semester : ${allSemesters}"
-                                            th:text="${semester.title}"
-                                            th:value="${semester.id}"></option>
-                                </select>
-                            </div>
-                            <!--end semester-->
-                            <!--Lecturer-->
-                            <div class="form-group col-sm-2">
-                                <!--<div class="input-group input-group-sm">-->
-                                <!--<input list="list-lecturers" id = "filter-clazz-lecturer" class="form-control" placeholder="Giảng viên"/>-->
-                                <!--</div>-->
-                                <select id="filter-clazz-lecturer" style="width: inherit">
-                                    <option selected value="0">--Giảng viên--</option>
-                                    <option th:each="lecturer : ${allLecturers}"
-                                            th:text="${lecturer.fullname+' - '+lecturer.code}"
-                                            th:value="${lecturer.id}"></option>
-                                </select>
-                            </div>
-                            <!--end semester-->
-                            <!--Lecturer-->
-                            <div class="form-group col-sm-2">
-                                <select id="displayOpt">
-                                    <option value="1" selected>Tất cả</option>
-                                    <option value="2">Chưa chọn</option>
-                                    <option value="3">Đã chọn</option>
-                                </select>
-                            </div>
-                            <!--end lecturer-->
                         </div>
                         <br>
                         <!--end filter bar-->
                         <div class="row">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="tbl-clazzes" width="100%" cellspacing="0">
-                                    <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Lớp</th>
-                                        <th>Môn học</th>
-                                        <th>Mã môn</th>
-                                        <th>Học kỳ</th>
-                                        <th>Giảng viên</th>
-                                        <th>Người làm feedback</th>
-                                        <th>Người xem báo cáo</th>
-                                        <!--<th>Tùy chọn</th>-->
-                                    </tr>
-                                    </thead>
-                                    <tfoot>
-                                    <tr>
-                                        <th></th>
-                                        <th>Lớp</th>
-                                        <th>Môn học</th>
-                                        <th>Mã môn</th>
-                                        <th>Học kỳ</th>
-                                        <th>Giảng viên</th>
-                                        <th>Người làm feedback</th>
-                                        <th>Người xem báo cáo</th>
-                                        <!--<th>Tùy chọn</th>-->
-                                    </tr>
-                                    </tfoot>
-                                    <tbody>
-                                    </tbody>
-                                </table>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="tbl-clazzes" width="100%" cellspacing="0">
+                                        <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Lớp</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th>Môn học</th>
+                                            <th>Mã môn</th>
+                                            <th>Học kỳ</th>
+                                            <th>Giảng viên</th>
+                                        </tr>
+                                        </thead>
+                                        <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th>Lớp</th>
+                                            <th></th>
+                                            <th>Môn học</th>
+                                            <th>Mã môn</th>
+                                            <th>Học kỳ</th>
+                                            <th>Giảng viên</th>
+                                        </tr>
+                                        </tfoot>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                             <!--end table responsive-->
                         </div>
                     </div>
                     <!--end tab pane clazzes-->
                 </div>
-                <!--end nav-tab-->
             </div>
+            <!--end nav-tab-->
         </div>
     </div>
-    <!-- /.container-fluid-->
-    <footer th:replace="fragments/footer"></footer>
-    <!--<datalist id="list-majors">-->
-        <!--<option th:each="major : ${allMajors}"-->
-                <!--th:text="${major.name+' - '+major.code}"></option>-->
-    <!--</datalist>-->
-    <!--<datalist id="list-semesters">-->
-        <!--<option th:each="semester : ${allSemesters}"-->
-                <!--th:text="${semester.title}"></option>-->
-    <!--</datalist>-->
-    <!--<datalist id="list-courses">-->
-        <!--<option th:each="course : ${allCourses}"-->
-                <!--th:text="${course.name+'-'+course.code}"></option>-->
-    <!--</datalist>-->
-    <!--<datalist id="list-lecturers">-->
-        <!--<option th:each="lecturer : ${allLecturers}"-->
-                <!--th:text="${lecturer.fullname+' - '+lecturer.code}"></option>-->
-    <!--</datalist>-->
-    <!-- Bootstrap core JavaScript-->
-    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
-    <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
-    <!-- Core plugin JavaScript-->
-    <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
-    <!-- Page level plugin JavaScript-->
-    <script th:src="@{/vendor/datatables/jquery.dataTables.js}"></script>
-    <script th:src="@{/vendor/datatables/dataTables.bootstrap4.js}"></script>
-    <!-- Custom scripts for all pages-->
-    <script th:src="@{/js/sb-admin.min.js}"></script>
-    <!-- Custom scripts for this page-->
-    <script th:src="@{/js/sb-admin-datatables.min.js}"></script>
-    <script th:src="@{/js/select-feedback-target.js}"></script>
+</div>
+<!-- /.container-fluid-->
+<footer th:replace="fragments/footer"></footer>
+<!--<datalist id="list-majors">-->
+<!--<option th:each="major : ${allMajors}"-->
+<!--th:text="${major.name+' - '+major.code}"></option>-->
+<!--</datalist>-->
+<!--<datalist id="list-semesters">-->
+<!--<option th:each="semester : ${allSemesters}"-->
+<!--th:text="${semester.title}"></option>-->
+<!--</datalist>-->
+<!--<datalist id="list-courses">-->
+<!--<option th:each="course : ${allCourses}"-->
+<!--th:text="${course.name+'-'+course.code}"></option>-->
+<!--</datalist>-->
+<!--<datalist id="list-lecturers">-->
+<!--<option th:each="lecturer : ${allLecturers}"-->
+<!--th:text="${lecturer.fullname+' - '+lecturer.code}"></option>-->
+<!--</datalist>-->
+<!-- Bootstrap core JavaScript-->
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- Core plugin JavaScript-->
+<script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+<!-- Page level plugin JavaScript-->
+<script th:src="@{/vendor/datatables/jquery.dataTables.js}"></script>
+<script th:src="@{/vendor/datatables/dataTables.bootstrap4.js}"></script>
+<!-- Custom scripts for all pages-->
+<script th:src="@{/js/sb-admin.min.js}"></script>
+<!-- Custom scripts for this page-->
+<script th:src="@{/js/sb-admin-datatables.min.js}"></script>
+<script th:src="@{/js/select-feedback-target.js}"></script>
 </div>
 </body>
 

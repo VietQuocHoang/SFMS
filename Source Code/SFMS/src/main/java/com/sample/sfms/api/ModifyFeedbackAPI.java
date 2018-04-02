@@ -64,7 +64,7 @@ public class ModifyFeedbackAPI {
 //            case "Chuyên ngành": return new ResponseEntity(new ArrayList<>(),HttpStatus.OK);
 //            case "Môn học": return new ResponseEntity(new ArrayList<>(), HttpStatus.OK);
             case "Lớp":
-                return modifyService.loadClazzTargets((List<Integer>)   session.getAttribute("targetIds"));
+                return modifyService.loadClazzTargets((List<Integer>) session.getAttribute("targetIds"));
 //            case "Phòng ban": return new ResponseEntity(new ArrayList<>(), HttpStatus.OK);
             default:
                 return new ResponseEntity(new ArrayList<>(), HttpStatus.OK);
@@ -128,35 +128,50 @@ public class ModifyFeedbackAPI {
 
     @JsonView(TargetView.basicClazzView.class)
     @GetMapping("/list/clazzes")
-    private ResponseEntity listClazzes(FilteringModel model, HttpSession session) {
-        String majorkey = model.majorName==null?"":model.majorName;
-        String coursekey = model.courseName==null?"":model.courseName;
-        String semesterkey = model.semesterTitle==null?"":model.semesterTitle;
-        String lecturerkey  = model.lecturerName==null?"":model.lecturerName;
-        return modifyService.filterClazz(majorkey,coursekey,semesterkey,lecturerkey);
+    private ResponseEntity listClazzes(HttpSession session) {
+        return modifyService.loadAllClazz();
     }
 
     @JsonView(TargetView.basicClazzView.class)
-    @GetMapping("/list/clazzes/{major}/{course}/{semester}/{lecturer}")
-    private ResponseEntity listClazzes(@PathVariable("major") String major,@PathVariable("course") String course,
-                                       @PathVariable("semester")String semester, @PathVariable("lecturer")String lecturer, HttpSession session) {
-
-        int majorKey = Integer.parseInt(major);
-        int courseKey = Integer.parseInt(course);
-        int semesterKey = Integer.parseInt(semester);
-        int lecturerKey = Integer.parseInt(lecturer);
-        return modifyService.filterClazz(majorKey,courseKey,semesterKey,lecturerKey);
+    @GetMapping("/list/courses")
+    private ResponseEntity listCourses(HttpSession session) {
+        return modifyService.loadAllCourses();
     }
+
+    @JsonView(TargetView.basicClazzView.class)
+    @GetMapping("/list/departments")
+    private ResponseEntity listDepartments(HttpSession session) {
+        return modifyService.loadAllDepartments();
+    }
+
+    @JsonView(TargetView.basicMajorView.class)
+    @GetMapping("/list/majors")
+    private ResponseEntity listMajors(HttpSession session) {
+        return modifyService.loadAllMajors();
+    }
+
     @JsonView(UserView.listUserView.class)
     @GetMapping("/list/conductors/{id}")
     private ResponseEntity listConductors(@PathVariable("id") int id, HttpSession session) {
-        return modifyService.loadConductors(id, (List<Integer>)session.getAttribute("targetIds"));
+        return modifyService.loadConductors(id, (List<Integer>) session.getAttribute("targetIds"));
     }
 
     @JsonView(UserView.listUserView.class)
     @GetMapping("/list/students")
-    private Iterable<User> getAllStudents(){
+    private Iterable<User> getAllStudents() {
         return modifyService.getAllStudents();
+    }
+
+    @JsonView(UserView.listUserView.class)
+    @GetMapping("/list/staffs")
+    private Iterable<User> getAllStaffs() {
+        return modifyService.getAllStaffs();
+    }
+
+    @JsonView(UserView.listUserView.class)
+    @GetMapping("/list/lecturers")
+    private Iterable<User> getAllLecturers() {
+        return modifyService.getAllLecturers();
     }
 
     @PostMapping("/create/{id}")
@@ -240,7 +255,7 @@ public class ModifyFeedbackAPI {
 
     @DeleteMapping("/remove/conductor/{id}")
     private ResponseEntity removeConductor(@PathVariable("id") int id, @RequestBody User conductor, HttpSession session) {
-        return modifyService.removeConductor(id, conductor.getId(),(List<Integer>) session.getAttribute("targetIds"));
+        return modifyService.removeConductor(id, conductor.getId(), (List<Integer>) session.getAttribute("targetIds"));
     }
 
 
@@ -264,12 +279,12 @@ public class ModifyFeedbackAPI {
                 session.setAttribute("targetIds", null);
                 return response;
             case 2:
-                response =  modifyService.saveTemplateFeadback((int) session.getAttribute("id"),
+                response = modifyService.saveTemplateFeadback((int) session.getAttribute("id"),
                         (List<Integer>) session.getAttribute("targetIds"));
                 session.setAttribute("targetIds", null);
                 return response;
             case 3:
-                response =  modifyService.updateSelectedTemplate((int) session.getAttribute("id"),
+                response = modifyService.updateSelectedTemplate((int) session.getAttribute("id"),
                         (List<Integer>) session.getAttribute("targetIds"));
                 session.setAttribute("targetIds", null);
                 return response;
