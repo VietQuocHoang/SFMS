@@ -1,10 +1,10 @@
 /*question list css*/
 .question-list-container {
     position: relative;
-    overflow-y: auto;
+    overflow-y: visible;
     overflow-x: hidden;
-    height: 500px;
-    border: 1px solid black;
+    min-height: 700px;
+    background-color: #e9ebee;
     padding: 20px;
     box-sizing: padding-box;
     float: left;
@@ -21,6 +21,7 @@
 
 /*individual question css*/
 .question-container {
+    background-color: #ffffff;
     position: inherit;
     margin-left: 10%;
     width: 80%;
@@ -99,6 +100,7 @@
     width: 100%;
     float: left;
     /*margin-left:10%;*/
+    padding: 10px 20px 10px 20px;
 }
 
 .answer-list {
@@ -167,9 +169,14 @@
 }
 
 .txtEditQuestion {
-    padding: 6px 12px;
+    padding: .375rem .75rem;
     width: 100%;
     resize: none;
+    border: 1px solid #ced4da;
+    -webkit-border-radius: .25rem;
+    -moz-border-radius: .25rem;
+    border-radius: .25rem;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
 
 .edit-answer-container {
@@ -366,25 +373,29 @@ i.fa-bars:hover {
 /*Item menu css*/
 
 .item-menu-container {
-    height: 500px;
+    flex: 16.666666667%;
+    height: auto;
     overflow: hidden;
-    padding: 0px;
+    padding: 0;
 }
 
 .item-menu-wrapper {
+    position: fixed;
     overflow: hidden;
-    width: 100%;
+    width: inherit;
+    padding-right: 1.25rem;
     float: left;
     box-sizing: border-box;
 }
 
 .item-list {
-    padding-left: 0rem;
+    width: inherit;
+    padding-left: 0;
     list-style: none;
 }
 
 .item-list > li, .item {
-    width: 100%;
+    width: inherit;
     height: auto;
     padding: 10px 8px;
     border: 1px lightgrey solid;

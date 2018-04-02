@@ -15,9 +15,10 @@ body {
 }
 
 .feedback-content {
-    height: 700px;
-    border: 2px #08AE9E solid;
-    border-radius: 5px;
+    /*TODO xóa 2 cái này*/
+    /*height: 700px;*/
+    /*border-radius: 5px;*/
+    /**/
     overflow-y: auto;
 }
 
