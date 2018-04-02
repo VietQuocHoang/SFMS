@@ -246,19 +246,24 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
             Type t = feedbackRepo.findOne(feedbackId).getTypeByTypeId();
             switch (t.getDescription()) {
                 case "Chuyên ngành":
-                    for (int id : targetIds) {
-                        response = feedbackRepo.findOne(id);
-                        if (response.getMajorByMajorId().getId() == targetId)
-                            return new ResponseEntity<>(targetIds, HttpStatus.ALREADY_REPORTED);
+                    if (!targetIds.isEmpty()) {
+                        for (int id : targetIds) {
+                            response = feedbackRepo.findOne(id);
+                            if (response.getMajorByMajorId() != null)
+                                if (response.getMajorByMajorId().getId() == targetId)
+                                    return new ResponseEntity<>(targetIds, HttpStatus.ALREADY_REPORTED);
+                        }
                     }
                     response = feedbackRepo.save(new Feedback(null, null, majorRepo.findOne(targetId), null, t));
                     targetIds.add(response.getId());
                     break;
                 case "Môn học":
-                    for (int id : targetIds) {
-                        response = feedbackRepo.findOne(id);
-                        if (response.getCourseByCourseId().getId() == targetId)
-                            return new ResponseEntity<>(targetIds, HttpStatus.ALREADY_REPORTED);
+                    if (!targetIds.isEmpty()) {
+                        for (int id : targetIds) {
+                            response = feedbackRepo.findOne(id);
+                            if (response.getCourseByCourseId().getId() == targetId)
+                                return new ResponseEntity<>(targetIds, HttpStatus.ALREADY_REPORTED);
+                        }
                     }
                     response = feedbackRepo.save(new Feedback(null, courseRepo.findOne(targetId), null, null, t));
                     targetIds.add(response.getId());
@@ -324,23 +329,9 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                 t = response.getTypeByTypeId();
                 switch (t.getDescription()) {
                     case "Chuyên ngành":
-                        if (response.getMajorByMajorId().getId() == id)
+                        if (response.getMajorByMajorId().getId() == id) {
                             userFeedbackRepo.delete(response.getUserFeedbacksById());
-                        feedbackRepo.delete(response);
-                        removedId = response.getId();
-                        break;
-                    case "Môn học":
-                        if (response.getCourseByCourseId().getId() == id)
-                            userFeedbackRepo.delete(response.getUserFeedbacksById());
-                        feedbackRepo.delete(response);
-                        removedId = response.getId();
-                        break;
-                    case "Lớp":
-                        if (response.getClazzByClazzId().getId() == id) {
-                            userFeedbackRepo.delete(response.getUserFeedbacksById());
-//                            response.setUserFeedbacksById(null);
                             feedbackRepo.delete(response.getFeedbacksById());
-//                            response.setFeedbacksById(null);
                             for (Question q : response.getQuestionsById()) {
                                 for (Optionn opt : q.getOptionsById()) {
                                     answerRepo.delete(opt.getAnswersById());
@@ -348,16 +339,54 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                                 optionRepo.delete(q.getOptionsById());
                             }
                             questionRepo.delete(response.getQuestionsById());
-//                            response.setQuestionsById(null);
+                            removedId = response.getId();
+                            feedbackRepo.delete(response);
+                        }
+                        break;
+                    case "Môn học":
+                        if (response.getCourseByCourseId().getId() == id) {
+                            userFeedbackRepo.delete(response.getUserFeedbacksById());
+                            feedbackRepo.delete(response.getFeedbacksById());
+                            for (Question q : response.getQuestionsById()) {
+                                for (Optionn opt : q.getOptionsById()) {
+                                    answerRepo.delete(opt.getAnswersById());
+                                }
+                                optionRepo.delete(q.getOptionsById());
+                            }
+                            questionRepo.delete(response.getQuestionsById());
+                            removedId = response.getId();
+                            feedbackRepo.delete(response);
+                        }
+                        break;
+                    case "Lớp":
+                        if (response.getClazzByClazzId().getId() == id) {
+                            userFeedbackRepo.delete(response.getUserFeedbacksById());
+                            feedbackRepo.delete(response.getFeedbacksById());
+                            for (Question q : response.getQuestionsById()) {
+                                for (Optionn opt : q.getOptionsById()) {
+                                    answerRepo.delete(opt.getAnswersById());
+                                }
+                                optionRepo.delete(q.getOptionsById());
+                            }
+                            questionRepo.delete(response.getQuestionsById());
                             removedId = response.getId();
                             feedbackRepo.delete(response);
                         }
                         break;
                     case "Phòng ban":
-                        if (response.getDepartmentByDepartmentId().getId() == id)
+                        if (response.getDepartmentByDepartmentId().getId() == id) {
                             userFeedbackRepo.delete(response.getUserFeedbacksById());
-                        feedbackRepo.delete(response);
-                        removedId = response.getId();
+                            feedbackRepo.delete(response.getFeedbacksById());
+                            for (Question q : response.getQuestionsById()) {
+                                for (Optionn opt : q.getOptionsById()) {
+                                    answerRepo.delete(opt.getAnswersById());
+                                }
+                                optionRepo.delete(q.getOptionsById());
+                            }
+                            questionRepo.delete(response.getQuestionsById());
+                            removedId = response.getId();
+                            feedbackRepo.delete(response);
+                        }
                         break;
                     default:
                         return new ResponseEntity<>(targetIds, HttpStatus.BAD_REQUEST);
@@ -402,7 +431,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
         switch (f.getTypeByTypeId().getDescription()) {
             case "Chuyên ngành":
                 conductors = userFilteringRepo.findByMajorByMajorId(f.getMajorByMajorId());
-                viewers = userFilteringRepo.findByRoleByRoleIdAndMajorByMajorId(roleRepo.findByRoleName("Trưởng phòng"), f.getMajorByMajorId());
+//                viewers = userFilteringRepo.findByRoleByRoleIdAndMajorByMajorId(roleRepo.findByRoleName("Trưởng phòng"), f.getMajorByMajorId());
                 break;
             case "Môn học":
                 Course course = f.getCourseByCourseId();
@@ -418,12 +447,12 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                     if (!conductors.contains(tmp)) conductors.add(tmp);
                 }
 //                set default viewers
-                viewers.addAll(userFilteringRepo.findByRoleByRoleIdAndMajorByMajorId_CoursesByIdContains(
-                        roleRepo.findByRoleName("Trưởng phòng"), course
-                ));
-                viewers.addAll(userFilteringRepo.findByRoleByRoleIdAndMajorByMajorId_CoursesByIdContains(
-                        roleRepo.findByRoleName("Giảng viên"), course
-                ));
+//                viewers.addAll(userFilteringRepo.findByRoleByRoleIdAndMajorByMajorId_CoursesByIdContains(
+//                        roleRepo.findByRoleName("Trưởng phòng"), course
+//                ));
+//                viewers.addAll(userFilteringRepo.findByRoleByRoleIdAndMajorByMajorId_CoursesByIdContains(
+//                        roleRepo.findByRoleName("Giảng viên"), course
+//                ));
                 break;
             case "Lớp":
                 studentClazzes.addAll(studentClazzRepo.findByClazzByClazzId(f.getClazzByClazzId()));
@@ -440,11 +469,12 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                 if (specialDepartment.contains(f.getDepartmentByDepartmentId().getName())) {
                     conductors.addAll(userRepo.findAll());
                     for (User conductor : conductors) {
-                        if (conductor.getDepartmentByDepartmentId().getName().equals("IT"))
-                            conductors.remove(conductor);
+                        if (conductor.getDepartmentByDepartmentId() != null)
+                            if (conductor.getDepartmentByDepartmentId().getName().equals("IT"))
+                                conductors.remove(conductor);
                     }
                 } else conductors.addAll(userRepo.findByRoleByRoleId_RoleName("Học sinh"));
-                viewers = userFilteringRepo.findByRoleByRoleIdAndMajorByMajorId(roleRepo.findByRoleName("Trưởng phòng"), f.getMajorByMajorId());
+//                viewers = userFilteringRepo.findByRoleByRoleIdAndMajorByMajorId(roleRepo.findByRoleName("Trưởng phòng"), f.getMajorByMajorId());
                 break;
             default:
                 break;
@@ -455,29 +485,33 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
 //            uf.setConductor(true);
 //            userFeedbackRepo.save(uf);
         }
-        for (User u : viewers) {
-            uf = userFeedbackRepo.findOne(new UserFeedbackPK(u.getId(), f.getId()));
-            if (uf != null) {
-                uf.setViewer(true);
-                userFeedbackRepo.save(uf);
-            } else {
-                uf = userFeedbackRepo.save(new UserFeedback(u, f, false, true, false));
-            }
-        }
+//        for (User u : viewers) {
+//            uf = userFeedbackRepo.findOne(new UserFeedbackPK(u.getId(), f.getId()));
+//            if (uf != null) {
+//                uf.setViewer(true);
+//                userFeedbackRepo.save(uf);
+//            } else {
+//                uf = userFeedbackRepo.save(new UserFeedback(u.getId(), f.getId(), false, true, false));
+//            }
+//        }
     }
 
     Feedback findTarget(int id, List<Integer> targetIds) {
-        Feedback tmp; Type t;
+        Feedback tmp;
+        Type t;
 
         for (int i : targetIds) {
             tmp = feedbackRepo.findOne(i);
             t = tmp.getTypeByTypeId();
             switch (t.getDescription()) {
                 case "Chuyên ngành":
+                    if (tmp.getMajorByMajorId().getId() == id) return tmp;
                     break;
                 case "Phòng ban":
+                    if (tmp.getDepartmentByDepartmentId().getId() == id) return tmp;
                     break;
                 case "Môn học":
+                    if (tmp.getCourseByCourseId().getId() == id) return tmp;
                     break;
                 case "Lớp":
                     if (tmp.getClazzByClazzId().getId() == id) {
@@ -485,7 +519,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                     }
                     break;
                 default:
-                    break ;
+                    break;
             }
         }
 
@@ -493,20 +527,23 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     }
 
     @Override
-    public ResponseEntity<UserFeedback> addConductor(int targetId, int userId, List<Integer> targetIds) {
+    public ResponseEntity addConductor(int targetId, int userId, List<Integer> targetIds) {
         try {
             Feedback f = findTarget(targetId, targetIds);
+            if (f == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             UserFeedback selected = userFeedbackRepo.findOne(new UserFeedbackPK(userId, f.getId()));
             if (selected != null) {
                 selected.setConductor(true);
-                return new ResponseEntity<>(userFeedbackRepo.save(selected), HttpStatus.OK);
+                userFeedbackRepo.save(selected);
+                return new ResponseEntity(HttpStatus.OK);
             }
             User u = userRepo.findOne(userId);
 //            Feedback f = feedbackRepo.findOne(targetId);
 //            UserFeedback uf = userFeedbackRepo.save(new UserFeedback(u.getId(), f.getId(), true, false, false));
 //            uf.setConductor(true);
 //            return new ResponseEntity<>(userFeedbackRepo.save(uf), HttpStatus.OK);
-            return new ResponseEntity<>(userFeedbackRepo.save(new UserFeedback(u.getId(), f.getId(), true, false, false)), HttpStatus.OK);
+            userFeedbackRepo.save(new UserFeedback(u.getId(), f.getId(), true, false, false));
+            return new ResponseEntity(HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -642,10 +679,34 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                 t = tmp.getTypeByTypeId();
                 switch (t.getDescription()) {
                     case "Chuyên ngành":
+                        if (tmp.getMajorByMajorId().getId() == id) {
+                            List<UserFeedback> ufs = (List) tmp.getUserFeedbacksById();
+                            if (!(ufs.isEmpty() || ufs == null)) {
+                                for (UserFeedback uf : ufs) {
+                                    conductors.add(uf.getUserByUserId());
+                                }
+                            }
+                        }
                         break;
                     case "Phòng ban":
+                        if (tmp.getDepartmentByDepartmentId().getId() == id) {
+                            List<UserFeedback> ufs = (List) tmp.getUserFeedbacksById();
+                            if (!(ufs.isEmpty() || ufs == null)) {
+                                for (UserFeedback uf : ufs) {
+                                    conductors.add(uf.getUserByUserId());
+                                }
+                            }
+                        }
                         break;
                     case "Môn học":
+                        if (tmp.getCourseByCourseId().getId() == id) {
+                            List<UserFeedback> ufs = (List) tmp.getUserFeedbacksById();
+                            if (!(ufs.isEmpty() || ufs == null)) {
+                                for (UserFeedback uf : ufs) {
+                                    conductors.add(uf.getUserByUserId());
+                                }
+                            }
+                        }
                         break;
                     case "Lớp":
                         if (tmp.getClazzByClazzId().getId() == id) {
@@ -718,7 +779,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     }
 
     @Override
-    public ResponseEntity<List<Major>> filterMajors(String majorKey) {
+    public ResponseEntity<List<Major>> loadAllMajors() {
         try {
             return new ResponseEntity<>(majorRepo.findAll(), HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
@@ -728,9 +789,9 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     }
 
     @Override
-    public ResponseEntity<List<Course>> filterCourses(String name) {
+    public ResponseEntity<List<Course>> loadAllCourses() {
         try {
-            return new ResponseEntity<>(courseRepo.findByNameContains(name), HttpStatus.OK);
+            return new ResponseEntity<>(courseRepo.findAll(), HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -738,7 +799,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     }
 
     @Override
-    public ResponseEntity<List<Department>> filterDepartments() {
+    public ResponseEntity<List<Department>> loadAllDepartments() {
         try {
             return new ResponseEntity<>(departmentRepo.findAll(), HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
@@ -748,79 +809,10 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     }
 
     @Override
-    public ResponseEntity<List<User>> filterLecturers(String majorKey, String nameKey) {
+    public ResponseEntity<List<Clazz>> loadAllClazz() {
         try {
-//            return userRepo.findByRoleByRoleId_RoleNameContainsAndFullnameContainsAndMajorByMajorId_NameContains("Giảng viên", nameKey, majorKey);
-//                return userRepo.findByRoleByRoleId_RoleName("Giảng viên");
-            return new ResponseEntity<>(userRepo.findAll(), HttpStatus.OK);
-        } catch (UnexpectedRollbackException e) {
-            logger.log(Level.FINE, e.toString());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @Override
-    public ResponseEntity<List<Clazz>> filterClazz(String majorKey, String courseKey, String semesterKey, String lecturerKey) {
-        try {
-//            return new ResponseEntity<>(clazzRepo.filteringver2(majorKey, courseKey, semesterKey, lecturerKey
-////                    , "Giảng viên, Trưởng ban, Trưởng phòng"
-//            ), HttpStatus.OK);
-            List<Major> majors = majorRepo.findByNameContainsOrCodeContains(majorKey, majorKey);
-            List<Course> courses = courseRepo.findByNameContainsOrCodeContains(courseKey, courseKey);
-//            List<Course> courses = courseRepo.findByNameContainsOrCodeContainsAndMajorByMajorId_NameContainsOrMajorByMajorId_CodeContains(courseKey, courseKey, majorKey, majorKey);
-            List<Semester> semesters = semesterRepo.findByTitleContains(semesterKey);
-            List<User> lecturers = userFilteringRepo.findByFullnameContainsOrCodeContains(lecturerKey, lecturerKey);
             List<Clazz> clazzes = clazzRepo.findAll();
-            for (Course c : courses) {
-                if (!majors.contains(c.getMajorByMajorId())) courses.remove(c);
-            }
-            for (User u : lecturers) {
-                if (!u.getRoleByRoleId().getRoleName().equals("Giảng viên") &&
-                        !u.getRoleByRoleId().getRoleName().equals("Trưởng ban") &&
-                        !u.getRoleByRoleId().getRoleName().equals("Trưởng phòng") &&
-                        !u.getRoleByRoleId().getRoleName().equals("Tổ trưởng") &&
-                        !majors.contains(u.getMajorByMajorId())) lecturers.remove(u);
-            }
-            for (Clazz c : clazzRepo.findAll()) {
-                if (!courses.contains(c.getCourseByCourseId()) ||
-                        !semesters.contains(c.getSemesterBySemesterId()) ||
-                        !lecturers.contains(c.getUserByLecturerId())) clazzes.remove(c);
-            }
-            return new ResponseEntity<>(clazzes, HttpStatus.OK);
-//            List<Clazz> clazzes = clazzRepo.filteringver2(majorKey, courseKey, semesterKey, lecturerKey);
-//            return new ResponseEntity<>(clazzes, HttpStatus.OK);
-        } catch (UnexpectedRollbackException e) {
-            logger.log(Level.FINE, e.toString());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
 
-
-    }
-
-    @Override
-    public ResponseEntity<List<Clazz>> filterClazz(int majorKey, int courseKey, int semesterkey, int lecturerKey) {
-        try {
-            Major major = null;
-            Semester semester = null;
-            User lecturer = null;
-            List<Course> courses = new ArrayList<>();
-            if (courseKey == 0) {
-                if (majorKey != 0) courses = (List<Course>) majorRepo.findOne(majorKey).getCoursesById();
-            } else courses.add(courseRepo.findOne(courseKey));
-            if (semesterkey != 0) semester = semesterRepo.findOne(semesterkey);
-            if (lecturerKey != 0) lecturer = userRepo.findOne(lecturerKey);
-            List<Clazz> clazzes = clazzRepo.findAll();
-            for (Clazz c : clazzRepo.findAll()) {
-                if (!courses.isEmpty()) {
-                    if (!courses.contains(c.getCourseByCourseId())) clazzes.remove(c);
-                }
-                if (semester != null) {
-                    if (c.getSemesterBySemesterId() != semester) clazzes.remove(c);
-                }
-                if (lecturer != null) {
-                    if (c.getUserByLecturerId() != lecturer) clazzes.remove(c);
-                }
-            }
             return new ResponseEntity<>(clazzes, HttpStatus.OK);
 //            List<Clazz> clazzes = clazzRepo.filteringver2(majorKey, courseKey, semesterKey, lecturerKey);
 //            return new ResponseEntity<>(clazzes, HttpStatus.OK);
@@ -839,11 +831,32 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     public List<User> getAllStudents() {
         List<User> l = userRepo.findAll();
         List<User> result = userRepo.findAll();
-        for(User u: l){
-            if(!u.getRoleByRoleId().getRoleName().equals("Học sinh")) result.remove(u);
+        for (User u : l) {
+            if (!u.getRoleByRoleId().getRoleName().equals("Học sinh")) result.remove(u);
         }
         return result;
     }
+
+    @Override
+    public List<User> getAllStaffs() {
+        List<User> l = userRepo.findAll();
+        List<User> result = userRepo.findAll();
+        for (User u : l) {
+            if (u.getRoleByRoleId().getRoleName().equals("Học sinh")) result.remove(u);
+        }
+        return result;
+    }
+
+    @Override
+    public List<User> getAllLecturers() {
+        List<User> l = userRepo.findAll();
+        List<User> result = userRepo.findAll();
+        for (User u : l) {
+            if (!(u.getRoleByRoleId().getRoleName().equals("Giảng viên")||(u.getRoleByRoleId().getRoleName().equals("Trưởng Ban") && u.getMajorByMajorId()!=null))) result.remove(u);
+        }
+        return result;
+    }
+
 
     @Override
     public ResponseEntity<List<Department>> loadDepartmentTargets(List<Integer> ids) {

@@ -37,7 +37,7 @@ public interface ModifyFeedbackService {
 
     public ResponseEntity<List<Feedback>> deleteFeedbacks(List<Integer> targetIds);
 
-    public ResponseEntity<UserFeedback> addConductor(int targetId, int userId, List<Integer> targetIds);
+    public ResponseEntity addConductor(int targetId, int userId, List<Integer> targetIds);
 
     public ResponseEntity removeConductor(int targetId, int userId, List<Integer> targetIds);
 
@@ -73,20 +73,20 @@ public interface ModifyFeedbackService {
 
     public ResponseEntity loadAllSemesters();
 
-    public ResponseEntity<List<Major>> filterMajors(String majorKey);
+    public ResponseEntity<List<Major>> loadAllMajors();
 
-    public ResponseEntity<List<Course>> filterCourses(String courseKey);
+    public ResponseEntity<List<Course>> loadAllCourses();
 
-    public ResponseEntity<List<Department>> filterDepartments();
+    public ResponseEntity<List<Department>> loadAllDepartments();
 
-    public ResponseEntity<List<User>> filterLecturers(String majorKey, String nameKey);
-
-    public ResponseEntity<List<Clazz>> filterClazz(String majorKey, String courseKey, String semesterkey, String lecturerKey);
-
-    public ResponseEntity<List<Clazz>> filterClazz(int majorKey, int courseKey, int semesterkey, int lecturerKey);
+    public ResponseEntity<List<Clazz>> loadAllClazz();
 
     public List filterSemester(String title);
 
     List<User> getAllStudents();
+
+    List<User> getAllStaffs();
+
+    List<User> getAllLecturers();
 
 }

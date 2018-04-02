@@ -80,7 +80,7 @@ public class CriteriaServiceImpl implements CriteriaService{
         try {
             Criteria c = criteriaRepo.findOne(id);
             if(c==null)return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            c.setStatus(false);
+            c.setStatus(true);
             return new ResponseEntity<>(criteriaRepo.save(c),HttpStatus.OK);
         }catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
@@ -93,7 +93,7 @@ public class CriteriaServiceImpl implements CriteriaService{
         try {
             Criteria c = criteriaRepo.findOne(id);
             if(c==null)return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            c.setStatus(true);
+            c.setStatus(false);
             return new ResponseEntity<>(criteriaRepo.save(c),HttpStatus.OK);
         }catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());

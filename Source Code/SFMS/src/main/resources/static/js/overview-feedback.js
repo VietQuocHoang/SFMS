@@ -2,9 +2,11 @@
  * Created by MyPC on 27/02/2018.
  */
 var modifyconductorlink = function(data, type, full, meta){
-    return "<a class='add-inf-item-link' href='/sfms/modify-feedback/conductor/"+data+"'><i class='fa fa-pencil'></i> Chỉnh sửa </a>"
-};
-var modifyviewerlink = "<a class='add-inf-item-link'    href='/sfms/modify-feedback-viewers'><i class='fa fa-pencil'></i> Chỉnh sửa </a>";
+    return "<a class='add-inf-item-link' href='/sfms/modify-feedback/conductor/"+data+"'><i class='fa fa-pencil'></i> Danh sách người làm feedback </a>";
+}
+var modifyviewerlink = function(data, type, full, meta){
+    return "<a class='add-inf-item-link' href='/sfms/modify-feedback-viewers'><i class='fa fa-pencil'></i> Danh sách người xem báo cáo </a>";
+}
 var linkShow = "<a href='/sfms/modify-feedback/target'><i class='fa fa-plus' style='font-size: 24px'></i>    </a>";
 var linkDeleteClazz = "<a href='#' onclick='removeClazzTarget(this)'><i class='fa fa-trash' style='font-size: 24px'></i>    </a>";
 var linkDeleteCourse = "<a href='#' onclick='removeCourseTarget(this)'><i class='fa fa-trash' style='font-size: 24px'></i>    </a>";
@@ -72,7 +74,8 @@ function loadDepartmentTable() {
                 },
                 {//column for modifyviewer
                     "data": null,
-                    "defaultContent": modifyviewerlink
+                    "render": modifyviewerlink,
+                    "visible": false,
                 },
                 {//column for view detail-update-delete
                     "data": null,
@@ -124,7 +127,8 @@ function loadMajorTable() {
                 },
                 {//column for modifyviewer
                     "data": null,
-                    "defaultContent": modifyviewerlink
+                    "render": modifyviewerlink,
+                    "visible": false,
                 },
                 {//column for view detail-update-delete
                     "data": null,
@@ -170,24 +174,21 @@ function loadCourseTable() {
             "columns": [
                 {"data": "name"},
                 {"data": "code"},
+                {"data": "majorByMajorId.name"},
                 {//column for modify conductor
                     "data": "id",
                     "render": modifyconductorlink
                 },
                 {//column for modifyviewer
-                    "data": null,
-                    "defaultContent": modifyviewerlink
+                    "data": "id",
+                    "render": modifyviewerlink,
+                    "visible": false,
                 },
                 {//column for view detail-update-delete
                     "data": null,
                     "defaultContent": linkShow + '  ' + linkDeleteCourse
                 }
-                // {
-                //     "data": "majorCoursesById",
-                //     "render": function(data, type, row, meta){
-                //
-                //     }
-                // }
+
             ],
             "language": {
                 "decimal": "",
@@ -242,7 +243,8 @@ function loadClazzTable() {
                 },
                 {//column for modifyviewer
                     "data": "id",
-                    "defaultContent": modifyviewerlink
+                    "render": modifyviewerlink,
+                    "visible": false,
                 },
                 {//column for view detail-update-delete
                     "data": null,

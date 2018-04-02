@@ -163,7 +163,7 @@ public class FeedbackAPI {
     @JsonView(FeedbackView.alertUserFeedbackView.class)
     @GetMapping("/undone-by-authorized-user")
     public ResponseEntity getListNotConductedFeedbackByAuthorizedUser() {
-        return feedbackService.getNotConductedFeedbacksByUserId();
+        return feedbackService.getNotificationData();
     }
 
     @JsonView(FeedbackView.alertUserFeedbackView.class)

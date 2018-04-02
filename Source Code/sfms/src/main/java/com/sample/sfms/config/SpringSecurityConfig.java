@@ -61,7 +61,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().loginPage("/login").failureUrl("/login?error=true")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/skeleton")
+                .defaultSuccessUrl("/dashboard")
                 .and()
                 .rememberMe().rememberMeParameter("remember-me")
                 .and()

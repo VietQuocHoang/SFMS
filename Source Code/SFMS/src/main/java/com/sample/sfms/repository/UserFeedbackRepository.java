@@ -30,4 +30,10 @@ public interface UserFeedbackRepository extends JpaRepository<UserFeedback, User
 
     @Query("Select u from UserFeedback u where u.userByUserId.id=:userId and u.feedbackByFeedbackId.id=:feedbackId")
     UserFeedback findUserFeedbackByUserAndFeedback(@Param("userId") int userId, @Param("feedbackId") int feedbackId);
+
+    @Query("Select count(u) from UserFeedback u where u.userByUserId.id=:userId and u.conducted=true")
+    int countNumberOfConductedFeedbackForUser(@Param("userId") int userId);
+
+    @Query("Select count(u) from UserFeedback u where u.userByUserId.id=:userId and u.conducted=false")
+    int countNumberOfNotConductedFeedbackForUser(@Param("userId") int userId);
 }

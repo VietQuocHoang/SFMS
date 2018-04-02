@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.sql.Date;
 import java.util.List;
 
 @org.springframework.stereotype.Repository
@@ -57,6 +58,32 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
 
     @Query("select f from Feedback f where f.semesterBySemesterId.id=:semId and f.courseByCourseId.id=:courseId")
     List<Feedback> getListFeedbackBySemIdAndCourseId(@Param("semId") int semId, @Param("courseId") int courseId);
+
+    @Query("select f from Feedback f where f.startDate < :date and f.endDate > :date and isPublished=1")
+    List<Feedback> getListOnGoingFeedbackByDate(@Param("date") Date date);
+
+    @Query("select count(f) from Feedback f where f.startDate < :date and f.endDate > :date and isPublished=1")
+    int countOnGoingFeedbackByDate(@Param("date") Date date);
+
+    @Query(value = "select count(f) from Feedback f where f.clazzByClazzId in (select c.id from Clazz c where c.userByLecturerId.id=:lecturerId)")
+    int countFeedbackBeingConductedOnLecturer(@Param("lecturerId") int lecturerId);
+
+    @Query(value = "select count(f) from Feedback f where f.clazzByClazzId in (select c.id from Clazz c where c.userByLecturerId.id=:lecturerId) and f.startDate < :currDate and f.endDate > :currDate")
+    int countOnGoingFeedbackBeingConductedOnLecturer(@Param("lecturerId") int lecturerId, @Param("currDate") Date currDate);
+
+    @Query(value = "select count(f) from Feedback f where f.clazzByClazzId in (select c.id from Clazz c where c.userByLecturerId.id=:lecturerId) and f.endDate < :currDate")
+    int countFinishedFeedbackBeingConductedOnLecturer(@Param("lecturerId") int lecturerId, @Param("currDate") Date currDate);
+
+    @Query(value = "select count(f) from Feedback f")
+    int countAllFeedback();
+
+    int countAllByTypeByTypeIdId(int typeId);
+
+    @Query(value = "select count(f) from Feedback f where f.departmentByDepartmentId.id=:depId and f.startDate < :currDate and f.endDate > :currDate")
+    int countOnGoingFeedbackForDepartment(@Param("depId") int depId, @Param("currDate") Date currDate);
+
+    @Query(value = "select count(f) from Feedback f where f.departmentByDepartmentId.id=:depId and f.endDate < :currDate")
+    int countFinishedFeedbackForDepartment(@Param("depId") int depId, @Param("currDate") Date currDate);
 
     @Query("select f from Feedback f, Clazz c where " +
             "f.isTemplate = false AND f.clazzByClazzId.id = c.id AND "+
