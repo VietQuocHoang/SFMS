@@ -19,6 +19,8 @@ public interface FeedbackService {
 
     ResponseEntity getNotConductedFeedbacksByUserId();
 
+    ResponseEntity getNotificationData();
+
     List<UserFeedback> getFeedbacksByUserId();
 
     Feedback findFeedbackToConduct(int id);

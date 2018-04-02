@@ -18,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -92,6 +93,28 @@ public class FeedbackServiceImpl implements FeedbackService {
                 if (null == listUserFeedback || listUserFeedback.isEmpty()) {
                     return new ResponseEntity(HttpStatus.NO_CONTENT);
                 } else {
+                    return new ResponseEntity(listUserFeedback, HttpStatus.OK);
+                }
+            } catch (Exception e) {
+                logger.log(Level.FINE, e.toString());
+                e.printStackTrace();
+                return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            }
+        } else {
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @Override
+    public ResponseEntity getNotificationData() {
+        User user = getAuthorizedUser();
+        if (user != null) {
+            try {
+                List<UserFeedback> listUserFeedback = userFeedbackRepository.findNotConductedFeedbacksByUserId(user.getId());
+                if (null == listUserFeedback || listUserFeedback.isEmpty()) {
+                    return new ResponseEntity(HttpStatus.NO_CONTENT);
+                } else {
+                    Collections.reverse(listUserFeedback);
                     return new ResponseEntity(listUserFeedback, HttpStatus.OK);
                 }
             } catch (Exception e) {
