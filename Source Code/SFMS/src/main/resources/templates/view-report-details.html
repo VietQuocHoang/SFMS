@@ -333,7 +333,12 @@
                 bindto: '#report-detail-chart',
                 data: {
                     onclick: function (d, element) {
-                      /*  window.open("view-report-semester" +
+                        window.open("view-report-semester" +
+                            "?userId=" + window.userId +
+                            "&courseId=" + window.courseId +
+                            "&semesterId=" + window.loadingSemesters[d.x + 1]
+                        );
+                        /*window.open("view-report-semester" +
                             "?userId=" + window.userId +
                             "&courseId=" + window.courseId +
                             "&semesterId=" + window.loadingSemesters[d.x + 1]
