@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -36,4 +37,7 @@ public interface UserFeedbackRepository extends JpaRepository<UserFeedback, User
 
     @Query("Select count(u) from UserFeedback u where u.userByUserId.id=:userId and u.conducted=false")
     int countNumberOfNotConductedFeedbackForUser(@Param("userId") int userId);
+
+    @Query("select u from UserFeedback u where u.conducted=false and u.feedbackByFeedbackId.endDate between :today and :twoDayAhead")
+    List<UserFeedback> getListUserFeedbackNotDoFeedbackYet(@Param("today") Date today, @Param("twoDayAhead") Date twoDayAhead);
 }

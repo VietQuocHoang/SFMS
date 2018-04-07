@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang='en'>
+<head></head>
+<body>
+<p>Gửi bạn <b th:text="${name}"></b>, <br>
+    Hiện tại hệ thống phát hiện bạn còn <b th:text="${feedbackList.size()}"></b> feedback chưa hoàn thành<br>
+    Xin vui lòng đăng nhập vào hệ thống và hoàn thành hoặc theo đường link sau
+    <span th:each="feedback:${feedbackList}">
+        <br>- <b th:text="${feedback.feedbackName}"></b> hoàn thành trước <b
+            th:text="${#dates.format(feedback.endDate,'dd-MM-yyyy')}"></b><br>
+        <!--<a th:href="${'http://localhost:8080/' + ctx+'/conduct-feedback/'+feedback.id}"></a><br>-->
+    </span>
+    Cảm ơn và chúc bạn một ngày tốt lành
+</p>
+</body>
+</html>
