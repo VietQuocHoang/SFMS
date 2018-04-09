@@ -10,7 +10,7 @@ var dropdownItem = "<a class='dropdown-item' href='#'>" +
     "                    <!--divider-->" +
     "                    <div class='dropdown-divider'></div>" +
     "                    <!--divider-->";
-
+var currentlySelected = $("meta[name='position']").attr("content");
 function getNotification() {
     $.ajax({
         type: "GET",
@@ -57,6 +57,21 @@ function getNotification() {
     });
 }
 
+function clearUnnecessaryMenuItem(roleName) {
+    let listItem = $("li.sidebar-item");
+    for (let i = 0; i < listItem.length; i++) {
+        if ($(listItem[i]).attr("data-role-access") != null) {
+            let roleAccessible = $(listItem[i]).attr("data-role-access");
+            if (roleAccessible !== "All") {
+                // console.log(roleAccessible.indexOf(roleName.trim()));
+                if (roleAccessible.indexOf(roleName) === -1) {
+                    $(listItem[i]).remove();
+                }
+            }
+        }
+    }
+}
+
 function getCurrentAuthenticatedUser() {
     $.ajax({
         url: _ctx + "/current",
@@ -66,15 +81,22 @@ function getCurrentAuthenticatedUser() {
             if (data == null) {
                 window.location.href = _ctx + "/logout";
             } else {
-                console.log(data.fullname);
+                roleName = data.roleByRoleId.roleName;
                 $(".fullname").html(data.fullname);
                 $(".userRole").html(data.roleByRoleId.roleName);
+                clearUnnecessaryMenuItem(data.roleByRoleId.roleName);
             }
         }
     })
 }
 
+function setSelectedNavbarItem() {
+    $("li[data-position='" + currentlySelected + "']").addClass("active");
+}
+
 $(document).ready(function () {
+    console.log(currentlySelected);
+    setSelectedNavbarItem();
     getNotification();
     getCurrentAuthenticatedUser();
 });
