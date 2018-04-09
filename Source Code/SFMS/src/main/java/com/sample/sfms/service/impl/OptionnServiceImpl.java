@@ -1,6 +1,7 @@
 package com.sample.sfms.service.impl;
 
 import com.sample.sfms.entity.Optionn;
+import com.sample.sfms.entity.Question;
 import com.sample.sfms.model.option.OptionCreateModel;
 import com.sample.sfms.model.option.OptionUpdateModel;
 import com.sample.sfms.repository.OptionnRepository;
@@ -8,6 +9,7 @@ import com.sample.sfms.service.interf.OptionnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 @Service("optionnService")
@@ -57,5 +59,10 @@ public class OptionnServiceImpl implements OptionnService {
         } catch (Exception ex) {
             throw ex;
         }
+    }
+
+    @Override
+    public List<Optionn> findByQuestionId(int questionId) {
+        return optionnRepository.findByQuestionId(questionId);
     }
 }

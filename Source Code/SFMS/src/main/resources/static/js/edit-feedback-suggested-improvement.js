@@ -47,6 +47,10 @@ function getSuggestions() {
     saveSuggestion(feedback);
 }
 
+function getBack() {
+    window.location.href = _ctx + "/modify-feedback/overview";
+}
+
 function saveSuggestion(feedback) {
     $.ajax({
         headers: {

@@ -64,6 +64,11 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
+    public int deactiveTemplate (int templateId) {
+        return feedbackRepository.deactiveTemplate(templateId);
+    }
+
+    @Override
     public List<Feedback> loadListFeedback(String type) {
         List<Feedback> list = new ArrayList<>();
         switch (type) {

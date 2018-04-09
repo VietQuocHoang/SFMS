@@ -28,5 +28,7 @@ public interface FeedbackService {
     Feedback findFeedbackToPreview(int feedbackId);
 
     List<Feedback> findAllFeedback();
+
+    int deactiveTemplate (int templateId);
 }
 

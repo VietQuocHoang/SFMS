@@ -48,7 +48,7 @@
             </div>
         </div>
         <div class="row template-container offset-1">
-                <div class="col-10 col-sm-10 col-md-4 col-lg-3 col-xl-3 template-thumbnail">
+                <figure class="col-10 col-sm-10 col-md-4 col-lg-3 col-xl-3 template-thumbnail">
                     <div class="create-new-container">
                         <div class="create-new-wrapper text-center">
                             <b>Tạo feedback trống</b>
@@ -56,13 +56,22 @@
                             <button class="btn btn-raised-primary btn-create-new" data-toggle="modal" data-target="#modalCreateNew"><i class="fa fa-fw fa-plus"></i> </button>
                         </div>
                     </div>
-                </div>
+                </figure>
             <th:block th:unless="${#lists.isEmpty(templates)}">
                 <th:block th:each="index:${#numbers.sequence(0,(templates.size()-1))}"> <!-- HARD CODE TO DO -->
-                    <div class="col-10 col-sm-10 col-md-4 col-lg-3 col-xl-3 template-thumbnail">
+                    <figure class="col-10 col-sm-10 col-md-4 col-lg-3 col-xl-3 template-thumbnail">
                         <div class="thumbnail-content">
-
-                            <b><p th:text="${templates.get(index).feedbackName}" th:remove="tag"></p> </b>
+                            <div class='toggle-bar-container'>
+                                <div class='toggle-bar-wrapper'>
+                                    <b><p th:text="${templates.get(index).feedbackName}" th:remove="tag"></p> </b>
+                                    <div class='delete-question-holder'>
+                                        <input hidden id='templateID-form' type="text" th:attr="value=${templates.get(index).id}">
+                                        <button class='btn-remove-question'><i class='fa fa-trash'></i> Xóa
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/><br/>
                             <p th:text="${templates.get(index).feedbackDes}"></p>
                         </div>
                         <div class="thumbnail-action">
@@ -73,7 +82,7 @@
                             <button class="btn btn-raised-primary btn-select-feedback">Tiếp tục</button>
                             </a>
                         </div>
-                    </div>
+                    </figure>
                 </th:block>
             </th:block>
 
@@ -144,7 +153,7 @@
                 </div>-->
         </div>
         <div class="row col-12 justify-content-center">
-            <a href="#">Xem thêm</a>
+            <a href="#" id="showMore">Xem thêm</a>
         </div>
     </div>
     <!-- end div container-fluid -->

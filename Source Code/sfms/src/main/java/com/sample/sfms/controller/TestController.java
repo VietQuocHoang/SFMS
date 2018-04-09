@@ -43,9 +43,9 @@ public class TestController {
         return new ModelAndView("create-feedback-suggested-improvement");
     }
 
-    @GetMapping(value = "/skeleton")
-    private ModelAndView skeleton() {
-        return new ModelAndView("skeleton");
+    @GetMapping(value = "/home")
+    private ModelAndView home() {
+        return new ModelAndView("dashboard");
     }
 
     @GetMapping(value = "/nav")

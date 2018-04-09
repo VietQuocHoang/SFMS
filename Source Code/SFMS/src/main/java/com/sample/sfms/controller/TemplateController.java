@@ -38,8 +38,12 @@ public class TemplateController {
         Feedback response = modifyService.createFeedbackFromTemplate(templateId).getBody(); //HARD CODE TO DO
         session.setAttribute("id", response.getId());
         Feedback template = feedbackService.findFeedbackById(templateId); //HARD CODE TO DO
+      //  if (template.getQuestionsById().size() == 0) {
+      //      mv.addObject("template", null);
+       // } else {
+            mv.addObject("template", template);
+       // }
         mv.addObject("MFModel", response);
-        mv.addObject("template", template);
         return mv;
     }
 

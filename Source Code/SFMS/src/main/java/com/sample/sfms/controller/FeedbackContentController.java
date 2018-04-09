@@ -35,33 +35,46 @@ public class FeedbackContentController {
         int feedbackId = (int)session.getAttribute("id");
         Feedback feedback = feedbackService.findFeedbackById(feedbackId);
         Collection<Question> questionList = feedback.getQuestionsById();
-        boolean flag = false;
-        for (Question question : questionList) {
-            if (question.getSuggestion() != null) {
-                flag = true;
-                break;
-            }
-        }
-        System.out.println("Flag: " + flag);
-        if (flag) {
+        if (questionList.size() <= 0) {
             ModelAndView mv = new ModelAndView("edit-feedback-suggested-improvement");
-            mv.addObject("feedback", feedback);
+            mv.addObject("feedback", null);
             mv.addObject("template", null);
             return mv;
         } else {
-            if (feedback.getFeedbackByReferenceId() != null) {
-                System.out.println("feedback.getFeedbackByReferenceId(): " + feedback.getFeedbackByReferenceId().getId());
+            boolean flag = false;
+            for (Question question : questionList) {
+                if (question.getSuggestion() != null) {
+                    flag = true;
+                    break;
+                }
+            }
+            System.out.println("Flag: " + flag);
+
+            if (flag) {
+                //Feedback da tung co suggestion nao
                 ModelAndView mv = new ModelAndView("edit-feedback-suggested-improvement");
-                mv.addObject("template", feedback.getFeedbackByReferenceId());
                 mv.addObject("feedback", feedback);
+                mv.addObject("template", null);
                 return mv;
             } else {
-                System.out.println("feedback.getFeedbackByReferenceId(): " + feedback.getFeedbackByReferenceId());
-                ModelAndView mv = new ModelAndView("create-feedback-suggested-improvement");
-                return mv;
+                //Feedback chua tung co suggestion nao
+                if (feedback.getFeedbackByReferenceId() != null) {
+                    //Feedback co template
+                    System.out.println("feedback.getFeedbackByReferenceId(): " + feedback.getFeedbackByReferenceId().getId());
+                    ModelAndView mv = new ModelAndView("edit-feedback-suggested-improvement");
+                    mv.addObject("template", feedback.getFeedbackByReferenceId());
+                    mv.addObject("feedback", feedback);
+                    return mv;
+                } else {
+                    ModelAndView mv = new ModelAndView("edit-feedback-suggested-improvement");
+                    mv.addObject("feedback", feedback);
+                    mv.addObject("template", null);
+                    //System.out.println("feedback.getFeedbackByReferenceId(): " + feedback.getFeedbackByReferenceId());
+                    //ModelAndView mv = new ModelAndView("create-feedback-suggested-improvement");
+                    return mv;
+                }
             }
         }
-
     }
 
     @GetMapping(value = "/preview-feedback/{id}")

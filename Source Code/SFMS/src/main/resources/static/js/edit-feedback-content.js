@@ -22,7 +22,7 @@ $(document).ready(() => {
     });
 });
 
-$.getScript("models.js", () => { alert('Error loading front-end models') });
+//$.getScript("models.js", () => { alert('Error loading front-end models') });
 
 //use to generate uniqueId
 function generateId() {
@@ -135,7 +135,6 @@ sort: (event, ui) => {
     ui.helper.css({'top': ui.position.top + wscrolltop + 'px'});
 },
 receive: (ev, ui) => {
-    console.log("received");
     copyHelper = null;
     let id = ui.item.attr('id');
     $(ui.item).removeClass("item");
@@ -189,7 +188,8 @@ receive: (ev, ui) => {
                 "                                            </div>" +
                 "                                            <div class='form-group row'>" +
                 "                                                <label class='col-4 col-form-label text-right'>Loại đánh giá: </label>" +
-                "                                                <div class='col-8'>" + selectBox +
+                "                                                <div class='col-8'>"
+                + selectBox +
                 "                                                </div>" +
                 "                                            </div>" +
                 "                                        </div>" +
@@ -203,7 +203,6 @@ receive: (ev, ui) => {
         }
         case 'radio-ele': {
             ui.item.replaceWith( //replace item with radio question
-
                 "<div class='question-container' id='radio-question-" + generateId() + "'>" +
                 "                        <div class='question-wrapper'>" +
                 "                            <div class='toggle-bar-container'>" +
@@ -220,7 +219,7 @@ receive: (ev, ui) => {
                 "                                <div class='preview-question-wrapper'>" +
                 "                                    <div class='question-content-container'>" +
                 "                                        <div class='question-content-wrapper'>" +
-                "                                            <p class='question-content-paragraph'>Tốc độ giảng dạy của giảng viên thế nào?" +
+                "                                            <p class='question-content-paragraph'>Nội dung của câu hỏi" +
                 "                                                </p>" +
                 "                                            <span class='required-question' style='display:none'><sup>*</sup></span>" +
                 "                                        </div>" +
@@ -265,12 +264,13 @@ receive: (ev, ui) => {
                 "                                            <div class='form-group row'>" +
                 "                                                <label class='col-4 col-form-label text-right'>Nội dung: </label>" +
                 "                                                <div class='col-8'>" +
-                "                                                    <textarea class='txtEditQuestion'>Tốc độ giảng dạy của giảng viên thế nào?</textarea>" +
+                "                                                    <textarea class='txtEditQuestion'>Nội dung của câu hỏi</textarea>" +
                 "                                                </div>" +
                 "                                            </div>" +
                 "                                            <div class='form-group row'>" +
                 "                                                <label class='col-4 col-form-label text-right'>Loại đánh giá: </label>" +
-                "                                                <div class='col-8'>" + selectBox +
+                "                                                <div class='col-8'>"
+                + selectBox +
                 "                                                </div>" +
                 "                                            </div>" +
                 "                                            <div class='form-group row'>" +
@@ -290,8 +290,8 @@ receive: (ev, ui) => {
                 "                                                                </div>" +
                 "                                                                <div class='input-edit-answer-holder'>" +
                 "                                                                    <input type='text' class='answer-content-input'" +
-                "                                                                           placeholder='Đáp án 1'>" +
-                "                                                                    Trọng số: <input type='number' min='0'" +
+                "                                                                           value='Đáp án 1'>" +
+                "                                                                    Trọng số: <input type='number' min='1' value='1'" +
                 "                                                                                     class='weight-input'>" +
                 "                                                                </div>" +
                 "                                                                <div class='remove-answer-holder'>" +
@@ -306,8 +306,8 @@ receive: (ev, ui) => {
                 "                                                                </div>" +
                 "                                                                <div class='input-edit-answer-holder'>" +
                 "                                                                    <input type='text' class='answer-content-input'" +
-                "                                                                           placeholder='Đáp án 2'>" +
-                "                                                                    Trọng số: <input type='number' min='0'" +
+                "                                                                           value='Đáp án 2'>" +
+                "                                                                    Trọng số: <input type='number' min='1' value='1'" +
                 "                                                                                     class='weight-input'>" +
                 "                                                                </div>" +
                 "                                                                <div class='remove-answer-holder'>" +
@@ -322,8 +322,8 @@ receive: (ev, ui) => {
                 "                                                                </div>" +
                 "                                                                <div class='input-edit-answer-holder'>" +
                 "                                                                    <input type='text' class='answer-content-input'" +
-                "                                                                           placeholder='Đáp án 3'>" +
-                "                                                                    Trọng số: <input type='number' min='0'" +
+                "                                                                           value='Đáp án 3'>" +
+                "                                                                    Trọng số: <input type='number' min='1' value='1'" +
                 "                                                                                     class='weight-input'>" +
                 "                                                                </div>" +
                 "                                                                <div class='remove-answer-holder'>" +
@@ -366,7 +366,7 @@ receive: (ev, ui) => {
                 "                                <div class='preview-question-wrapper'>" +
                 "                                    <div class='question-content-container'>" +
                 "                                        <div class='question-content-wrapper'>" +
-                "                                            <p class='question-content-paragraph'>Tốc độ giảng dạy của giảng viên thế nào?" +
+                "                                            <p class='question-content-paragraph'>Nội dung của câu hỏi" +
                 "                                                </p>" +
                 "                                            <span class='required-question' style='display:none'><sup>*</sup></span>" +
                 "                                        </div>" +
@@ -401,12 +401,13 @@ receive: (ev, ui) => {
                 "                                            <div class='form-group row'>" +
                 "                                                <label class='col-4 col-form-label text-right'>Nội dung: </label>" +
                 "                                                <div class='col-8'>" +
-                "                                                    <textarea class='txtEditQuestion'>Tốc độ giảng dạy của giảng viên thế nào?</textarea>" +
+                "                                                    <textarea class='txtEditQuestion'>Nội dung của câu hỏi</textarea>" +
                 "                                                </div>" +
                 "                                            </div>" +
                 "                                            <div class='form-group row'>" +
                 "                                                <label class='col-4 col-form-label text-right'>Loại đánh giá: </label>" +
-                "                                                <div class='col-8'>" + selectBox +
+                "                                                <div class='col-8'>"
+                + selectBox +
                 "                                                </div>" +
                 "                                            </div>" +
                 "                                            <div class='form-group row'>" +
@@ -426,8 +427,8 @@ receive: (ev, ui) => {
                 "                                                                </div>" +
                 "                                                                <div class='input-edit-answer-holder'>" +
                 "                                                                    <input type='text' class='answer-content-input'" +
-                "                                                                           placeholder='Đáp án 1'>" +
-                "                                                                    Trọng số: <input type='number' min='0'" +
+                "                                                                           value='Đáp án 1'>" +
+                "                                                                    Trọng số: <input type='number' min='1' value='1'" +
                 "                                                                                     class='weight-input'>" +
                 "                                                                </div>" +
                 "                                                                <div class='remove-answer-holder'>" +
@@ -501,7 +502,8 @@ receive: (ev, ui) => {
                 "                                            </div>" +
                 "                                            <div class='form-group row'>" +
                 "                                                <label class='col-4 col-form-label text-right'>Loại đánh giá: </label>" +
-                "                                                <div class='col-8'>" + selectBox +
+                "                                                <div class='col-8'>"
+                + selectBox +
                 "                                                </div>" +
                 "                                            </div>" +
                 "                                        </div>" +
@@ -566,7 +568,8 @@ receive: (ev, ui) => {
                 "                                            </div>" +
                 "                                            <div class='form-group row'>" +
                 "                                                <label class='col-4 col-form-label text-right'>Loại đánh giá: </label>" +
-                "                                                <div class='col-8'>" + selectBox +
+                "                                                <div class='col-8'>"
+                + selectBox +
                 "                                                </div>" +
                 "                                            </div>" +
                 "                                        </div>" +
@@ -673,20 +676,23 @@ questionContent.html(value);
 });
 
 $(document).on("click", ".remove-answer-holder>i.fa-close", (event) => {
+    console.log("star removing");
     let parentContainer = $(event.target).parents(".question-container");
-let listAnswer = parentContainer.find(".form-check");
-let parentListItem = $(event.target).parents("li");
-let listEditAnswerContainer = $(event.target).parents(".list-answer-edit");
-if (listEditAnswerContainer.find(".edit-answer-item").length > 1) {
-    let index = listEditAnswerContainer.find("li").index(parentListItem);
-    parentListItem.fadeOut(500, () => {
-        parentListItem.remove()
-});
-    let removeAnswer = $(listAnswer.get(index));
-    removeAnswer.fadeOut(500, () => {
-        removeAnswer.remove()
-});
-}
+    let listAnswer = parentContainer.find(".form-check");
+    let parentListItem = $(event.target).parents("li");
+    let listEditAnswerContainer = $(event.target).parents(".list-answer-edit");
+    var remove = document.getElementsByClassName("edit-answer-item");
+    if (listEditAnswerContainer.find(".edit-answer-item").length > 1) {
+        console.log("found edit-answer-item");
+        let index = listEditAnswerContainer.find("li").index(parentListItem);
+        parentListItem.fadeOut(500, () => {
+            parentListItem.remove()
+        });
+        let removeAnswer = $(listAnswer.get(index));
+        removeAnswer.fadeOut(500, () => {
+            removeAnswer.remove()
+        });
+    }
 });
 
 $(document).on("change", ".other-option-checkbox", (event) => {
@@ -880,8 +886,8 @@ function getQuestions() {
     let feedback = new Feedback(feedbackID); ////// HARD CODE /////////////
 
     //Lấy hết các div chứa question
-    let allQuestions = $("div[class='']");
-    question-container
+    let allQuestions = $("div[class='question-container']");
+    //question-container
     for (var i = 0; i < allQuestions.length; ++i) {
         //Lấy id của div để biết thuộc loại question nào
         let id = allQuestions[i].getAttribute("id");
@@ -958,6 +964,6 @@ function saveFeedback(feedback) {
                 //alert(data.message);
                // window.location=data.message;
             },
-            error: (err) => alert(err)
+            error: (err) => alert(err.message)
 });
 }

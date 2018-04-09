@@ -71,6 +71,22 @@ public class FeedbackAPI {
         return new Response(false, "Xin kiểm tra lại feedback đã hợp lệ chưa");
     }
 
+    @RequestMapping(value = "/deactive-template", method = RequestMethod.POST)
+    @Transactional
+    public Response deactiveTemplate(@RequestBody String templateIDS) {
+        int templateID = Integer.parseInt(templateIDS);
+            try {
+                int result = feedbackService.deactiveTemplate(templateID);
+                System.out.print("result: " + result);
+                if (result > 0) {
+                    return new Response(true);
+                }
+            } catch (Exception ex) {
+                return new Response(false, ex.getMessage());
+            }
+        return new Response(false, "Xin kiểm tra lại feedback đã hợp lệ chưa");
+    }
+
     @RequestMapping(value = "/modify-question", method = RequestMethod.POST)
     @Transactional
     public Response modifyQuestion(@RequestBody FeedbackUpdateModel model) {

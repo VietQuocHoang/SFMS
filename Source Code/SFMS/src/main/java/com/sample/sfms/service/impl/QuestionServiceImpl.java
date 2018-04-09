@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
@@ -149,6 +150,7 @@ public class QuestionServiceImpl implements QuestionService {
         }
 
         try {
+
             Question question = this.questionRepo.getOne(model.getQuestionId());
 
             question.setIsRequied(model.isRequired());
@@ -161,10 +163,23 @@ public class QuestionServiceImpl implements QuestionService {
 
             this.questionRepo.save(question);
 
+            List<Integer> listModifyOptionnID = new ArrayList<>();
             if (model.getOptionUpdateModels() != null) {
                 for (OptionUpdateModel option : model.getOptionUpdateModels()) {
                     option.setQuestion(question);
                     optionnService.update(option);
+                    if (option.getId() >= 0) {
+                        listModifyOptionnID.add(option.getId());
+                    }
+                }
+            }
+
+
+            List<Optionn> listExistedOption = optionnService.findByQuestionId(model.getQuestionId());
+
+            for (Optionn optionn : listExistedOption) {
+                if (!listModifyOptionnID.contains(optionn.getId()) && !optionn.getOptionnContent().equals("Khác") && optionn.getPoint()!=0) {
+                    optionnService.remove(optionn.getId());
                 }
             }
 

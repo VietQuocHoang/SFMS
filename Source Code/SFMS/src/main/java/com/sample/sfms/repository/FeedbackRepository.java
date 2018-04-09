@@ -2,9 +2,11 @@ package com.sample.sfms.repository;
 
 import com.sample.sfms.entity.Feedback;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import javax.transaction.Transactional;
 import java.sql.Date;
 import java.util.List;
 
@@ -101,4 +103,8 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
             "q.id = o.questionByQuestionId.id and " +
             "o.id = a.optionnByOptionnId.id")
     List<FeedbackReportModel> statistics(@Param("feedbackId")int feedbackId);*/
+
+    @Modifying
+    @Query("update Feedback f set f.isTemplate = false where f.id = ?1")
+    int deactiveTemplate(int templateId);
 }
