@@ -2,8 +2,6 @@ package com.sample.sfms.repository;
 
 import com.sample.sfms.entity.Clazz;
 import com.sample.sfms.entity.Course;
-import com.sample.sfms.entity.Semester;
-import com.sample.sfms.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -46,18 +44,15 @@ public interface ClazzRepository extends JpaRepository<Clazz, Integer> {
 //                              ,@Param("rolenames") String roleNames
     );
 
-    List<Clazz> findByCourseByCourseIdAndSemesterBySemesterIdAndUserByLecturerId(Course course, Semester semester, User lecturer);
-
-    List<Clazz> findByCourseByCourseIdAndSemesterBySemesterId(Course course, Semester semester);
-
-    List<Clazz> findBySemesterBySemesterIdAndUserByLecturerId(Course course, Semester semester, User lecturer);
-
-    List<Clazz> findByUserByLecturerId(User lecturer);
-
-    List<Clazz> findBySemesterBySemesterId(Semester semester);
 
     List<Clazz> findByCourseByCourseId(Course course);
 
-    int countAllByUserByLecturerIdId(int lecturerId);
-
+    @Query(value = "Select u.id as userId,u.fullname, co.id as courseId, co.name " +
+            "from " +
+            "(SELECT u.* " +
+            "FROM capstone.user u, capstone.role r " +
+            "where r.id = u.role_id and r.id=1) u, capstone.clazz cl, capstone.course co " +
+            "where u.id = cl.lecturer_id and cl.course_id = co.id " +
+            "group by co.id", nativeQuery = true)
+    List<Object[]> findAllCourseCorrespondingToEachLecturerTaught();
 }

@@ -10,7 +10,7 @@ var dropdownItem = "<a class='dropdown-item' href='#'>" +
     "                    <!--divider-->" +
     "                    <div class='dropdown-divider'></div>" +
     "                    <!--divider-->";
-var roleName;
+var currentlySelected = $("meta[name='position']").attr("content");
 function getNotification() {
     $.ajax({
         type: "GET",
@@ -90,8 +90,13 @@ function getCurrentAuthenticatedUser() {
     })
 }
 
+function setSelectedNavbarItem() {
+    $("li[data-position='" + currentlySelected + "']").addClass("active");
+}
 
 $(document).ready(function () {
+    console.log(currentlySelected);
+    setSelectedNavbarItem();
     getNotification();
     getCurrentAuthenticatedUser();
 });
