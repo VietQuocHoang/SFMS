@@ -1,22 +1,22 @@
 package com.sample.sfms.model.feedback;
 
-import com.sample.sfms.entity.Clazz;
 import com.sample.sfms.entity.Course;
 import com.sample.sfms.entity.Department;
 import com.sample.sfms.entity.Major;
+import com.sample.sfms.model.report.reportList.ReportLecturerCourse;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FeedbackTargetWrapper {
     private List<Course> courses;
-    private List<Clazz> classes;
+    private List<ReportLecturerCourse> lecturerCourseLists;
     private List<Major> majors;
     private List<Department> departments;
 
     public FeedbackTargetWrapper() {
         courses = new ArrayList<>();
-        classes = new ArrayList<>();
+        lecturerCourseLists = new ArrayList<>();
         majors = new ArrayList<>();
         departments = new ArrayList<>();
     }
@@ -29,12 +29,12 @@ public class FeedbackTargetWrapper {
         this.courses = courses;
     }
 
-    public List<Clazz> getClasses() {
-        return classes;
+    public List<ReportLecturerCourse> getLecturerCourseLists() {
+        return lecturerCourseLists;
     }
 
-    public void setClasses(List<Clazz> classes) {
-        this.classes = classes;
+    public void setLecturerCourseLists(List<ReportLecturerCourse> lecturerCourseLists) {
+        this.lecturerCourseLists = lecturerCourseLists;
     }
 
     public List<Major> getMajors() {

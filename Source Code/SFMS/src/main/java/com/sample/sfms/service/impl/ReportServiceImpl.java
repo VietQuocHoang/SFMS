@@ -4,6 +4,7 @@ import com.sample.sfms.define.QuestionType;
 import com.sample.sfms.entity.*;
 import com.sample.sfms.model.FeedbackReportModel;
 import com.sample.sfms.model.feedback.FeedbackTargetWrapper;
+import com.sample.sfms.model.report.reportList.ReportLecturerCourse;
 import com.sample.sfms.model.report.reportSemester.*;
 import com.sample.sfms.repository.*;
 import com.sample.sfms.service.interf.ReportService;
@@ -136,7 +137,13 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public FeedbackTargetWrapper loadListFeedbackTargetWrapper() {
         FeedbackTargetWrapper feedbackTargetWrapper = new FeedbackTargetWrapper();
-        feedbackTargetWrapper.setClasses(clazzRepository.findAll());
+        List<Object[]> objectList = clazzRepository.findAllCourseCorrespondingToEachLecturerTaught();
+        ReportLecturerCourse lecturerCourse;
+        for (Object[] o : objectList) {
+            lecturerCourse = new ReportLecturerCourse();
+            lecturerCourse.mapFromObject(o);
+            feedbackTargetWrapper.getLecturerCourseLists().add(lecturerCourse);
+        }
         feedbackTargetWrapper.setCourses(courseRepo.findAll());
         feedbackTargetWrapper.setDepartments(depRepo.findAll());
         feedbackTargetWrapper.setMajors(majorRepo.findAll());
@@ -284,8 +291,9 @@ public class ReportServiceImpl implements ReportService {
                     }
                 }
             }
-            reportSemesterModel.setCriteriaReportModelList(criteriaReportModels);
+            removeUnnecessaryCriteria(criteriaReportModels);
             calculateCriteriaAvg(criteriaReportModels);
+            reportSemesterModel.setCriteriaReportModelList(criteriaReportModels);
             calculateSemPoint(reportSemesterModel);
             return reportSemesterModel;
         }
@@ -336,5 +344,14 @@ public class ReportServiceImpl implements ReportService {
             }
         }
         return null;
+    }
+
+    private void removeUnnecessaryCriteria(List<CriteriaReportModel> criteriaReportModels) {
+        for (CriteriaReportModel c : criteriaReportModels) {
+            if ((c.getOpenQuestionReportModels() == null || c.getOpenQuestionReportModels().isEmpty())
+                    && (c.getYnQuestionReportModels() == null || c.getYnQuestionReportModels().isEmpty())) {
+                criteriaReportModels.remove(c);
+            }
+        }
     }
 }

@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top" id="mainNav">
-    <a class="navbar-brand" href="#">SFMS</a>
+    <a class="navbar-brand" th:href="@{/dashboard}">SFMS</a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
             data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
             aria-label="Toggle navigation">
@@ -23,44 +23,52 @@
                 </span>
                 </div>
             </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                <a class="nav-link" href="#">
+            <li class="nav-item sidebar-item" data-toggle="tooltip" data-position="dashboard" data-role-access="All"
+                data-placement="right"
+                title="Dashboard">
+                <a class="nav-link" th:href="@{/dashboard}">
                     <i class="fa fa-fw fa-dashboard"></i>
                     <span class="nav-link-text">Dashboard</span>
                 </a>
             </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Feedback">
+            <li class="nav-item sidebar-item" data-toggle="tooltip" data-role-access="All" data-placement="right"
+                title="Feedback">
                 <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseFeedback"
                    data-parent="#exampleAccordion">
                     <i class="fa fa-fw fa-feed"></i>
                     <span class="nav-link-text">Quản lý feedback</span>
                 </a>
                 <ul class="sidenav-second-level collapse" id="collapseFeedback">
-                    <li>
+                    <li class="sidebar-item" data-position="criteria" data-role-access="Trưởng ban, Quản trị hệ thống">
                         <a th:href="@{/criteria/list}">Quản lí tiêu chí đánh giá</a>
                     </li>
-                    <li>
+                    <li class="sidebar-item" data-position="create-feedback"
+                        data-role-access="Nhân viên, Trưởng ban, Quản trị hệ thống">
                         <a th:href="@{/template/select-template}">Tạo feedback mới</a>
                     </li>
-                    <li>
+                    <li class="sidebar-item" data-role-access="All" data-position="feedback">
                         <a th:href="@{/conduct-feedback/list}">Xem danh sách feedback</a>
                     </li>
-                    <li>
+                    <li class="sidebar-item" data-position="report"
+                        data-role-access="Trưởng ban, Quản trị hệ thống, Nhân viên, Giảng viên">
                         <a th:href="@{/reports}">Xem báo cáo</a>
                     </li>
                 </ul>
             </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Account">
+            <li class="nav-item sidebar-item" data-toggle="tooltip" data-placement="right" title="Account"
+                data-role-access="Nhân viên, Trưởng ban, Quản trị hệ thống">
                 <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseAccount"
                    data-parent="#exampleAccordion">
                     <i class="fa fa-fw fa-user-circle"></i>
                     <span class="nav-link-text">Quản lý tài khoản</span>
                 </a>
                 <ul class="sidenav-second-level collapse" id="collapseAccount">
-                    <li>
+                    <li class="sidebar-item" data-position="create-user"
+                        data-role-access="Nhân viên, Trưởng ban, Quản trị hệ thống">
                         <a th:href="@{/users/add}">Thêm mới tài khoản</a>
                     </li>
-                    <li>
+                    <li class="sidebar-item" data-position="user"
+                        data-role-access="Nhân viên, Trưởng ban, Quản trị hệ thống">
                         <a th:href="@{/users}">Xem danh sách tài khoản</a>
                     </li>
                 </ul>

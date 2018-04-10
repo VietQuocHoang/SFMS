@@ -652,6 +652,7 @@ $(document).on("click", ".btn-expand-edit", (event) => {
 let parentWrapper = parentContainer.find(".question-wrapper");
 let previewQuestion = parentWrapper.find(".preview-question-container");
 let editQuestionContainer = parentWrapper.find(".edit-question-container");
+    parentWrapper.toggleClass("collapsed");
 $(event.target).toggleClass("fa-angle-down fa-angle-up");
 editQuestionContainer.slideToggle();
 });
