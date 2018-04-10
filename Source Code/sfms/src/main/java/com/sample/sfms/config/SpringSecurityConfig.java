@@ -48,8 +48,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeRequests()
+        http.csrf().disable();
+        /*        .authorizeRequests()
                 .mvcMatchers("/", "/login").permitAll()
                 .mvcMatchers("/roles/**").hasAuthority("EDIT_PERMISSION")
                 .mvcMatchers("/users/**").access("hasAuthority('EDIT_USER')")
@@ -67,6 +67,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/").and().exceptionHandling()
-                .accessDeniedPage("/access-denied");
+                .accessDeniedPage("/access-denied");*/
     }
 }

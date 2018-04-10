@@ -14,6 +14,9 @@ import java.util.List;
  */
 
 public interface ReportService {
+
+    List<Clazz> loadListClassByCourseLecturerSemester (int type, int userId, int courseId, int semesterId);
+
     List<Object> loadListReport (String type);
 
     List<FeedbackReportModel> loadReportDetail(int courseId, int userId, int type, int semesterId);

@@ -98,7 +98,11 @@ $(".btn-preview").click(function() {
         dataType: 'html',
         success: function(data) {
             document.getElementById('templateID').value = templateID;
-            $("#modalTemplateContent").innerHTML = "";
+           // $("#modalTemplateContent").innerHTML = "";
+            var myNode = document.getElementById("modalTemplateContent");
+            while (myNode.firstChild) {
+                myNode.removeChild(myNode.firstChild);
+            }
             $("#modalTemplateContent").append(data);
             $('#modalTemplate').modal('toggle');
         },

@@ -56,6 +56,11 @@ public class ReportServiceImpl implements ReportService {
     private SemesterRepository semesterRepository;
 
     @Override
+    public List<Clazz> loadListClassByCourseLecturerSemester(int type, int userId, int courseId, int semesterId) {
+        return clazzRepository.findListClassByCourseLecturerSemester(type, userId, courseId, semesterId);
+    }
+
+    @Override
     public List<Object> loadListReport(String type) {
         List<Object> results = new ArrayList<>();
         switch (type) {

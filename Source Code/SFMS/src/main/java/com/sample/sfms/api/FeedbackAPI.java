@@ -185,6 +185,7 @@ public class FeedbackAPI {
     @JsonView(FeedbackView.alertUserFeedbackView.class)
     @GetMapping("/conduct")
     public ResponseEntity getListFeedbackOfAuthorizedUser() {
+        System.out.println("getListFeedbackOfAuthorizedUser");
         return feedbackService.getNotConductedFeedbacksByUserId();
     }
 

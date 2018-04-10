@@ -91,7 +91,14 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public ResponseEntity getNotConductedFeedbacksByUserId() {
-        User user = getAuthorizedUser();
+        List<UserFeedback> listUserFeedback = userFeedbackRepository.findNotConductedFeedbacksByUserId(9);
+        System.out.println("getNotConductedFeedbacksByUserId");
+        if (null == listUserFeedback || listUserFeedback.isEmpty()) {
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity(listUserFeedback, HttpStatus.OK);
+        }
+      /* TODO User user = getAuthorizedUser();
         if (user != null) {
             try {
                 List<UserFeedback> listUserFeedback = userFeedbackRepository.findNotConductedFeedbacksByUserId(user.getId());
@@ -107,7 +114,7 @@ public class FeedbackServiceImpl implements FeedbackService {
             }
         } else {
             return new ResponseEntity(HttpStatus.FORBIDDEN);
-        }
+        }*/
     }
 
     @Override
@@ -145,8 +152,20 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public Feedback findFeedbackToConduct(int feedbackId) {
+        UserFeedback userFeedback = userFeedbackRepository.findUserFeedbackByUserAndFeedback(9, feedbackId);
+        //if user doesn't have the right to to do this feedback or this feedback is conducted
+        if (userFeedback == null || !userFeedback.isConductor() || userFeedback.isConducted()) {
+            return null;
+        }
+        Feedback feedback = userFeedback.getFeedbackByFeedbackId();
+        //if feedback is overdue or not started yet
+        long currDate = System.currentTimeMillis();
+        if (currDate < feedback.getStartDate().getTime() || currDate > feedback.getEndDate().getTime()) {
+            return null;
+        } else return feedback;
+
         //if user is logged in
-        User user = getAuthorizedUser();
+      /* todo User user = getAuthorizedUser();
         if (user == null) {
             return null;
         }
@@ -160,7 +179,7 @@ public class FeedbackServiceImpl implements FeedbackService {
         long currDate = System.currentTimeMillis();
         if (currDate < feedback.getStartDate().getTime() || currDate > feedback.getEndDate().getTime()) {
             return null;
-        } else return feedback;
+        } else return feedback;*/
     }
 
     @Override

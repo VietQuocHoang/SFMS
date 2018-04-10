@@ -1,10 +1,13 @@
 package com.sample.sfms.api;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.sample.sfms.entity.Feedback;
 import com.sample.sfms.entity.UserFeedback;
 import com.sample.sfms.model.answer.ConductAnswerWrapper;
 import com.sample.sfms.service.interf.ConductFeedbackService;
 import com.sample.sfms.service.interf.FeedbackService;
+import com.sample.sfms.view.FeedbackView;
+import com.sample.sfms.view.UserFeedbackView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +25,12 @@ public class ConductFeedbackAPI {
     @Autowired
     private FeedbackService feedbackService;
 
+    @JsonView(UserFeedbackView.basicUserFeedbackView.class)
     @GetMapping("/list")
-    private List<UserFeedback> getFeedbacks(){
-        List<UserFeedback> feedbacks = feedbackService.getFeedbacksByUserId();
-        return feedbacks;
+    private ResponseEntity getFeedbacks(){
+        //List<UserFeedback> feedbacks = feedbackService.getFeedbacksByUserId();
+        //return feedbacks;
+        return feedbackService.getNotConductedFeedbacksByUserId();
     }
 
     @PostMapping(value = "/save", consumes = "application/json", produces = "application/json")

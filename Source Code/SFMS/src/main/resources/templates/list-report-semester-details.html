@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <meta name="ctx" th:content="${#httpServletRequest.getContextPath()}"/>
+    <title>Làm feedback</title>
+    <div th:replace="fragments/core-css"></div>
+    <!-- custom style -->
+    <link th:href="@{/css/conduct-feedback.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/custom-style.css}" rel="stylesheet" type="text/css"/>
+    <div th:replace="fragments/core-script"></div>
+    <!-- custom script -->
+    <!--<script th:src="@{/js/conduct-feedback.js}"></script>-->
+</head>
+
+<body>
+<div class="container" id="conduct-feedback-container">
+    <div class="row justify-content-center">
+    </div>
+    <!-- div feedback content -->
+    <div class="row justify-content-center">
+        <div class="col-sm-12 col-12 col-md-12 col-xl-12 col-lg-12 text-center" style="padding: 10px">
+            <!--<th:block th:with="numOfPage = ${feedback.questionsById.size()%3==0}?${feedback.questionsById.size()/3}:${(feedback.questionsById.size()/3) + 1}">-->
+            <!--<form>-->
+            <!---->
+            <!--</form>-->
+            <!--</th:block>-->
+            <th:block th:if="${classes.size() == 0}">
+
+                <h5>Không có lớp nào</h5>
+
+            </th:block>
+
+            <th:block th:if="${classes.size() != 0}">
+            <th:block th:each="index:${#numbers.sequence(0,(classes.size()-1))}">
+            <!--    <div th:class="${index==0}?'feedback-page page-active':'feedback-page'">-->
+
+                <!--    th:classappend="${'question-' + feedback.questionsById.get(index).id} + (${feedback.questionsById.get(index).isRequied}?' required': '')">
+               <div class="card-header">
+                     Câu hỏi <p th:text="${index+1}" th:remove="tag"></p>
+                     <span th:class="${feedback.questionsById.get(index).isRequied}?'required-question active':'required-question'">*</span>
+                     <!--TODO sửa lại cái này
+                 </div>-->
+                <a th:href="@{'/reports/semester-detail'(typeId=${type},semId=${classes.get(index).semesterBySemesterId.id},targetId=${classes.get(index).id})}"
+                   >
+                    <h4 th:text="${classes.get(index).className}" th:remove="tag">
+                    </h4>
+                </a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+            </th:block>
+            </th:block>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
