@@ -58,9 +58,9 @@ public class MailServiceImpl implements MailService {
         java.util.Date today = new java.util.Date();
         Calendar cal = Calendar.getInstance();
         cal.setTime(today);
-        cal.add(Calendar.DATE, 2);
-        java.util.Date twoDayAhead = cal.getTime();
-        return userFeedbackRepository.getListUserFeedbackNotDoFeedbackYet(new Date(today.getTime()), new Date(twoDayAhead.getTime()));
+        cal.add(Calendar.DATE, 4);
+        java.util.Date fourDayAhead = cal.getTime();
+        return userFeedbackRepository.getListUserFeedbackNotDoFeedbackYet(new Date(today.getTime()), new Date(fourDayAhead.getTime()));
     }
 
     @Override

@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="position" content="report"/>
     <title>Xem báo cáo</title>
     <!--Core style-->
     <div th:replace="fragments/core-css"></div>
@@ -141,23 +142,22 @@
                 <table id="tblClass" class="table table-bordered" style="display: none">
                     <thead>
                     <tr>
-                        <th class="w-25">Tên lớp</th>
                         <th class="w-25">Giảng viên</th>
                         <th class="w-25">Môn học</th>
                         <th class="w-25"></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <th:block th:if="${feedbackTarget.classes.isEmpty()}">
+                    <th:block th:if="${feedbackTarget.lecturerCourseLists.isEmpty()}">
                         <tr>
                             <td colspan="4">Hiện tại không có danh phòng ban nào trong danh sách</td>
                         </tr>
                     </th:block>
-                    <th:block th:unless="${feedbackTarget.classes.isEmpty()}">
-                        <tr th:attr="data-name=${class.className}" th:each="class:${feedbackTarget.classes}">
-                            <td th:text="${class.className}"></td>
-                            <td th:text="${class.userByLecturerId.fullname}"></td>
-                            <td th:text="${class.courseByCourseId.name}"></td>
+                    <th:block th:unless="${feedbackTarget.lecturerCourseLists.isEmpty()}">
+                        <tr th:attr="data-name=${lecCourse.fullname}"
+                            th:each="lecCourse:${feedbackTarget.lecturerCourseLists}">
+                            <td th:text="${lecCourse.fullname}"></td>
+                            <td th:text="${lecCourse.courseName}"></td>
                             <td class="text-center"><a th:href="@{/view-report-details}" class="btn btn-raised-primary">Xem
                                 báo cáo</a></td><!--TODO sửa đây ông eiii-->
                         </tr>
