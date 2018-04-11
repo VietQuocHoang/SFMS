@@ -31,4 +31,6 @@ public interface UserService {
 
     ResponseEntity checkExistedUsername(String username);
 
+    boolean findActiveUserByUserNameAndPassword(String username, String password);
+
 }
