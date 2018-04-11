@@ -27,16 +27,37 @@ import java.util.logging.Logger;
 public class UserServiceImpl implements UserService {
     private static Logger logger = Logger.getLogger(UserServiceImpl.class.getName());
 
-    @Autowired
     private UserRepository userRepository;
-    @Autowired
     private RoleRepository roleRepository;
-    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-    @Autowired
     private DepartmentRepository departmentRepository;
-    @Autowired
     private MajorRepository majorRepository;
+
+    @Autowired
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @Autowired
+    public void setRoleRepository(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
+    }
+
+    @Autowired
+    public void setbCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
+
+    @Autowired
+    public void setDepartmentRepository(DepartmentRepository departmentRepository) {
+        this.departmentRepository = departmentRepository;
+    }
+
+    @Autowired
+    public void setMajorRepository(MajorRepository majorRepository) {
+        this.majorRepository = majorRepository;
+    }
+
 
     @Override
     public User findUserByMail(String email) {
@@ -161,6 +182,19 @@ public class UserServiceImpl implements UserService {
             return new ResponseEntity(HttpStatus.OK);
         } else {
             return new ResponseEntity(HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @Override
+    public boolean findActiveUserByUserNameAndPassword(String username, String password) {
+        if (null == username || null == password || username.length() == 0 || password.length() == 0) {
+            return false;
+        } else {
+            User u = userRepository.findActiveUserByUserName(username);
+            if (u == null) {
+                return false;
+            }
+            return bCryptPasswordEncoder.matches(password, u.getPassword());
         }
     }
 
