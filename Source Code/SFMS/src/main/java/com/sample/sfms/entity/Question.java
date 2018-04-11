@@ -13,6 +13,7 @@ import java.util.Collection;
 public class Question {
     @JsonView(FeedbackView.conductFeedbackView.class)
     private int id;
+    @JsonView(FeedbackView.conductFeedbackView.class)
     private String type;
     private String suggestion;
     @JsonView(FeedbackView.conductFeedbackView.class)
