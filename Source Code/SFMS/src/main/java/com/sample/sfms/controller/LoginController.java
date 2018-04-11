@@ -21,7 +21,7 @@ public class LoginController {
         if (user == null) {
             return new ModelAndView("login");
         } else {
-            return new ModelAndView("redirect:/home");
+            return new ModelAndView("redirect:/dashboard");
         }
     }
 
