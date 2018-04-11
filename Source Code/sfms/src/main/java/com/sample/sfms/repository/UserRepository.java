@@ -4,6 +4,7 @@ import com.sample.sfms.entity.Role;
 import com.sample.sfms.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -28,4 +29,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     int countDeactivatedUser();
 
     int countAllByRoleByRoleIdId(int roleId);
+
+    @Query(value = "Select u from User u where u.username=:username and u.status=1")
+    User findActiveUserByUserName(@Param("username") String username);
 }
