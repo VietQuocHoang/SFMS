@@ -1,25 +1,58 @@
 /**
  * Created by MyPC on 27/02/2018.
  */
-var btnActive = "<input class='btn active btn-check-target' type='button' onclick='activeCriteria(this)' value='Kích hoạt'/>"
-var btnDeactive = "<input class='btn active btn-checked' type='button' onclick='deactiveCriteria(this)' value='Đã kích hoạt'/>"
+// var btnActive = "<input class='btn active btn-check-target' type='button' onclick='activeCriteria(this)' value='Kích hoạt'/>"
+// var btnDeactive = "<input class='btn active btn-checked' type='button' onclick='deactiveCriteria(this)' value='Đã kích hoạt'/>"
+// var btnActive = "<input data-toggle='toggle' type='checkbox' onclick='activeCriteria(this)'/>"
+// var btnDeactive = "<input checked data-toggle='toggle' type='checkbox' onclick='deactiveCriteria(this)'/>"
+var btnDeactive = "<label class='tgl'>" +
+    "<input onclick='deactiveCriteria(this)' type='checkbox' checked/>" +
+    "<span class='tgl_body'>" +
+    "<span class='tgl_switch'></span>" +
+    "<span class='tgl_track'>" +
+    "<span class='tgl_bgd'></span>" +
+    "<span class='tgl_bgd tgl_bgd-negative'></span></span></span></label>"
+var btnActive = "<label class='tgl'>" +
+    "<input onclick='activeCriteria(this)' type='checkbox'/>" +
+    "<span class='tgl_body'>" +
+    "<span class='tgl_switch'></span>" +
+    "<span class='tgl_track'>" +
+    "<span class='tgl_bgd'></span>" +
+    "<span class='tgl_bgd tgl_bgd-negative'></span></span></span></label>"
+var btnDeactiveForm = "<label class='tgl' id='btnStatus'>" +
+    "<input id='btnStt' type='checkbox' checked/>" +
+    "<span class='tgl_body'>" +
+    "<span class='tgl_switch'></span>" +
+    "<span class='tgl_track'>" +
+    "<span class='tgl_bgd'></span>" +
+    "<span class='tgl_bgd tgl_bgd-negative'></span></span></span></label>"
+var btnActiveForm = "<label class='tgl' id='btnStatus'>" +
+    "<input id='btnStt' type='checkbox'/>" +
+    "<span class='tgl_body'>" +
+    "<span class='tgl_switch'></span>" +
+    "<span class='tgl_track'>" +
+    "<span class='tgl_bgd'></span>" +
+    "<span class='tgl_bgd tgl_bgd-negative'></span></span></span></label>"
 var linkShow = "<a href='#' onclick='initNewForm()' data-toggle='modal' data-target='#InfoModal'><i class='fa fa-plus' style='font-size: 20px'></i>    </a>";
 var linkUpdate = "<a href='#' onclick='initUpdateForm(this)' data-toggle='modal' data-target='#InfoModal'><i class='fa fa-pencil' style='font-size: 20px'></i>    </a>";
 var linkDelete = "<a href='#'><i class='fa fa-trash' style='font-size: 20px'></i>    </a>";
-var btnActiveForm = "<input class='btn active btn-check-target' id='btnStatus' type='button' name='btnStatus' value='Kích hoạt'/>"
-var btnDeactiveForm = "<input class='btn active btn-checked' id='btnStatus' type='button' name='btnStatus' value='Vô hiệu'/>"
-var showedTable, saveOpt, method, selectedId = "", status = true, btn, tmp;
+// var btnActiveForm = "<input class='btn active btn-check-target' id='btnStatus' type='button' name='btnStatus' value='Kích hoạt'/>"
+// var btnDeactiveForm = "<input class='btn active btn-checked' id='btnStatus' type='button' name='btnStatus' value='Vô hiệu'/>"
+// var btnActiveForm = "<input class='btn active btn-check-target' id='btnStatus' type='button' name='btnStatus' value='Kích hoạt'/>"
+// var btnDeactiveForm = "<input class='btn active btn-checked' id='btnStatus' type='button' name='btnStatus' value='Vô hiệu'/>"
+var showedTable, saveOpt, method, selectedId = "", status = 1, btn, tmp;
 $(document).ready(function () {
     loadCriteriaTable();
 });
-
+$("#btnStt").click(function(){if(status==0)status=1; else status=0; console.log(status)});
 function initNewForm() {
     selectedId = "";
     saveOpt = 'create';
     method = 'POST';
     $("#critName").val("");
     $("#critType").val("");
-    $("#btnSatus").replaceWith(btnActiveForm)
+    status=true;
+    $("#btnStatus").replaceWith(btnActiveForm)
 }
 function initUpdateForm(el) {
     var data = $("#tbl-criteria").DataTable().row($(el).parents('tr')).data();
@@ -28,7 +61,7 @@ function initUpdateForm(el) {
     method = 'PUT';
     $("#critName").val(data.criteria);
     $("#critType").val(data.typeByTypeId.id);
-    if (data.status) $("#btnSatus").replaceWith(btnActiveForm); else $("#btnSatus").replaceWith(btnDeactiveForm)
+    if (!data.status){ $("#btnStatus").replaceWith(btnActiveForm); status==0;} else {$("#btnStatus").replaceWith(btnDeactiveForm); status==1}
 }
 var status_to_button = function (data, type, full, meta) {
     // console.log(data);
@@ -91,7 +124,7 @@ $("#btnSave").click(function () {
         "id": selectedId,
         "criteria": $("#critName").val(),
         "typeByTypeId": {"id": $("#critType").val()},
-        "status": status
+        "status": status==1
     };
     console.log(criteria);
     $.ajax({

@@ -550,7 +550,7 @@ function setStartEndConstraint() {
 
 $("#btnSave").click(function () {
     var opt = $('input[name="save-option"]:checked', '#save-opt').val();
-    alert(opt);
+    // alert(opt);
     $.ajax({
         url: '/sfms/api/modify-feedback/save/option/' + opt,
         type: 'PUT',
