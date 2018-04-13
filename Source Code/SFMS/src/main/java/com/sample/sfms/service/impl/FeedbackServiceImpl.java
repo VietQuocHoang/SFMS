@@ -64,6 +64,11 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
+    public int deactiveTemplate (int templateId) {
+        return feedbackRepository.deactiveTemplate(templateId);
+    }
+
+    @Override
     public List<Feedback> loadListFeedback(String type) {
         List<Feedback> list = new ArrayList<>();
         switch (type) {
@@ -86,7 +91,7 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public ResponseEntity getNotConductedFeedbacksByUserId() {
-        User user = getAuthorizedUser();
+      User user = getAuthorizedUser();
         if (user != null) {
             try {
                 List<UserFeedback> listUserFeedback = userFeedbackRepository.findNotConductedFeedbacksByUserId(user.getId());
@@ -102,6 +107,17 @@ public class FeedbackServiceImpl implements FeedbackService {
             }
         } else {
             return new ResponseEntity(HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @Override
+    public ResponseEntity getNotConductedFeedbacksByUserIdMobile() {
+        List<UserFeedback> listUserFeedback = userFeedbackRepository.findNotConductedFeedbacksByUserId(9);
+        System.out.println("getNotConductedFeedbacksByUserId");
+        if (null == listUserFeedback || listUserFeedback.isEmpty()) {
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity(listUserFeedback, HttpStatus.OK);
         }
     }
 
@@ -140,12 +156,26 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public Feedback findFeedbackToConduct(int feedbackId) {
-        //if user is logged in
         User user = getAuthorizedUser();
         if (user == null) {
             return null;
         }
         UserFeedback userFeedback = userFeedbackRepository.findUserFeedbackByUserAndFeedback(user.getId(), feedbackId);
+        //if user doesn't have the right to to do this feedback or this feedback is conducted
+        if (userFeedback == null || !userFeedback.isConductor() || userFeedback.isConducted()) {
+            return null;
+        }
+        Feedback feedback = userFeedback.getFeedbackByFeedbackId();
+        //if feedback is overdue or not started yet
+        long currDate = System.currentTimeMillis();
+        if (currDate < feedback.getStartDate().getTime() || currDate > feedback.getEndDate().getTime()) {
+            return null;
+        } else return feedback;
+    }
+
+    @Override
+    public Feedback findFeedbackToConductMobile(int feedbackId) {
+        UserFeedback userFeedback = userFeedbackRepository.findUserFeedbackByUserAndFeedback(9, feedbackId);
         //if user doesn't have the right to to do this feedback or this feedback is conducted
         if (userFeedback == null || !userFeedback.isConductor() || userFeedback.isConducted()) {
             return null;

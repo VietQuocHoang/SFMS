@@ -89,6 +89,32 @@ public class ConductFeedbackServiceImpl implements ConductFeedbackService {
     }
 
     @Override
+    public ResponseEntity saveAnswerMobile(ConductAnswerWrapper conductAnswerWrapper) {
+        answerRepository.removeAllAnswerByUserAndFeedback(9, conductAnswerWrapper.getFeedbackId());
+        Timestamp currDate = new Timestamp(System.currentTimeMillis());
+        if (conductAnswerWrapper.getAnswers() != null) {
+            Optionn optionn = null;
+            Answer answer;
+            for (ConductAnswer conductAnswer : conductAnswerWrapper.getAnswers()) {
+                optionn = optionnRepository.findOne(conductAnswer.getOptionnByOptionnId());
+                answer = new Answer();
+                answer.setCreateDate(currDate);
+                answer.setOptionnByOptionnId(optionn);
+                answer.setUserByUserId(userRepository.findOne(9));
+                answer.setAnswerContent(conductAnswer.getAnswerContent());
+                answerRepository.save(answer);
+            }
+            if (null != optionn) {
+                int feedbackId = optionn.getQuestionByQuestionId().getFeedbackByFeedbackId().getId();
+                UserFeedback userFeedback = userFeedbackRepository.findUserFeedbackByUserAndFeedback(9, feedbackId);
+                userFeedback.setConducted(true);
+                userFeedbackRepository.save(userFeedback);
+            }
+        }
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @Override
     public ResponseEntity findFeedbackToEdit(int feedbackId) {
         User user = getCurrentAuthenticatedUser();
         UserFeedback userFeedback = userFeedbackRepository.findUserFeedbackByUserAndFeedback(user.getId(), feedbackId);

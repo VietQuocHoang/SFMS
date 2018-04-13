@@ -5,4 +5,6 @@ package com.sample.sfms.view;
  */
 public class SemesterView {
     public static class basicSemesterView{}
+
+    public static class reportAllSemesterView{}
 }

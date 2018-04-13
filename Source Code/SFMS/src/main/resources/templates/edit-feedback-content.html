@@ -178,10 +178,9 @@
                                                         </div>
                                                         <div class='edit-answer-container'>
                                                             <div class='edit-answer-wrapper'>
-                                                                <ul th:class="list-answer-edit"
-                                                                    th:each="option: ${feedback.questionsById.get(index).optionsById}">
+                                                                <ul th:class="list-answer-edit">
                                                                     <th:block
-                                                                            th:if="${option.optionnContent != 'Khác'}">
+                                                                            th:if="${option.optionnContent != 'Khác'}" th:each="option: ${feedback.questionsById.get(index).optionsById}">
                                                                         <li>
                                                                             <div class='edit-answer-item'>
                                                                                 <div class='sort-edit-answer-handle'>
@@ -378,10 +377,9 @@
                                                         </div>
                                                         <div class='edit-answer-container'>
                                                             <div class='edit-answer-wrapper'>
-                                                                <ul th:class="list-answer-edit"
-                                                                    th:each="option: ${feedback.questionsById.get(index).optionsById}">
+                                                                <ul th:class="list-answer-edit">
                                                                     <th:block
-                                                                            th:if="${option.optionnContent != 'Khác'}">
+                                                                            th:if="${option.optionnContent != 'Khác'}" th:each="option: ${feedback.questionsById.get(index).optionsById}">
                                                                         <li>
                                                                             <div class='edit-answer-item'>
                                                                                 <div class='sort-edit-answer-handle'>
@@ -667,7 +665,7 @@
                             bản(đơn dòng)</a></li>
                         <li class="item" id="textarea-ele"><a href="#"><i class="fa fa-paragraph"></i> Trường nhập văn
                             bản(đa dòng)</a></li>
-                        <li class="item" id="star-ele"><a href="#"><i class="fa fa-star"></i> Sao đánh giá</a></li>
+                        <!--<li class="item" id="star-ele"><a href="#"><i class="fa fa-star"></i> Sao đánh giá</a></li>-->
                     </ul>
                 </div>
             </div>

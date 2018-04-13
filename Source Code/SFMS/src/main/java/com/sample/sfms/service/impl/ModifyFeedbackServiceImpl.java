@@ -9,11 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.UnexpectedRollbackException;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -473,7 +471,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                             if (conductor.getDepartmentByDepartmentId().getName().equals("IT"))
                                 conductors.remove(conductor);
                     }
-                } else conductors.addAll(userRepo.findByRoleByRoleId_RoleName("Học sinh"));
+                } else conductors.addAll(userRepo.findByRoleByRoleId_RoleName("Sinh viên"));
 //                viewers = userFilteringRepo.findByRoleByRoleIdAndMajorByMajorId(roleRepo.findByRoleName("Trưởng phòng"), f.getMajorByMajorId());
                 break;
             default:
@@ -832,7 +830,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
         List<User> l = userRepo.findAll();
         List<User> result = userRepo.findAll();
         for (User u : l) {
-            if (!u.getRoleByRoleId().getRoleName().equals("Học sinh")) result.remove(u);
+            if (!u.getRoleByRoleId().getRoleName().equals("Sinh viên")) result.remove(u);
         }
         return result;
     }
@@ -842,7 +840,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
         List<User> l = userRepo.findAll();
         List<User> result = userRepo.findAll();
         for (User u : l) {
-            if (u.getRoleByRoleId().getRoleName().equals("Học sinh")) result.remove(u);
+            if (u.getRoleByRoleId().getRoleName().equals("Sinh viên")) result.remove(u);
         }
         return result;
     }

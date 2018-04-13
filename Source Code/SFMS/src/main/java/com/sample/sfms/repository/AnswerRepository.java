@@ -38,4 +38,9 @@ public interface AnswerRepository extends JpaRepository<Answer, Integer> {
             "where a.user_id=:userId and f.id=:feedbackId", nativeQuery = true)
     int removeAllAnswerByUserAndFeedback(@Param("userId") int userId, @Param("feedbackId") int feedbackId);
 
+    @Query(value = "select a from Answer a, Feedback f, Question q, Optionn o where "
+            + "f.id = :feedbackId and f.id = q.feedbackByFeedbackId.id "
+            + "and q.id = o.questionByQuestionId.id and o.id = a.optionnByOptionnId.id and "
+            + "(q.type = 'Radio' or q.type = 'CheckBox' or q.type = 'Star') and q.criteriaByCriteriaId.id = :critId")
+    List<Answer> getAllHaveScoresOptionByFeedbackIdAndCriteriaId (@Param("feedbackId") int feedbackId, @Param("critId") int critId);
 }

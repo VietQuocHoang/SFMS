@@ -1,6 +1,7 @@
 package com.sample.sfms.service.interf;
 
 import com.sample.sfms.entity.Question;
+import com.sample.sfms.model.ModifySuggestionModel;
 import com.sample.sfms.model.question.AddQuestionModel;
 import com.sample.sfms.model.question.RemoveQuestionModel;
 import com.sample.sfms.model.question.UpdateQuestionModel;
@@ -27,5 +28,9 @@ public interface QuestionService {
     List<Question> findAll();
 
     List<Question> findByFeedbackId(int feedbackId);
+
+    Question findByQuestionID (int questionID);
+
+    void modifySuggestion(String suggestion, int questionId) throws Exception;
 
 }

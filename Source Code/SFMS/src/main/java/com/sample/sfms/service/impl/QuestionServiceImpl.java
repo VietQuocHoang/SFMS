@@ -1,6 +1,7 @@
 package com.sample.sfms.service.impl;
 
 import com.sample.sfms.entity.*;
+import com.sample.sfms.model.ModifySuggestionModel;
 import com.sample.sfms.model.option.OptionCreateModel;
 import com.sample.sfms.model.option.OptionUpdateModel;
 import com.sample.sfms.model.question.AddQuestionModel;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
@@ -60,6 +62,11 @@ public class QuestionServiceImpl implements QuestionService {
         question.setIsRequied(model.isRequired());
         question.setQuestionContent(model.getQuestionContent());
         question.setSuggestion(model.getSuggestion());
+       /* if (model.getSuggestion() == null) {
+            question.setSuggestion("");
+        } else {
+            question.setSuggestion(model.getSuggestion());
+        }*/
         question.setType(model.getType());
 
 
@@ -103,6 +110,29 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     @Transactional
+    public void modifySuggestion(String suggestion, int questionId) throws Exception {
+        if (questionId == 0) {
+            throw new Exception("Xin chọn câu hỏi để update");
+        }
+
+        try {
+            int result = questionRepo.updateSuggestion(suggestion, questionId);
+            /*Question question = this.questionRepo.getOne(model.getQuestionId());
+            question.setSuggestion(model.getSuggestion());
+
+            Feedback feedback = feedbackRepository.findById(model.getFeedbackId());
+
+            question.setFeedbackByFeedbackId(feedback);
+
+            this.questionRepo.save(question);*/
+
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    @Override
+    @Transactional
     public void updateQuestion(UpdateQuestionModel model) throws Exception {
         if (model.getQuestionId() == 0) {
             throw new Exception("Xin chọn câu hỏi để update");
@@ -120,6 +150,7 @@ public class QuestionServiceImpl implements QuestionService {
         }
 
         try {
+
             Question question = this.questionRepo.getOne(model.getQuestionId());
 
             question.setIsRequied(model.isRequired());
@@ -132,10 +163,22 @@ public class QuestionServiceImpl implements QuestionService {
 
             this.questionRepo.save(question);
 
+            List<Integer> listModifyOptionnID = new ArrayList<>();
             if (model.getOptionUpdateModels() != null) {
                 for (OptionUpdateModel option : model.getOptionUpdateModels()) {
                     option.setQuestion(question);
                     optionnService.update(option);
+                    if (option.getId() >= 0) {
+                        listModifyOptionnID.add(option.getId());
+                    }
+                }
+            }
+
+            List<Optionn> listExistedOption = optionnService.findByQuestionId(model.getQuestionId());
+
+            for (Optionn optionn : listExistedOption) {
+                if (!listModifyOptionnID.contains(optionn.getId()) && !optionn.getOptionnContent().equals("Khác") && optionn.getPoint()!=0) {
+                    optionnService.remove(optionn.getId());
                 }
             }
 
@@ -172,6 +215,11 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public List<Question> findByFeedbackId(int feedbackId) {
         return questionRepo.findByFeedbackId(feedbackId);
+    }
+
+    @Override
+    public Question findByQuestionID(int questionID) {
+        return questionRepo.findByQuestionId(questionID);
     }
 
     /*---------------Private methods------------------*/

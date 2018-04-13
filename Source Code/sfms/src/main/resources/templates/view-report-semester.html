@@ -37,7 +37,7 @@
                 </h3>
                 <hr style="border: 2px dashed #08AE9E; width:50%">
                 <h3><b>Điểm trung bình: <span class="point-text"
-                                              th:text="${#numbers.formatDecimal(report.averageSemPoint,0,1) + '/5'}"></span></b>
+                                              th:text="${#numbers.formatDecimal(report.averageSemPoint,1,1) + '/5'}"></span></b>
                 </h3>
             </div>
         </div>
@@ -48,15 +48,20 @@
                 <th:block th:unless="${report == null}">
                     <div class="card criteria-card" th:each="criteria:${report.criteriaReportModelList}">
                         <div class="card-header">
-                            <h4 th:text="${criteria.criteriaName+'-'+#numbers.formatDecimal(criteria.averageCriteriaPoint,0,1)+'/5'}"></h4>
+                            <h4 th:text="${criteria.criteriaName+'-'+#numbers.formatDecimal(criteria.averageCriteriaPoint,1,1)+'/5'}"></h4>
                         </div>
                         <div class="card-block question-card yn-question"
                              th:each="ynQuestion:${criteria.ynQuestionReportModels}">
-                            <p><b>Lời khuyên: </b>
-                            <div th:text="${ynQuestion.suggestion}" th:remove="tag"></div>
+                            <p><b>Điểm trung bình của câu hỏi: </b>
+                                <span th:text="${ynQuestion.questionAvgPoint}"
+                                      th:class="${ynQuestion.questionAvgPoint>3.4?'text-success':'text-danger'}"></span>
+                            </p>
+                            <p th:if="${ynQuestion.questionAvgPoint<3.4}"><b>Lời khuyên: </b>
+                                <span th:text="${ynQuestion.questionAvgPoint<3.4?ynQuestion.suggestion:''}"
+                                      class="text-danger"></span>
                             </p>
                             <p><b th:text="${ynQuestion.questionContent}"></b><br>
-                            <div th:text="${ynQuestion.responseCount}" th:remove="tag"></div>
+                                <span th:text="${ynQuestion.responseCount} + ' phản hồi'"></span>
                             </p>
                             <div th:id="'chart-'+${#dates.createNow().getTime()}"
                                  class="piechart"></div>

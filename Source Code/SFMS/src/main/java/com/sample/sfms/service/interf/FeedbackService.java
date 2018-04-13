@@ -19,14 +19,20 @@ public interface FeedbackService {
 
     ResponseEntity getNotConductedFeedbacksByUserId();
 
+    ResponseEntity getNotConductedFeedbacksByUserIdMobile();
+
     ResponseEntity getNotificationData();
 
     List<UserFeedback> getFeedbacksByUserId();
 
     Feedback findFeedbackToConduct(int id);
 
+    Feedback findFeedbackToConductMobile(int id);
+
     Feedback findFeedbackToPreview(int feedbackId);
 
     List<Feedback> findAllFeedback();
+
+    int deactiveTemplate (int templateId);
 }
 

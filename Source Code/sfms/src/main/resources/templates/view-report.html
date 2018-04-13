@@ -158,7 +158,8 @@
                             th:each="lecCourse:${feedbackTarget.lecturerCourseLists}">
                             <td th:text="${lecCourse.fullname}"></td>
                             <td th:text="${lecCourse.courseName}"></td>
-                            <td class="text-center"><a th:href="@{/view-report-details}" class="btn btn-raised-primary">Xem
+                            <td class="text-center">
+                                <a th:href="@{/view-report-details(typeId=3,userId=${class.userByLecturerId.id},courseId=${class.courseByCourseId.id})}" class="btn btn-raised-primary">Xem
                                 báo cáo</a></td><!--TODO sửa đây ông eiii-->
                         </tr>
                     </th:block>

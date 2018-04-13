@@ -1,15 +1,14 @@
 package com.sample.sfms.controller;
 
+import com.sample.sfms.entity.Clazz;
+import com.sample.sfms.entity.Feedback;
 import com.sample.sfms.entity.PrivilegeRole;
 import com.sample.sfms.entity.User;
 import com.sample.sfms.model.report.reportSemester.ReportSemesterModel;
 import com.sample.sfms.service.interf.ReportService;
 import com.sample.sfms.service.interf.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -27,6 +26,21 @@ public class ReportController {
 
     @Autowired
     private UserService userService;
+
+    @GetMapping(value = "/list-class")
+    private ModelAndView listClass(@RequestParam("type") int type, @RequestParam("userId") int userId, @RequestParam("courseId") int courseId, @RequestParam("semesterId") int semesterId) {
+        ModelAndView mav = new ModelAndView();
+        List<Clazz> classes = reportService.loadListClassByCourseLecturerSemester(type, userId, courseId, semesterId);
+        //Feedback feedback = feedbackService.findFeedbackToPreview(feedbackId);
+        if (classes == null) {
+            mav.setViewName("forbidden");
+        } else {
+            mav.setViewName("list-report-semester-details");
+            mav.addObject("classes", classes);
+            mav.addObject("type", type);
+        }
+        return mav;
+    }
 
     @GetMapping
     private ModelAndView viewListReport() {

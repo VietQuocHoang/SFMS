@@ -44,6 +44,32 @@
 //     }, 3000)
 // });
 
+var itemsCount = 0, itemsMax = $('.template-container figure').length;
+$('.template-container figure').hide();
+
+
+function showNextItems() {
+    var pagination = 6;
+
+    for (var i = itemsCount; i < (itemsCount + pagination); i++) {
+        $('.template-container figure:eq(' + i + ')').show();
+        console.log(i);
+    }
+
+    itemsCount += pagination;
+
+    if (itemsCount >= itemsMax) {
+        $('#showMore').hide();
+    }
+};
+
+showNextItems();
+
+$('#showMore').on('click', function (e) {
+    e.preventDefault();
+    showNextItems();
+});
+
 var templateThumbnail = $(".template-thumbnail");
 var _ctx = $("meta[name='ctx']").attr("content");
 
@@ -71,9 +97,12 @@ $(".btn-preview").click(function() {
         url: _ctx +'/preview-feedback/' + templateID,
         dataType: 'html',
         success: function(data) {
-            $("#modalTemplateContent").innerHTML = "";
-            $("#modalTemplateFooter").innerHTML = "";
-            $("#modalTemplateFooter").append("<input hidden class='form-control' value='" + templateID + "' type='text' name='templateID'>");
+            document.getElementById('templateID').value = templateID;
+           // $("#modalTemplateContent").innerHTML = "";
+            var myNode = document.getElementById("modalTemplateContent");
+            while (myNode.firstChild) {
+                myNode.removeChild(myNode.firstChild);
+            }
             $("#modalTemplateContent").append(data);
             $('#modalTemplate').modal('toggle');
         },
@@ -97,4 +126,21 @@ $(".btn-preview").click(function() {
   //  });
    // $("#modalTemplate").modal('toggle');
 });
+
+
+$(".btn-remove-question").click(function() {
+    var templateID = $(this).siblings('input').val();
+    $.ajax({
+        url: _ctx +'/api/feedbacks/deactive-template',
+        type: 'POST',
+        data: templateID,
+        dataType: "text",
+        contentType: "text/plain",
+        success: function(data) {
+            window.location = window.location;
+        },
+        error: (err) => alert(err)
+    });
+});
+
 
