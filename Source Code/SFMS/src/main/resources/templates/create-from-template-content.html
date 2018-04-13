@@ -189,10 +189,9 @@
                                                         </div>
                                                         <div class='edit-answer-container'>
                                                             <div class='edit-answer-wrapper'>
-                                                                <ul th:class="list-answer-edit"
-                                                                    th:each="option: ${template.questionsById.get(index).optionsById}">
+                                                                <ul th:class="list-answer-edit">
                                                                     <th:block
-                                                                            th:if="${option.optionnContent != 'Khác'}">
+                                                                            th:if="${option.optionnContent != 'Khác'}" th:each="option: ${template.questionsById.get(index).optionsById}">
                                                                         <li>
                                                                             <div class='edit-answer-item'>
                                                                                 <div class='sort-edit-answer-handle'>
@@ -398,10 +397,9 @@
                                                         </div>
                                                         <div class='edit-answer-container'>
                                                             <div class='edit-answer-wrapper'>
-                                                                <ul th:class="list-answer-edit"
-                                                                    th:each="option: ${template.questionsById.get(index).optionsById}">
+                                                                <ul th:class="list-answer-edit">
                                                                     <th:block
-                                                                            th:if="${option.optionnContent != 'Khác'}">
+                                                                            th:if="${option.optionnContent != 'Khác'}" th:each="option: ${template.questionsById.get(index).optionsById}">
                                                                         <li>
                                                                             <div class='edit-answer-item'>
                                                                                 <div class='sort-edit-answer-handle'>
