@@ -189,10 +189,23 @@ public class FeedbackAPI {
         return feedbackService.getNotConductedFeedbacksByUserId();
     }
 
+    @JsonView(FeedbackView.alertUserFeedbackView.class)
+    @GetMapping("/conduct-mobile")
+    public ResponseEntity getListFeedbackOfAuthorizedUserMobile() {
+        System.out.println("getListFeedbackOfAuthorizedUser");
+        return feedbackService.getNotConductedFeedbacksByUserIdMobile();
+    }
+
     @JsonView(FeedbackView.conductFeedbackView.class)
     @GetMapping("/conduct/{id}")
     public Feedback conductFeedback(@PathVariable("id") int id) {
         return feedbackService.findFeedbackToConduct(id);
+    }
+
+    @JsonView(FeedbackView.conductFeedbackView.class)
+    @GetMapping("/conduct-mobile/{id}")
+    public Feedback conductFeedbackMobile(@PathVariable("id") int id) {
+        return feedbackService.findFeedbackToConductMobile(id);
     }
 
 }

@@ -39,6 +39,11 @@ public class ConductFeedbackAPI {
         return conductFeedbackService.saveAnswer(conductAnswerWrapper);
     }
 
+    @PostMapping(value = "/save-mobile", consumes = "application/json", produces = "application/json")
+    private ResponseEntity saveConductedFeedbackMobile(
+            @RequestBody ConductAnswerWrapper conductAnswerWrapper) {
+        return conductFeedbackService.saveAnswerMobile(conductAnswerWrapper);
+    }
     /*@GetMapping(value = "/list")
     private ModelAndView getListConductFeedback() {
         ModelAndView mav = new ModelAndView("view-list-conduct-feedback");

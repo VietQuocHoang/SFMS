@@ -174,7 +174,6 @@ public class QuestionServiceImpl implements QuestionService {
                 }
             }
 
-
             List<Optionn> listExistedOption = optionnService.findByQuestionId(model.getQuestionId());
 
             for (Optionn optionn : listExistedOption) {

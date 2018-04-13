@@ -291,7 +291,7 @@ public class ReportServiceImpl implements ReportService {
                     }
                 }
             }
-            removeUnnecessaryCriteria(criteriaReportModels);
+            criteriaReportModels = removeUnnecessaryCriteria(criteriaReportModels);
             calculateCriteriaAvg(criteriaReportModels);
             reportSemesterModel.setCriteriaReportModelList(criteriaReportModels);
             calculateSemPoint(reportSemesterModel);
@@ -346,12 +346,14 @@ public class ReportServiceImpl implements ReportService {
         return null;
     }
 
-    private void removeUnnecessaryCriteria(List<CriteriaReportModel> criteriaReportModels) {
+    private List<CriteriaReportModel> removeUnnecessaryCriteria(List<CriteriaReportModel> criteriaReportModels) {
+        List<CriteriaReportModel> resultList = new ArrayList<>();
         for (CriteriaReportModel c : criteriaReportModels) {
-            if ((c.getOpenQuestionReportModels() == null || c.getOpenQuestionReportModels().isEmpty())
-                    && (c.getYnQuestionReportModels() == null || c.getYnQuestionReportModels().isEmpty())) {
-                criteriaReportModels.remove(c);
+            if((c.getYnQuestionReportModels() != null && !c.getYnQuestionReportModels().isEmpty())
+                    || (c.getOpenQuestionReportModels() != null && !c.getOpenQuestionReportModels().isEmpty())){
+                resultList.add(c);
             }
         }
+        return resultList;
     }
 }
