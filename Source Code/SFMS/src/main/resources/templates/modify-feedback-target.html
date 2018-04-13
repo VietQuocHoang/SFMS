@@ -15,6 +15,7 @@
     <link th:href="@{/vendor/datatables/dataTables.bootstrap4.css}" rel="stylesheet">
     <link th:href="@{/css/progressbar-feedback.css}" rel="stylesheet">
     <link th:href="@{/css/modify-feedback-select-target.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/switch-button.css}">
 </head>
 
 <body class="fixed-nav sticky-footer" id="page-top">
@@ -264,15 +265,10 @@
 <!--th:text="${lecturer.fullname+' - '+lecturer.code}"></option>-->
 <!--</datalist>-->
 <!-- Bootstrap core JavaScript-->
-<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
-<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
-<!-- Core plugin JavaScript-->
-<script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+<div th:replace="fragments/core-script"></div>
 <!-- Page level plugin JavaScript-->
 <script th:src="@{/vendor/datatables/jquery.dataTables.js}"></script>
 <script th:src="@{/vendor/datatables/dataTables.bootstrap4.js}"></script>
-<!-- Custom scripts for all pages-->
-<script th:src="@{/js/sb-admin.min.js}"></script>
 <!-- Custom scripts for this page-->
 <script th:src="@{/js/sb-admin-datatables.min.js}"></script>
 <script th:src="@{/js/select-feedback-target.js}"></script>

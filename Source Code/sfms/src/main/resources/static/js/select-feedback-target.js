@@ -3,14 +3,71 @@
  */
 var modifyconductorlink = "<a class='add-inf-item-link' href='/sfms/modify-feedback-conductors'><i class='fa fa-pencil'></i> Chỉnh sửa </a>";
 var modifyviewerlink = "<a class='add-inf-item-link'    href='/sfms/modify-feedback-viewers'><i class='fa fa-pencil'></i> Chỉnh sửa </a>";
-var btnAddClazz = "<input class='btn active btn-check-target' type='button' onclick='addClazzTarget(this)' value='Chọn'/>"
-var btnAddCourse = "<input class='btn active btn-check-target' type='button' onclick='addCourseTarget(this)' value='Chọn'/>"
-var btnAddMajor = "<input class='btn active btn-check-target' type='button' onclick='addMajorTarget(this)' value='Chọn'/>"
-var btnAddDepartment = "<input class='btn active btn-check-target' type='button' onclick='addDepartmentTarget(this)' value='Chọn'/>"
-var btnRemoveClazz = "<input class='btn active btn-checked' type='button' onclick='removeClazzTarget(this)' value='Bỏ chọn'/>"
-var btnRemoveCourse = "<input class='btn active btn-checked' type='button' onclick='removeCourseTarget(this)' value='Bỏ chọn'/>"
-var btnRemoveMajor = "<input class='btn active btn-checked' type='button' onclick='removeMajorTarget(this)' value='Bỏ chọn'/>"
-var btnRemoveDepartment = "<input class='btn active btn-checked' type='button' onclick='removeDepartmentTarget(this)' value='Bỏ chọn'/>"
+// var btnAddClazz = "<input class='btn active btn-check-target' type='button' onclick='addClazzTarget(this)' value='Chọn'/>"
+// var btnAddCourse = "<input class='btn active btn-check-target' type='button' onclick='addCourseTarget(this)' value='Chọn'/>"
+// var btnAddMajor = "<input class='btn active btn-check-target' type='button' onclick='addMajorTarget(this)' value='Chọn'/>"
+// var btnAddDepartment = "<input class='btn active btn-check-target' type='button' onclick='addDepartmentTarget(this)' value='Chọn'/>"
+// var btnRemoveClazz = "<input class='btn active btn-checked' type='button' onclick='removeClazzTarget(this)' value='Bỏ chọn'/>"
+// var btnRemoveCourse = "<input class='btn active btn-checked' type='button' onclick='removeCourseTarget(this)' value='Bỏ chọn'/>"
+// var btnRemoveMajor = "<input class='btn active btn-checked' type='button' onclick='removeMajorTarget(this)' value='Bỏ chọn'/>"
+// var btnRemoveDepartment = "<input class='btn active btn-checked' type='button' onclick='removeDepartmentTarget(this)' value='Bỏ chọn'/>"
+var btnAddClazz = "<label class='tgl'>" +
+    "<input onclick='addClazzTarget(this)' type='checkbox'/>" +
+    "<span class='tgl_body'>" +
+    "<span class='tgl_switch'></span>" +
+    "<span class='tgl_track'>" +
+    "<span class='tgl_bgd'></span>" +
+    "<span class='tgl_bgd tgl_bgd-negative'></span></span></span></label>";
+var btnAddCourse = "<label class='tgl'>" +
+    "<input onclick='addCourseTarget(this)' type='checkbox'/>" +
+    "<span class='tgl_body'>" +
+    "<span class='tgl_switch'></span>" +
+    "<span class='tgl_track'>" +
+    "<span class='tgl_bgd'></span>" +
+    "<span class='tgl_bgd tgl_bgd-negative'></span></span></span></label>";
+var btnAddMajor = "<label class='tgl'>" +
+    "<input onclick='addMajorTarget(this)' type='checkbox'/>" +
+    "<span class='tgl_body'>" +
+    "<span class='tgl_switch'></span>" +
+    "<span class='tgl_track'>" +
+    "<span class='tgl_bgd'></span>" +
+    "<span class='tgl_bgd tgl_bgd-negative'></span></span></span></label>";
+var btnAddDepartment = "<label class='tgl'>" +
+    "<input onclick='addDepartmentTarget(this)' type='checkbox'/>" +
+    "<span class='tgl_body'>" +
+    "<span class='tgl_switch'></span>" +
+    "<span class='tgl_track'>" +
+    "<span class='tgl_bgd'></span>" +
+    "<span class='tgl_bgd tgl_bgd-negative'></span></span></span></label>";
+var btnRemoveClazz = "<label class='tgl'>" +
+    "<input onclick='removeClazzTarget(this)' type='checkbox' checked/>" +
+    "<span class='tgl_body'>" +
+    "<span class='tgl_switch'></span>" +
+    "<span class='tgl_track'>" +
+    "<span class='tgl_bgd'></span>" +
+    "<span class='tgl_bgd tgl_bgd-negative'></span></span></span></label>"
+var btnRemoveCourse = "<label class='tgl'>" +
+    "<input onclick='removeCourseTarget(this)' type='checkbox' checked/>" +
+    "<span class='tgl_body'>" +
+    "<span class='tgl_switch'></span>" +
+    "<span class='tgl_track'>" +
+    "<span class='tgl_bgd'></span>" +
+    "<span class='tgl_bgd tgl_bgd-negative'></span></span></span></label>"
+var btnRemoveMajor = "<label class='tgl'>" +
+    "<input onclick='removeMajorTarget(this)' type='checkbox' checked/>" +
+    "<span class='tgl_body'>" +
+    "<span class='tgl_switch'></span>" +
+    "<span class='tgl_track'>" +
+    "<span class='tgl_bgd'></span>" +
+    "<span class='tgl_bgd tgl_bgd-negative'></span></span></span></label>"
+var btnRemoveDepartment = "<label class='tgl'>" +
+    "<input onclick='removeDepartmentTarget(this)' type='checkbox' checked/>" +
+    "<span class='tgl_body'>" +
+    "<span class='tgl_switch'></span>" +
+    "<span class='tgl_track'>" +
+    "<span class='tgl_bgd'></span>" +
+    "<span class='tgl_bgd tgl_bgd-negative'></span></span></span></label>"
+
 var showedTargetTab;
 var showedTable;
 var tmp;

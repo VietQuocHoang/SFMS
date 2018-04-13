@@ -550,7 +550,7 @@ function setStartEndConstraint() {
 
 $("#btnSave").click(function () {
     var opt = $('input[name="save-option"]:checked', '#save-opt').val();
-  //  alert(opt);
+    // alert(opt);
     $.ajax({
         url: '/sfms/api/modify-feedback/save/option/' + opt,
         type: 'PUT',
@@ -558,7 +558,7 @@ $("#btnSave").click(function () {
         contentType: 'application/json',
         success: function (data, status, xhr) {
             if (xhr.status === 200) {
-                window.location.href = "/sfms/skeleton";
+                window.location.href = "/sfms/conduct-feedback/list";
             }
         },
         error: function () {

@@ -2,8 +2,24 @@
  * Created by MyPC on 29/01/2018.
  */
 var tmp, btn, showedTable, displayingTable, conductors;
-var btnAdd = "<input class='btn active btn-check-target' type='button' onclick='addConductor(this)' value='Chọn'/>"
-var btnRemove = "<input class='btn active btn-checked' type='button' onclick='removeConductor(this)' value='Bỏ chọn'/>"
+// var btnAdd = "<input class='btn active btn-check-target'  type='button' onclick='addConductor(this)' value='Chọn'/>"
+// var btnRemove = "<input class='btn active btn-checked' type='button' onclick='removeConductor(this)' value='Bỏ chọn'/>"
+// var btnAdd = "<input data-toggle='toggle' type='button' onclick='addConductor(this)' value='Chọn'/>"
+// var btnRemove = "<input checked data-toggle='toggle' type='button' onclick='removeConductor(this)' value='Đã chọn'/>"
+var btnAdd = "<label class='tgl'>" +
+    "<input onclick='addConductor(this)' type='checkbox' checked/>" +
+    "<span class='tgl_body'>" +
+    "<span class='tgl_switch'></span>" +
+    "<span class='tgl_track'>" +
+    "<span class='tgl_bgd'></span>" +
+    "<span class='tgl_bgd tgl_bgd-negative'></span></span></span></label>"
+var btnRemove = "<label class='tgl'>" +
+    "<input onclick='removeConductor(this)' type='checkbox'/>" +
+    "<span class='tgl_body'>" +
+    "<span class='tgl_switch'></span>" +
+    "<span class='tgl_track'>" +
+    "<span class='tgl_bgd'></span>" +
+    "<span class='tgl_bgd tgl_bgd-negative'></span></span></span></label>"
 $(document).ready(function () {
     $('#tbl-staffs').DataTable(
         {
