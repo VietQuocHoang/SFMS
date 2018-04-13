@@ -50,7 +50,7 @@
                         <!--<datalist id="list-departments" th:each="department : ${departments}">-->
                         <!--<option th:utext="${department.name}">...</option>-->
                         <option value="">Tất cả phòng</option>
-                        <option value="N/A">Học sinh</option>
+                        <option value="N/A">Sinh viên</option>
                         <option th:each="department:${departmentList}" th:text="${department.name}"></option>
                     </select>
                     <select class="filter-box" id="list-majors">

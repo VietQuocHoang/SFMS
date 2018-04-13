@@ -52,11 +52,16 @@
                         </div>
                         <div class="card-block question-card yn-question"
                              th:each="ynQuestion:${criteria.ynQuestionReportModels}">
-                            <p><b>Lời khuyên: </b>
-                            <div th:text="${ynQuestion.suggestion}" th:remove="tag"></div>
+                            <p><b>Điểm trung bình của câu hỏi: </b>
+                                <span th:text="${ynQuestion.questionAvgPoint}"
+                                      th:class="${ynQuestion.questionAvgPoint>3.4?'text-success':'text-danger'}"></span>
+                            </p>
+                            <p th:if="${ynQuestion.questionAvgPoint<3.4}"><b>Lời khuyên: </b>
+                                <span th:text="${ynQuestion.questionAvgPoint<3.4?ynQuestion.suggestion:''}"
+                                      class="text-danger"></span>
                             </p>
                             <p><b th:text="${ynQuestion.questionContent}"></b><br>
-                            <div th:text="${ynQuestion.responseCount}" th:remove="tag"></div>
+                                <span th:text="${ynQuestion.responseCount} + ' phản hồi'"></span>
                             </p>
                             <div th:id="'chart-'+${#dates.createNow().getTime()}"
                                  class="piechart"></div>
