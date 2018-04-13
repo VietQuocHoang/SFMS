@@ -14,8 +14,8 @@ body {
 }
 
 .card-header-outer {
-    background-color: #F5F5F5;
-    color: #08AE9E;
+    background-color: #08AE9E;
+    color: #F5F5F5;
     text-align: left;
     font-size: 24px;
     font-weight: bold;
@@ -59,7 +59,7 @@ body {
   
 
 .card {
-    margin-top: 5px;
+    margin-top: 0px;
     margin-bottom: 20px;
     margin-left: 20px;
     margin-right: 20px;
@@ -106,4 +106,9 @@ body {
 
 .progress-bar {
     background-color: #08AE9E;
+}
+
+div.tab-content-suggestion{
+    margin-top: 1%;
+    margin-bottom: 5%;
 }

@@ -207,3 +207,50 @@
 .question{
     color: #08ae9e;
 }
+
+.delete-question-holder {
+    padding-left: 20px;
+    width: auto;
+    float: right;
+}
+
+.delete-question-holder:hover {
+    cursor: pointer;
+}
+
+.btn-remove-question{
+    background-color: transparent;
+    border: none;
+    border-radius: 2px;
+    font-size: 20px;
+    height: auto;
+    color: #c66865;
+}
+.btn-remove-question:hover {
+    background-color: #c66865;
+    color: white;
+}
+
+/*toggle bar css*/
+.toggle-bar-container {
+    position: relative;
+    width:100%;
+    padding-bottom: 10px;
+    /*float: left;*/
+}
+
+.toggle-bar-wrapper {
+    /*display:none;*/
+    padding-top: 10px;
+    padding-bottom: 10px;
+    position: relative;
+    width: 100%;
+    float: left;
+    border-bottom: 1px solid #c5c5c5;
+    /*border-bottom-left-radius: 5px;*/
+    /*padding: 10px 5px;*/
+}
+
+.toggle-bar-wrapper:hover {
+    cursor: move;
+}

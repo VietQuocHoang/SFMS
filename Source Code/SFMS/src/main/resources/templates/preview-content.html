@@ -21,8 +21,6 @@
     <div class="row justify-content-center">
         <div class="feedback-title-wrapper">
             <h3 class="feedback-title" th:text="${feedback.feedbackName}"></h3>
-            <hr/>
-            <p class="warning-text" th:text="${feedback.templateDes}"></p>
 
         </div>
     </div>
@@ -34,6 +32,12 @@
             <!---->
             <!--</form>-->
             <!--</th:block>-->
+            <th:block th:if="${feedback.questionsById.size() == 0}">
+
+                <h5>Không có câu hỏi nào</h5>
+
+            </th:block>
+            <th:block th:if="${feedback.questionsById.size() != 0}">
             <th:block th:each="index:${#numbers.sequence(0,(feedback.questionsById.size()-1))}">
             <!--    <div th:class="${index==0}?'feedback-page page-active':'feedback-page'">-->
                     <div class="card"
@@ -247,6 +251,7 @@
                         </div>
                     </div>-->
             <!--    </div>-->
+            </th:block>
             </th:block>
         </div>
 

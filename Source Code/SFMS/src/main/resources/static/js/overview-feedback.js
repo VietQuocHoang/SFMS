@@ -550,7 +550,7 @@ function setStartEndConstraint() {
 
 $("#btnSave").click(function () {
     var opt = $('input[name="save-option"]:checked', '#save-opt').val();
-    alert(opt);
+    // alert(opt);
     $.ajax({
         url: '/sfms/api/modify-feedback/save/option/' + opt,
         type: 'PUT',
@@ -590,10 +590,14 @@ $("#previewContent").click(function () {
         url: _ctx + '/preview-feedback/' + feedbackID,
         dataType: 'html',
         success: function (data) {
-            $(".feedback-content").innerHTML = "";
+            var myNode = document.getElementById("feedback-content-id");
+            while (myNode.firstChild) {
+                myNode.removeChild(myNode.firstChild);
+            }
+          //  $(".feedback-content").innerHTML = "";
             //     $("#modalTemplateFooter").innerHTML = "";
             //    $("#modalTemplateFooter").append("<input hidden class='form-control' value='" + templateID + "' type='text' name='templateID'>");
-            $(".feedback-content").append(data);
+            $("#feedback-content-id").append(data);
             $('#FBContentModal').modal('toggle');
         },
         error: (err) => alert(err)

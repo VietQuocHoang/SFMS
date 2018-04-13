@@ -55,4 +55,11 @@ public interface ClazzRepository extends JpaRepository<Clazz, Integer> {
             "where u.id = cl.lecturer_id and cl.course_id = co.id " +
             "group by co.id", nativeQuery = true)
     List<Object[]> findAllCourseCorrespondingToEachLecturerTaught();
+
+    @Query("select c from Feedback f, Clazz c where " +
+            "f.isTemplate = false AND f.clazzByClazzId.id = c.id AND "+
+            "(f.typeByTypeId.id = :type OR :type = -1) AND "+
+            "c.courseByCourseId.id = :courseId AND c.userByLecturerId.id = :userId and c.semesterBySemesterId.id = :semId")
+    List<Clazz> findListClassByCourseLecturerSemester( @Param("type")int type, @Param("userId") int userId, @Param("courseId") int courseId, @Param("semId") int semesterId);
+
 }

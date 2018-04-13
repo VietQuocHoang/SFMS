@@ -2,6 +2,7 @@ package com.sample.sfms.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.sample.sfms.view.FeedbackView;
+import com.sample.sfms.view.UserFeedbackView;
 
 import javax.persistence.*;
 
@@ -12,13 +13,19 @@ import javax.persistence.*;
 @Table(name = "user_feedback", schema = "capstone", catalog = "")
 @IdClass(UserFeedbackPK.class)
 public class UserFeedback {
+    @JsonView({UserFeedbackView.basicUserFeedbackView.class})
     private int userId;
+    @JsonView({UserFeedbackView.basicUserFeedbackView.class})
     private int feedbackId;
+    @JsonView({UserFeedbackView.basicUserFeedbackView.class})
     private boolean isConductor;
+    @JsonView({UserFeedbackView.basicUserFeedbackView.class})
     private boolean isViewer;
+    @JsonView({UserFeedbackView.basicUserFeedbackView.class})
     private boolean isConducted;
+    @JsonView({UserFeedbackView.basicUserFeedbackView.class})
     private User userByUserId;
-    @JsonView({FeedbackView.alertUserFeedbackView.class})
+    @JsonView({FeedbackView.alertUserFeedbackView.class, UserFeedbackView.basicUserFeedbackView.class})
     private Feedback feedbackByFeedbackId;
 
     public UserFeedback() {

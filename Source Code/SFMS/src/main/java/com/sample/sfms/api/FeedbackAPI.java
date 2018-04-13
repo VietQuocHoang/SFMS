@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.sample.sfms.api.responseModel.Response;
 import com.sample.sfms.entity.Feedback;
 import com.sample.sfms.entity.Question;
+import com.sample.sfms.model.FeedbackModifySuggestionModel;
+import com.sample.sfms.model.ModifySuggestionModel;
 import com.sample.sfms.model.feedback.FeedbackCreateModel;
 import com.sample.sfms.model.feedback.FeedbackUpdateModel;
 import com.sample.sfms.model.option.OptionCreateModel;
@@ -69,6 +71,22 @@ public class FeedbackAPI {
         return new Response(false, "Xin kiểm tra lại feedback đã hợp lệ chưa");
     }
 
+    @RequestMapping(value = "/deactive-template", method = RequestMethod.POST)
+    @Transactional
+    public Response deactiveTemplate(@RequestBody String templateIDS) {
+        int templateID = Integer.parseInt(templateIDS);
+            try {
+                int result = feedbackService.deactiveTemplate(templateID);
+                System.out.print("result: " + result);
+                if (result > 0) {
+                    return new Response(true);
+                }
+            } catch (Exception ex) {
+                return new Response(false, ex.getMessage());
+            }
+        return new Response(false, "Xin kiểm tra lại feedback đã hợp lệ chưa");
+    }
+
     @RequestMapping(value = "/modify-question", method = RequestMethod.POST)
     @Transactional
     public Response modifyQuestion(@RequestBody FeedbackUpdateModel model) {
@@ -88,6 +106,11 @@ public class FeedbackAPI {
                         AddQuestionModel addQuestion = new AddQuestionModel();
                         addQuestion.setFeedbackId(feedbackId);
                         addQuestion.setType(question.getType());
+                      /*  if (question.getSuggestion() == null) {
+                            addQuestion.setSuggestion("");
+                        } else {
+                            addQuestion.setSuggestion(question.getSuggestion());
+                        }*/
                         addQuestion.setSuggestion(question.getSuggestion());
                         addQuestion.setCriteriaId(question.getCriteriaId());
                         addQuestion.setQuestionContent(question.getQuestionContent());
@@ -125,6 +148,33 @@ public class FeedbackAPI {
         return new Response(false,"Xin kiểm tra lại feedback đã hợp lệ chưa");
     }
 
+    @RequestMapping(value = "/modify-suggestion", method = RequestMethod.POST)
+    @Transactional
+    public Response modifySuggestion(@RequestBody FeedbackModifySuggestionModel model) {
+        if(model.valid()) {
+            try {
+                //int feedbackId = feedbackService.save(model);
+                int feedbackId = model.getId();
+            //    List<Question> listExistedQuestion = questionService.findByFeedbackId(feedbackId);
+                List<ModifySuggestionModel> listSuggestionQuestion = model.getQuestions();
+             //   List<Integer> listModifyQuestionID = new ArrayList<>();
+                for (ModifySuggestionModel question : listSuggestionQuestion) {
+                      //  Question existedQuestion = questionService.findByQuestionID(question.getQuestionId());
+                            questionService.modifySuggestion(question.getSuggestion(),question.getQuestionId());
+                        //question.setFeedbackId(feedbackId);
+                        //questionService.modifySuggestion(question);
+                     //   listModifyQuestionID.add(question.getQuestionId());
+
+                }
+
+                return new Response(true, feedbackId + "");
+            } catch (Exception ex) {
+                return new Response(false, ex.getMessage());
+            }
+
+        }
+        return new Response(false,"Xin kiểm tra lại feedback đã hợp lệ chưa");
+    }
 
     @JsonView(FeedbackView.alertUserFeedbackView.class)
     @GetMapping("/undone-by-authorized-user")
@@ -135,13 +185,27 @@ public class FeedbackAPI {
     @JsonView(FeedbackView.alertUserFeedbackView.class)
     @GetMapping("/conduct")
     public ResponseEntity getListFeedbackOfAuthorizedUser() {
+        System.out.println("getListFeedbackOfAuthorizedUser");
         return feedbackService.getNotConductedFeedbacksByUserId();
+    }
+
+    @JsonView(FeedbackView.alertUserFeedbackView.class)
+    @GetMapping("/conduct-mobile")
+    public ResponseEntity getListFeedbackOfAuthorizedUserMobile() {
+        System.out.println("getListFeedbackOfAuthorizedUser");
+        return feedbackService.getNotConductedFeedbacksByUserIdMobile();
     }
 
     @JsonView(FeedbackView.conductFeedbackView.class)
     @GetMapping("/conduct/{id}")
     public Feedback conductFeedback(@PathVariable("id") int id) {
         return feedbackService.findFeedbackToConduct(id);
+    }
+
+    @JsonView(FeedbackView.conductFeedbackView.class)
+    @GetMapping("/conduct-mobile/{id}")
+    public Feedback conductFeedbackMobile(@PathVariable("id") int id) {
+        return feedbackService.findFeedbackToConductMobile(id);
     }
 
 }

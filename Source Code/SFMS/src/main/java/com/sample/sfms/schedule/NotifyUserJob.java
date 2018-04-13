@@ -14,6 +14,6 @@ public class NotifyUserJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        mailService.notifyUser();
+        //mailService.notifyUser();
     }
 }

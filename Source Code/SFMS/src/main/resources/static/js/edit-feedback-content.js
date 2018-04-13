@@ -22,9 +22,7 @@ $(document).ready(() => {
     });
 });
 
-$.getScript("models.js", () => {
-    alert('Error loading front-end models')
-});
+//$.getScript("models.js", () => { alert('Error loading front-end models') });
 
 //use to generate uniqueId
 function generateId() {
@@ -676,6 +674,7 @@ $(document).on("keyup", ".txtEditQuestion", (event) => {
 });
 
 $(document).on("click", ".remove-answer-holder>i.fa-close", (event) => {
+    console.log("star removing");
     let parentContainer = $(event.target).parents(".question-container");
     let listAnswer = parentContainer.find(".form-check");
     let parentListItem = $(event.target).parents("li");
@@ -889,7 +888,7 @@ function getQuestions() {
 
     //Lấy hết các div chứa question
     let allQuestions = $("div[class='question-container']");
-
+    //question-container
     for (var i = 0; i < allQuestions.length; ++i) {
         //Lấy id của div để biết thuộc loại question nào
         let id = allQuestions[i].getAttribute("id");
