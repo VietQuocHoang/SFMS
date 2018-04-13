@@ -152,11 +152,27 @@ public class QuestionServiceImpl implements QuestionService {
         try {
 
             Question question = this.questionRepo.getOne(model.getQuestionId());
-
+            List<Optionn> listExistedOption = optionnService.findByQuestionId(model.getQuestionId());
             question.setIsRequied(model.isRequired());
             question.setQuestionContent(model.getQuestionContent());
             question.setSuggestion(model.getSuggestion());
             question.setType(model.getType());
+            question.setCriteriaByCriteriaId(criteriaRepository.findById(model.getCriteriaId()));
+            if (model.isRequireOther()) {
+                OptionCreateModel optionCreateModel = new OptionCreateModel();
+                optionCreateModel.setQuestion(question);
+                optionCreateModel.setOptionContent("Khác");
+                optionCreateModel.setPoint(0.0);
+                optionCreateModel.setQuestionId(question.getId());
+                optionnService.add(optionCreateModel);
+            } else {
+                for (Optionn option : question.getOptionsById()) {
+                    if (option.getOptionnContent().equals("Khác") && option.getPoint()==0) {
+                        optionnService.remove(option.getId());
+                    }
+                }
+            }
+
             Feedback feedback = feedbackRepository.findById(model.getFeedbackId());
 
             question.setFeedbackByFeedbackId(feedback);
@@ -167,14 +183,22 @@ public class QuestionServiceImpl implements QuestionService {
             if (model.getOptionUpdateModels() != null) {
                 for (OptionUpdateModel option : model.getOptionUpdateModels()) {
                     option.setQuestion(question);
-                    optionnService.update(option);
+                    if (option.getId() > 0) {
+                        optionnService.update(option);
+                    } else if (option.getId() == 0) {
+                        OptionCreateModel addOption = new OptionCreateModel();
+                        addOption.setOptionContent(option.getOptionContent());
+                        addOption.setPoint(option.getPoint());
+                        addOption.setQuestionId(question.getId());
+                        addOption.setQuestion(question);
+                        optionnService.add(addOption);
+                    }
+
                     if (option.getId() >= 0) {
                         listModifyOptionnID.add(option.getId());
                     }
                 }
             }
-
-            List<Optionn> listExistedOption = optionnService.findByQuestionId(model.getQuestionId());
 
             for (Optionn optionn : listExistedOption) {
                 if (!listModifyOptionnID.contains(optionn.getId()) && !optionn.getOptionnContent().equals("Khác") && optionn.getPoint()!=0) {

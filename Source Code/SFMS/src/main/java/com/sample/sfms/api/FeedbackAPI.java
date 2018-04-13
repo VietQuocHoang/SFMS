@@ -116,18 +116,22 @@ public class FeedbackAPI {
                         addQuestion.setQuestionContent(question.getQuestionContent());
                         addQuestion.setRequired(question.isRequired());
                         addQuestion.setRequireOther(question.isRequireOther());
-                        OptionCreateModel[] options = new OptionCreateModel[question.getOptionUpdateModels().length];
-                        int i = 0;
-                        for (OptionUpdateModel option : question.getOptionUpdateModels()) {
-                            OptionCreateModel addOption = new OptionCreateModel();
-                            addOption.setOptionContent(option.getOptionContent());
-                            addOption.setPoint(option.getPoint());
-                          //  addOption.setQuestionId(option.getQuestionId());
-                            addOption.setQuestion(option.getQuestion());
-                            options[i] = addOption;
-                            i++;
+                        if (!question.getType().equals("Text") && !question.getType().equals("TextArea")) {
+                            OptionCreateModel[] options = new OptionCreateModel[question.getOptionUpdateModels().length];
+                            int i = 0;
+                            for (OptionUpdateModel option : question.getOptionUpdateModels()) {
+                                OptionCreateModel addOption = new OptionCreateModel();
+                                addOption.setOptionContent(option.getOptionContent());
+                                addOption.setPoint(option.getPoint());
+                                //  addOption.setQuestionId(option.getQuestionId());
+                                addOption.setQuestion(option.getQuestion());
+                                options[i] = addOption;
+                                i++;
+                            }
+                            addQuestion.setOptionCreateModel(options);
+                        } else {
+                            addQuestion.setOptionCreateModel(null);
                         }
-                        addQuestion.setOptionCreateModel(options);
                         int questionID = questionService.addQuestion(addQuestion);
                         listModifyQuestionID.add(questionID);
                     }
