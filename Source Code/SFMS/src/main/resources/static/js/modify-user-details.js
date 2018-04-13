@@ -12,7 +12,7 @@ $(document).ready(() => {
         let departmentSelect = $("select[name='departmentByDepartmentId']");
         let departmentOption = departmentSelect.find("option");
         let majorSelect = $("select[name='majorByMajorId']");
-        if (value === "Học sinh") {
+        if (value === "Sinh viên") {
             majorSelect.attr("disabled", false);
             departmentSelect.attr("disabled", true);
             for (let i = 0; i < departmentOption.length; i++) {
@@ -82,7 +82,7 @@ $(document).ready(() => {
         let departmentSelect = $("select[name='departmentByDepartmentId']");
         let departmentOption = departmentSelect.find("option");
         let majorSelect = $("select[name='majorByMajorId']");
-        if (value === "Học sinh") {
+        if (value === "Sinh viên") {
             majorSelect.attr("disabled", false);
             departmentSelect.attr("disabled", true);
             for (let i = 0; i < departmentOption.length; i++) {
