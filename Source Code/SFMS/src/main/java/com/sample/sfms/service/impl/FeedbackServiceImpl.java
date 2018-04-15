@@ -17,6 +17,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.RollbackException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -66,6 +67,24 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Override
     public int deactiveTemplate (int templateId) {
         return feedbackRepository.deactiveTemplate(templateId);
+    }
+
+    @Override
+    public ResponseEntity switchPublish(int feedbackId) {
+        Feedback feedback = feedbackRepository.findOne(feedbackId);
+        if (feedback == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        } else {
+            try {
+                feedback.setIsPublished(!feedback.getIsPublished());
+                feedbackRepository.save(feedback);
+                return new ResponseEntity(HttpStatus.OK);
+            } catch (RollbackException e) {
+                logger.log(Level.FINE, e.toString());
+                e.printStackTrace();
+                return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            }
+        }
     }
 
     @Override

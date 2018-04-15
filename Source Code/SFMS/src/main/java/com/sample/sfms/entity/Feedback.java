@@ -31,9 +31,13 @@ public class Feedback {
     @JsonView({FeedbackView.overview.class, FeedbackView.conductFeedbackView.class})
     private boolean isPublished;
     private User userByCreatorId;
+    @JsonView({FeedbackView.listView.class})
     private Department departmentByDepartmentId;
+    @JsonView({FeedbackView.listView.class})
     private Course courseByCourseId;
+    @JsonView({FeedbackView.listView.class})
     private Major majorByMajorId;
+    @JsonView({FeedbackView.listView.class})
     private Clazz clazzByClazzId;
     @JsonView({FeedbackView.overview.class})
     private Type typeByTypeId;

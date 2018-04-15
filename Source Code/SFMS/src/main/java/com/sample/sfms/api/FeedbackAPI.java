@@ -208,4 +208,17 @@ public class FeedbackAPI {
         return feedbackService.findFeedbackToConductMobile(id);
     }
 
+
+    @PostMapping("/switch-publish")
+    public ResponseEntity switchPublishFeedback(@RequestParam(value = "id", defaultValue = "") int id) {
+        return feedbackService.switchPublish(id);
+    }
+
+
+    @JsonView(FeedbackView.listView.class)
+    @GetMapping("/list")
+    public List<Feedback> getAllFeedback() {
+        return feedbackService.findAllFeedback();
+    }
+
 }
