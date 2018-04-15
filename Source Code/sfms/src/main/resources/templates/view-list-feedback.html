@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <meta name="position" content="feedback"/>
+    <meta name="position" content="publish-feedback"/>
     <title>Xem danh sách Feedback</title>
     <!-- custom style -->
     <link th:href="@{/css/view-list-feedback.css}" rel="stylesheet" type="text/css">
@@ -24,7 +24,7 @@
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="index.html">Dashboard</a>
+                <a th:href="@{/dashboard}">Dashboard</a>
             </li>
             <li class="breadcrumb-item">
                 <a href="#">Quản lý feedback</a>
@@ -44,8 +44,7 @@
                 <h3 class="feedback-title pull-left" style="text-align: left">
                     Danh sách Feedbacks
                 </h3>
-                <a th:href="@{/select-template}" class="btn btn-raised-primary pull-right">Thêm feedback <i
-                        class="fa fa-plus"></i></a>
+
             </div>
             <!-- end div container -->
         </div>
@@ -59,11 +58,15 @@
                     <!--<option value="Môn học">Môn học</option>-->
                     <!--<option value="Lớp">Lớp</option>-->
                     <!--</select>-->
-                    <button class="btn-filter active" value="">Xem toàn bộ</button>
-                    <button class="btn-filter" value="Phòng ban">Phòng ban</button>
-                    <button class="btn-filter" value="Chuyên ngành">Chuyên ngành</button>
-                    <button class="btn-filter" value="Môn học">Môn học</button>
-                    <button class="btn-filter" value="Lớp">Lớp</button>
+                    <a th:href="@{/select-template}" class="btn btn-raised-primary pull-right">Thêm feedback <i
+                            class="fa fa-plus"></i></a>
+                    <select class="filter-scope">
+                        <option value="">Lọc loại feedback</option>
+                        <option value="Phòng ban">Phòng ban</option>
+                        <option value="Chuyên ngành">Chuyên ngành</option>
+                        <option value="Môn học">Môn học</option>
+                        <option value="Lớp">Lớp</option>
+                    </select>
                 </div>
                 <div class="table-wrapper">
                     <table id="tblFeedback" class="table table-bordered">
@@ -71,8 +74,7 @@
                         <tr>
                             <th>Tên feedback</th>
                             <th>Kì báo cáo</th>
-                            <th>Thời gian bắt đầu</th>
-                            <th>Thời gian kết thúc</th>
+                            <th>Từ-đến</th>
                             <th>Loại</th>
                             <th>Đối tượng được báo cáo</th>
                             <th>Tình trạng</th>
@@ -80,45 +82,12 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="feedback:${feedbackList}">
-                            <td th:text="${feedback.feedbackName}"></td>
-                            <td th:attr="data-sort=${feedback.semesterBySemesterId.startDate.getTime()}"
-                                th:text="${feedback.semesterBySemesterId.title}"></td>
-                            <td th:attr="data-sort=${feedback.createDate.getTime()}"
-                                th:text="${#dates.format(feedback.createDate, 'dd/MM/yyyy')}"></td>
-                            <td th:attr="data-sort=${feedback.endDate.getTime()}"
-                                th:text="${#dates.format(feedback.endDate, 'dd/MM/yyyy')}"></td>
-                            <td th:text="${feedback.typeByTypeId.description}"></td>
-                            <td>
-                                <div th:text="${feedback.departmentByDepartmentId!=null?feedback.departmentByDepartmentId.name:''}"
-                                     th:remove="tag"></div>
-                                <div th:text="${feedback.courseByCourseId!=null?feedback.courseByCourseId.name:''}"
-                                     th:remove="tag"></div>
-                                <div th:text="${feedback.majorByMajorId!=null?feedback.majorByMajorId.name:''}"
-                                     th:remove="tag"></div>
-                                <div th:text="${feedback.clazzByClazzId!=null?feedback.clazzByClazzId.className:''}"
-                                     th:remove="tag"></div>
-                            </td>
-                            <td>
-                                <p th:class="${feedback.isPublished?'text-success':'text-danger'}"
-                                   th:text="${feedback.isPublished?'Đã xuất bản':'Không xuất bản'}"></p>
-                            </td>
-                            <td>
-                                <a th:if="${#dates.createNow().getTime() > feedback.endDate.getTime()}"
-                                   th:href="@{'/reports/feedbacks/'+ ${feedback.id}}"><i class="fa fa-eye"></i> Xem báo
-                                    cáo</a>
-                                <p class="text-danger"
-                                   th:unless="${#dates.createNow().getTime() > feedback.endDate.getTime()}">Đang trong
-                                    quá trình thực hiện</p>
-                            </td>
-                        </tr>
                         </tbody>
                         <tfoot>
                         <tr>
                             <th>Tên feedback</th>
                             <th>Kì báo cáo</th>
-                            <th>Thời gian bắt đầu</th>
-                            <th>Thời gian kết thúc</th>
+                            <th>Từ-đến</th>
                             <th>Loại</th>
                             <th>Đối tượng được báo cáo</th>
                             <th>Tình trạng</th>
@@ -133,6 +102,58 @@
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
     <div th:replace="fragments/footer"></div>
+    <div class="modal fade" id="modalPublish">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Xác nhận lại việc xuất bản</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    Sau khi xuất bản, nếu feedback này vẫn còn hạn, người dùng có thể tiếp tục làm feedback này. Bạn có
+                    chắc chắn muốn xuất bản feedback này không?
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-switch" id="btnPublish">Xuất bản</button>
+                    <button type="button" class="btn" data-dismiss="modal">Đóng</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalDepublish">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Confirm message -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Xác nhận lại việc ngưng xuất bản</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    Sau khi ngưng xuất bản, người dùng sẽ không thể làm feedback này. Bạn có chắc chắn muốn ngưng xuất
+                    bản feedback này không?
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-switch" id="btnDepublish">Ngưng xuất bản</button>
+                    <button type="button" class="btn" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="txtFeedbackId">
+    <div id="snackbar"></div>
 </div>
 </body>
 <div th:replace="fragments/core-script"></div>

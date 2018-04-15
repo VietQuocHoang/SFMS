@@ -117,26 +117,32 @@
                                         thành
                                     </td>
                                     <!--switch case-->
-                                    <td th:if="${!feedback.conducted
+                                    <th:block th:if="${feedback.feedbackByFeedbackId.isPublished}">
+
+                                        <td th:if="${!feedback.conducted
                                     && (currDate.getTime() < feedback.feedbackByFeedbackId.endDate.getTime())
                                     && (currDate.getTime() > feedback.feedbackByFeedbackId.startDate.getTime())}">
-                                        <a th:href="@{/conduct-feedback/__${feedback.feedbackByFeedbackId.id}__}">Làm
-                                            feedback <i class="fa fa-pencil"></i> </a>
-                                    </td>
-                                    <td class="text-danger"
-                                        th:if="${!feedback.conducted
+                                            <a th:href="@{/conduct-feedback/__${feedback.feedbackByFeedbackId.id}__}">Làm
+                                                feedback <i class="fa fa-pencil"></i> </a>
+                                        </td>
+                                        <td class="text-danger"
+                                            th:if="${!feedback.conducted
                                     && ((currDate.getTime() > feedback.feedbackByFeedbackId.endDate.getTime())
                                     || (currDate.getTime() < feedback.feedbackByFeedbackId.startDate.getTime()))}">
-                                        Feedback đã quá hạn hoặc chưa bắt đầu
-                                    </td>
-                                    <td class="text-danger"
-                                        th:if="${feedback.conducted
+                                            Feedback đã quá hạn hoặc chưa bắt đầu
+                                        </td>
+                                        <td class="text-danger"
+                                            th:if="${feedback.conducted
                                     && (currDate.getTime() < feedback.feedbackByFeedbackId.endDate.getTime())
                                     && (currDate.getTime() > feedback.feedbackByFeedbackId.startDate.getTime())}">
-                                        <a th:href="@{/conduct-feedback/edit/__${feedback.feedbackByFeedbackId.id}__}">Làm
-                                            lại feedback <i class="fa fa-edit"></i> </a>
-                                    </td>
-                                    <!--end switch case-->
+                                            <a th:href="@{/conduct-feedback/edit/__${feedback.feedbackByFeedbackId.id}__}">Làm
+                                                lại feedback <i class="fa fa-edit"></i> </a>
+                                        </td>
+                                        <!--end switch case-->
+                                    </th:block>
+                                    <th:block th:unless="${feedback.feedbackByFeedbackId.isPublished}">
+                                        <td class="text-danger">Feedback này chưa được xuất bản</td>
+                                    </th:block>
                                 </tr>
                             </th:block>
                             </tbody>

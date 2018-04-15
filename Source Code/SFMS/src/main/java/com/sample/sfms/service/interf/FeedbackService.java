@@ -34,5 +34,7 @@ public interface FeedbackService {
     List<Feedback> findAllFeedback();
 
     int deactiveTemplate (int templateId);
+
+    ResponseEntity switchPublish(int feedbackId);
 }
 
