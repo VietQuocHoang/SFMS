@@ -694,6 +694,15 @@ $(document).on("click", ".remove-answer-holder>i.fa-close", (event) => {
 $(document).on("change", ".other-option-checkbox", (event) => {
     let parentContainer = $(event.target).parents(".question-container");
     let otherQuestionContainer = $(parentContainer).find(".form-other");
+    if (otherQuestionContainer.length == 0) {
+       // var ansWrapper = document.getElementsByClassName("answer-wrapper");
+        $("#answer-wrapper-id").append("<div class='form-check form-other'>\n" +
+            "                                                                <label class='form-check-label'>\n" +
+            "                                                                    <input class='form-check-input' type='radio' disabled>Khác\n" +
+            "                                                                    <input type='text' class='other-option-input' disabled>\n" +
+            "                                                                </label>\n" +
+            "                                                            </div>")
+    }
     if ($(event.target).is(":checked")) {
         otherQuestionContainer.removeClass("disabled");
     } else {

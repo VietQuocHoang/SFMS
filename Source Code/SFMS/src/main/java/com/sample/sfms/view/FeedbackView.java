@@ -9,4 +9,7 @@ public class FeedbackView {
 
     public static class overview{
     }
+
+    public static class listView extends overview {
+    }
 }

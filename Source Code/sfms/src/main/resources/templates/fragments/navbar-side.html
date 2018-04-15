@@ -49,6 +49,10 @@
                     <li class="sidebar-item" data-role-access="All" data-position="feedback">
                         <a th:href="@{/conduct-feedback/list}">Xem danh sách feedback</a>
                     </li>
+                    <li class="sidebar-item" data-role-access="Trưởng ban, Quản trị hệ thống, Nhân viên"
+                        data-position="publish-feedback">
+                        <a th:href="@{/feedbacks/}">Ngưng/Xuất bản feedback</a>
+                    </li>
                <!--     <li class="sidebar-item" data-position="report"
                         data-role-access="Trưởng ban, Quản trị hệ thống, Nhân viên, Giảng viên">
                         <a th:href="@{/reports}">Xem báo cáo</a>
@@ -58,14 +62,14 @@
             <li class="nav-item sidebar-item" data-toggle="tooltip" data-placement="right" title="Report"
                 data-role-access="Trưởng ban, Quản trị hệ thống, Nhân viên, Giảng viên">
                 <a class="nav-link" data-toggle="tooltip" th:href="@{/reports}">
-                    <i class="fa fa-fw fa-user-circle"></i>
+                    <i class="fa fa-fw fa-clipboard"></i>
                     <span class="nav-link-text">Xem báo cáo</span>
                 </a>
             </li>
             <li class="nav-item sidebar-item" data-toggle="tooltip" data-placement="right" title="Criteria"
                 data-role-access="Trưởng ban, Quản trị hệ thống">
                 <a class="nav-link" data-toggle="tooltip" th:href="@{/criteria/list}">
-                    <i class="fa fa-fw fa-user-circle"></i>
+                    <i class="fa fa-fw fa-check"></i>
                     <span class="nav-link-text">Quản lý tiêu chí đánh giá</span>
                 </a>
             </li>

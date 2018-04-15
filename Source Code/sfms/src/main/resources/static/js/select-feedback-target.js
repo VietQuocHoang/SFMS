@@ -155,6 +155,7 @@ var selected_department_to_button = function (data, type, full, meta) {
 
 var course_to_major = function (data, type, full, meta) {
     let major = data;
+    console.log(data);
     if (major["code"] != null && major["name"] != null)return major["code"] + ' - ' + major["name"];
     if (major["name"] != null)return major["name"];
     return major["code"]

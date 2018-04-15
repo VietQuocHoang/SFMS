@@ -1,6 +1,7 @@
 package com.sample.sfms.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.sample.sfms.view.FeedbackView;
 import com.sample.sfms.view.TargetView;
 import com.sample.sfms.view.UserView;
 
@@ -19,7 +20,7 @@ public class Clazz {
     private Date endDate;
     @JsonView(TargetView.basicClazzView.class)
     private Date startDate;
-    @JsonView({TargetView.basicClazzView.class, UserView.listUserView.class})
+    @JsonView({TargetView.basicClazzView.class, UserView.listUserView.class, FeedbackView.listView.class})
     private String className;
     @JsonView({TargetView.basicClazzView.class, UserView.listUserView.class})
     private Semester semesterBySemesterId;

@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import javax.transaction.Transactional;
 import java.sql.Date;
 import java.util.List;
 
@@ -107,4 +106,9 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
     @Modifying
     @Query("update Feedback f set f.isTemplate = false where f.id = ?1")
     int deactiveTemplate(int templateId);
+
+
+    @Query("select f from Feedback f where f.isPublished=true and f.startDate < :currDate and f.endDate > :currDate and f.id=:id")
+    Feedback findFeedbackToConduct(@Param("id") int id, @Param("currDate") Date currDate);
+
 }

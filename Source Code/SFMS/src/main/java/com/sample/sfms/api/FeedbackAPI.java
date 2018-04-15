@@ -116,18 +116,22 @@ public class FeedbackAPI {
                         addQuestion.setQuestionContent(question.getQuestionContent());
                         addQuestion.setRequired(question.isRequired());
                         addQuestion.setRequireOther(question.isRequireOther());
-                        OptionCreateModel[] options = new OptionCreateModel[question.getOptionUpdateModels().length];
-                        int i = 0;
-                        for (OptionUpdateModel option : question.getOptionUpdateModels()) {
-                            OptionCreateModel addOption = new OptionCreateModel();
-                            addOption.setOptionContent(option.getOptionContent());
-                            addOption.setPoint(option.getPoint());
-                          //  addOption.setQuestionId(option.getQuestionId());
-                            addOption.setQuestion(option.getQuestion());
-                            options[i] = addOption;
-                            i++;
+                        if (!question.getType().equals("Text") && !question.getType().equals("TextArea")) {
+                            OptionCreateModel[] options = new OptionCreateModel[question.getOptionUpdateModels().length];
+                            int i = 0;
+                            for (OptionUpdateModel option : question.getOptionUpdateModels()) {
+                                OptionCreateModel addOption = new OptionCreateModel();
+                                addOption.setOptionContent(option.getOptionContent());
+                                addOption.setPoint(option.getPoint());
+                                //  addOption.setQuestionId(option.getQuestionId());
+                                addOption.setQuestion(option.getQuestion());
+                                options[i] = addOption;
+                                i++;
+                            }
+                            addQuestion.setOptionCreateModel(options);
+                        } else {
+                            addQuestion.setOptionCreateModel(null);
                         }
-                        addQuestion.setOptionCreateModel(options);
                         int questionID = questionService.addQuestion(addQuestion);
                         listModifyQuestionID.add(questionID);
                     }
@@ -206,6 +210,19 @@ public class FeedbackAPI {
     @GetMapping("/conduct-mobile/{id}")
     public Feedback conductFeedbackMobile(@PathVariable("id") int id) {
         return feedbackService.findFeedbackToConductMobile(id);
+    }
+
+
+    @PostMapping("/switch-publish")
+    public ResponseEntity switchPublishFeedback(@RequestParam(value = "id", defaultValue = "") int id) {
+        return feedbackService.switchPublish(id);
+    }
+
+
+    @JsonView(FeedbackView.listView.class)
+    @GetMapping("/list")
+    public List<Feedback> getAllFeedback() {
+        return feedbackService.findAllFeedback();
     }
 
 }
