@@ -59,7 +59,7 @@
                                     <thead>
                                     <tr>
                                         <th>Tiêu chí</th>
-                                        <th>Đối tượng</th>
+                                        <!--<th>Đối tượng</th>-->
                                         <th>Trạng thái</th>
                                         <th>Tùy chọn</th>
                                     </tr>
@@ -69,7 +69,7 @@
                                     <tfoot>
                                     <tr>
                                         <th>Tiêu chí</th>
-                                        <th>Đối tượng</th>
+                                        <!--<th>Đối tượng</th>-->
                                         <th>Trạng thái</th>
                                         <th>Tùy chọn</th>
                                     </tr>
@@ -108,11 +108,11 @@
                                             </div>
                                         </div>
                                         <br>
-                                        <div class="row form-row">
+                                        <div class="row form-row" hidden>
                                             <div class="col-md-4">
                                                 <label>Đối tượng: </label></div>
                                             <div class="col-md-4">
-                                                <select class="input-group input-group-sm" id="critType">
+                                                <select class="input-group input-group-sm" id="critType" th:value="0">
                                                     <!--if feedback type has not been defined-->
                                                     <option th:each="type : ${alltypes}"
                                                             th:value="${type.id}"
@@ -128,7 +128,7 @@
                                                 <label>Trạng thái </label></div>
                                             <div class="col-md-3">
                                                 <label class="tgl" id="btnStatus">
-                                                    <input id="btnStt" type="checkbox" checked/>
+                                                    <input id="btnStt" type="checkbox" onclick='switchStatus()' checked/>
                                                     <span class="tgl_body">
                                                         <span class="tgl_switch"></span>
                                                         <span class="tgl_track">
