@@ -17,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.RollbackException;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.logging.Level;
@@ -44,11 +45,21 @@ public class ConductFeedbackServiceImpl implements ConductFeedbackService {
 
     @Override
     public ResponseEntity<Feedback> findFeedbackByid(int id) {
-        Feedback feedback = feedbackRepository.findById(id);
+        Feedback feedback = feedbackRepository.findFeedbackToConduct(id, new Date(System.currentTimeMillis()));
         if (null == feedback) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<>(feedback, HttpStatus.OK);
+            User user = getCurrentAuthenticatedUser();
+            UserFeedback userFeedback = userFeedbackRepository.findUserFeedbackByUserAndFeedback(user.getId(), id);
+            if (userFeedback == null) {
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            } else {
+                if (!userFeedback.isConducted()) {
+                    return new ResponseEntity<>(feedback, HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
+                }
+            }
         }
     }
 

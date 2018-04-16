@@ -1,6 +1,7 @@
 package com.sample.sfms.entity;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.sample.sfms.view.FeedbackView;
 import com.sample.sfms.view.TargetView;
 import com.sample.sfms.view.UserView;
 
@@ -16,7 +17,7 @@ public class Major {
     private int id;
     @JsonView({TargetView.basicClazzView.class, TargetView.basicMajorView.class, TargetView.basicCourseView.class, UserView.listUserView.class})
     private String code;
-    @JsonView({TargetView.basicClazzView.class, TargetView.basicMajorView.class, TargetView.basicCourseView.class, UserView.listUserView.class})
+    @JsonView({TargetView.basicClazzView.class, TargetView.basicMajorView.class, TargetView.basicCourseView.class, UserView.listUserView.class, FeedbackView.listView.class})
     private String name;
     private Collection<Feedback> feedbacksById;
     @JsonView({TargetView.basicMajorView.class})

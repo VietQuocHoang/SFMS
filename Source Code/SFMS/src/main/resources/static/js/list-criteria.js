@@ -20,14 +20,14 @@ var btnActive = "<label class='tgl'>" +
     "<span class='tgl_bgd'></span>" +
     "<span class='tgl_bgd tgl_bgd-negative'></span></span></span></label>"
 var btnDeactiveForm = "<label class='tgl' id='btnStatus'>" +
-    "<input id='btnStt' type='checkbox' checked/>" +
+    "<input id='btnStt' type='checkbox' onclick='switchStatus()' checked/>" +
     "<span class='tgl_body'>" +
     "<span class='tgl_switch'></span>" +
     "<span class='tgl_track'>" +
     "<span class='tgl_bgd'></span>" +
     "<span class='tgl_bgd tgl_bgd-negative'></span></span></span></label>"
 var btnActiveForm = "<label class='tgl' id='btnStatus'>" +
-    "<input id='btnStt' type='checkbox'/>" +
+    "<input id='btnStt' type='checkbox' onclick='switchStatus()'/>" +
     "<span class='tgl_body'>" +
     "<span class='tgl_switch'></span>" +
     "<span class='tgl_track'>" +
@@ -40,19 +40,20 @@ var linkDelete = "<a href='#'><i class='fa fa-trash' style='font-size: 20px'></i
 // var btnDeactiveForm = "<input class='btn active btn-checked' id='btnStatus' type='button' name='btnStatus' value='Vô hiệu'/>"
 // var btnActiveForm = "<input class='btn active btn-check-target' id='btnStatus' type='button' name='btnStatus' value='Kích hoạt'/>"
 // var btnDeactiveForm = "<input class='btn active btn-checked' id='btnStatus' type='button' name='btnStatus' value='Vô hiệu'/>"
-var showedTable, saveOpt, method, selectedId = "", status = 1, btn, tmp;
+var showedTable, saveOpt, method, selectedId = "", status, btn, tmp;
 $(document).ready(function () {
+    status=1;
     loadCriteriaTable();
 });
-$("#btnStt").click(function(){if(status==0)status=1; else status=0; console.log(status)});
+function switchStatus(){console.log(status);if(status==0){status=1;}else status=0;console.log(status);}
 function initNewForm() {
     selectedId = "";
     saveOpt = 'create';
     method = 'POST';
     $("#critName").val("");
     $("#critType").val("");
-    status=true;
-    $("#btnStatus").replaceWith(btnActiveForm)
+    status=1;
+    $("#btnStatus").replaceWith(btnDeactiveForm)
 }
 function initUpdateForm(el) {
     var data = $("#tbl-criteria").DataTable().row($(el).parents('tr')).data();
@@ -60,8 +61,8 @@ function initUpdateForm(el) {
     saveOpt = "update";
     method = 'PUT';
     $("#critName").val(data.criteria);
-    $("#critType").val(data.typeByTypeId.id);
-    if (!data.status){ $("#btnStatus").replaceWith(btnActiveForm); status==0;} else {$("#btnStatus").replaceWith(btnDeactiveForm); status==1}
+    // $("#critType").val(data.typeByTypeId.id);
+    if (!data.status){ $("#btnStatus").replaceWith(btnActiveForm); status=0;} else {$("#btnStatus").replaceWith(btnDeactiveForm); status=1}
 }
 var status_to_button = function (data, type, full, meta) {
     // console.log(data);
@@ -120,11 +121,16 @@ function reloadTable() {
 }
 
 $("#btnSave").click(function () {
+    // var num=0;
+    var stt;
+    console.log(status);
+    if(status==1)stt=true;else stt=false;
     var criteria = {
         "id": selectedId,
         "criteria": $("#critName").val(),
         "typeByTypeId": {"id": $("#critType").val()},
-        "status": status==1
+        // "typeByTypeId": num,
+        "status": stt
     };
     console.log(criteria);
     $.ajax({
@@ -181,7 +187,7 @@ function loadCriteriaTable() {
             "columns": [
                 // {"data": "id"},
                 {"data": "criteria"},
-                {"data": "typeByTypeId", "render": getTypeName},
+                // {"data": "typeByTypeId", "render": getTypeName, "visible": false},
                 {
                     "data": "status",
                     "render": status_to_button
@@ -192,70 +198,70 @@ function loadCriteriaTable() {
                 }
             ],
             initComplete: function () {
-                this.api().columns([0]).every(function () {
-                    var column = this;
-                    var select = $('<datalist id="listCrit"></datalist>').appendTo($("#filterName").empty());
-                    select.append('<option value=""></option>');
-                    var input = $('<input type="text" value="" list="listCrit" placeholder="Tiêu chí"/>')
-                        .appendTo($("#filterName"))
-                        .on("keyup keydown change", function () {
-                            var val = $.fn.dataTable.util.escapeRegex(
-                                $(this).val()
-                            );
-                            // alert(val);
-                            column
-                                .search(val ? '^' + val + '$' : '', true, false)
-                                .search(val)
-                                .draw();
-                        });
-                    select.on("change", function () {
-                        var val = $.fn.dataTable.util.escapeRegex(
-                            $(this).val()
-                        );
-                        alert(val);
-                        column
-                        // .search(val ? '^' + val + '$' : '', true, false)
-                            .search(val)
-                            .draw();
-                    });
-                    column.data().unique().sort().each(function (d, j) {
-                        select.append('<option value="' + d + '">' + d + '</option>')
-                    });
-                });
-                this.api().columns([1]).every(function () {
-                    var column = this;
-                    var input = $('<input type="text" value="" list="listType" placeholder="Đối tượng"/>')
-                            .appendTo($("#filterType").empty())
-                            .on('change keyup keydown', function () {
-                                var val = $.fn.dataTable.util.escapeRegex(
-                                    $(this).val()
-                                );
-                                column
-                                // .search(val ? '^' + val + '$' : '', true, false)
-                                    .search(val)
-                                    .draw();
-                            })
-                        ;
-                    var opts = new Array(column.data().length);
-                    var datalist = $('<datalist id="listType"></datalist>').appendTo($("#filterType"))
-                        .on("change", function () {
-                            var val = $.fn.dataTable.util.escapeRegex(
-                                $(this).val()
-                            );
-                            // alert(val);
-                            column
-                            // .search(val ? '^' + val + '$' : '', true, false)
-                                .search(val)
-                                .draw();
-                        });
-                    datalist.append('<option value=""></option>');
-                    column.data().unique().sort().each(function (d, j) {
-                        if (!opts.includes(d["description"])) {
-                            opts.push(d["description"]);
-                            datalist.append('<option value="' + d["description"] + '">' + d["description"] + '</option>')
-                        }
-                    });
-                });
+                // this.api().columns([0]).every(function () {
+                //     var column = this;
+                //     var select = $('<datalist id="listCrit"></datalist>').appendTo($("#filterName").empty());
+                //     select.append('<option value=""></option>');
+                //     var input = $('<input type="text" value="" list="listCrit" placeholder="Tiêu chí"/>')
+                //         .appendTo($("#filterName"))
+                //         .on("keyup keydown change", function () {
+                //             var val = $.fn.dataTable.util.escapeRegex(
+                //                 $(this).val()
+                //             );
+                //             // alert(val);
+                //             column
+                //                 .search(val ? '^' + val + '$' : '', true, false)
+                //                 .search(val)
+                //                 .draw();
+                //         });
+                //     select.on("change", function () {
+                //         var val = $.fn.dataTable.util.escapeRegex(
+                //             $(this).val()
+                //         );
+                //         alert(val);
+                //         column
+                //         // .search(val ? '^' + val + '$' : '', true, false)
+                //             .search(val)
+                //             .draw();
+                //     });
+                //     column.data().unique().sort().each(function (d, j) {
+                //         select.append('<option value="' + d + '">' + d + '</option>')
+                //     });
+                // });
+                // this.api().columns([1]).every(function () {
+                //     var column = this;
+                //     var input = $('<input type="text" value="" list="listType" placeholder="Đối tượng"/>')
+                //             .appendTo($("#filterType").empty())
+                //             .on('change keyup keydown', function () {
+                //                 var val = $.fn.dataTable.util.escapeRegex(
+                //                     $(this).val()
+                //                 );
+                //                 column
+                //                 // .search(val ? '^' + val + '$' : '', true, false)
+                //                     .search(val)
+                //                     .draw();
+                //             })
+                //         ;
+                //     var opts = new Array(column.data().length);
+                //     var datalist = $('<datalist id="listType"></datalist>').appendTo($("#filterType"))
+                //         .on("change", function () {
+                //             var val = $.fn.dataTable.util.escapeRegex(
+                //                 $(this).val()
+                //             );
+                //             // alert(val);
+                //             column
+                //             // .search(val ? '^' + val + '$' : '', true, false)
+                //                 .search(val)
+                //                 .draw();
+                //         });
+                //     datalist.append('<option value=""></option>');
+                //     column.data().unique().sort().each(function (d, j) {
+                //         if (!opts.includes(d["description"])) {
+                //             opts.push(d["description"]);
+                //             datalist.append('<option value="' + d["description"] + '">' + d["description"] + '</option>')
+                //         }
+                //     });
+                // });
             },
             "language": {
                 "decimal": "",
