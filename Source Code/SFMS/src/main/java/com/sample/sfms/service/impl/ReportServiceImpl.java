@@ -87,26 +87,97 @@ public class ReportServiceImpl implements ReportService {
         return semesters;
     }
 
-    public List<FeedbackReportModel> loadReportDetail(int courseId, int userId, int type, int semesterId) {
-        List<Feedback> feedbacks = feedbackRepository.findByUserCource(courseId, userId, type,semesterId);
-        HashMap<String, FeedbackReportModel> reportHashMap = new HashMap<>();
+    public List<FeedbackReportModel> loadReportDetail(int targetId, int userId, int typeId, int semesterId) {
+        Type type = typeRepository.findOne(typeId);
+        String target = type.getDescription();
         List<FeedbackReportModel> reports = new ArrayList<>();
-        HashMap<String, Integer> sumMap = new HashMap<>();
-        HashMap<String, Integer> countMap = new HashMap<>();
-        List<Criteria> criteriaList = criteriaRepository.findAll();
-        for (Criteria c : criteriaList) {
-             List<Answer> answers = new ArrayList<>();
-             for (Feedback f : feedbacks) {
-                 answers.addAll(answerRepository.getAllHaveScoresOptionByFeedbackIdAndCriteriaId(f.getId(),c.getId()));
-             }
-             double count = answers.size();
-             double sum = 0;
-             for (Answer a : answers) {
-                 sum += a.getOptionnByOptionnId().getPoint();
-             }
-             FeedbackReportModel report = new FeedbackReportModel(c.getCriteria(),sum,count);
-             reports.add(report);
+        //HashMap<String, FeedbackReportModel> reportHashMap = new HashMap<>();
+       // HashMap<String, Integer> sumMap = new HashMap<>();
+        //HashMap<String, Integer> countMap = new HashMap<>();
+
+        switch (target) {
+            case CLASS: {
+                List<Feedback> feedbacks = feedbackRepository.findByUserCourse(targetId, userId, typeId,semesterId);
+                List<Criteria> criteriaList = criteriaRepository.findAll();
+                for (Criteria c : criteriaList) {
+                    List<Answer> answers = new ArrayList<>();
+                    for (Feedback f : feedbacks) {
+                        answers.addAll(answerRepository.getAllHaveScoresOptionByFeedbackIdAndCriteriaId(f.getId(),c.getId()));
+                    }
+                    double count = answers.size();
+                    double sum = 0;
+                    for (Answer a : answers) {
+                        sum += a.getOptionnByOptionnId().getPoint();
+                    }
+                    FeedbackReportModel report = new FeedbackReportModel(c.getCriteria(),sum,count);
+                    reports.add(report);
+                }
+                break;
+            }
+
+            case DEPARTMENT: {
+                List<Feedback> feedbacks2 = feedbackRepository.findByDepartment(targetId,typeId, semesterId);
+                List<Criteria> criteriaList = criteriaRepository.findAll();
+                for (Criteria c : criteriaList) {
+                    List<Answer> answers = new ArrayList<>();
+                    for (Feedback f : feedbacks2) {
+                        answers.addAll(answerRepository.getAllHaveScoresOptionByFeedbackIdAndCriteriaId(f.getId(),c.getId()));
+                    }
+                    double count = answers.size();
+                    double sum = 0;
+                    for (Answer a : answers) {
+                        sum += a.getOptionnByOptionnId().getPoint();
+                    }
+                    FeedbackReportModel report = new FeedbackReportModel(c.getCriteria(),sum,count);
+                    reports.add(report);
+                }
+                break;
+            }
+
+            case COURSE: {
+                List<Feedback> feedbacks2 = feedbackRepository.findByCourse(targetId,typeId, semesterId);
+                List<Criteria> criteriaList = criteriaRepository.findAll();
+                for (Criteria c : criteriaList) {
+                    List<Answer> answers = new ArrayList<>();
+                    for (Feedback f : feedbacks2) {
+                        answers.addAll(answerRepository.getAllHaveScoresOptionByFeedbackIdAndCriteriaId(f.getId(),c.getId()));
+                    }
+                    double count = answers.size();
+                    double sum = 0;
+                    for (Answer a : answers) {
+                        sum += a.getOptionnByOptionnId().getPoint();
+                    }
+                    FeedbackReportModel report = new FeedbackReportModel(c.getCriteria(),sum,count);
+                    reports.add(report);
+                }
+                break;
+            }
+
+            case MAJOR: {
+                List<Feedback> feedbacks2 = feedbackRepository.findByMajor(targetId,typeId, semesterId);
+                List<Criteria> criteriaList = criteriaRepository.findAll();
+                for (Criteria c : criteriaList) {
+                    List<Answer> answers = new ArrayList<>();
+                    for (Feedback f : feedbacks2) {
+                        answers.addAll(answerRepository.getAllHaveScoresOptionByFeedbackIdAndCriteriaId(f.getId(),c.getId()));
+                    }
+                    double count = answers.size();
+                    double sum = 0;
+                    for (Answer a : answers) {
+                        sum += a.getOptionnByOptionnId().getPoint();
+                    }
+                    FeedbackReportModel report = new FeedbackReportModel(c.getCriteria(),sum,count);
+                    reports.add(report);
+                }
+                break;
+            }
+
+            default: {
+                return null;
+            }
         }
+
+
 
         /*for (FeedbackReportModel report : reports) {
             String key = report.getCriteria();

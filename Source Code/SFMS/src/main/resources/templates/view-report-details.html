@@ -54,7 +54,7 @@
                 <div class="col-12">
 
                     <h3 class="feedback-title" style="text-align: left">
-                        Báo cáo Feedbacks - Phòng IT
+
                     </h3>
                     <div class="tab">
                         <!-- <button class="tablinks" onclick="openCity(event, 'London')">Tất cả</button>
@@ -150,11 +150,12 @@
             xhttp.send();
         }
 
-        function loadSemesterStatistic(semesterIds, userId, courseId, callback) {
+        function loadSemesterStatistic(semesterIds, userId, targetId, typeId, callback) {
             console.log("loadSemesterStatistic");
             var url = _ctx + "/api/reports/semesterStatistic" + //"./semesterStatistic" +
                 "?userId=" + userId +
-                "&courseId=" + courseId;
+                "&targetId=" + targetId +
+                "&typeId=" + typeId;
             for (var i = 0; i < semesterIds.length; i++) {
                 url = url + "&semesterId=" + semesterIds[i]
             }
@@ -192,6 +193,7 @@
                     flgFetch = (flgFetch && s.id != toId);
                 }
                 window.loadingSemesters = semesterData;
+                console.log("window.loadingSemesters: " + window.loadingSemesters);
                 if (flgFetch) {
                     semesterData = [fromId];
                     var m = window.semesterMapping[fromId];
@@ -280,7 +282,8 @@
                 window.sEcho++;
                 loadSemesterStatistic(semesterData,
                     window.userId,
-                    window.courseId,
+                    window.targetId,
+                    window.typeId,
                     ajaxCallback);
             });
         }
@@ -331,27 +334,46 @@
             window.statistic = 0;
             window.sEcho = 0;
             window.userId = location.getParam('userId');
-            window.courseId = location.getParam('courseId');
+            window.targetId = location.getParam('targetId');
+            window.typeId = location.getParam('typeId');
             window.chart = c3.generate({
                 bindto: '#report-detail-chart',
                 data: {
                     onclick: function (d, element) {
-                        $.ajax({
-                            url: _ctx +"/reports/list-class?type=3&userId=" + window.userId + "&courseId=" + window.courseId + "&semesterId=10", //TODO window.loadingSemesters[d.x + 1],
-                            dataType: 'html',
-                            success: function(data) {
-                               // document.getElementById('templateID').value = templateID;
-                                // $("#modalTemplateContent").innerHTML = "";
-                                var myNode = document.getElementById("list-expand");
-                                while (myNode.firstChild) {
-                                    myNode.removeChild(myNode.firstChild);
-                                }
-                                $("#list-expand").append(data);
-                               // $('#modalTemplate').modal('toggle');
-                            },
-                            error: (err) => alert(err)
-                        });
-                       /* window.open("/reports/list-class?type=3" + //TODO
+                        window.dataChart = d.x+1;
+                        //console.log("data: " + d);
+                        if (window.typeId == 3) {
+                            $.ajax({
+                                url: _ctx +"/reports/list-class?type=3&userId=" + window.userId + "&courseId=" + window.targetId + "&semesterId=" + (d.x+1), //TODO window.loadingSemesters[d.x + 1],
+                                dataType: 'html',
+                                success: function(data) {
+                                    // document.getElementById('templateID').value = templateID;
+                                    // $("#modalTemplateContent").innerHTML = "";
+                                    var myNode = document.getElementById("list-expand");
+
+                                    while (myNode.firstChild) {
+                                        myNode.removeChild(myNode.firstChild);
+                                    }
+                                    $("#list-expand").append(data);
+                                    // $('#modalTemplate').modal('toggle');
+                                },
+                                error: (err) => alert(err)
+                            });
+                        } else {
+                            $.ajax({
+                                url: _ctx +"/reports/list-class?type=3&userId=" + window.userId + "&courseId=" + window.targetId + "&semesterId=" + (d.x+1), //TODO window.loadingSemesters[d.x + 1],
+                                dataType: 'html',
+                                success: function(data) {
+                                    window.location.href = _ctx + ("/reports/semester-detail" +
+                                        "?typeId=" + window.typeId +
+                                        "&targetId=" + window.targetId +
+                                        "&semId=" + (d.x + 1));
+                                },
+                                error: (err) => alert(err)
+                            });
+                        }
+
+                       /* window.open("/reports/list-class?type=3" +
                             "&userId=" + window.userId +
                             "&courseId=" + window.courseId +
                             "&semesterId=" + window.loadingSemesters[d.x + 1]

@@ -48,15 +48,18 @@ public class ReportAPI  {
 
     @GetMapping("/semesterStatistic")
     private ResponseEntity getSemesterStatistic(@RequestParam("userId") int userId,
-                                                @RequestParam("courseId") int courseId,
+                                                @RequestParam("targetId") int targetId,
+                                                @RequestParam("typeId") int typeId,
                                                 @RequestParam(value="semesterId") List<Integer> semesterIds)
     {
         List<FeedbackReporStatistictModel> feedbackReporStatistictModels = new ArrayList<>();
         for (int semId : semesterIds) {
-            List<FeedbackReportModel> feedbackReportModel = reportService.loadReportDetail(courseId,userId,3,semId); //TODO
+            List<FeedbackReportModel> feedbackReportModel = reportService.loadReportDetail(targetId,userId,typeId,semId);
             FeedbackReporStatistictModel feedbackReporStatistictModel = new FeedbackReporStatistictModel(semId, feedbackReportModel);
             feedbackReporStatistictModels.add(feedbackReporStatistictModel);
+            System.out.println("feedbackReporStatistictModels" + feedbackReporStatistictModel.getData().get(0).getSum());
         }
+
         return new ResponseEntity(feedbackReporStatistictModels, HttpStatus.OK);
     }
 }
