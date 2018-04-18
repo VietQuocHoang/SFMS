@@ -25,7 +25,7 @@ public interface UserFeedbackRepository extends JpaRepository<UserFeedback, User
     List<UserFeedback> findNotConductedFeedbacksByUserId(@Param("userId") int id);
 
     @Modifying
-    @Query("Select u from UserFeedback u where u.userByUserId.id=:userId and u.conducted=false and u.feedbackByFeedbackId.startDate < :currDate and u.feedbackByFeedbackId.endDate > :currDate ")
+    @Query("Select u from UserFeedback u where u.userByUserId.id=:userId and u.conducted=false and u.feedbackByFeedbackId.startDate < :currDate and u.feedbackByFeedbackId.endDate > :currDate and u.conductor=true")
     List<UserFeedback> findNotConductedFeedbacksByUserIdAndCurrDate(@Param("userId") int id, @Param("currDate") Date currDate);
     @Modifying
     @Query("Select u from UserFeedback u where u.userByUserId.id=:userId")
@@ -41,6 +41,6 @@ public interface UserFeedbackRepository extends JpaRepository<UserFeedback, User
     @Query("Select count(u) from UserFeedback u where u.userByUserId.id=:userId and u.conducted=false")
     int countNumberOfNotConductedFeedbackForUser(@Param("userId") int userId);
 
-    @Query("select u from UserFeedback u where u.conducted=false and u.feedbackByFeedbackId.endDate between :today and :twoDayAhead")
+    @Query("select u from UserFeedback u where u.conducted=false and u.feedbackByFeedbackId.endDate between :today and :twoDayAhead and u.conductor = true")
     List<UserFeedback> getListUserFeedbackNotDoFeedbackYet(@Param("today") Date today, @Param("twoDayAhead") Date twoDayAhead);
 }
