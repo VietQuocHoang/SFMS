@@ -20,7 +20,7 @@ public class FeedbackController {
     @GetMapping
     private ModelAndView getListFeedback() {
         ModelAndView mav = new ModelAndView("view-list-feedback");
-        List<Feedback> feedbackList = feedbackService.findAllFeedback();
+        List<Feedback> feedbackList = feedbackService.findAllFeedbackNotTemplate();
         mav.addObject("feedbackList", feedbackList);
         return mav;
     }

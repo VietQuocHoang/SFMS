@@ -218,7 +218,7 @@ public class FeedbackAPI {
     @JsonView(FeedbackView.listView.class)
     @GetMapping("/list")
     public List<Feedback> getAllFeedback() {
-        return feedbackService.findAllFeedback();
+        return feedbackService.findAllFeedbackNotTemplate();
     }
 
 }

@@ -25,6 +25,9 @@ public interface UserFeedbackRepository extends JpaRepository<UserFeedback, User
     List<UserFeedback> findNotConductedFeedbacksByUserId(@Param("userId") int id);
 
     @Modifying
+    @Query("Select u from UserFeedback u where u.userByUserId.id=:userId and u.conducted=false and u.feedbackByFeedbackId.startDate < :currDate and u.feedbackByFeedbackId.endDate > :currDate ")
+    List<UserFeedback> findNotConductedFeedbacksByUserIdAndCurrDate(@Param("userId") int id, @Param("currDate") Date currDate);
+    @Modifying
     @Query("Select u from UserFeedback u where u.userByUserId.id=:userId")
     List<UserFeedback> findFeedbacksByUserId(@Param("userId") int id);
 

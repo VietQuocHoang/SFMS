@@ -111,4 +111,8 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
     @Query("select f from Feedback f where f.isPublished=true and f.startDate < :currDate and f.endDate > :currDate and f.id=:id")
     Feedback findFeedbackToConduct(@Param("id") int id, @Param("currDate") Date currDate);
 
+    @Query("Select f from Feedback f where f.isTemplate = 0")
+    List<Feedback> findAllFeedbackNotTemplate();
+
+
 }
