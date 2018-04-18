@@ -18,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.RollbackException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -145,7 +146,7 @@ public class FeedbackServiceImpl implements FeedbackService {
         User user = getAuthorizedUser();
         if (user != null) {
             try {
-                List<UserFeedback> listUserFeedback = userFeedbackRepository.findNotConductedFeedbacksByUserId(user.getId());
+                List<UserFeedback> listUserFeedback = userFeedbackRepository.findNotConductedFeedbacksByUserIdAndCurrDate(user.getId(), new Date(System.currentTimeMillis()));
                 if (null == listUserFeedback || listUserFeedback.isEmpty()) {
                     return new ResponseEntity(HttpStatus.NO_CONTENT);
                 } else {
@@ -220,8 +221,8 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public List<Feedback> findAllFeedback() {
-        return feedbackRepository.findAll();
+    public List<Feedback> findAllFeedbackNotTemplate() {
+        return feedbackRepository.findAllFeedbackNotTemplate();
     }
 
     private User getAuthorizedUser() {
