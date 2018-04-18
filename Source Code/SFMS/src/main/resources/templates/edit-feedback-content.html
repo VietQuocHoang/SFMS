@@ -88,10 +88,10 @@
                                                         </th:block>
                                                     </div>
                                                 </div>
-                                                <div class='answer-container'>
 
-                                                    <div th:class="answer-wrapper"
-                                                         th:each="option: ${feedback.questionsById.get(index).optionsById}">
+                                                <div class='answer-container'>
+                                                    <div th:class="answer-wrapper"  id='answer-wrapper-id'>
+                                                        <th:block th:each="option: ${feedback.questionsById.get(index).optionsById}">
                                                         <th:block th:if="${option.optionnContent != 'Khác'}">
                                                             <div class='form-check'>
                                                                 <label class='form-check-label'>
@@ -115,6 +115,8 @@
                                                           </div>-->
                                                         <th:block
                                                                 th:if="${option.optionnContent == 'Khác' and option.point == 0}">
+
+
                                                             <div class='form-check form-other'>
                                                                 <label class='form-check-label'>
                                                                     <input class='form-check-input' type='radio' disabled>Khác
@@ -122,6 +124,8 @@
                                                                 </label>
                                                             </div>
                                                         </th:block>
+                                                        </th:block>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -169,11 +173,17 @@
                                                             <label class='col-4 col-form-label text-right'>Thêm câu trả
                                                                 lời
                                                                 Khác: </label>
+
                                                             <div class='col-8'
                                                                  style='padding-top: 7px; padding-bottom:7px;'>
-
-                                                                <input class='other-option-checkbox' type='checkbox'>
-
+                                                                <th:block
+                                                                        th:if="${isRequiredOther} == 1">
+                                                                <input class='other-option-checkbox' type='checkbox' checked="checked">
+                                                                </th:block>
+                                                                <th:block
+                                                                        th:if="${isRequiredOther} != 1">
+                                                                    <input class='other-option-checkbox' type='checkbox'>
+                                                                </th:block>
                                                             </div>
                                                         </div>
                                                         <div class='edit-answer-container'>
@@ -289,8 +299,8 @@
                                                 </div>
                                                 <div class='answer-container'>
 
-                                                    <div th:class="answer-wrapper"
-                                                         th:each="option: ${feedback.questionsById.get(index).optionsById}">
+                                                    <div th:class="answer-wrapper"  id='answer-wrapper-id'>
+                                                        <th:block th:each="option: ${feedback.questionsById.get(index).optionsById}">
                                                         <th:block th:if="${option.optionnContent != 'Khác'}">
                                                             <div class='form-check'>
                                                                 <label class='form-check-label'>
@@ -320,6 +330,7 @@
                                                                     <input type='text' class='other-option-input' disabled>
                                                                 </label>
                                                             </div>
+                                                        </th:block>
                                                         </th:block>
                                                     </div>
                                                 </div>
@@ -438,7 +449,7 @@
                                                                          </li>-->
                                                                 </ul>
                                                                 <div class='add-new-answer-wrapper'>
-                                                                    <a class='add-new-answer add-new-answer-option'><i
+                                                                    <a class='add-new-answer add-new-answer-checkbox'><i
                                                                             class='fa fa-plus'></i> Thêm</a>
                                                                 </div>
                                                             </div>

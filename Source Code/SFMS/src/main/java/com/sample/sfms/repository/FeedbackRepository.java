@@ -90,7 +90,7 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
             "f.isTemplate = false AND f.clazzByClazzId.id = c.id AND "+
             "(f.typeByTypeId.id = :type OR :type = -1) AND "+
             "c.courseByCourseId.id = :courseId AND c.userByLecturerId.id = :userId and f.semesterBySemesterId.id = :semId")
-    List<Feedback> findByUserCource(@Param("courseId")int courseId,
+    List<Feedback> findByUserCourse(@Param("courseId")int courseId,
                                     @Param("userId")int userId,
                                     @Param("type")int type,
                                     @Param("semId") int semId);
@@ -111,8 +111,31 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
     @Query("select f from Feedback f where f.isPublished=true and f.startDate < :currDate and f.endDate > :currDate and f.id=:id")
     Feedback findFeedbackToConduct(@Param("id") int id, @Param("currDate") Date currDate);
 
+
     @Query("Select f from Feedback f where f.isTemplate = 0")
     List<Feedback> findAllFeedbackNotTemplate();
+    
+    @Query("select f from Feedback f where " +
+            "f.isTemplate = false AND f.departmentByDepartmentId.id = :depId AND "+
+            "(f.typeByTypeId.id = :type OR :type = -1) AND "+
+            "f.semesterBySemesterId.id = :semId")
+    List<Feedback> findByDepartment(@Param("depId")int depId,
+                                    @Param("type")int type,
+                                    @Param("semId") int semId);
 
+    @Query("select f from Feedback f where " +
+            "f.isTemplate = false AND f.majorByMajorId.id = :majorId AND "+
+            "(f.typeByTypeId.id = :type OR :type = -1) AND "+
+            "f.semesterBySemesterId.id = :semId")
+    List<Feedback> findByMajor(@Param("majorId")int majorId,
+                                    @Param("type")int type,
+                                    @Param("semId") int semId);
 
+    @Query("select f from Feedback f where " +
+            "f.isTemplate = false AND f.courseByCourseId.id = :courseId AND "+
+            "(f.typeByTypeId.id = :type OR :type = -1) AND "+
+            "f.semesterBySemesterId.id = :semId")
+    List<Feedback> findByCourse(@Param("courseId")int courseId,
+                                    @Param("type")int type,
+                                    @Param("semId") int semId);
 }

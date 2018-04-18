@@ -85,8 +85,8 @@
                     <th:block th:unless="${feedbackTarget.departments.isEmpty()}">
                         <tr th:attr="data-name=${department.name}" th:each="department:${feedbackTarget.departments}">
                             <td th:text="${department.name}"></td>
-                            <td class="text-center"><a th:href="@{/view-report-details}" class="btn btn-raised-primary">Xem
-                                báo cáo</a></td><!--TODO sửa đây ông eiii-->
+                            <td class="text-center"><a th:href="@{/view-report-details(typeId=4,userId=0,targetId=${department.id})}" class="btn btn-raised-primary">Xem
+                                báo cáo</a></td>
                         </tr>
                     </th:block>
                     </tbody>
@@ -109,8 +109,8 @@
                         <tr th:attr="data-name=${major.name}" th:each="major:${feedbackTarget.majors}">
                             <td th:text="${major.name}"></td>
                             <td th:text="${major.code}"></td>
-                            <td class="text-center"><a th:href="@{/view-report-details}" class="btn btn-raised-primary">Xem
-                                báo cáo</a></td><!--TODO sửa đây ông eiii-->
+                            <td class="text-center"><a th:href="@{/view-report-details(typeId=1,userId=0,targetId=${major.id})}" class="btn btn-raised-primary">Xem
+                                báo cáo</a></td>
                         </tr>
                     </th:block>
                     </tbody>
@@ -133,8 +133,8 @@
                         <tr th:attr="data-name=${course.name}" th:each="course:${feedbackTarget.courses}">
                             <td th:text="${course.name}"></td>
                             <td th:text="${course.code}"></td>
-                            <td class="text-center"><a th:href="@{/view-report-details}" class="btn btn-raised-primary">Xem
-                                báo cáo</a></td><!--TODO sửa đây ông eiii-->
+                            <td class="text-center"><a th:href="@{/view-report-details(typeId=2,userId=0,targetId=${course.id})}" class="btn btn-raised-primary">Xem
+                                báo cáo</a></td>
                         </tr>
                     </th:block>
                     </tbody>
@@ -150,7 +150,7 @@
                     <tbody>
                     <th:block th:if="${feedbackTarget.lecturerCourseLists.isEmpty()}">
                         <tr>
-                            <td colspan="4">Hiện tại không có danh phòng ban nào trong danh sách</td>
+                            <td colspan="4">Hiện tại không có lớp nào trong danh sách</td>
                         </tr>
                     </th:block>
                     <th:block th:unless="${feedbackTarget.lecturerCourseLists.isEmpty()}">
@@ -159,8 +159,8 @@
                             <td th:text="${lecCourse.fullname}"></td>
                             <td th:text="${lecCourse.courseName}"></td>
                             <td class="text-center">
-                                <a th:href="@{/view-report-details(typeId=3,userId=${class.userByLecturerId.id},courseId=${class.courseByCourseId.id})}" class="btn btn-raised-primary">Xem
-                                báo cáo</a></td><!--TODO sửa đây ông eiii-->
+                                <a th:href="@{/view-report-details(typeId=3,userId=${lecCourse.lecturerId},targetId=${lecCourse.courseId})}" class="btn btn-raised-primary">Xem
+                                báo cáo</a></td>
                         </tr>
                     </th:block>
                     </tbody>

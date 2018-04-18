@@ -91,8 +91,8 @@
                                                 </div>
                                                 <div class='answer-container'>
 
-                                                    <div th:class="answer-wrapper"
-                                                         th:each="option: ${template.questionsById.get(index).optionsById}">
+                                                    <div th:class="answer-wrapper" id='answer-wrapper-id'>
+                                                        <th:block th:each="option: ${template.questionsById.get(index).optionsById}">
                                                         <th:block th:if="${option.optionnContent != 'Khác'}">
                                                             <div class='form-check'>
                                                                 <label class='form-check-label'>
@@ -122,6 +122,7 @@
                                                                     <input type='text' class='other-option-input' disabled>
                                                                 </label>
                                                             </div>
+                                                        </th:block>
                                                         </th:block>
                                                     </div>
                                                 </div>
@@ -189,10 +190,9 @@
                                                         </div>
                                                         <div class='edit-answer-container'>
                                                             <div class='edit-answer-wrapper'>
-                                                                <ul th:class="list-answer-edit"
-                                                                    th:each="option: ${template.questionsById.get(index).optionsById}">
+                                                                <ul th:class="list-answer-edit">
                                                                     <th:block
-                                                                            th:if="${option.optionnContent != 'Khác'}">
+                                                                            th:if="${option.optionnContent != 'Khác'}" th:each="option: ${template.questionsById.get(index).optionsById}">
                                                                         <li>
                                                                             <div class='edit-answer-item'>
                                                                                 <div class='sort-edit-answer-handle'>
@@ -301,8 +301,8 @@
                                                 </div>
                                                 <div class='answer-container'>
 
-                                                    <div th:class="answer-wrapper"
-                                                         th:each="option: ${template.questionsById.get(index).optionsById}">
+                                                    <div th:class="answer-wrapper" id='answer-wrapper-id'>
+                                                        <th:block th:each="option: ${template.questionsById.get(index).optionsById}">
                                                         <th:block th:if="${option.optionnContent != 'Khác'}">
                                                             <div class='form-check'>
                                                                 <label class='form-check-label'>
@@ -332,6 +332,7 @@
                                                                     <input type='text' class='other-option-input' disabled>
                                                                 </label>
                                                             </div>
+                                                        </th:block>
                                                         </th:block>
                                                     </div>
                                                 </div>
@@ -398,10 +399,9 @@
                                                         </div>
                                                         <div class='edit-answer-container'>
                                                             <div class='edit-answer-wrapper'>
-                                                                <ul th:class="list-answer-edit"
-                                                                    th:each="option: ${template.questionsById.get(index).optionsById}">
+                                                                <ul th:class="list-answer-edit">
                                                                     <th:block
-                                                                            th:if="${option.optionnContent != 'Khác'}">
+                                                                            th:if="${option.optionnContent != 'Khác'}" th:each="option: ${template.questionsById.get(index).optionsById}">
                                                                         <li>
                                                                             <div class='edit-answer-item'>
                                                                                 <div class='sort-edit-answer-handle'>
@@ -460,7 +460,7 @@
                                                                          </li>-->
                                                                 </ul>
                                                                 <div class='add-new-answer-wrapper'>
-                                                                    <a class='add-new-answer add-new-answer-option'><i
+                                                                    <a class='add-new-answer add-new-answer-checkbox'><i
                                                                             class='fa fa-plus'></i> Thêm</a>
                                                                 </div>
                                                             </div>
