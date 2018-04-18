@@ -238,25 +238,25 @@ public class ReportServiceImpl implements ReportService {
             String target = type.getDescription();
             switch (target) {
                 case MAJOR: {
-                    feedbackList = feedbackRepository.getListFeedbackBySemIdAndMajorId(semId, targetId);
+                    feedbackList = feedbackRepository.getListFeedbackBySemIdAndMajorId(semId, targetId, typeId);
                     Major major = majorRepo.findOne(targetId);
                     reportSemesterModel.setTarget(major.getName());
                     break;
                 }
                 case COURSE: {
-                    feedbackList = feedbackRepository.getListFeedbackBySemIdAndCourseId(semId, targetId);
+                    feedbackList = feedbackRepository.getListFeedbackBySemIdAndCourseId(semId, targetId, typeId);
                     Course course = courseRepo.findOne(targetId);
                     reportSemesterModel.setTarget(course.getName());
                     break;
                 }
                 case CLASS: {
-                    feedbackList = feedbackRepository.getListFeedbackBySemIdAndClassId(semId, targetId);
+                    feedbackList = feedbackRepository.getListFeedbackBySemIdAndClassId(semId, targetId, typeId);
                     Clazz clazz = clazzRepository.findOne(targetId);
                     reportSemesterModel.setTarget(clazz.getClassName());
                     break;
                 }
                 case DEPARTMENT: {
-                    feedbackList = feedbackRepository.getListFeedbackBySemIdAndDepId(semId, targetId);
+                    feedbackList = feedbackRepository.getListFeedbackBySemIdAndDepId(semId, targetId, typeId);
                     Department department = depRepo.findOne(targetId);
                     reportSemesterModel.setTarget(department.getName());
                     break;

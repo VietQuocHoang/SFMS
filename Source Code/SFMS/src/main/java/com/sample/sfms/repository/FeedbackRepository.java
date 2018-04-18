@@ -48,17 +48,17 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
             "f.clazzByClazzId.id = c.id AND f.semesterBySemesterId.id = s.id")
     List<Feedback> getListClassFeedback();
 
-    @Query("select f from Feedback f where f.semesterBySemesterId.id=:semId and f.departmentByDepartmentId.id=:depId")
-    List<Feedback> getListFeedbackBySemIdAndDepId(@Param("semId") int semId, @Param("depId") int depId);
+    @Query("select f from Feedback f where f.semesterBySemesterId.id=:semId and f.departmentByDepartmentId.id=:depId and f.isTemplate=false and (f.typeByTypeId.id = :typeId OR :typeId = -1)")
+    List<Feedback> getListFeedbackBySemIdAndDepId(@Param("semId") int semId, @Param("depId") int depId, @Param("typeId") int typeId);
 
-    @Query("select f from Feedback f where f.semesterBySemesterId.id=:semId and f.majorByMajorId.id=:majorId")
-    List<Feedback> getListFeedbackBySemIdAndMajorId(@Param("semId") int semId, @Param("majorId") int majorId);
+    @Query("select f from Feedback f where f.semesterBySemesterId.id=:semId and f.majorByMajorId.id=:majorId and f.isTemplate=false and (f.typeByTypeId.id = :typeId OR :typeId = -1)")
+    List<Feedback> getListFeedbackBySemIdAndMajorId(@Param("semId") int semId, @Param("majorId") int majorId, @Param("typeId") int typeId);
 
-    @Query("select f from Feedback f where f.semesterBySemesterId.id=:semId and f.clazzByClazzId.id=:classId")
-    List<Feedback> getListFeedbackBySemIdAndClassId(@Param("semId") int semId, @Param("classId") int classId);
+    @Query("select f from Feedback f where f.semesterBySemesterId.id=:semId and f.clazzByClazzId.id=:classId and f.isTemplate=false and (f.typeByTypeId.id = :typeId OR :typeId = -1)")
+    List<Feedback> getListFeedbackBySemIdAndClassId(@Param("semId") int semId, @Param("classId") int classId, @Param("typeId") int typeId);
 
-    @Query("select f from Feedback f where f.semesterBySemesterId.id=:semId and f.courseByCourseId.id=:courseId")
-    List<Feedback> getListFeedbackBySemIdAndCourseId(@Param("semId") int semId, @Param("courseId") int courseId);
+    @Query("select f from Feedback f where f.semesterBySemesterId.id=:semId and f.courseByCourseId.id=:courseId and f.isTemplate=false and (f.typeByTypeId.id = :typeId OR :typeId = -1)")
+    List<Feedback> getListFeedbackBySemIdAndCourseId(@Param("semId") int semId, @Param("courseId") int courseId, @Param("typeId") int typeId);
 
     @Query("select f from Feedback f where f.startDate < :date and f.endDate > :date and isPublished=1")
     List<Feedback> getListOnGoingFeedbackByDate(@Param("date") Date date);

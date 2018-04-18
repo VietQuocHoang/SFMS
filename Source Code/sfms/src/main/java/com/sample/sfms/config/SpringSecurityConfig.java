@@ -49,7 +49,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeRequests()
+            .authorizeRequests()
                 .mvcMatchers("/", "/login", "/mobile/login").permitAll()
                 .mvcMatchers("/roles/**").hasAuthority("EDIT_PERMISSION")
                 .mvcMatchers("/users/**").access("hasAuthority('EDIT_USER')")
