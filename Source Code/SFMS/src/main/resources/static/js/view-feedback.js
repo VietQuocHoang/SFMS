@@ -88,19 +88,15 @@ $(document).ready(() => {
             "data": {"id": feedbackId},
             success: (data, status, xhr) => {
                 if (xhr.status === 200) {
-                    snackBar.html("<p class='text-success'>Thay đổi trạng thái thành công</p>");
+                    notifySnackbar("Thay đổi trạng thái thành công", "success");
                 }
             },
             error: (data, status, xhr) => {
-                snackBar.html("<p class='text-danger'>Đã có lỗi xảy ra, vui lòng thử lại</p>");
+                notifySnackbar("Đã có lỗi xảy ra, vui lòng thử lại", "danger");
             },
             complete: (data, status, xhr) => {
                 $("#modalPublish").modal('hide');
                 $("#modalDepublish").modal('hide');
-                snackBar.addClass("show");
-                setTimeout(() => {
-                    snackBar.removeClass("show");
-                }, 1500);
                 table.ajax.reload();
                 filterTable($(".filter-scope").find(":selected").val());
             }

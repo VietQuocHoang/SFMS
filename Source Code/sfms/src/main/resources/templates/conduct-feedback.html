@@ -11,9 +11,6 @@
     <!-- custom style -->
     <link th:href="@{/css/conduct-feedback.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/css/custom-style.css}" rel="stylesheet" type="text/css"/>
-    <div th:replace="fragments/core-script"></div>
-    <!-- custom script -->
-    <script th:src="@{/js/conduct-feedback.js}"></script>
 </head>
 
 <body>
@@ -21,6 +18,14 @@
     <div class="row justify-content-center">
         <div class="feedback-title-wrapper">
             <h3 class="feedback-title" th:text="${feedback.feedbackName}"></h3>
+            <h3 class="feedback-title"
+                th:text="${feedback.departmentByDepartmentId != null?'Phòng' + feedback.departmentByDepartmentId.name + '-' + feedback.semesterBySemesterId.title:''}"></h3>
+            <h3 class="feedback-title"
+                th:text="${feedback.majorByMajorId != null ?'Ngành ' + feedback.majorByMajorId.name + '-' + feedback.semesterBySemesterId.title :''}"></h3>
+            <h3 class="feedback-title"
+                th:text="${feedback.clazzByClazzId != null?'Lớp ' + feedback.clazzByClazzId.clazzName+'-' + feedback.userByLecturerId.fullname + '-' + feedback.semesterBySemesterId.title:''}"></h3>
+            <h3 class="feedback-title"
+                th:text="${feedback.courseByCourseId != null?'Môn '+ feedback.courseByCourseId.name + '-' + feedback.semesterBySemesterId.title:''}"></h3>
             <hr/>
             <p class="warning-text">Vui lòng hoàn thành các câu hỏi bắt buộc</p>
         </div>
@@ -308,7 +313,10 @@
 
         </div>
     </div>
+    <div id="snackbar"></div>
 </div>
 </body>
-
+<div th:replace="fragments/core-script"></div>
+<!-- custom script -->
+<script th:src="@{/js/conduct-feedback.js}"></script>
 </html>
