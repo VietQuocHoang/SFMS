@@ -38,6 +38,13 @@ public interface AnswerRepository extends JpaRepository<Answer, Integer> {
             "where a.user_id=:userId and f.id=:feedbackId", nativeQuery = true)
     int removeAllAnswerByUserAndFeedback(@Param("userId") int userId, @Param("feedbackId") int feedbackId);
 
+    @Query(value = "Select a.* " +
+            "from capstone.answer a inner join capstone.optionn o on (a.option_id=o.id) " +
+            "inner join capstone.question q on (o.question_id = q.id) " +
+            "inner join capstone.feedback f on (q.feedback_id = f.id) " +
+            "where a.user_id=:userId and f.id=:feedbackId", nativeQuery = true)
+    List<Answer> findAllAnswerByUserAndFeedback(@Param("userId") int userId, @Param("feedbackId") int feedbackId);
+
     @Query(value = "select a from Answer a, Feedback f, Question q, Optionn o where "
             + "f.id = :feedbackId and f.id = q.feedbackByFeedbackId.id "
             + "and q.id = o.questionByQuestionId.id and o.id = a.optionnByOptionnId.id and "

@@ -70,7 +70,7 @@ public class ConductFeedbackServiceImpl implements ConductFeedbackService {
             return new ResponseEntity(HttpStatus.FORBIDDEN);
         }
         try {
-            answerRepository.removeAllAnswerByUserAndFeedback(user.getId(), conductAnswerWrapper.getFeedbackId());
+            List<Answer> oldAnswers = answerRepository.findAllAnswerByUserAndFeedback(user.getId(), conductAnswerWrapper.getFeedbackId());
             Timestamp currDate = new Timestamp(System.currentTimeMillis());
             if (conductAnswerWrapper.getAnswers() != null) {
                 Optionn optionn = null;
@@ -91,6 +91,7 @@ public class ConductFeedbackServiceImpl implements ConductFeedbackService {
                     userFeedbackRepository.save(userFeedback);
                 }
             }
+            answerRepository.delete(oldAnswers);
             return new ResponseEntity(HttpStatus.OK);
         } catch (RollbackException e) {
             logger.log(Level.FINE, e.toString());

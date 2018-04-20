@@ -95,8 +95,17 @@ function setSelectedNavbarItem() {
 }
 
 $(document).ready(function () {
-    console.log(currentlySelected);
     setSelectedNavbarItem();
     getNotification();
     getCurrentAuthenticatedUser();
 });
+
+
+function notifySnackbar(message, type) {
+    let snackBar = $("#snackbar");
+    snackBar.html("<p class='text-" + type + "'>" + message + "</p>");
+    snackBar.addClass("show");
+    setTimeout(() => {
+        snackBar.removeClass("show");
+    }, 1500);
+}
