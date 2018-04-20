@@ -226,13 +226,27 @@ $(document).ready(() => {
                 url: _ctx + "/conduct-feedback/save",
                 success: (data, status, xhr) => {
                     if (xhr.status === 200) {
-                        window.location.href = _ctx + "/conduct-feedback/list"
-                    } else if (xhr.status === 403) {
-                        window.location.href = _ctx + "/logout"
-                    } else {
-                        $(".warning-text").append(data);
+                        $("#confirmModal").modal('hide');
+                        notifySnackbar("Lưu câu trả lời thành công", "success");
+                        setTimeout(() => {
+                            window.location.href = _ctx + "/conduct-feedback/list";
+                        }, 500);
                     }
-                }
+                },
+                error: (data, status, xhr) => {
+                    $("#confirmModal").modal('hide');
+                    if (xhr.status = 403) {
+                        notifySnackbar("Vui lòng đăng nhập lại", "danger");
+                        setTimeout(() => {
+                            window.location.href = _ctx + "/logout";
+                        }, 500);
+                    } else {
+                        notifySnackbar("Đã có lỗi xảy ra, vui lòng thử lại", "danger");
+                        setTimeout(() => {
+                            window.location.href = _ctx + "/conduct-feedback/list";
+                        }, 500);
+                    }
+                },
             });
         } else {
             $(".warning-text").addClass("show");
