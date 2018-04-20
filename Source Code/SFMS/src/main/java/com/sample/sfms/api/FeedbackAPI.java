@@ -6,12 +6,14 @@ import com.sample.sfms.entity.Feedback;
 import com.sample.sfms.entity.Question;
 import com.sample.sfms.model.FeedbackModifySuggestionModel;
 import com.sample.sfms.model.ModifySuggestionModel;
+import com.sample.sfms.model.answer.ConductAnswerWrapper;
 import com.sample.sfms.model.feedback.FeedbackCreateModel;
 import com.sample.sfms.model.feedback.FeedbackUpdateModel;
 import com.sample.sfms.model.option.OptionCreateModel;
 import com.sample.sfms.model.option.OptionUpdateModel;
 import com.sample.sfms.model.question.AddQuestionModel;
 import com.sample.sfms.model.question.UpdateQuestionModel;
+import com.sample.sfms.service.interf.ConductFeedbackService;
 import com.sample.sfms.service.interf.FeedbackService;
 import com.sample.sfms.service.interf.QuestionService;
 import com.sample.sfms.view.FeedbackView;
@@ -38,6 +40,9 @@ public class FeedbackAPI {
 
     @Autowired
     private QuestionService questionService;
+
+    @Autowired
+    private ConductFeedbackService conductFeedbackService;
 
     @GetMapping
     private List<Feedback> getListTemplate(boolean isTemplate){
@@ -194,8 +199,8 @@ public class FeedbackAPI {
     }
 
     @JsonView(FeedbackView.alertUserFeedbackView.class)
-    @GetMapping("/conduct-mobile")
-    public ResponseEntity getListFeedbackOfAuthorizedUserMobile() {
+    @GetMapping("/mobile/conduct-mobile")
+    public ResponseEntity getListFeedbackOfAuthorizedUserMobile(@RequestHeader("username") String username) {
         System.out.println("getListFeedbackOfAuthorizedUser");
         return feedbackService.getNotConductedFeedbacksByUserIdMobile();
     }
@@ -207,8 +212,8 @@ public class FeedbackAPI {
     }
 
     @JsonView(FeedbackView.conductFeedbackView.class)
-    @GetMapping("/conduct-mobile/{id}")
-    public Feedback conductFeedbackMobile(@PathVariable("id") int id) {
+    @GetMapping("/mobile/conduct-mobile/{id}")
+    public Feedback conductFeedbackMobile(@RequestHeader("username") String username, @PathVariable("id") int id) {
         return feedbackService.findFeedbackToConductMobile(id);
     }
 
@@ -224,5 +229,6 @@ public class FeedbackAPI {
     public List<Feedback> getAllFeedback() {
         return feedbackService.findAllFeedbackNotTemplate();
     }
+
 
 }

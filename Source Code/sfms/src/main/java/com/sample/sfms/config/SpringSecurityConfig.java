@@ -50,7 +50,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
             .authorizeRequests()
-                .mvcMatchers("/", "/login", "/mobile/login").permitAll()
+                .mvcMatchers("/",
+                        "/login",
+                        "/api/mobile/login",
+                        "/api/feedbacks/mobile/**",
+                        "/api/conduct-feedback/mobile/**"
+                ).permitAll()
                 .mvcMatchers("/roles/**").hasAuthority("EDIT_PERMISSION")
                 .mvcMatchers("/users/**").access("hasAuthority('EDIT_USER')")
                 .mvcMatchers("/feedbacks/**").access("hasAuthority('EDIT_PERMISSION') or hasAuthority('EDIT_FEEDBACK')")
