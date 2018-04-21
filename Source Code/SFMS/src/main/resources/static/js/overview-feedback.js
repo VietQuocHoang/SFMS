@@ -1,10 +1,10 @@
 /**
  * Created by MyPC on 27/02/2018.
  */
-var modifyconductorlink = function(data, type, full, meta){
-    return "<a class='add-inf-item-link' href='/sfms/modify-feedback/conductor/"+data+"'><i class='fa fa-pencil'></i> Danh sách người làm feedback </a>";
+var modifyconductorlink = function (data, type, full, meta) {
+    return "<a class='add-inf-item-link' href='/sfms/modify-feedback/conductor/" + data + "'><i class='fa fa-pencil'></i> Danh sách người làm feedback </a>";
 }
-var modifyviewerlink = function(data, type, full, meta){
+var modifyviewerlink = function (data, type, full, meta) {
     return "<a class='add-inf-item-link' href='/sfms/modify-feedback-viewers'><i class='fa fa-pencil'></i> Danh sách người xem báo cáo </a>";
 }
 var linkShow = "<a href='/sfms/modify-feedback/target'><i class='fa fa-plus' style='font-size: 24px'></i>    </a>";
@@ -54,9 +54,35 @@ $(document).ready(function () {
             // showedTable = $("#tbl-majors");
             break;
     }
+    $("#details_form").validate(
+        {
+            messages:{
+                title: "Vui lòng điền tiêu đề",
+                descr: "Vui lòng điền mô tả",
+                typeId: "Vui lòng chọn loại đối tượng",
+                semesterId: "Vui lòng chọn học kì tiến hành khảo sát",
+                startdate: "Vui lòng chọn thời gian bắt đầu khảo sát",
+                enddate: "Vui lòng chọn thời gian kết thúc khảo sát"
+            }
+        }
+    );
+    $("#typeId").attr('required', true);
+    $("#feedback-title").attr('required', true);
+    $("#feedback-description").attr('required', true);
+    setRequired();
     setStartEndConstraint();
     // changeStart();
 });
+function setRequired() {
+    $("#semesterId").attr('required', true);
+    $("#startdate").attr('required', true);
+    $("#enddate").attr('required', true);
+}
+function setNonRequired() {
+    $("#semesterId").attr('required', false);
+    $("#startdate").attr('required', false);
+    $("#enddate").attr('required', false);
+}
 function loadDepartmentTable() {
     $('#tbl-departments').DataTable().destroy();
     showedTable = $('#tbl-departments').DataTable(
@@ -399,7 +425,7 @@ $("#typeId").change(function () {
                 }
             },
             error: function (xhr) {
-               alert("fuck");
+                alert("fuck");
             }
         }
     );
@@ -485,7 +511,7 @@ function changeStart() {
                 }
             },
             error: function (xhr) {
-              //  alert("ihi")
+                //  alert("ihi")
             }
         }
     );
@@ -503,10 +529,10 @@ function changeEnd() {
             contentType: 'application/json',
             data: JSON.stringify(feedbackData),
             success: function (data, status, xhr) {
-      //          alert("hehe")
+                //          alert("hehe")
             },
             error: function (result) {
-           //     alert("ihi")
+                //     alert("ihi")
             }
         }
     );
@@ -542,7 +568,7 @@ function setStartEndConstraint() {
                 }
             },
             error: function (result) {
-               // alert("fuck");
+                // alert("fuck");
             }
         }
     );
@@ -551,6 +577,7 @@ function setStartEndConstraint() {
 $("#btnSave").click(function () {
     var opt = $('input[name="save-option"]:checked', '#save-opt').val();
     // alert(opt);
+    if($("#details_form").valid()){
     $.ajax({
         url: '/sfms/api/modify-feedback/save/option/' + opt,
         type: 'PUT',
@@ -562,9 +589,11 @@ $("#btnSave").click(function () {
             }
         },
         error: function () {
-            alert("fuck")
+            // alert("fuck")
         }
-    });
+    });}else{
+        alert( "Vui lòng hoàn tất các thông tin cần thiết");
+    }
 })
 
 $("#btnCancel").click(function () {
@@ -579,7 +608,7 @@ $("#btnCancel").click(function () {
             }
         },
         error: function () {
-       //    alert("fuck")
+            //    alert("fuck")
         }
     });
 })
@@ -594,7 +623,7 @@ $("#previewContent").click(function () {
             while (myNode.firstChild) {
                 myNode.removeChild(myNode.firstChild);
             }
-          //  $(".feedback-content").innerHTML = "";
+            //  $(".feedback-content").innerHTML = "";
             //     $("#modalTemplateFooter").innerHTML = "";
             //    $("#modalTemplateFooter").append("<input hidden class='form-control' value='" + templateID + "' type='text' name='templateID'>");
             $("#feedback-content-id").append(data);
@@ -618,7 +647,7 @@ function removeTarget(target) {
             }
         },
         error: function () {
-          //  alert("fuck")
+            //  alert("fuck")
         }
     })
 }

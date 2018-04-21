@@ -6,6 +6,10 @@ h4.overview-title{
 .radio-inline{
     margin-right: 1%;
 }
+
+.error{
+    color: red;
+}
 .btn-cancel{
     background-color: #FFFFFF   ;
     color: #c7254e;
