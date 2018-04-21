@@ -1,6 +1,24 @@
 var wscrolltop = 0;
 var _ctx = $("meta[name='ctx']").attr("content");
+var selectBox;
+$(document).ready(() => {
+    $.ajax({
+        type: 'GET',
+        url: _ctx + "/api/criteria/list",
+        dataType: 'json',
+        success: (data, status, xhr) => {
+            selectBox = "<select class='form-control select-list-criteria'>";
+            for (let i = 0; i < data.length; i++) {
+                let option = "<option value='" + data[i].id + "'>" + data[i].criteria + "</option>";
+                selectBox += option;
+            }
+            selectBox += "</select>";
+        },
+        error: (data, status, xhr) => {
 
+        }
+    });
+});
 $.getScript("models.js", () => { alert('Error loading front-end models') });
 
 //use to generate uniqueId
@@ -168,13 +186,8 @@ receive: (ev, ui) => {
                 "                                            </div>" +
                 "                                            <div class='form-group row'>" +
                 "                                                <label class='col-4 col-form-label text-right'>Loại đánh giá: </label>" +
-                "                                                <div class='col-8'>" +
-                "                                                    <select class='form-control select-list-criteria'>" +
-                "                                                        <option value='1'>Chuyên cần</option>" +
-                "                                                        <option value='2'>Tác phong</option>" +
-                "                                                        <option value='3'>Thái độ</option>" +
-                "                                                        <option value='4'>Chuyên môn</option>" +
-                "                                                    </select>" +
+                "                                                <div class='col-8'>"
+                + selectBox +
                 "                                                </div>" +
                 "                                            </div>" +
                 "                                        </div>" +
@@ -204,7 +217,7 @@ receive: (ev, ui) => {
                 "                                <div class='preview-question-wrapper'>" +
                 "                                    <div class='question-content-container'>" +
                 "                                        <div class='question-content-wrapper'>" +
-                "                                            <p class='question-content-paragraph'>Tốc độ giảng dạy của giảng viên thế nào?" +
+                "                                            <p class='question-content-paragraph'>Nội dung của câu hỏi" +
                 "                                                </p>" +
                 "                                            <span class='required-question' style='display:none'><sup>*</sup></span>" +
                 "                                        </div>" +
@@ -249,18 +262,13 @@ receive: (ev, ui) => {
                 "                                            <div class='form-group row'>" +
                 "                                                <label class='col-4 col-form-label text-right'>Nội dung: </label>" +
                 "                                                <div class='col-8'>" +
-                "                                                    <textarea class='txtEditQuestion'>Tốc độ giảng dạy của giảng viên thế nào?</textarea>" +
+                "                                                    <textarea class='txtEditQuestion'>Nội dung của câu hỏi</textarea>" +
                 "                                                </div>" +
                 "                                            </div>" +
                 "                                            <div class='form-group row'>" +
                 "                                                <label class='col-4 col-form-label text-right'>Loại đánh giá: </label>" +
-                "                                                <div class='col-8'>" +
-                "                                                    <select class='form-control select-list-criteria'>" +
-                "                                                        <option value='1'>Chuyên cần</option>" +
-                "                                                        <option value='2'>Tác phong</option>" +
-                "                                                        <option value='3'>Thái độ</option>" +
-                "                                                        <option value='4'>Chuyên môn</option>" +
-                "                                                    </select>" +
+                "                                                <div class='col-8'>"
+                + selectBox +
                 "                                                </div>" +
                 "                                            </div>" +
                 "                                            <div class='form-group row'>" +
@@ -280,8 +288,8 @@ receive: (ev, ui) => {
                 "                                                                </div>" +
                 "                                                                <div class='input-edit-answer-holder'>" +
                 "                                                                    <input type='text' class='answer-content-input'" +
-                "                                                                           placeholder='Đáp án 1'>" +
-                "                                                                    Trọng số: <input type='number' min='0'" +
+                "                                                                           value='Đáp án 1'>" +
+                "                                                                    Trọng số: <input type='number' min='1' max='5' value='1'" +
                 "                                                                                     class='weight-input'>" +
                 "                                                                </div>" +
                 "                                                                <div class='remove-answer-holder'>" +
@@ -296,8 +304,8 @@ receive: (ev, ui) => {
                 "                                                                </div>" +
                 "                                                                <div class='input-edit-answer-holder'>" +
                 "                                                                    <input type='text' class='answer-content-input'" +
-                "                                                                           placeholder='Đáp án 2'>" +
-                "                                                                    Trọng số: <input type='number' min='0'" +
+                "                                                                           value='Đáp án 2'>" +
+                "                                                                    Trọng số: <input type='number' min='1' max='5' value='1'" +
                 "                                                                                     class='weight-input'>" +
                 "                                                                </div>" +
                 "                                                                <div class='remove-answer-holder'>" +
@@ -312,8 +320,8 @@ receive: (ev, ui) => {
                 "                                                                </div>" +
                 "                                                                <div class='input-edit-answer-holder'>" +
                 "                                                                    <input type='text' class='answer-content-input'" +
-                "                                                                           placeholder='Đáp án 3'>" +
-                "                                                                    Trọng số: <input type='number' min='0'" +
+                "                                                                           value='Đáp án 3'>" +
+                "                                                                    Trọng số: <input type='number' min='1' max='5' value='1'" +
                 "                                                                                     class='weight-input'>" +
                 "                                                                </div>" +
                 "                                                                <div class='remove-answer-holder'>" +
@@ -356,7 +364,7 @@ receive: (ev, ui) => {
                 "                                <div class='preview-question-wrapper'>" +
                 "                                    <div class='question-content-container'>" +
                 "                                        <div class='question-content-wrapper'>" +
-                "                                            <p class='question-content-paragraph'>Tốc độ giảng dạy của giảng viên thế nào?" +
+                "                                            <p class='question-content-paragraph'>Nội dung của câu hỏi" +
                 "                                                </p>" +
                 "                                            <span class='required-question' style='display:none'><sup>*</sup></span>" +
                 "                                        </div>" +
@@ -391,18 +399,13 @@ receive: (ev, ui) => {
                 "                                            <div class='form-group row'>" +
                 "                                                <label class='col-4 col-form-label text-right'>Nội dung: </label>" +
                 "                                                <div class='col-8'>" +
-                "                                                    <textarea class='txtEditQuestion'>Tốc độ giảng dạy của giảng viên thế nào?</textarea>" +
+                "                                                    <textarea class='txtEditQuestion'>Nội dung của câu hỏi</textarea>" +
                 "                                                </div>" +
                 "                                            </div>" +
                 "                                            <div class='form-group row'>" +
                 "                                                <label class='col-4 col-form-label text-right'>Loại đánh giá: </label>" +
-                "                                                <div class='col-8'>" +
-                "                                                    <select class='form-control select-list-criteria'>" +
-                "                                                        <option value='1'>Chuyên cần</option>" +
-                "                                                        <option value='2'>Tác phong</option>" +
-                "                                                        <option value='3'>Thái độ</option>" +
-                "                                                        <option value='4'>Chuyên môn</option>" +
-                "                                                    </select>" +
+                "                                                <div class='col-8'>"
+                + selectBox +
                 "                                                </div>" +
                 "                                            </div>" +
                 "                                            <div class='form-group row'>" +
@@ -422,8 +425,8 @@ receive: (ev, ui) => {
                 "                                                                </div>" +
                 "                                                                <div class='input-edit-answer-holder'>" +
                 "                                                                    <input type='text' class='answer-content-input'" +
-                "                                                                           placeholder='Đáp án 1'>" +
-                "                                                                    Trọng số: <input type='number' min='0'" +
+                "                                                                           value='Đáp án 1'>" +
+                "                                                                    Trọng số: <input type='number' min='1' max='5' value='1'" +
                 "                                                                                     class='weight-input'>" +
                 "                                                                </div>" +
                 "                                                                <div class='remove-answer-holder'>" +
@@ -497,13 +500,8 @@ receive: (ev, ui) => {
                 "                                            </div>" +
                 "                                            <div class='form-group row'>" +
                 "                                                <label class='col-4 col-form-label text-right'>Loại đánh giá: </label>" +
-                "                                                <div class='col-8'>" +
-                "                                                    <select class='form-control select-list-criteria'>" +
-                "                                                        <option value='1'>Chuyên cần</option>" +
-                "                                                        <option value='2'>Tác phong</option>" +
-                "                                                        <option value='3'>Thái độ</option>" +
-                "                                                        <option value='4'>Chuyên môn</option>" +
-                "                                                    </select>" +
+                "                                                <div class='col-8'>"
+                + selectBox +
                 "                                                </div>" +
                 "                                            </div>" +
                 "                                        </div>" +
@@ -609,7 +607,7 @@ var editQuestion = "<li>" +
     "</div>" +
     "<div class='input-edit-answer-holder'>" +
     "<input type='text' class='answer-content-input' value='Đáp án " + (listEditAnswer.find("li").length + 1) + "'>" +
-    " Trọng số: <input type='number' min='0' class='weight-input' value='1'>" +
+    " Trọng số: <input type='number' min='1' max='5' class='weight-input' value='1'>" +
     "</div>" +
     "<div class='remove-answer-holder'>" +
     "<i class='fa fa-close'></i>" +
@@ -636,7 +634,7 @@ var editQuestion = "<li>" +
     "</div>" +
     "<div class='input-edit-answer-holder'>" +
     "<input type='text' class='answer-content-input' value='Đáp án " + (listEditAnswer.find("li").length + 1) + "'>" +
-    " Trọng số: <input type='number' min='0' class='weight-input' value='1'>" +
+    " Trọng số: <input type='number' min='1' max='5' class='weight-input' value='1'>" +
     "</div>" +
     "<div class='remove-answer-holder'>" +
     "<i class='fa fa-close'></i>" +

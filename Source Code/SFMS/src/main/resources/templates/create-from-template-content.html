@@ -160,10 +160,17 @@
                                                                 giá: </label>
                                                             <div class='col-8'>
                                                                 <select class='form-control select-list-criteria'>
-                                                                    <option value='1'>Chuyên cần</option>
-                                                                    <option value='2'>Tác phong</option>
-                                                                    <option value='3'>Thái độ</option>
-                                                                    <option value='4'>Chuyên môn</option>
+                                                                    <th:block th:each="index2: ${#numbers.sequence(0, (criterias.size() - 1))}">
+                                                                        <th:block
+                                                                                th:if="${template.questionsById.get(index).criteriaByCriteriaId.id == criterias.get(index2).id}">
+                                                                            <option selected="selected" th:attr="value=${index2+1}"><span th:text="${criterias.get(index2).criteria}" th:remove="tag"></span></option>
+                                                                        </th:block>
+                                                                        <th:block
+                                                                                th:if="${template.questionsById.get(index).criteriaByCriteriaId.id != criterias.get(index2).id}">
+                                                                            <option th:attr="value=${index2+1}"><span th:text="${criterias.get(index2).criteria}" th:remove="tag"></span></option>
+                                                                        </th:block>
+                                                                    </th:block>
+
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -205,7 +212,7 @@
                                                                                            th:value="${option.optionnContent}"
                                                                                            th:attr="id=${option.id}"/>
                                                                                     Trọng số: <input type='number'
-                                                                                                     min='0'
+                                                                                                     min='1' max='5'
                                                                                                      th:value="${option.point}"
                                                                                                      class='weight-input'>
                                                                                 </div>
@@ -370,10 +377,17 @@
                                                                 giá: </label>
                                                             <div class='col-8'>
                                                                 <select class='form-control select-list-criteria'>
-                                                                    <option value='1'>Chuyên cần</option>
-                                                                    <option value='2'>Tác phong</option>
-                                                                    <option value='3'>Thái độ</option>
-                                                                    <option value='4'>Chuyên môn</option>
+                                                                    <th:block th:each="index2: ${#numbers.sequence(0, (criterias.size() - 1))}">
+                                                                        <th:block
+                                                                                th:if="${template.questionsById.get(index).criteriaByCriteriaId.id == criterias.get(index2).id}">
+                                                                            <option selected="selected" th:attr="value=${index2+1}"><span th:text="${criterias.get(index2).criteria}" th:remove="tag"></span></option>
+                                                                        </th:block>
+                                                                        <th:block
+                                                                                th:if="${template.questionsById.get(index).criteriaByCriteriaId.id != criterias.get(index2).id}">
+                                                                            <option th:attr="value=${index2+1}"><span th:text="${criterias.get(index2).criteria}" th:remove="tag"></span></option>
+                                                                        </th:block>
+                                                                    </th:block>
+
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -414,7 +428,7 @@
                                                                                            th:value="${option.optionnContent}"
                                                                                            th:attr="id=${option.id}"/>
                                                                                     Trọng số: <input type='number'
-                                                                                                     min='0'
+                                                                                                     min='1' max='5'
                                                                                                      th:value="${option.point}"
                                                                                                      class='weight-input'>
                                                                                 </div>
@@ -552,10 +566,17 @@
                                                                 giá: </label>
                                                             <div class='col-8'>
                                                                 <select class='form-control select-list-criteria'>
-                                                                    <option value='1'>Chuyên cần</option>
-                                                                    <option value='2'>Tác phong</option>
-                                                                    <option value='3'>Thái độ</option>
-                                                                    <option value='4'>Chuyên môn</option>
+                                                                    <th:block th:each="index2: ${#numbers.sequence(0, (criterias.size() - 1))}">
+                                                                        <th:block
+                                                                                th:if="${template.questionsById.get(index).criteriaByCriteriaId.id == criterias.get(index2).id}">
+                                                                            <option selected="selected" th:attr="value=${index2+1}"><span th:text="${criterias.get(index2).criteria}" th:remove="tag"></span></option>
+                                                                        </th:block>
+                                                                        <th:block
+                                                                                th:if="${template.questionsById.get(index).criteriaByCriteriaId.id != criterias.get(index2).id}">
+                                                                            <option th:attr="value=${index2+1}"><span th:text="${criterias.get(index2).criteria}" th:remove="tag"></span></option>
+                                                                        </th:block>
+                                                                    </th:block>
+
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -646,10 +667,17 @@
                                                                 giá: </label>
                                                             <div class='col-8'>
                                                                 <select class='form-control select-list-criteria'>
-                                                                    <option value='1'>Chuyên cần</option>
-                                                                    <option value='2'>Tác phong</option>
-                                                                    <option value='3'>Thái độ</option>
-                                                                    <option value='4'>Chuyên môn</option>
+                                                                    <th:block th:each="index2: ${#numbers.sequence(0, (criterias.size() - 1))}">
+                                                                        <th:block
+                                                                                th:if="${template.questionsById.get(index).criteriaByCriteriaId.id == criterias.get(index2).id}">
+                                                                            <option selected="selected" th:attr="value=${index2+1}"><span th:text="${criterias.get(index2).criteria}" th:remove="tag"></span></option>
+                                                                        </th:block>
+                                                                        <th:block
+                                                                                th:if="${template.questionsById.get(index).criteriaByCriteriaId.id != criterias.get(index2).id}">
+                                                                            <option th:attr="value=${index2+1}"><span th:text="${criterias.get(index2).criteria}" th:remove="tag"></span></option>
+                                                                        </th:block>
+                                                                    </th:block>
+
                                                                 </select>
                                                             </div>
                                                         </div>
