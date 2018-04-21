@@ -46,118 +46,122 @@
                 <div class="col-lg-12">
                     <br>
                     <!--title-->
-                    <div class="row fb-inf">
-                        <div class="col-sm-1"></div>
-                        <div class="col-sm-2"><label class="lb-inf">Tiêu đề</label></div>
-                        <div class="form-group col-sm-6">
-                            <input id="feedback-title" type='text' class="form-control input-group-sm"
-                                   th:value="${feedback.feedbackName}"/>
+                    <form id="details_form">
+                        <div class="row fb-inf">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-2"><label class="lb-inf">Tiêu đề</label></div>
+                            <div class="form-group col-sm-6">
+                                <input name="title" id="feedback-title" type='text' class="form-control input-group-sm"
+                                       th:value="${feedback.feedbackName}"/>
+                            </div>
                         </div>
-                    </div>
-                    <!--end title-->
-                    <!--description-->
-                    <div class="row fb-inf">
-                        <div class="col-sm-1"></div>
-                        <div class="col-sm-2"><label class="lb-inf">Mô tả</label></div>
-                        <div class="form-group col-sm-6">
-                            <input id="feedback-description" type='text' class="form-control input-group-sm"
-                                   th:value="${feedback.feedbackDes}"/>
+                        <!--end title-->
+                        <!--description-->
+                        <div class="row fb-inf">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-2"><label class="lb-inf">Mô tả</label></div>
+                            <div class="form-group col-sm-6">
+                                <input name="descr" id="feedback-description" type='text' class="form-control input-group-sm"
+                                       th:value="${feedback.feedbackDes}"/>
+                            </div>
                         </div>
-                    </div>
-                    <!--end description-->
-                    <!--semester-->
-                    <div class="row feedback-target">
-                        <div class="col-sm-1"></div>
-                        <div class="col-md-2">
-                            <label class="lb-inf">Học kỳ</label>
+                        <!--end description-->
+                        <!--semester-->
+                        <div class="row feedback-target">
+                            <div class="col-sm-1"></div>
+                            <div class="col-md-2">
+                                <label class="lb-inf">Học kỳ</label>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="form-group col-sm-2">
+                                <!--<div class="input-group input-group-sm">-->
+                                <!--<input list="list-types" class="form-control" placeholder="Loại đối tượng"/>-->
+                                <!--</div>-->
+                                <select class="input-group input-group-sm" name="semesterId" id="semesterId">
+                                    <!--<th:block th:each="type : ${alltypes}">-->
+                                    <option th:if="${feedback.semesterBySemesterId != null}"
+                                            th:each="semester : ${allSemesters}"
+                                            th:value="${semester.id}"
+                                            th:text="${semester.title}"
+                                            th:selected="${semester.id==(feedback.semesterBySemesterId.id)}"></option>
+                                    <option th:if="${feedback.semesterBySemesterId == null}"
+                                            th:each="semester : ${allSemesters}"
+                                            th:value="${semester.id}"
+                                            th:text="${semester.title}"></option>
+                                    <!--th:onclick=""-->
+                                    <!--</th:block>-->
+                                </select>
+                            </div>
                         </div>
-                        <div class="col-md-1"></div>
-                        <div class="form-group col-sm-2">
-                            <!--<div class="input-group input-group-sm">-->
-                            <!--<input list="list-types" class="form-control" placeholder="Loại đối tượng"/>-->
-                            <!--</div>-->
-                            <select class="input-group input-group-sm" id="semesterId">
-                                <!--<th:block th:each="type : ${alltypes}">-->
-                                <option th:if="${feedback.semesterBySemesterId != null}"
-                                        th:each="semester : ${allSemesters}"
-                                        th:value="${semester.id}"
-                                        th:text="${semester.title}"
-                                        th:selected="${semester.id==(feedback.semesterBySemesterId.id)}"></option>
-                                <option th:if="${feedback.semesterBySemesterId == null}"
-                                        th:each="semester : ${allSemesters}"
-                                        th:value="${semester.id}"
-                                        th:text="${semester.title}"></option>
-                                <!--th:onclick=""-->
-                                <!--</th:block>-->
-                            </select>
+                        <!--end semester-->
+                        <!--start time & review content & suggestion-->
+                        <div class="row fb-inf">
+                            <!--published at-->
+                            <div class="col-sm-1"></div>
+                            <div class="form-group col-sm-3">
+                                <label class="lb-inf">Bắt đầu nhận phản hồi:</label>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <input name="startdate" id="startdate" type='date' class="form-control input-group-sm"
+                                       th:value="${startdate}"/>
+                            </div>
+                            <!--end published at-->
+                            <div class="col-sm-1"></div>
+                            <!--review content-->
+                            <div class="form-group col-sm-5">
+                                <a id="previewContent" class="add-inf-item-link" href="#" data-toggle="modal"
+                                   data-target="#FBContentModal"><i
+                                        class="fa fa-eye"></i> Xem nội dung feedback
+                                </a>
+                                <br>
+                                <a class="add-inf-item-link" th:href="@{'/modify-suggested-improvement'}"><i
+                                        class="fa fa-lightbulb-o"></i> Xem đề xuất cải tiến
+                                </a>
+                            </div>
+                            <!--end review content-->
                         </div>
-                    </div>
-                    <!--end semester-->
-                    <!--start time & review content & suggestion-->
-                    <div class="row fb-inf">
-                        <!--published at-->
-                        <div class="col-sm-1"></div>
-                        <div class="form-group col-sm-3">
-                            <label class="lb-inf">Bắt đầu nhận phản hồi:</label>
+                        <!--end start time & review content & suggestion-->
+                        <!--closed at-->
+                        <div class="row fb-inf">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-3"><label class="lb-inf">Kết thúc nhận phản hồi</label></div>
+                            <div class="form-group col-sm-2">
+                                <input name="enddate" id="enddate" type='date' class="form-control input-group-sm"
+                                       th:value="${enddate}"/>
+                            </div>
                         </div>
-                        <div class="form-group col-sm-2">
-                            <input id="startdate" type='date' class="form-control input-group-sm"
-                                   th:value="${startdate}"/>
+                        <!--end closed at-->
+                        <br>
+                        <!--feedback type-->
+                        <div class="row feedback-target">
+                            <div class="col-sm-1"></div>
+                            <div class="col-md-3">
+                                <label class="lb-inf">Đối tượng được đánh giá</label>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <!--<div class="input-group input-group-sm">-->
+                                <!--<input list="list-types" class="form-control" placeholder="Loại đối tượng"/>-->
+                                <!--</div>-->
+                                <select class="input-group input-group-sm" name="typeId" id="typeId">
+                                    <!--if feedback type has been defined-->
+                                    <option th:if="${feedback.typeByTypeId != null}"
+                                            th:each="type : ${alltypes}"
+                                            th:value="${type.id}"
+                                            th:text="${type.description}"
+                                            data-toggle="tab" th:href="${'#nav-'+type.id}" role="tab"
+                                            th:selected="${type.id==feedback.typeByTypeId.id}"></option>
+                                    <!--if feedback type has not been defined-->
+                                    <option th:if="${feedback.typeByTypeId == null}"
+                                            th:each="type : ${alltypes}"
+                                            th:value="${type.id}"
+                                            data-toggle="tab" href="#nav-lecturers" role="tab"
+                                            th:text="${type.description}"></option>
+                                </select>
+                                <!--end select feedback type-->
+                            </div>
                         </div>
-                        <!--end published at-->
-                        <div class="col-sm-1"></div>
-                        <!--review content-->
-                        <div class="form-group col-sm-5">
-                            <a id="previewContent" class="add-inf-item-link" href="#" data-toggle="modal"
-                               data-target="#FBContentModal"><i
-                                    class="fa fa-eye"></i> Xem nội dung feedback
-                            </a>
-                            <br>
-                            <a class="add-inf-item-link" th:href="@{'/modify-suggested-improvement'}"><i class="fa fa-lightbulb-o"></i> Xem đề xuất cải tiến
-                            </a>
-                        </div>
-                        <!--end review content-->
-                    </div>
-                    <!--end start time & review content & suggestion-->
-                    <!--closed at-->
-                    <div class="row fb-inf">
-                        <div class="col-sm-1"></div>
-                        <div class="col-sm-3"><label class="lb-inf">Kết thúc nhận phản hồi</label></div>
-                        <div class="form-group col-sm-2">
-                            <input id="enddate" type='date' class="form-control input-group-sm" th:value="${enddate}"/>
-                        </div>
-                    </div>
-                    <!--end closed at-->
-                    <br>
-                    <!--feedback type-->
-                    <div class="row feedback-target">
-                        <div class="col-sm-1"></div>
-                        <div class="col-md-3">
-                            <label class="lb-inf">Đối tượng được đánh giá</label>
-                        </div>
-                        <div class="form-group col-sm-2">
-                            <!--<div class="input-group input-group-sm">-->
-                            <!--<input list="list-types" class="form-control" placeholder="Loại đối tượng"/>-->
-                            <!--</div>-->
-                            <select class="input-group input-group-sm" id="typeId">
-                                <!--if feedback type has been defined-->
-                                <option th:if="${feedback.typeByTypeId != null}"
-                                        th:each="type : ${alltypes}"
-                                        th:value="${type.id}"
-                                        th:text="${type.description}"
-                                        data-toggle="tab" th:href="${'#nav-'+type.id}" role="tab"
-                                        th:selected="${type.id==feedback.typeByTypeId.id}"></option>
-                                <!--if feedback type has not been defined-->
-                                <option th:if="${feedback.typeByTypeId == null}"
-                                        th:each="type : ${alltypes}"
-                                        th:value="${type.id}"
-                                        data-toggle="tab" href="#nav-lecturers" role="tab"
-                                        th:text="${type.description}"></option>
-                            </select>
-                            <!--end select feedback type-->
-                        </div>
-                    </div>
-                    <!--end select feedback type-->
+                        <!--end select feedback type-->
+                    </form>
                     <div class="row form-row feedback-target">
                         <div class="tab-content" id="nav-tabContent">
                             <!--tab pane clazzes-->
@@ -321,14 +325,17 @@
                         <div class="col-md-3">
                             <form id="save-opt">
                                 <div class="radio">
-                                    <label><input type="radio" name="save-option" value="1" checked>Lưu & tiến hành
+                                    <label><input type="radio" name="save-option" value="1"
+                                                  checked onclick="setRequired()">Lưu & tiến hành
                                         feedback</label>
                                 </div>
                                 <div class="radio">
-                                    <label><input type="radio" name="save-option" value="2">Mẫu mới</label>
+                                    <label><input type="radio" name="save-option"  value="2" onclick="setNonRequired()">Mẫu
+                                        mới</label>
                                 </div>
                                 <div class="radio">
-                                    <label><input type="radio" name="save-option" value="3">Cập nhật mẫu đã chọn</label>
+                                    <label><input type="radio" name="save-option" value="3" onclick="setNonRequired()">Cập
+                                        nhật mẫu đã chọn</label>
                                 </div>
                                 <!--</div>-->
                             </form>
@@ -362,7 +369,8 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="row justify-content-center">
-                                        <div id="feedback-content-id" class="col-sm-12 col-12 col-md-6 col-xl-11 col-lg-12 text-center feedback-content">
+                                        <div id="feedback-content-id"
+                                             class="col-sm-12 col-12 col-md-6 col-xl-11 col-lg-12 text-center feedback-content">
                                             <!-- <h3 class="feedback-title">Feedback cho môn học PRJ321 lớp SE1067</h3>
                                              <hr>
                                              <p>Vui lòng hoàn thành các câu hỏi </p>
@@ -801,6 +809,7 @@
         <script th:src="@{/vendor/datatables/jquery.dataTables.js}"></script>
         <script th:src="@{/vendor/datatables/dataTables.bootstrap4.js}"></script>
         <script th:src="@{/vendor/jquery-ui/jquery-ui.js}"></script>
+        <script th:src="@{/vendor/jquery/jquery.validate.min.js}"></script>
         <!-- /.content-wrapper-->
         <script th:src="@{/js/conduct-feedback.js}"></script>
         <script th:inline="javascript" th:src="@{/js/overview-feedback.js}"></script>
