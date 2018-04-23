@@ -2,6 +2,7 @@ package com.sample.sfms.controller;
 
 import com.sample.sfms.entity.Feedback;
 import com.sample.sfms.entity.Question;
+import com.sample.sfms.service.interf.CriteriaService;
 import com.sample.sfms.service.interf.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,11 +23,15 @@ public class FeedbackContentController {
     @Autowired
     private FeedbackService feedbackService;
 
+    @Autowired
+    CriteriaService critService;
+
     @RequestMapping(value = "/edit-feedback-content/{id}")
     private ModelAndView editFeedbackModel(@PathVariable("id") int feedbackId){
         ModelAndView mv = new ModelAndView("edit-feedback-content");
         Feedback feedback = feedbackService.findFeedbackById(feedbackId);
         mv.addObject("feedback", feedback);
+        mv.addObject("criterias", critService.getAllCriterias());
         return mv;
     }
 

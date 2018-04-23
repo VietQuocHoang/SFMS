@@ -46,7 +46,7 @@
                             <td th:text="${clazz.courseByCourseId.code}"></td>
                             <td th:text="${clazz.courseByCourseId.name}"></td>
                             <td th:text="${clazz.className}"></td>
-                            <td class="text-center"><a th:href="@{/view-report-details}">Xem báo cáo <i
+                            <td class="text-center"><a th:href="@{/view-report-details(typeId=3,userId=${clazz.userByLecturerId.id},targetId=${clazz.courseByCourseId.id})}">Xem báo cáo <i
                                     class="fa fa-clipboard"></i></a></td>
                             <!--TODO sửa đây ông eiii-->
                         </tr>
@@ -68,7 +68,7 @@
                         <div class="card-body">
                             <p class="card-text">Phòng ban của bạn: </p>
                             <h5 class="card-title" th:text="${department.name}"></h5>
-                            <a th:href="@{/view-report-detail}" class="card-link">Xem báo cáo chi tiết <i
+                            <a th:href="@{/view-report-details(typeId=4,userId=0,targetId=${department.id})}" class="card-link">Xem báo cáo chi tiết <i
                                     class="fa fa-arrow-right"></i> </a>
                         </div>
                     </div>

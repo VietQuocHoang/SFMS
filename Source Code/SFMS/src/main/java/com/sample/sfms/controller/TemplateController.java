@@ -1,6 +1,7 @@
 package com.sample.sfms.controller;
 
 import com.sample.sfms.entity.Feedback;
+import com.sample.sfms.service.interf.CriteriaService;
 import com.sample.sfms.service.interf.FeedbackService;
 import com.sample.sfms.service.interf.ModifyFeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class TemplateController {
     @Autowired
     ModifyFeedbackService modifyService;
 
+    @Autowired
+    CriteriaService critService;
+
     @RequestMapping(value = "/select-template")
     private ModelAndView loadListTemplate(){
         ModelAndView mv = new ModelAndView("select-template");
@@ -35,14 +39,15 @@ public class TemplateController {
     @GetMapping(value = "/create/{id}")
     private ModelAndView createFeedbackByGet(@PathVariable("id") int templateId, HttpSession session) {
         ModelAndView mv = new ModelAndView("create-from-template-content");
-        Feedback response = modifyService.createFeedbackFromTemplate(templateId).getBody(); //HARD CODE TO DO
+        Feedback response = modifyService.createFeedbackFromTemplate(templateId).getBody();
         session.setAttribute("id", response.getId());
-        Feedback template = feedbackService.findFeedbackById(templateId); //HARD CODE TO DO
+        Feedback template = feedbackService.findFeedbackById(templateId);
       //  if (template.getQuestionsById().size() == 0) {
       //      mv.addObject("template", null);
        // } else {
             mv.addObject("template", template);
        // }
+        mv.addObject("criterias", critService.getAllCriterias());
         mv.addObject("MFModel", response);
         return mv;
     }
@@ -51,11 +56,12 @@ public class TemplateController {
     private ModelAndView createFeedbackByPost(@RequestParam("templateId") String templateId, HttpSession session) {
         int templateIdInt = Integer.parseInt(templateId);
         ModelAndView mv = new ModelAndView("create-from-template-content");
-        Feedback response = modifyService.createFeedbackFromTemplate(templateIdInt).getBody(); //HARD CODE TO DO
+        Feedback response = modifyService.createFeedbackFromTemplate(templateIdInt).getBody();
         session.setAttribute("id", response.getId());
-        Feedback template = feedbackService.findFeedbackById(templateIdInt); //HARD CODE TO DO
+        Feedback template = feedbackService.findFeedbackById(templateIdInt);
         mv.addObject("MFModel", response);
         mv.addObject("template", template);
+        mv.addObject("criterias", critService.getAllCriterias());
         return mv;
     }
 }

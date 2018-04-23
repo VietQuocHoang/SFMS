@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/mobile")
 public class LoginAPI {
 
     private UserService userService;
@@ -18,8 +18,10 @@ public class LoginAPI {
         this.userService = userService;
     }
 
-    @PostMapping("/mobile/login")
-    private boolean mobileLogin(@RequestParam(value = "username", defaultValue = "") String username, @RequestParam(value = "password", defaultValue = "") String password) {
+    @PostMapping("/login")
+    private boolean mobileLogin(@RequestParam(value = "username", defaultValue = "") String username,
+                                @RequestParam(value = "password", defaultValue = "") String password) {
+
         return userService.findActiveUserByUserNameAndPassword(username, password);
     }
 

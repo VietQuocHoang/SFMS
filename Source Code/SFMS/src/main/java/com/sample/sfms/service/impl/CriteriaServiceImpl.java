@@ -121,4 +121,9 @@ public class CriteriaServiceImpl implements CriteriaService{
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    @Override
+    public List<Criteria> getAllCriterias() {
+        return criteriaRepo.findAll();
+    }
 }
