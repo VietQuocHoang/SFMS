@@ -4,8 +4,8 @@ import com.sample.sfms.entity.Clazz;
 import com.sample.sfms.entity.Semester;
 import com.sample.sfms.model.FeedbackReportModel;
 import com.sample.sfms.model.feedback.FeedbackTargetWrapper;
+import com.sample.sfms.model.report.reportList.ReportLecturerCourse;
 import com.sample.sfms.model.report.reportSemester.ReportSemesterModel;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -28,4 +28,6 @@ public interface ReportService {
     List<Clazz> findClazzByLectureId(int lectureId);
 
     List<Semester> findAllSemester();
+
+    List<ReportLecturerCourse> findAllCourseCorrespondingToCurrentLecturer();
 }

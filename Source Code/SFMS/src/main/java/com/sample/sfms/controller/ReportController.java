@@ -1,14 +1,16 @@
 package com.sample.sfms.controller;
 
 import com.sample.sfms.entity.Clazz;
-import com.sample.sfms.entity.Feedback;
 import com.sample.sfms.entity.PrivilegeRole;
 import com.sample.sfms.entity.User;
 import com.sample.sfms.model.report.reportSemester.ReportSemesterModel;
 import com.sample.sfms.service.interf.ReportService;
 import com.sample.sfms.service.interf.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -55,7 +57,7 @@ public class ReportController {
                 mav.setViewName("view-report");
                 mav.addObject("feedbackTarget", reportService.loadListFeedbackTargetWrapper());
             } else if (p.getPrivilege().getName().equals(SEE_SELF_REPORT)) {
-                mav.addObject("clazzes", user.getClazzesById());
+                mav.addObject("courses", reportService.findAllCourseCorrespondingToCurrentLecturer());
                 mav.setViewName("view-my-report");
             } else if (p.getPrivilege().getName().equals(SEE_DEPARTMENT_REPORT)) {
                 mav.addObject("department", user.getDepartmentByDepartmentId());

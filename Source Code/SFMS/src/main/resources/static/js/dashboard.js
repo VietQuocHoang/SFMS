@@ -43,11 +43,20 @@ $(document).ready(() => {
                 let obj = [name[j].trim(), parseInt(value[j].trim())];
                 dataArr.push(obj);
             }
+            let options = {
+                title: title,
+                sliceVisibilityThreshold: 0,
+                animation: {
+                    duration: 1000,
+                    easing: 'out',
+                    startup: true,
+                },
+                pieHole: 0.4,
+            };
             let data = new google.visualization.DataTable();
             data.addColumn('string', 'name');
             data.addColumn('number', 'value');
             data.addRows(dataArr);
-            let options = {title: title, sliceVisibilityThreshold: 0};
             let chart = new google.visualization.PieChart(document.getElementById(id));
             chart.draw(data, options);
         }

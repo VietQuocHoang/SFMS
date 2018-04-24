@@ -10,6 +10,7 @@
     <title>Xem báo cáo của tôi</title>
     <div th:replace="fragments/core-css"></div>
     <link rel="stylesheet" th:href="@{/vendor/datatables/dataTables.bootstrap4.css}">
+    <link rel="stylesheet" th:href="@{/css/view-my-report.css}">
 </head>
 <body class="fixed-nav sticky-footer" id="page-top">
 <div th:replace="fragments/navbar-side"></div>
@@ -18,7 +19,7 @@
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="index.html">Dashboard</a>
+                <a th:href="@{/dasboard}">Dashboard</a>
             </li>
             <li class="breadcrumb-item active">Báo cáo của tôi</li>
         </ol>
@@ -27,44 +28,60 @@
                 <h1>Các báo cáo của tôi</h1>
             </div>
         </div>
+        <div class="row search-container justify-content-center">
+            <div class="col-10 col-sm-10 col-md-4 col-lg-4 col-xl-4 search-wrapper">
+                <input class="text" placeholder="Tìm kiếm môn học">
+                <button><i class="fa fa-fw fa-search"></i></button>
+            </div>
+        </div>
         <div class="row">
-            <div class="col-10 offset-1">
-                <th:block th:if="${clazzes!=null}">
-                    <table class="table table-bordered" id="tblMyReport">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Mã môn</th>
-                            <th>Tên môn</th>
-                            <th>Lớp</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="clazz:${clazzes}">
-                            <td th:text="${clazzStat.count}"></td>
-                            <td th:text="${clazz.courseByCourseId.code}"></td>
-                            <td th:text="${clazz.courseByCourseId.name}"></td>
-                            <td th:text="${clazz.className}"></td>
-                            <td class="text-center"><a th:href="@{/view-report-details(typeId=3,userId=${clazz.userByLecturerId.id},targetId=${clazz.courseByCourseId.id})}">Xem báo cáo <i
-                                    class="fa fa-clipboard"></i></a></td>
-                            <!--TODO sửa đây ông eiii-->
-                        </tr>
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                            <th>#</th>
-                            <th>Mã môn</th>
-                            <th>Tên môn</th>
-                            <th>Lớp</th>
-                            <th></th>
-                        </tr>
-                        </tfoot>
-                    </table>
+            <div class="card-wrapper">
+                <th:block th:if="${courses!=null}">
+                    <div class="card" th:each="course:${courses}">
+                        <div class="card-body">
+                            <p class="card-text">Tên môn: </p>
+                            <h5 class="card-title" th:text="${course.courseName}"></h5>
+                            <p class="card-text">Mã môn: </p>
+                            <h5 class="card-title" th:text="${course.code}"></h5>
+                            <a th:href="@{/view-report-details(typeId=3,userId=${lecturerId},targetId=${course.courseId})}"
+                               class="card-link">Xem báo cáo chi tiết <i
+                                    class="fa fa-arrow-right"></i> </a>
+                        </div>
+                    </div>
+                    <!--<table class="table table-bordered" id="tblMyReport">-->
+                    <!--<thead>-->
+                    <!--<tr>-->
+                    <!--<th>#</th>-->
+                    <!--<th>Mã môn</th>-->
+                    <!--<th>Tên môn</th>-->
+                    <!--<th>Lớp</th>-->
+                    <!--<th></th>-->
+                    <!--</tr>-->
+                    <!--</thead>-->
+                    <!--<tbody>-->
+                    <!--<tr th:each="clazz:${clazzes}">-->
+                    <!--<td th:text="${clazzStat.count}"></td>-->
+                    <!--<td th:text="${clazz.courseByCourseId.code}"></td>-->
+                    <!--<td th:text="${clazz.courseByCourseId.name}"></td>-->
+                    <!--<td th:text="${clazz.className}"></td>-->
+                    <!--<td class="text-center"><a th:href="@{/view-report-details(typeId=3,userId=${clazz.userByLecturerId.id},targetId=${clazz.courseByCourseId.id})}">Xem báo cáo <i-->
+                    <!--class="fa fa-clipboard"></i></a></td>-->
+                    <!--&lt;!&ndash;TODO sửa đây ông eiii&ndash;&gt;-->
+                    <!--</tr>-->
+                    <!--</tbody>-->
+                    <!--<tfoot>-->
+                    <!--<tr>-->
+                    <!--<th>#</th>-->
+                    <!--<th>Mã môn</th>-->
+                    <!--<th>Tên môn</th>-->
+                    <!--<th>Lớp</th>-->
+                    <!--<th></th>-->
+                    <!--</tr>-->
+                    <!--</tfoot>-->
+                    <!--</table>-->
                 </th:block>
                 <th:block th:if="${department!=null}">
-                    <div class="card" style="box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);">
+                    <div class="card">
                         <div class="card-body">
                             <p class="card-text">Phòng ban của bạn: </p>
                             <h5 class="card-title" th:text="${department.name}"></h5>

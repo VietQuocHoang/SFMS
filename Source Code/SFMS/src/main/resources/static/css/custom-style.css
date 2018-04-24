@@ -24,6 +24,7 @@
 
 /*search bar*/
 .search-container{
+    align-items: center;
     height:40px;
 }
 .search-wrapper{

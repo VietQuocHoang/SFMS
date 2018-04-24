@@ -9,12 +9,11 @@ import com.sample.sfms.model.report.reportSemester.*;
 import com.sample.sfms.repository.*;
 import com.sample.sfms.service.interf.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -56,6 +55,9 @@ public class ReportServiceImpl implements ReportService {
     @Autowired
     private SemesterRepository semesterRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     public List<Clazz> loadListClassByCourseLecturerSemester(int type, int userId, int courseId, int semesterId) {
         return clazzRepository.findListClassByCourseLecturerSemester(type, userId, courseId, semesterId);
@@ -85,6 +87,20 @@ public class ReportServiceImpl implements ReportService {
         List<Semester> semesters = new ArrayList<>();
         semesters = semesterRepository.findAllSemesters();
         return semesters;
+    }
+
+    @Override
+    public List<ReportLecturerCourse> findAllCourseCorrespondingToCurrentLecturer() {
+        User user = getAuthorizedUser();
+        List<Object[]> objectList = clazzRepository.findAllCourseCorrespondingToLecturer(user.getId());
+        List<ReportLecturerCourse> reportLecturerCourseList = new ArrayList<>();
+        ReportLecturerCourse lecturerCourse;
+        for (Object[] o : objectList) {
+            lecturerCourse = new ReportLecturerCourse();
+            lecturerCourse.mapFromObject(o);
+            reportLecturerCourseList.add(lecturerCourse);
+        }
+        return reportLecturerCourseList;
     }
 
     public List<FeedbackReportModel> loadReportDetail(int targetId, int userId, int typeId, int semesterId) {
@@ -427,4 +443,11 @@ public class ReportServiceImpl implements ReportService {
         }
         return resultList;
     }
+
+    private User getAuthorizedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        return userRepository.findByUsername(username);
+    }
+
 }
