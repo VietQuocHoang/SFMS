@@ -940,7 +940,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
             List<Clazz> results = new ArrayList<>();
             Clazz c;
             for (int id : ids) {
-                c = feedbackRepo.findOne(id).getClazzByClazzId();
+                    c = feedbackRepo.findOne(id).getClazzByClazzId();
                 if (c != null) results.add(c);
             }
             return new ResponseEntity<>(results, HttpStatus.OK);
