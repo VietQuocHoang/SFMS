@@ -1,6 +1,7 @@
 package com.sample.sfms.controller;
 
 import com.sample.sfms.entity.Feedback;
+import com.sample.sfms.entity.Optionn;
 import com.sample.sfms.entity.Question;
 import com.sample.sfms.service.interf.CriteriaService;
 import com.sample.sfms.service.interf.FeedbackService;
@@ -12,12 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by Binh Nguyen on 10-Mar-18.
  */
 @RestController
+@RequestMapping("/feedbacks-content")
 public class FeedbackContentController {
 
     @Autowired
@@ -30,6 +34,17 @@ public class FeedbackContentController {
     private ModelAndView editFeedbackModel(@PathVariable("id") int feedbackId){
         ModelAndView mv = new ModelAndView("edit-feedback-content");
         Feedback feedback = feedbackService.findFeedbackById(feedbackId);
+        List<Integer> isOther = new ArrayList<>();
+        for (Question question : feedback.getQuestionsById()) {
+            int other = 0;
+            for (Optionn option : question.getOptionsById()) {
+                if (option.getOptionnContent().equals("Khác") && option.getPoint() == 0) {
+                    other = 1;
+                }
+            }
+            isOther.add(other);
+        }
+        mv.addObject("others", isOther);
         mv.addObject("feedback", feedback);
         mv.addObject("criterias", critService.getAllCriterias());
         return mv;

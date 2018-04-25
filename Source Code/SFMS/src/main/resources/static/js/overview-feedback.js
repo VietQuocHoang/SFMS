@@ -577,6 +577,7 @@ function setStartEndConstraint() {
 $("#btnSave").click(function () {
     var opt = $('input[name="save-option"]:checked', '#save-opt').val();
     // alert(opt);
+ //   var form = $("#details_form");
     if($("#details_form").valid()){
     $.ajax({
         url: '/sfms/api/modify-feedback/save/option/' + opt,
@@ -616,7 +617,7 @@ $("#btnCancel").click(function () {
 $("#previewContent").click(function () {
     var feedbackID = document.getElementById("feedbackID").innerHTML;
     $.ajax({
-        url: _ctx + '/preview-feedback/' + feedbackID,
+        url: _ctx + '/feedbacks-content/preview-feedback/' + feedbackID,
         dataType: 'html',
         success: function (data) {
             var myNode = document.getElementById("feedback-content-id");

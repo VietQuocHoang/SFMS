@@ -159,12 +159,21 @@ public class QuestionServiceImpl implements QuestionService {
             question.setType(model.getType());
             question.setCriteriaByCriteriaId(criteriaRepository.findById(model.getCriteriaId()));
             if (model.isRequireOther()) {
-                OptionCreateModel optionCreateModel = new OptionCreateModel();
-                optionCreateModel.setQuestion(question);
-                optionCreateModel.setOptionContent("Khác");
-                optionCreateModel.setPoint(0.0);
-                optionCreateModel.setQuestionId(question.getId());
-                optionnService.add(optionCreateModel);
+                boolean flag = false;
+                for (Optionn option : listExistedOption) {
+                    if (option.getOptionnContent().equals("Khác") && option.getPoint()==0) {
+                        flag = true;
+                    }
+                }
+                if (!flag) {
+                    OptionCreateModel optionCreateModel = new OptionCreateModel();
+                    optionCreateModel.setQuestion(question);
+                    optionCreateModel.setOptionContent("Khác");
+                    optionCreateModel.setPoint(0.0);
+                    optionCreateModel.setQuestionId(question.getId());
+                    optionnService.add(optionCreateModel);
+                }
+
             } else {
                 for (Optionn option : question.getOptionsById()) {
                     if (option.getOptionnContent().equals("Khác") && option.getPoint()==0) {

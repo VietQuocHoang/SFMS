@@ -23,7 +23,7 @@
             <h3 class="feedback-title"
                 th:text="${feedback.majorByMajorId != null ?'Ngành ' + feedback.majorByMajorId.name + '-' + feedback.semesterBySemesterId.title :''}"></h3>
             <h3 class="feedback-title"
-                th:text="${feedback.clazzByClazzId != null?'Lớp ' + feedback.clazzByClazzId.clazzName+'-' + feedback.userByLecturerId.fullname + '-' + feedback.semesterBySemesterId.title:''}"></h3>
+                th:text="${feedback.clazzByClazzId != null?'Lớp ' + feedback.clazzByClazzId.className+'-' + feedback.clazzByClazzId.userByLecturerId.fullname + '-' + feedback.semesterBySemesterId.title:''}"></h3>
             <h3 class="feedback-title"
                 th:text="${feedback.courseByCourseId != null?'Môn '+ feedback.courseByCourseId.name + '-' + feedback.semesterBySemesterId.title:''}"></h3>
             <hr/>
