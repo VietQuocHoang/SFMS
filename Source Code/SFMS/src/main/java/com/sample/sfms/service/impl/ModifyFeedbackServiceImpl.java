@@ -131,25 +131,54 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     public ResponseEntity<Feedback> updateSelectedTemplate(int feedbackId, List<Integer> targetIds) {
         try {
             Feedback feedback = feedbackRepo.findOne(feedbackId), target = new Feedback();
-            feedback.setId(feedback.getFeedbackByReferenceId().getId());
-            feedback.setFeedbackByReferenceId(null);
-            for (int id : targetIds) {
-                target = feedbackRepo.findOne(id);
+            for (int targetId : targetIds) {
+                target = feedbackRepo.findOne(targetId);
                 if (target != null) {
-                    feedbackRepo.delete(target);
+                    deleteFeedback(target);
                 }
             }
+//            int deletedid = feedbackId;
+//            feedback.setId(feedback.getFeedbackByReferenceId().getId());
+//            feedback.setFeedbackByReferenceId(null);
             Feedback template = feedback.getFeedbackByReferenceId();
-            for (Question q : template.getQuestionsById()) {
-                questionRepo.delete(q);
+            if (template == null) return saveTemplateFeadback(feedbackId, targetIds);
+            if (template != null) {
+                if (template.getQuestionsById() != null) {
+                    for (Question q : template.getQuestionsById()) {
+                        for (Optionn opt : q.getOptionsById()) {
+                            answerRepo.delete(opt.getAnswersById());
+                        }
+                        optionRepo.delete(q.getOptionsById());
+                    }
+                    questionRepo.delete(template.getQuestionsById());
+                }
             }
-            template = clone(feedback, template);
+            feedbackRepo.save(template);
+            template.setFeedbackName(feedback.getFeedbackName());
+            template.setFeedbackDes(feedback.getFeedbackDes());
+            template.setTypeByTypeId(feedback.getTypeByTypeId());
+            template.setFeedbackName(feedback.getFeedbackName());
             template.setStartDate(null);
             template.setEndDate(null);
             template.setIsTemplate(true);
             template.setIsPublished(false);
             template.setSemesterBySemesterId(null);
-            return new ResponseEntity<>(feedbackRepo.save(feedback), HttpStatus.OK);
+            template = feedbackRepo.save(template);
+            Question question = new Question();
+            Optionn optionn = new Optionn();
+            for (Question q : feedback.getQuestionsById()) {
+                question = new Question(q.getType(), q.getSuggestion(), q.getIsRequied(), q.getQuestionContent(),
+                        q.getCriteriaByCriteriaId(), template);
+                question = questionRepo.save(question);
+                for (Optionn o : q.getOptionsById()) {
+                    optionn = new Optionn(o.getOptionnContent(), o.getPoint(), question);
+                    optionn = optionRepo.save(optionn);
+                }
+            }
+            deleteFeedback(feedbackRepo.findOne(feedbackId));
+//            Feedback response = feedbackRepo.save(feedback);
+//            deleteFeedback(feedbackRepo.findOne(deletedid));
+            return new ResponseEntity<>(template, HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -298,7 +327,6 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     }
 
     public void deleteFeedback(Feedback response) {
-
         userFeedbackRepo.delete(response.getUserFeedbacksById());
 //                            response.setUserFeedbacksById(null);
         feedbackRepo.delete(response.getFeedbacksById());
@@ -850,7 +878,8 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
         List<User> l = userRepo.findAll();
         List<User> result = userRepo.findAll();
         for (User u : l) {
-            if (!(u.getRoleByRoleId().getRoleName().equals("Giảng viên")||(u.getRoleByRoleId().getRoleName().equals("Trưởng Ban") && u.getMajorByMajorId()!=null))) result.remove(u);
+            if (!(u.getRoleByRoleId().getRoleName().equals("Giảng viên") || (u.getRoleByRoleId().getRoleName().equals("Trưởng Ban") && u.getMajorByMajorId() != null)))
+                result.remove(u);
         }
         return result;
     }
