@@ -2,6 +2,7 @@
 .btn-raised-primary{
     color:#fff;
     background-color: #08AE9E;
+    outline: none;
 }
 .btn-raised-primary:hover{
     background-color: #00877e;

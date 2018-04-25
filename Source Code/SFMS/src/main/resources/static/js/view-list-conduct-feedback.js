@@ -44,7 +44,6 @@ function updateFilter() {
         let
             self = $(this),
             result = true; // not guilty until proven guilty
-        console.log(self);
         Object.keys(filters).forEach(function (filter) {
             if (filters[filter] && (filters[filter] != 'All')) {
                 result = result && filters[filter] === self.data(filter);

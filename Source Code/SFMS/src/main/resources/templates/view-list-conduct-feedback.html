@@ -24,7 +24,7 @@
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="index.html">Dashboard</a>
+                <a th:href="@{/index.html}">Dashboard</a>
             </li>
             <li class="breadcrumb-item">
                 <a href="#">Quản lý feedback</a>
@@ -38,15 +38,29 @@
              </div>
          </div>-->
         <div class="row">
+            <div class="col-12" style="margin-left:1rem;padding-left:1rem; padding-right:1rem;">
+                <h1>Các feedback dành cho tôi</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 table-container">
+                <div class="filter-bar-holder"></div>
+                <div class="tab-menu-holder">
+                    <a class="tab-menu-item active">Tất cả</a>
+                    <a class="tab-menu-item">Phòng ban</a>
+                    <a class="tab-menu-item">Môn học</a>
+                    <a class="tab-menu-item">Khóa học</a>
+                    <a class="tab-menu-item">Lớp</a>
+                    <a class="more"><i class="fa fa-ellipsis-v"></i> </a>
+                </div>
+                <div class="table-wrapper"></div>
+            </div>
+        </div>
 
+        <div class="row">
             <!-- div feedback content col-sm-12 col-12 col-md-9 col-xl-9 col-lg-12-->
             <div class="col-12">
-                <h3 class="feedback-title" style="text-align: left">
-                    Danh sách Feedbacks
-                </h3>
                 <div class="tab">
-                    <!-- <button class="tablinks" onclick="openCity(event, 'all')">Tất cả</button>
-                     <button class="tablinks" onclick="openCity(event, 'undone')">Chưa hoàn thành</button>-->
                     <div class="tablinks-div">
                         &nbsp;&nbsp;&nbsp;
                         Trạng thái
@@ -76,7 +90,6 @@
                           <input style="height: 35px; width: 150px; border-radius: 0.25em" type="" name="" value="" />
                         -->
                     </div>
-
                 </div>
                 <th:block th:if="${feedbacks.isEmpty()}">
                     <div class="empty-notify-holder">
