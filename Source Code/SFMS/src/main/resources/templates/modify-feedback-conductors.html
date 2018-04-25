@@ -85,71 +85,16 @@
                     <div class="tab-pane fade" id="nav-lecturers" role="tabpanel"
                          aria-labelledby="nav-lecturers-tab">
                         <!--filter bar-->
-                        <div class="form-row">
-                            <!--major-->
-                            <div class="form-group col-sm-2">
-                                <select id="inputMajorForLect" class="form-control">
-                                    <option selected>--Ngành--</option>
-                                    <option>An toàn thông tin</option>
-                                    <option>Kỹ thuật phần mềm</option>
-                                    <option>Thiết kế đồ họa</option>
-                                    <option>Quản trị kinh doanh</option>
-                                    <option>Ngôn ngữ Nhật</option>
-                                </select>
-                            </div>
-                            <!--end major-->
-                            <!--SubMajor-->
-                            <div class="form-group col-sm-3">
-                                <select id="inputSubMajorForLect" class="form-control">
-                                    <option selected>--Phòng ban/Chuyên ngành--</option>
-                                    <option>Hệ thống thông tin</option>
-                                    <option>Kỹ sư cầu nối Nhật Bản</option>
-                                    <option>Nhúng</option>
-                                    <option>Computing Fundamentals</option>
-                                    <option>Mathematics</option>
-                                    <option>Software Engineering</option>
-                                    <option>Accounting</option>
-                                    <option>Japanese</option>
-                                    <option>Chinese</option>
-                                    <option>Economics</option>
-                                    <option>Finance</option>
-                                </select>
-                            </div>
-                            <!--Subject-->
-                            <div class="form-group col-sm-2">
-                                <select id="inputSubjectForLect" class="form-control">
-                                    <option selected>--Môn học--</option>
-                                    <option>Database Warehouse - DBW301</option>
-                                    <option>Capstone Project-DBW301</option>
-                                    <option>Cloud Computing - PRC391</option>
-                                    <option>Digital Fundamentals - DGT201</option>
-                                    <option>E-Commerce - ISC301</option>
-                                    <option>Embedded Software Development - ESS301</option>
-                                    <option>Human Computer Interaction - HCI201</option>
-                                </select>
-                            </div>
-                            <!--end Subjects-->
-                            <!--Role-->
-                            <div class="form-group col-sm-2">
-                                <select id="inputRoleForLect" class="form-control">
-                                    <option selected>--Phân quyền--</option>
-                                    <option>Trưởng phòng</option>
-                                    <option>Trưởng ban</option>
-                                    <option>Giảng viên</option>
-                                    <option>Nhân viên</option>
-                                    <option>Bò viên</option>
-                                </select>
-                            </div>
-                        </div>
+
                         <!--table lecturers-->
                         <div class="row">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="tbl-lecturers" width="100%" cellspacing="0">
                                     <thead>
                                     <tr>
-                                        <th><input class="btn btn-check-all" type="button" name="target"
-                                                   id="btn-all-lecturer1" value="Chọn tất cả"/></th>
+                                        <th></th>
                                         <th>Họ & tên</th>
+                                        <th>Mã</th>
                                         <th>Ngành</th>
                                         <th>Phòng ban</th>
                                         <th>Chức vụ</th>
@@ -158,9 +103,9 @@
                                     </thead>
                                     <tfoot>
                                     <tr>
-                                        <th><input class="btn btn-check-all" type="button" name="target"
-                                                   id="btn-all-lecturer2" value="Chọn tất cả"/></th>
+                                        <th></th>
                                         <th>Họ & tên</th>
+                                        <th>Mã</th>
                                         <th>Ngành</th>
                                         <th>Phòng ban</th>
                                         <th>Chức vụ</th>
@@ -179,71 +124,26 @@
                     <div class="tab-pane fade" id="nav-staffs" role="tabpanel"
                          aria-labelledby="nav-lecturers-tab">
                         <!--filter bar-->
-                        <div class="form-row">
-                            <!--major-->
-                            <div class="form-group col-sm-2">
-                                <select id="inputMajorForStaff" class="form-control">
-                                    <option selected>--Ngành--</option>
-                                    <option>An toàn thông tin</option>
-                                    <option>Kỹ thuật phần mềm</option>
-                                    <option>Thiết kế đồ họa</option>
-                                    <option>Quản trị kinh doanh</option>
-                                    <option>Ngôn ngữ Nhật</option>
-                                </select>
-                            </div>
-                            <!--end major-->
-                            <!--SubMajor-->
-                            <div class="form-group col-sm-3">
-                                <select id="inputSubMajorForStaff" class="form-control">
-                                    <option selected>--Phòng ban/Chuyên ngành--</option>
-                                    <option>Ban Giám Hiệu</option>
-                                    <option>Phòng Đào Tạo</option>
-                                    <option>Phòng Khảo Thí</option>
-                                    <option>Phòng Công tác sinh viên</option>
-                                    <option>Phòng IT</option>
-                                    <option>Kỹ sư cầu nối Nhật Bản</option>
-                                    <option>Nhúng</option>
-                                    <option>Computing Fundamentals</option>
-                                    <option>Mathematics</option>
-                                    <option>Software Engineering</option>
-                                    <option>Accounting</option>
-                                    <option>Japanese</option>
-                                    <option>Chinese</option>
-                                    <option>Economics</option>
-                                    <option>Finance</option>
-                                </select>
-                            </div>
-                            <!--Role-->
-                            <div class="form-group col-sm-2">
-                                <select id="inputRoleForStaff" class="form-control">
-                                    <option selected>--Phân quyền--</option>
-                                    <option>Trưởng phòng</option>
-                                    <option>Trưởng ban</option>
-                                    <option>Giảng viên</option>
-                                    <option>Nhân viên</option>
-                                    <option>Bò viên</option>
-                                </select>
-                            </div>
-                        </div>
+
                         <!--table staffs-->
                         <div class="row">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="tbl-staffs" width="100%" cellspacing="0">
                                     <thead>
                                     <tr>
-                                        <th><input class="btn btn-check-all" type="button" name="target" id="btn-all-staff1"
-                                                   value="Chọn tất cả"/></th>
+                                        <th></th>
                                         <th>Họ & tên</th>
-                                        <th>Phòng ban/Chuyên ngành</th>
+                                        <th>Mã</th>
+                                        <th>Phòng ban</th>
                                         <th>Chức vụ</th>
                                     </tr>
                                     </thead>
                                     <tfoot>
                                     <tr>
-                                        <th><input class="btn btn-check-all" type="button" name="target" id="btn-all-staff2"
-                                                   value="Chọn tất cả"/></th>
+                                        <th></th>
                                         <th>Họ & tên</th>
-                                        <th>Phòng ban/Chuyên ngành</th>
+                                        <th>Mã</th>
+                                        <th>Phòng ban</th>
                                         <th>Chức vụ</th>
                                     </tr>
                                     </tfoot>
@@ -331,8 +231,7 @@
                                 <table class="table table-bordered" id="tbl-students" width="100%" cellspacing="0">
                                     <thead>
                                     <tr>
-                                        <th><input class="btn btn-check-all" type="button" name="target"
-                                                   value="Chọn tất cả"/></th>
+                                        <th></th>
                                         <th>Họ & tên</th>
                                         <th>MSSV</th>
                                         <th>Chuyên ngành</th>
@@ -344,8 +243,7 @@
                                     </thead>
                                     <tfoot>
                                     <tr>
-                                        <th><input class="btn btn-check-all" type="button" name="target"
-                                                   value="Chọn tất cả"/></th>
+                                        <th></th>
                                         <th>Họ & tên</th>
                                         <th>MSSV</th>
                                         <th>Chuyên ngành</th>
