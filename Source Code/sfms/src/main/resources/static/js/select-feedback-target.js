@@ -79,42 +79,31 @@ $(document).ready(function () {
             showedTargetTab = $('#nav-major');
             showedTargetTab.addClass("show active");
             loadMajorTable();
-            setInterval(function () {
-                loadMajorTargets();
-                showedTable.ajax.reload(null, false); // user paging is not reset on reload
-            }, 3000);
+            reloadTable();
             break;
         case '2':
             showedTargetTab = $('#nav-course');
             showedTargetTab.addClass("show active");
             loadCourseTable();
-            setInterval(function () {
-                loadCourseTargets();
-                showedTable.ajax.reload(null, false); // user paging is not reset on reload
-            }, 3000);
+            reloadTable();
             break;
         case '3':
             showedTargetTab = $('#nav-clazz');
             showedTargetTab.addClass("show active");
             loadClazzTable();
-            setInterval(function () {
-                loadClazzTargets();
-                showedTable.ajax.reload(null, false); // user paging is not reset on reload
-            }, 3000);
+            reloadTable();
             break;
         case '4':
             showedTargetTab = $('#nav-department');
             showedTargetTab.addClass("show active");
             loadDepartmentTable();
-            setInterval(function () {
-                loadDepartmentTargets();
-                showedTable.ajax.reload(null, false); // user paging is not reset on reload
-            }, 3000);
+            reloadTable();
             break;
         default :
             showedTargetTab = $('#nav-major');
             showedTargetTab.addClass("show active");
             loadMajorTable();
+            reloadTable();
             // showedTable = $("#tbl-majors");
             break;
     }
@@ -174,16 +163,26 @@ var lecturer_to_nameandcode = function (data, type, full, meta) {
 }
 
 function reloadTable() {
-    // alert("hehe");
-    switch ($('#typeId').val()) {
-        case '1':loadMajorTargets();break;
-        case '2':loadCourseTargets();break;
-        case '3':loadClazzTargets();break;
-        case '4':loadDepartmentTargets();break;
-    }
     setTimeout(function () {
-        showedTable.ajax.reload(null, false);// reload without come back to the first page
-    }, 2000); //reload the table after 0.2s
+        switch ($('#typeId').val()) {
+            case 1:
+                loadMajorTargets();
+                showedTable.ajax.reload(null, false);// reload without come back to the first page;
+                break;
+            case 2:
+                loadCourseTargets();
+                showedTable.ajax.reload(null, false);// reload without come back to the first page
+                break;
+            case 3:
+                loadClazzTargets();
+                showedTable.ajax.reload(null, false);// reload without come back to the first page
+                break;
+            case 4:
+                loadDepartmentTargets();
+                showedTable.ajax.reload(null, false);// reload without come back to the first page
+                break;
+        }
+    },3000); //reload the table after 0.2s
 }
 
 // $("#filter-clazz-lecturer").change(function () {
@@ -205,7 +204,7 @@ function reloadTable() {
 function loadDepartmentTable() {
     $('#tbl-departments').DataTable().destroy();
     loadDepartmentTargets();
-    showedTable=$('#tbl-departments').DataTable(
+    showedTable = $('#tbl-departments').DataTable(
         {
             "ajax": {
                 "url": "/sfms/api/modify-feedback/list/departments",
@@ -249,7 +248,7 @@ function loadDepartmentTable() {
 function loadMajorTable() {
     $('#tbl-majors').DataTable().destroy();
     loadMajorTargets();
-    showedTable=$('#tbl-majors').DataTable(
+    showedTable = $('#tbl-majors').DataTable(
         {
             "ajax": {
                 "url": "/sfms/api/modify-feedback/list/majors",
@@ -294,7 +293,7 @@ function loadMajorTable() {
 function loadCourseTable() {
     $('#tbl-courses').DataTable().destroy();
     loadCourseTargets();
-    showedTable=$('#tbl-courses').DataTable(
+    showedTable = $('#tbl-courses').DataTable(
         {
             "ajax": {
                 "url": "/sfms/api/modify-feedback/list/courses",
@@ -641,7 +640,7 @@ function loadMajorTargets() {
                 // console.log(targets);
             },
             error: function (xhr) {
-                alert(xhr.message);
+                // alert(xhr.message);
             }
         }
     )
@@ -687,12 +686,18 @@ function addTarget(target) {
         data: JSON.stringify(target),
         success: function (data, status, xhr) {
             if (xhr.status === 200) {
-                console.log("targets now" + targets)
+                console.log("targets now" + targets);
+                // switch($('#typeId').val()){
+                //     case 1: loadMajorTargets();reloadTable();break;
+                //     case 2: loadCourseTargets();reloadTable(); break;
+                //     case 3: loadClazzTargets(); reloadTable();break;
+                //     case 4: loadDepartmentTargets(); reloadTable();break;
+                // }
                 reloadTable();
             }
         },
         error: function () {
-            alert("fuck")
+            // alert("fuck")
         }
     })
 }
@@ -725,12 +730,29 @@ function removeTarget(target) {
         data: JSON.stringify(target),
         success: function (data, status, xhr) {
             if (xhr.status === 200) {
-                loadClazzTargets();
+                // switch ($('#typeId').val()) {
+                //     case 1:
+                //         loadMajorTargets();
+                //         reloadTable();
+                //         break;
+                //     case 2:
+                //         loadCourseTargets();
+                //         reloadTable();
+                //         break;
+                //     case 3:
+                //         loadClazzTargets();
+                //         reloadTable();
+                //         break;
+                //     case 4:
+                //         loadDepartmentTargets();
+                //         reloadTable();
+                //         break;
+                // }
                 reloadTable();
             }
         },
         error: function () {
-            alert("fuck")
+            // alert("fuck")
         }
     })
 }

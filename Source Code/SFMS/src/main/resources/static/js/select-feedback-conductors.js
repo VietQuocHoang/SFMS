@@ -33,7 +33,7 @@ function reloadTable() {
         tblStudent.ajax.reload(null, false);// reload without come back to the first page
         tblLecturer.ajax.reload(null, false);
         tblStaff.ajax.reload(null, false);
-    }, 1000); //reload the table after 0.2s
+    }, 3000); //reload the table after 0.2s
 }
 
 var selected_to_button = function (data, type, full, meta) {

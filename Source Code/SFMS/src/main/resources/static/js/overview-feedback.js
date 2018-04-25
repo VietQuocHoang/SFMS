@@ -328,7 +328,7 @@ function loadClazzTable() {
 function reloadTable() {
     setTimeout(function () {
         showedTable.ajax.reload(null, false);// reload without come back to the first page
-    }, 200); //reload the table after 0.2s
+    }, 3000); //reload the table after 0.2s
 }
 
 $("#feedback-title").focusout(function () {
@@ -425,7 +425,7 @@ $("#typeId").change(function () {
                 }
             },
             error: function (xhr) {
-                alert("fuck");
+                // alert("fuck");
             }
         }
     );
