@@ -94,7 +94,7 @@ $(".btn-preview").click(function() {
    // alert(test);
    //alert($('button').siblings($('input[id="templateID"]')).val());
    $.ajax({
-        url: _ctx +'/preview-feedback/' + templateID,
+        url: _ctx +'/feedbacks-content/preview-feedback/' + templateID,
         dataType: 'html',
         success: function(data) {
             document.getElementById('templateID').value = templateID;

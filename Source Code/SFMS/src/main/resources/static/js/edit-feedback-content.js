@@ -189,7 +189,8 @@ $(".question-list-wrapper").sortable({
                     "                                            </div>" +
                     "                                            <div class='form-group row'>" +
                     "                                                <label class='col-4 col-form-label text-right'>Loại đánh giá: </label>" +
-                    "                                                <div class='col-8'>" + selectBox +
+                    "                                                <div class='col-8'>"
+                    + selectBox +
                     "                                                </div>" +
                     "                                            </div>" +
                     "                                        </div>" +
@@ -203,7 +204,6 @@ $(".question-list-wrapper").sortable({
             }
             case 'radio-ele': {
                 ui.item.replaceWith( //replace item with radio question
-
                     "<div class='question-container' id='radio-question-" + generateId() + "'>" +
                     "                        <div class='question-wrapper'>" +
                     "                            <div class='toggle-bar-container'>" +
@@ -220,7 +220,7 @@ $(".question-list-wrapper").sortable({
                     "                                <div class='preview-question-wrapper'>" +
                     "                                    <div class='question-content-container'>" +
                     "                                        <div class='question-content-wrapper'>" +
-                    "                                            <p class='question-content-paragraph'>Tốc độ giảng dạy của giảng viên thế nào?" +
+                    "                                            <p class='question-content-paragraph'>Nội dung của câu hỏi" +
                     "                                                </p>" +
                     "                                            <span class='required-question' style='display:none'><sup>*</sup></span>" +
                     "                                        </div>" +
@@ -265,12 +265,13 @@ $(".question-list-wrapper").sortable({
                     "                                            <div class='form-group row'>" +
                     "                                                <label class='col-4 col-form-label text-right'>Nội dung: </label>" +
                     "                                                <div class='col-8'>" +
-                    "                                                    <textarea class='txtEditQuestion'>Tốc độ giảng dạy của giảng viên thế nào?</textarea>" +
+                    "                                                    <textarea class='txtEditQuestion'>Nội dung của câu hỏi</textarea>" +
                     "                                                </div>" +
                     "                                            </div>" +
                     "                                            <div class='form-group row'>" +
                     "                                                <label class='col-4 col-form-label text-right'>Loại đánh giá: </label>" +
-                    "                                                <div class='col-8'>" + selectBox +
+                    "                                                <div class='col-8'>"
+                    + selectBox +
                     "                                                </div>" +
                     "                                            </div>" +
                     "                                            <div class='form-group row'>" +
@@ -290,8 +291,8 @@ $(".question-list-wrapper").sortable({
                     "                                                                </div>" +
                     "                                                                <div class='input-edit-answer-holder'>" +
                     "                                                                    <input type='text' class='answer-content-input'" +
-                    "                                                                           placeholder='Đáp án 1'>" +
-                    "                                                                    Trọng số: <input type='number' min='0'" +
+                    "                                                                           value='Đáp án 1'>" +
+                    "                                                                    Trọng số: <input type='number' min='1' max='5' value='1'" +
                     "                                                                                     class='weight-input'>" +
                     "                                                                </div>" +
                     "                                                                <div class='remove-answer-holder'>" +
@@ -306,8 +307,8 @@ $(".question-list-wrapper").sortable({
                     "                                                                </div>" +
                     "                                                                <div class='input-edit-answer-holder'>" +
                     "                                                                    <input type='text' class='answer-content-input'" +
-                    "                                                                           placeholder='Đáp án 2'>" +
-                    "                                                                    Trọng số: <input type='number' min='0'" +
+                    "                                                                           value='Đáp án 2'>" +
+                    "                                                                    Trọng số: <input type='number' min='1' max='5' value='1'" +
                     "                                                                                     class='weight-input'>" +
                     "                                                                </div>" +
                     "                                                                <div class='remove-answer-holder'>" +
@@ -322,8 +323,8 @@ $(".question-list-wrapper").sortable({
                     "                                                                </div>" +
                     "                                                                <div class='input-edit-answer-holder'>" +
                     "                                                                    <input type='text' class='answer-content-input'" +
-                    "                                                                           placeholder='Đáp án 3'>" +
-                    "                                                                    Trọng số: <input type='number' min='0'" +
+                    "                                                                           value='Đáp án 3'>" +
+                    "                                                                    Trọng số: <input type='number' min='1' max='5' value='1'" +
                     "                                                                                     class='weight-input'>" +
                     "                                                                </div>" +
                     "                                                                <div class='remove-answer-holder'>" +
@@ -366,7 +367,7 @@ $(".question-list-wrapper").sortable({
                     "                                <div class='preview-question-wrapper'>" +
                     "                                    <div class='question-content-container'>" +
                     "                                        <div class='question-content-wrapper'>" +
-                    "                                            <p class='question-content-paragraph'>Tốc độ giảng dạy của giảng viên thế nào?" +
+                    "                                            <p class='question-content-paragraph'>Nội dung của câu hỏi" +
                     "                                                </p>" +
                     "                                            <span class='required-question' style='display:none'><sup>*</sup></span>" +
                     "                                        </div>" +
@@ -401,12 +402,13 @@ $(".question-list-wrapper").sortable({
                     "                                            <div class='form-group row'>" +
                     "                                                <label class='col-4 col-form-label text-right'>Nội dung: </label>" +
                     "                                                <div class='col-8'>" +
-                    "                                                    <textarea class='txtEditQuestion'>Tốc độ giảng dạy của giảng viên thế nào?</textarea>" +
+                    "                                                    <textarea class='txtEditQuestion'>Nội dung của câu hỏi</textarea>" +
                     "                                                </div>" +
                     "                                            </div>" +
                     "                                            <div class='form-group row'>" +
                     "                                                <label class='col-4 col-form-label text-right'>Loại đánh giá: </label>" +
-                    "                                                <div class='col-8'>" + selectBox +
+                    "                                                <div class='col-8'>"
+                    + selectBox +
                     "                                                </div>" +
                     "                                            </div>" +
                     "                                            <div class='form-group row'>" +
@@ -426,8 +428,8 @@ $(".question-list-wrapper").sortable({
                     "                                                                </div>" +
                     "                                                                <div class='input-edit-answer-holder'>" +
                     "                                                                    <input type='text' class='answer-content-input'" +
-                    "                                                                           placeholder='Đáp án 1'>" +
-                    "                                                                    Trọng số: <input type='number' min='0'" +
+                    "                                                                           value='Đáp án 1'>" +
+                    "                                                                    Trọng số: <input type='number' min='1' max='5' value='1'" +
                     "                                                                                     class='weight-input'>" +
                     "                                                                </div>" +
                     "                                                                <div class='remove-answer-holder'>" +
@@ -501,7 +503,8 @@ $(".question-list-wrapper").sortable({
                     "                                            </div>" +
                     "                                            <div class='form-group row'>" +
                     "                                                <label class='col-4 col-form-label text-right'>Loại đánh giá: </label>" +
-                    "                                                <div class='col-8'>" + selectBox +
+                    "                                                <div class='col-8'>"
+                    + selectBox +
                     "                                                </div>" +
                     "                                            </div>" +
                     "                                        </div>" +
@@ -694,7 +697,7 @@ $(document).on("click", ".remove-answer-holder>i.fa-close", (event) => {
 $(document).on("change", ".other-option-checkbox", (event) => {
     let parentContainer = $(event.target).parents(".question-container");
     let otherQuestionContainer = $(parentContainer).find(".form-other");
-    if (otherQuestionContainer.length == 0) {
+  /*  if (otherQuestionContainer.length == 0) {
        // var ansWrapper = document.getElementsByClassName("answer-wrapper");
         $("#answer-wrapper-id").append("<div class='form-check form-other'>\n" +
             "                                                                <label class='form-check-label'>\n" +
@@ -702,7 +705,7 @@ $(document).on("change", ".other-option-checkbox", (event) => {
             "                                                                    <input type='text' class='other-option-input' disabled>\n" +
             "                                                                </label>\n" +
             "                                                            </div>")
-    }
+    }*/
     if ($(event.target).is(":checked")) {
         otherQuestionContainer.removeClass("disabled");
     } else {
