@@ -6,4 +6,6 @@ public class UserView {
 
     public class listUserView {
     }
+    public class listLecturerView {
+    }
 }

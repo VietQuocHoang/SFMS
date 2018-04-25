@@ -78,15 +78,17 @@ var selected_to_button = function (data, type, full, meta) {
 }
 
 var major_to_majorName = function (data, type, full, meta) {
-    if (data["code"] != null && data["name"] != null)return data["code"] + ' - ' + data["name"];
+    if (data["code"] != null && data["name"] != null)return data["code"] + ' _ ' + data["name"];
     if (data["name"] != null)return data["name"];
     return data["code"]
 }
 var clazzes_to_courses = function (data, type, full, meta) {
     // if(data.length==0)return '';
-    var courses = '', clazz, course;
+    var courses = '', course;
     var recs = new Array(100);
-    for (var clazz in data) {
+    // console.log(data);
+    for (var c in data) {
+        let clazz = data[c]
         course = clazz["courseByCourseId"];
         // courses = courses + "" + course["code"] +" - "+course["name"]+ ", ";
         if (!recs.includes(course["code"])) {
@@ -94,7 +96,7 @@ var clazzes_to_courses = function (data, type, full, meta) {
             courses = courses + "" + course["code"] + ", ";
         }
     }
-
+    // console.log(courses)
     return courses;
 }
 var studentClazzes_to_courses = function (data, type, full, meta) {
@@ -811,7 +813,7 @@ function loadStudents() {
                         if (!(opts.includes(d["name"]))) {
                             opts.push(d["name"]);
                             if (d["code"] != null && d["name"] != null)
-                                datalist.append('<option value="' + d["code"] + '  ' + d["name"] + '">' + d["code"] + ' - ' + d["name"] + '</option>'); else if (d["name"] != null) datalist.append('<option value="' + d["name"] + '">' + d["name"] + '</option>'); else if (d["code"] != null) datalist.append('<option value="' + d["code"] + '">' + d["code"] + '</option>')
+                                datalist.append('<option value="' + d["code"] + ' _ ' + d["name"] + '">' + d["code"] + ' <_></_> ' + d["name"] + '</option>'); else if (d["name"] != null) datalist.append('<option value="' + d["name"] + '">' + d["name"] + '</option>'); else if (d["code"] != null) datalist.append('<option value="' + d["code"] + '">' + d["code"] + '</option>')
                         }
                     });
                 });
@@ -833,7 +835,7 @@ function loadStudents() {
                     var datalist = $('<datalist id="listCourse"></datalist>').appendTo($("#filterStudentCourse"))
                         .on("change", function () {
                             var val = $.fn.dataTable.util.escapeRegex(
-                                $(this).val()
+                                $(this).text()
                             );
                             // alert(val);
                             column
@@ -851,7 +853,7 @@ function loadStudents() {
                             course = clazz["courseByCourseId"];
                             if (!opts.includes(course["code"])) {
                                 opts.push(course["code"]);
-                                datalist.append('<option value="' + course["code"] + ' - ' + course["name"] + '">' + course["code"] + ' - ' + course["name"] + '</option>');
+                                datalist.append('<option value="' + course["code"] +  '">' + course["code"] + ' _ ' + course["name"] + '</option>');
                             }
                         }
                     });
@@ -933,7 +935,7 @@ function loadStudents() {
                             lecturer = clazz["userByLecturerId"];
                             if (!recs.includes(lecturer["code"])) {
                                 recs.push(lecturer["code"]);
-                                datalist.append('<option value="' + lecturer["fullname"] +' - '+lecturer["code"]+ '">' + lecturer["name"] +' - '+lecturer["code"] + '</option>');
+                                datalist.append('<option value="' + lecturer["fullname"] +' _ '+lecturer["code"]+ '">' + lecturer["fullname"] +' _ '+lecturer["code"] + '</option>');
                             }
                         }
                     });

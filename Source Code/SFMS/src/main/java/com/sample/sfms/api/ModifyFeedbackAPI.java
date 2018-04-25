@@ -6,26 +6,30 @@ package com.sample.sfms.api;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sample.sfms.entity.*;
-//import com.sample.sfms.entity.Role;
-//import com.sample.sfms.entity.Semester;
-//import com.sample.sfms.model.ModifyFeedbackModel;
-import com.sample.sfms.model.FilteringModel;
+import com.sample.sfms.entity.Feedback;
+import com.sample.sfms.entity.Semester;
+import com.sample.sfms.entity.Type;
+import com.sample.sfms.entity.User;
 import com.sample.sfms.model.Target;
 import com.sample.sfms.service.interf.ModifyFeedbackService;
-import com.sample.sfms.view.*;
+import com.sample.sfms.view.FeedbackView;
+import com.sample.sfms.view.SemesterView;
+import com.sample.sfms.view.TargetView;
+import com.sample.sfms.view.UserView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-//import org.springframework.web.servlet.ModelAndView;
-//import sun.nio.cs.ISO_8859_2;
 
 import javax.servlet.http.HttpSession;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+//import com.sample.sfms.entity.Role;
+//import com.sample.sfms.entity.Semester;
+//import com.sample.sfms.model.ModifyFeedbackModel;
+//import org.springframework.web.servlet.ModelAndView;
+//import sun.nio.cs.ISO_8859_2;
 
 /**
  * Created by MyPC on 24/02/2018.
@@ -168,7 +172,7 @@ public class ModifyFeedbackAPI {
         return modifyService.getAllStaffs();
     }
 
-    @JsonView(UserView.listUserView.class)
+    @JsonView(UserView.listLecturerView.class)
     @GetMapping("/list/lecturers")
     private Iterable<User> getAllLecturers() {
         return modifyService.getAllLecturers();

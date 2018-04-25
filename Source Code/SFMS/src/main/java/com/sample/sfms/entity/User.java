@@ -14,31 +14,32 @@ import java.util.Collection;
 @Entity
 @Table(name = "user", schema = "capstone", catalog = "")
 public class User {
-    @JsonView({TargetView.basicClazzView.class, UserView.listUserView.class})
+    @JsonView({TargetView.basicClazzView.class, UserView.listUserView.class, UserView.listLecturerView.class})
     private int id;
     private String username;
     private String password;
-    @JsonView({UserView.authenticatedUser.class, TargetView.basicClazzView.class, UserView.listUserView.class})
+    @JsonView({UserView.authenticatedUser.class, TargetView.basicClazzView.class, UserView.listUserView.class, UserView.listLecturerView.class})
     private String fullname;
-    @JsonView({UserView.listUserView.class})
+    @JsonView({UserView.listUserView.class, UserView.listLecturerView.class, UserView.listLecturerView.class})
     private String code;
-    @JsonView({UserView.listUserView.class})
+    @JsonView({UserView.listUserView.class, UserView.listLecturerView.class})
     private String mail;
     private Date birth;
-    @JsonView({UserView.listUserView.class})
+    @JsonView({UserView.listUserView.class, UserView.listLecturerView.class})
     private Byte status;
     private boolean male;
     private Collection<Answer> answersById;
+    @JsonView({UserView.listLecturerView.class})
     private Collection<Clazz> clazzesById;//clazzes whose be taught by a lecturer
     private Collection<Feedback> feedbacksById;
-    @JsonView({UserView.listUserView.class})
+    @JsonView({UserView.listUserView.class, UserView.listLecturerView.class})
     private Collection<StudentClazz> studentClazzesById;
     private Collection<UserFeedback> userFeedbacksById;
-    @JsonView({UserView.listUserView.class})
+    @JsonView({UserView.listUserView.class, UserView.listLecturerView.class})
     private Department departmentByDepartmentId;
-    @JsonView({UserView.authenticatedUser.class, UserView.listUserView.class})
+    @JsonView({UserView.authenticatedUser.class, UserView.listUserView.class, UserView.listLecturerView.class})
     private Role roleByRoleId;
-    @JsonView({UserView.listUserView.class})
+    @JsonView({UserView.listUserView.class, UserView.listLecturerView.class})
     private Major majorByMajorId;
 
     @Id

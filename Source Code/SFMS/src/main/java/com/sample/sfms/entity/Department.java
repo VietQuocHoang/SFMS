@@ -15,7 +15,7 @@ import java.util.Collection;
 public class Department {
     @JsonView({TargetView.basicClazzView.class, TargetView.basicDepartmentView.class})
     private int id;
-    @JsonView({TargetView.basicClazzView.class, TargetView.basicDepartmentView.class, UserView.listUserView.class, FeedbackView.listView.class})
+    @JsonView({TargetView.basicClazzView.class, TargetView.basicDepartmentView.class, UserView.listUserView.class, FeedbackView.listView.class, UserView.listLecturerView.class})
     private String name;
     private Collection<Feedback> feedbacksById;
     private Collection<User> usersById;
