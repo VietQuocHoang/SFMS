@@ -153,6 +153,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                     questionRepo.delete(template.getQuestionsById());
                 }
             }
+            template.setQuestionsById(null);
             feedbackRepo.save(template);
             template.setFeedbackName(feedback.getFeedbackName());
             template.setFeedbackDes(feedback.getFeedbackDes());
