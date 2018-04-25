@@ -1,7 +1,7 @@
 /**
  * Created by MyPC on 29/01/2018.
  */
-var tmp, btn, showedTable, displayingTable, conductors;
+var tmp, btn, tblStudent,tblLecturer, tblStaff, displayingTable, conductors;
 // var btnAdd = "<input class='btn active btn-check-target'  type='button' onclick='addConductor(this)' value='Chọn'/>"
 // var btnRemove = "<input class='btn active btn-checked' type='button' onclick='removeConductor(this)' value='Bỏ chọn'/>"
 // var btnAdd = "<input data-toggle='toggle' type='button' onclick='addConductor(this)' value='Chọn'/>"
@@ -21,34 +21,6 @@ var btnRemove = "<label class='tgl'>" +
     "<span class='tgl_bgd'></span>" +
     "<span class='tgl_bgd tgl_bgd-negative'></span></span></span></label>"
 $(document).ready(function () {
-    $('#tbl-staffs').DataTable(
-        {
-            "language": {
-                "decimal": "",
-                "emptyTable": "Không kết quả nào được tìm thấy",
-                "info": "Hiển thị từ _START_ tới _END_ trong số _TOTAL_ kết quả",
-                "infoEmpty": "Hiển thị 0 tới 0 trong số 0 kết quả",
-                "infoFiltered": "(filtered from _MAX_ total entries)",
-                "infoPostFix": "",
-                "thousands": ",",
-                "lengthMenu": "_MENU_ kết quả mỗi trang",
-                "loadingRecords": "Đang tải...",
-                "processing": "Đang xử lý...",
-                "search": "Tìm:",
-                "zeroRecords": "Không tìm thấy kết quả phù hợp",
-                "paginate": {
-                    "first": "Đầu",
-                    "last": "Cuối",
-                    "next": "Sau",
-                    "previous": "Trước"
-                },
-                "aria": {
-                    "sortAscending": ": kích hoạt để sắp xếp tăng dần",
-                    "sortDescending": ": kích hoạt để sắp xếp giảm dần"
-                }
-            }
-        }
-    );
     loadStaffs();
     loadLecturers();
     loadStudents();
@@ -58,7 +30,9 @@ $(document).ready(function () {
 function reloadTable() {
     // alert("hehe");
     setTimeout(function () {
-        showedTable.ajax.reload(null, false);// reload without come back to the first page
+        tblStudent.ajax.reload(null, false);// reload without come back to the first page
+        tblLecturer.ajax.reload(null, false);
+        tblStaff.ajax.reload(null, false);
     }, 1000); //reload the table after 0.2s
 }
 
@@ -205,7 +179,7 @@ function addConductor(el) {
         success: function (data, status, xhr) {
             if (xhr.status === 200) {
                 loadConductors();
-                console.log("conductors now"+conductors);
+                console.log("conductors now" + conductors);
                 reloadTable();
             }
         },
@@ -241,7 +215,7 @@ function loadStaffs() {
     $('#tbl-staffs').DataTable().destroy();
     loadConductors();
     displayingTable = $('#tbl-staffs');
-    showedTable = $('#tbl-staffs').DataTable(
+    tblStaff = $('#tbl-staffs').DataTable(
         {
             "ajax": {
                 "url": "/sfms/api/modify-feedback/list/staffs",
@@ -260,204 +234,76 @@ function loadStaffs() {
                 },
             ],
             initComplete: function () {
-                // this.api().columns([3]).every(function () {
-                //     var column = this;
-                //     var input = $('<input type="text" value="" list="listMajor" placeholder="Chuyên ngành"/>')
-                //             .appendTo($("#filterStudentMajor").empty())
-                //             .on('change keyup keydown', function () {
-                //                 var val = $.fn.dataTable.util.escapeRegex(
-                //                     $(this).val()
-                //                 );
-                //                 column
-                //                 // .search(val ? '^' + val + '$' : '', true, false)
-                //                     .search(val)
-                //                     .draw();
-                //             })
-                //         ;
-                //     var opts = new Array(column.data().length);
-                //     var datalist = $('<datalist id="listMajor"></datalist>').appendTo($("#filterStudentMajor"))
-                //         .on("change", function () {
-                //             var val = $.fn.dataTable.util.escapeRegex(
-                //                 $(this).val()
-                //             );
-                //             // alert(val);
-                //             column
-                //             // .search(val ? '^' + val + '$' : '', true, false)
-                //                 .search(val)
-                //                 .draw();
-                //         });
-                //     datalist.append('<option value=""></option>');
-                //     column.data().unique().sort().each(function (d, j) {
-                //         if (!(opts.includes(d["name"]))) {
-                //             opts.push(d["name"]);
-                //             if (d["code"] != null && d["name"] != null)
-                //                 datalist.append('<option value="' + d["code"] + ' - ' + d["name"] + '">' + d["code"] + ' - ' + d["name"] + '</option>'); else if (d["name"] != null) datalist.append('<option value="' + d["name"] + '">' + d["name"] + '</option>'); else if (d["code"] != null) datalist.append('<option value="' + d["code"] + '">' + d["code"] + '</option>')
-                //         }
-                //     });
-                // });
-                // this.api().columns([4]).every(function () {
-                //     var column = this;
-                //     var input = $('<input type="text" value="" list="listCourse" placeholder="Môn học"/>')
-                //             .appendTo($("#filterStudentCourse").empty())
-                //             .on('change keyup keydown', function () {
-                //                 var val = $.fn.dataTable.util.escapeRegex(
-                //                     $(this).val()
-                //                 );
-                //                 column
-                //                 // .search(val ? '^' + val + '$' : '', true, false)
-                //                     .search(val)
-                //                     .draw();
-                //             })
-                //         ;
-                //     var opts = new Array(column.data().length);
-                //     var datalist = $('<datalist id="listCourse"></datalist>').appendTo($("#filterStudentCourse"))
-                //         .on("change", function () {
-                //             var val = $.fn.dataTable.util.escapeRegex(
-                //                 $(this).val()
-                //             );
-                //             // alert(val);
-                //             column
-                //             // .search(val ? '^' + val + '$' : '', true, false)
-                //                 .search(val)
-                //                 .draw();
-                //         });
-                //     datalist.append('<option value=""></option>');
-                //     column.data().unique().sort().each(function (d, j) {
-                //         var clazz, course;
-                //         // var recs = new Array(100);
-                //         for (var studentClazz in d) {
-                //             let sc = d[studentClazz];
-                //             clazz = sc["clazzByClazzId"];
-                //             course = clazz["courseByCourseId"];
-                //             if (!opts.includes(course["code"])) {
-                //                 opts.push(course["code"]);
-                //                 datalist.append('<option value="' + course["code"] + ' - ' + course["name"] + '">' + course["code"] + ' - ' + course["name"] + '</option>');
-                //             }
-                //         }
-                //     });
-                // });
-                // this.api().columns([5]).every(function () {
-                //     var column = this;
-                //     var input = $('<input type="text" value="" list="listSemester" placeholder="Học kì"/>')
-                //             .appendTo($("#filterStudentSemester").empty())
-                //             .on('change keyup keydown', function () {
-                //                 var val = $.fn.dataTable.util.escapeRegex(
-                //                     $(this).val()
-                //                 );
-                //                 column
-                //                 // .search(val ? '^' + val + '$' : '', true, false)
-                //                     .search(val)
-                //                     .draw();
-                //             })
-                //         ;
-                //     var recs = new Array(column.data().length);
-                //     var datalist = $('<datalist id="listSemester"></datalist>').appendTo($("#filterStudentSemester"))
-                //         .on("change", function () {
-                //             var val = $.fn.dataTable.util.escapeRegex(
-                //                 $(this).val()
-                //             );
-                //             // alert(val);
-                //             column
-                //             // .search(val ? '^' + val + '$' : '', true, false)
-                //                 .search(val)
-                //                 .draw();
-                //         });
-                //     datalist.append('<option value=""></option>');
-                //     column.data().unique().sort().each(function (d, j) {
-                //         var clazz, semester;
-                //         // var recs = new Array(100);
-                //         for (var studentClazz in d) {
-                //             let sc = d[studentClazz];
-                //             clazz = sc["clazzByClazzId"];
-                //             semester = clazz["semesterBySemesterId"];
-                //             if (!recs.includes(semester["title"])) {
-                //                 recs.push(semester["title"]);
-                //                 datalist.append('<option value="' + semester["title"] + '">' + semester["title"] + '</option>');
-                //             }
-                //         }
-                //     });
-                // });
-                // this.api().columns([6]).every(function () {
-                //     var column = this;
-                //     var input = $('<input type="text" value="" list="listLecturer" placeholder="Giảng viên"/>')
-                //             .appendTo($("#filterStudentLecturer").empty())
-                //             .on('change keyup keydown', function () {
-                //                 var val = $.fn.dataTable.util.escapeRegex(
-                //                     $(this).val()
-                //                 );
-                //                 column
-                //                 // .search(val ? '^' + val + '$' : '', true, false)
-                //                     .search(val)
-                //                     .draw();
-                //             })
-                //         ;
-                //     var recs = new Array(column.data().length);
-                //     var datalist = $('<datalist id="listLecturer"></datalist>').appendTo($("#filterStudentLecturer"))
-                //         .on("change", function () {
-                //             var val = $.fn.dataTable.util.escapeRegex(
-                //                 $(this).val()
-                //             );
-                //             // alert(val);
-                //             column
-                //             // .search(val ? '^' + val + '$' : '', true, false)
-                //                 .search(val)
-                //                 .draw();
-                //         });
-                //     datalist.append('<option value=""></option>');
-                //     column.data().unique().sort().each(function (d, j) {
-                //         var clazz, lecturer;
-                //         // var recs = new Array(100);
-                //         for (var studentClazz in d) {
-                //             let sc = d[studentClazz];
-                //             clazz = sc["clazzByClazzId"];
-                //             lecturer = clazz["userByLecturerId"];
-                //             if (!recs.includes(lecturer["code"])) {
-                //                 recs.push(lecturer["code"]);
-                //                 datalist.append('<option value="' + lecturer["fullname"] +' - '+lecturer["code"]+ '">' + lecturer["name"] +' - '+lecturer["code"] + '</option>');
-                //             }
-                //         }
-                //     });
-                // });
-                // this.api().columns([6]).every(function () {
-                //     var column = this;
-                //     var input = $('<input type="text" value="" list="listClazz" placeholder="Lớp"/>')
-                //             .appendTo($("#filterStudentClazz").empty())
-                //             .on('change keyup keydown', function () {
-                //                 var val = $.fn.dataTable.util.escapeRegex(
-                //                     $(this).val()
-                //                 );
-                //                 column
-                //                 // .search(val ? '^' + val + '$' : '', true, false)
-                //                     .search(val)
-                //                     .draw();
-                //             })
-                //         ;
-                //     var recs = new Array(column.data().length);
-                //     var datalist = $('<datalist id="listClazz"></datalist>').appendTo($("#filterStudentClazz"))
-                //         .on("change", function () {
-                //             var val = $.fn.dataTable.util.escapeRegex(
-                //                 $(this).val()
-                //             );
-                //             // alert(val);
-                //             column
-                //             // .search(val ? '^' + val + '$' : '', true, false)
-                //                 .search(val)
-                //                 .draw();
-                //         });
-                //     datalist.append('<option value=""></option>');
-                //     column.data().unique().sort().each(function (d, j) {
-                //         var clazz;
-                //         // var recs = new Array(100);
-                //         for (var studentClazz in d) {
-                //             let sc = d[studentClazz];
-                //             clazz = sc["clazzByClazzId"];
-                //             if (!recs.includes(clazz["className"])) {
-                //                 recs.push(clazz["className"]);
-                //                 datalist.append('<option value="' + clazz["className"]+ '">' + clazz["className"] + '</option>');
-                //             }
-                //         }
-                //     });
-                // });
+                this.api().columns([3]).every(function () {
+                    var column = this;
+                    var input = $('<input type="text" value="" list="listDepartment2" placeholder="Phòng ban"/>')
+                            .appendTo($("#filterStaffDepartment").empty())
+                            .on('change keyup keydown', function () {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
+                                column
+                                // .search(val ? '^' + val + '$' : '', true, false)
+                                    .search(val)
+                                    .draw();
+                            })
+                        ;
+                    var opts = new Array(column.data().length);
+                    var datalist = $('<datalist id="listDepartment2"></datalist>').appendTo($("#filterStaffDepartment"))
+                        .on("change", function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+                            // alert(val);
+                            column
+                            // .search(val ? '^' + val + '$' : '', true, false)
+                                .search(val)
+                                .draw();
+                        });
+                    datalist.append('<option value=""></option>');
+                    column.data().unique().sort().each(function (d, j) {
+                        if (!opts.includes(d)) {
+                            opts.push(d);
+                            datalist.append('<option value="' + d + '">' + d + '</option>');
+                        }
+
+                    });
+                });
+                this.api().columns([4]).every(function () {
+                    var column = this;
+                    var input = $('<input type="text" value="" list="listRole2" placeholder="Phân quyền"/>')
+                            .appendTo($("#filterStaffRole").empty())
+                            .on('change keyup keydown', function () {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
+                                column
+                                // .search(val ? '^' + val + '$' : '', true, false)
+                                    .search(val)
+                                    .draw();
+                            })
+                        ;
+                    var opts = new Array(column.data().length);
+                    var datalist = $('<datalist id="listRole2"></datalist>').appendTo($("#filterStaffRole"))
+                        .on("change", function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+                            // alert(val);
+                            column
+                            // .search(val ? '^' + val + '$' : '', true, false)
+                                .search(val)
+                                .draw();
+                        });
+                    datalist.append('<option value=""></option>');
+                    column.data().unique().sort().each(function (d, j) {
+                        if (!opts.includes(d)) {
+                            opts.push(d);
+                            datalist.append('<option value="' + d + '">' + d + '</option>');
+                        }
+
+                    });
+                });
             },
             "language": {
                 "decimal": "",
@@ -490,7 +336,7 @@ function loadLecturers() {
     $('#tbl-lecturers').DataTable().destroy();
     loadConductors();
     displayingTable = $('#tbl-lecturers');
-    showedTable = $('#tbl-lecturers').DataTable(
+    tblLecturer = $('#tbl-lecturers').DataTable(
         {
             "ajax": {
                 "url": "/sfms/api/modify-feedback/list/lecturers",
@@ -505,9 +351,9 @@ function loadLecturers() {
                     "data": "majorByMajorId",
                     "render": major_to_majorName
                 },
-                {
-                    "data": "departmentByDepartmentId.name",
-                },
+                // {
+                //     "data": "departmentByDepartmentId.name",
+                // },
                 {
                     "data": "roleByRoleId.roleName",
                 },
@@ -517,204 +363,116 @@ function loadLecturers() {
                 },
             ],
             initComplete: function () {
-                // this.api().columns([3]).every(function () {
-                //     var column = this;
-                //     var input = $('<input type="text" value="" list="listMajor" placeholder="Chuyên ngành"/>')
-                //             .appendTo($("#filterStudentMajor").empty())
-                //             .on('change keyup keydown', function () {
-                //                 var val = $.fn.dataTable.util.escapeRegex(
-                //                     $(this).val()
-                //                 );
-                //                 column
-                //                 // .search(val ? '^' + val + '$' : '', true, false)
-                //                     .search(val)
-                //                     .draw();
-                //             })
-                //         ;
-                //     var opts = new Array(column.data().length);
-                //     var datalist = $('<datalist id="listMajor"></datalist>').appendTo($("#filterStudentMajor"))
-                //         .on("change", function () {
-                //             var val = $.fn.dataTable.util.escapeRegex(
-                //                 $(this).val()
-                //             );
-                //             // alert(val);
-                //             column
-                //             // .search(val ? '^' + val + '$' : '', true, false)
-                //                 .search(val)
-                //                 .draw();
-                //         });
-                //     datalist.append('<option value=""></option>');
-                //     column.data().unique().sort().each(function (d, j) {
-                //         if (!(opts.includes(d["name"]))) {
-                //             opts.push(d["name"]);
-                //             if (d["code"] != null && d["name"] != null)
-                //                 datalist.append('<option value="' + d["code"] + ' - ' + d["name"] + '">' + d["code"] + ' - ' + d["name"] + '</option>'); else if (d["name"] != null) datalist.append('<option value="' + d["name"] + '">' + d["name"] + '</option>'); else if (d["code"] != null) datalist.append('<option value="' + d["code"] + '">' + d["code"] + '</option>')
-                //         }
-                //     });
-                // });
-                // this.api().columns([4]).every(function () {
-                //     var column = this;
-                //     var input = $('<input type="text" value="" list="listCourse" placeholder="Môn học"/>')
-                //             .appendTo($("#filterStudentCourse").empty())
-                //             .on('change keyup keydown', function () {
-                //                 var val = $.fn.dataTable.util.escapeRegex(
-                //                     $(this).val()
-                //                 );
-                //                 column
-                //                 // .search(val ? '^' + val + '$' : '', true, false)
-                //                     .search(val)
-                //                     .draw();
-                //             })
-                //         ;
-                //     var opts = new Array(column.data().length);
-                //     var datalist = $('<datalist id="listCourse"></datalist>').appendTo($("#filterStudentCourse"))
-                //         .on("change", function () {
-                //             var val = $.fn.dataTable.util.escapeRegex(
-                //                 $(this).val()
-                //             );
-                //             // alert(val);
-                //             column
-                //             // .search(val ? '^' + val + '$' : '', true, false)
-                //                 .search(val)
-                //                 .draw();
-                //         });
-                //     datalist.append('<option value=""></option>');
-                //     column.data().unique().sort().each(function (d, j) {
-                //         var clazz, course;
-                //         // var recs = new Array(100);
-                //         for (var studentClazz in d) {
-                //             let sc = d[studentClazz];
-                //             clazz = sc["clazzByClazzId"];
-                //             course = clazz["courseByCourseId"];
-                //             if (!opts.includes(course["code"])) {
-                //                 opts.push(course["code"]);
-                //                 datalist.append('<option value="' + course["code"] + ' - ' + course["name"] + '">' + course["code"] + ' - ' + course["name"] + '</option>');
-                //             }
-                //         }
-                //     });
-                // });
-                // this.api().columns([5]).every(function () {
-                //     var column = this;
-                //     var input = $('<input type="text" value="" list="listSemester" placeholder="Học kì"/>')
-                //             .appendTo($("#filterStudentSemester").empty())
-                //             .on('change keyup keydown', function () {
-                //                 var val = $.fn.dataTable.util.escapeRegex(
-                //                     $(this).val()
-                //                 );
-                //                 column
-                //                 // .search(val ? '^' + val + '$' : '', true, false)
-                //                     .search(val)
-                //                     .draw();
-                //             })
-                //         ;
-                //     var recs = new Array(column.data().length);
-                //     var datalist = $('<datalist id="listSemester"></datalist>').appendTo($("#filterStudentSemester"))
-                //         .on("change", function () {
-                //             var val = $.fn.dataTable.util.escapeRegex(
-                //                 $(this).val()
-                //             );
-                //             // alert(val);
-                //             column
-                //             // .search(val ? '^' + val + '$' : '', true, false)
-                //                 .search(val)
-                //                 .draw();
-                //         });
-                //     datalist.append('<option value=""></option>');
-                //     column.data().unique().sort().each(function (d, j) {
-                //         var clazz, semester;
-                //         // var recs = new Array(100);
-                //         for (var studentClazz in d) {
-                //             let sc = d[studentClazz];
-                //             clazz = sc["clazzByClazzId"];
-                //             semester = clazz["semesterBySemesterId"];
-                //             if (!recs.includes(semester["title"])) {
-                //                 recs.push(semester["title"]);
-                //                 datalist.append('<option value="' + semester["title"] + '">' + semester["title"] + '</option>');
-                //             }
-                //         }
-                //     });
-                // });
-                // this.api().columns([6]).every(function () {
-                //     var column = this;
-                //     var input = $('<input type="text" value="" list="listLecturer" placeholder="Giảng viên"/>')
-                //             .appendTo($("#filterStudentLecturer").empty())
-                //             .on('change keyup keydown', function () {
-                //                 var val = $.fn.dataTable.util.escapeRegex(
-                //                     $(this).val()
-                //                 );
-                //                 column
-                //                 // .search(val ? '^' + val + '$' : '', true, false)
-                //                     .search(val)
-                //                     .draw();
-                //             })
-                //         ;
-                //     var recs = new Array(column.data().length);
-                //     var datalist = $('<datalist id="listLecturer"></datalist>').appendTo($("#filterStudentLecturer"))
-                //         .on("change", function () {
-                //             var val = $.fn.dataTable.util.escapeRegex(
-                //                 $(this).val()
-                //             );
-                //             // alert(val);
-                //             column
-                //             // .search(val ? '^' + val + '$' : '', true, false)
-                //                 .search(val)
-                //                 .draw();
-                //         });
-                //     datalist.append('<option value=""></option>');
-                //     column.data().unique().sort().each(function (d, j) {
-                //         var clazz, lecturer;
-                //         // var recs = new Array(100);
-                //         for (var studentClazz in d) {
-                //             let sc = d[studentClazz];
-                //             clazz = sc["clazzByClazzId"];
-                //             lecturer = clazz["userByLecturerId"];
-                //             if (!recs.includes(lecturer["code"])) {
-                //                 recs.push(lecturer["code"]);
-                //                 datalist.append('<option value="' + lecturer["fullname"] +' - '+lecturer["code"]+ '">' + lecturer["name"] +' - '+lecturer["code"] + '</option>');
-                //             }
-                //         }
-                //     });
-                // });
-                // this.api().columns([6]).every(function () {
-                //     var column = this;
-                //     var input = $('<input type="text" value="" list="listClazz" placeholder="Lớp"/>')
-                //             .appendTo($("#filterStudentClazz").empty())
-                //             .on('change keyup keydown', function () {
-                //                 var val = $.fn.dataTable.util.escapeRegex(
-                //                     $(this).val()
-                //                 );
-                //                 column
-                //                 // .search(val ? '^' + val + '$' : '', true, false)
-                //                     .search(val)
-                //                     .draw();
-                //             })
-                //         ;
-                //     var recs = new Array(column.data().length);
-                //     var datalist = $('<datalist id="listClazz"></datalist>').appendTo($("#filterStudentClazz"))
-                //         .on("change", function () {
-                //             var val = $.fn.dataTable.util.escapeRegex(
-                //                 $(this).val()
-                //             );
-                //             // alert(val);
-                //             column
-                //             // .search(val ? '^' + val + '$' : '', true, false)
-                //                 .search(val)
-                //                 .draw();
-                //         });
-                //     datalist.append('<option value=""></option>');
-                //     column.data().unique().sort().each(function (d, j) {
-                //         var clazz;
-                //         // var recs = new Array(100);
-                //         for (var studentClazz in d) {
-                //             let sc = d[studentClazz];
-                //             clazz = sc["clazzByClazzId"];
-                //             if (!recs.includes(clazz["className"])) {
-                //                 recs.push(clazz["className"]);
-                //                 datalist.append('<option value="' + clazz["className"]+ '">' + clazz["className"] + '</option>');
-                //             }
-                //         }
-                //     });
-                // });
+                this.api().columns([3]).every(function () {
+                    var column = this;
+                    var input = $('<input type="text" value="" list="listMajor1" placeholder="Chuyên ngành"/>')
+                            .appendTo($("#filterLecturerMajor").empty())
+                            .on('change keyup keydown', function () {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
+                                column
+                                // .search(val ? '^' + val + '$' : '', true, false)
+                                    .search(val)
+                                    .draw();
+                            })
+                        ;
+                    var opts = new Array(column.data().length);
+                    var datalist = $('<datalist id="listMajor1"></datalist>').appendTo($("#filterLecturerMajor"))
+                        .on("change", function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+                            // alert(val);
+                            column
+                            // .search(val ? '^' + val + '$' : '', true, false)
+                                .search(val)
+                                .draw();
+                        });
+                    datalist.append('<option value=""></option>');
+                    column.data().unique().sort().each(function (d, j) {
+                        if (!(opts.includes(d["name"]))) {
+                            opts.push(d["name"]);
+                            if (d["code"] != null && d["name"] != null)
+                                datalist.append('<option value="' + d["code"] + ' _ ' + d["name"] + '">' + d["code"] + ' _ ' + d["name"] + '</option>'); else if (d["name"] != null) datalist.append('<option value="' + d["name"] + '">' + d["name"] + '</option>'); else if (d["code"] != null) datalist.append('<option value="' + d["code"] + '">' + d["code"] + '</option>')
+                        }
+                    });
+                });
+                this.api().columns([5]).every(function () {
+                    var column = this;
+                    var input = $('<input type="text" value="" list="listCourse1" placeholder="Môn học"/>')
+                            .appendTo($("#filterLecturerCourse").empty())
+                            .on('change keyup keydown', function () {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
+                                column
+                                // .search(val ? '^' + val + '$' : '', true, false)
+                                    .search(val)
+                                    .draw();
+                            })
+                        ;
+                    var opts = new Array(column.data().length);
+                    var datalist = $('<datalist id="listCourse1"></datalist>').appendTo($("#filterLecturerCourse"))
+                        .on("change", function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).text()
+                            );
+                            // alert(val);
+                            column
+                            // .search(val ? '^' + val + '$' : '', true, false)
+                                .search(val)
+                                .draw();
+                        });
+                    datalist.append('<option value=""></option>');
+                    column.data().unique().sort().each(function (d, j) {
+                        var clazz, course;
+                        // var recs = new Array(100);
+                        for (var c in d) {
+                            let clazz = d[c];
+                            course = clazz["courseByCourseId"];
+                            if (!opts.includes(course["code"])) {
+                                opts.push(course["code"]);
+                                datalist.append('<option value="' + course["code"] + '">' + course["code"] + ' _ ' + course["name"] + '</option>');
+                            }
+                        }
+                    });
+                });
+                this.api().columns([4]).every(function () {
+                    var column = this;
+                    var input = $('<input type="text" value="" list="listRole1" placeholder="Phân quyền"/>')
+                            .appendTo($("#filterLecturerRole").empty())
+                            .on('change keyup keydown', function () {
+                                var val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
+                                column
+                                // .search(val ? '^' + val + '$' : '', true, false)
+                                    .search(val)
+                                    .draw();
+                            })
+                        ;
+                    var opts = new Array(column.data().length);
+                    var datalist = $('<datalist id="listRole1"></datalist>').appendTo($("#filterLecturerRole"))
+                        .on("change", function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+                            // alert(val);
+                            column
+                            // .search(val ? '^' + val + '$' : '', true, false)
+                                .search(val)
+                                .draw();
+                        });
+                    datalist.append('<option value=""></option>');
+                    column.data().unique().sort().each(function (d, j) {
+                        if (!opts.includes(d)) {
+                            opts.push(d);
+                            datalist.append('<option value="' + d + '">' + d + '</option>');
+                        }
+
+                    });
+                });
             },
             "language": {
                 "decimal": "",
@@ -747,7 +505,7 @@ function loadStudents() {
     $('#tbl-students').DataTable().destroy();
     loadConductors();
     displayingTable = $('#tbl-students');
-    showedTable = $('#tbl-students').DataTable(
+    tblStudent = $('#tbl-students').DataTable(
         {
             "ajax": {
                 "url": "/sfms/api/modify-feedback/list/students",
@@ -813,7 +571,7 @@ function loadStudents() {
                         if (!(opts.includes(d["name"]))) {
                             opts.push(d["name"]);
                             if (d["code"] != null && d["name"] != null)
-                                datalist.append('<option value="' + d["code"] + ' _ ' + d["name"] + '">' + d["code"] + ' <_></_> ' + d["name"] + '</option>'); else if (d["name"] != null) datalist.append('<option value="' + d["name"] + '">' + d["name"] + '</option>'); else if (d["code"] != null) datalist.append('<option value="' + d["code"] + '">' + d["code"] + '</option>')
+                                datalist.append('<option value="' + d["code"] + ' _ ' + d["name"] + '">' + d["code"] + ' _ ' + d["name"] + '</option>'); else if (d["name"] != null) datalist.append('<option value="' + d["name"] + '">' + d["name"] + '</option>'); else if (d["code"] != null) datalist.append('<option value="' + d["code"] + '">' + d["code"] + '</option>')
                         }
                     });
                 });
@@ -853,7 +611,7 @@ function loadStudents() {
                             course = clazz["courseByCourseId"];
                             if (!opts.includes(course["code"])) {
                                 opts.push(course["code"]);
-                                datalist.append('<option value="' + course["code"] +  '">' + course["code"] + ' _ ' + course["name"] + '</option>');
+                                datalist.append('<option value="' + course["code"] + '">' + course["code"] + ' _ ' + course["name"] + '</option>');
                             }
                         }
                     });
@@ -935,7 +693,7 @@ function loadStudents() {
                             lecturer = clazz["userByLecturerId"];
                             if (!recs.includes(lecturer["code"])) {
                                 recs.push(lecturer["code"]);
-                                datalist.append('<option value="' + lecturer["fullname"] +' _ '+lecturer["code"]+ '">' + lecturer["fullname"] +' _ '+lecturer["code"] + '</option>');
+                                datalist.append('<option value="' + lecturer["fullname"] + ' _ ' + lecturer["code"] + '">' + lecturer["fullname"] + ' _ ' + lecturer["code"] + '</option>');
                             }
                         }
                     });
@@ -975,7 +733,7 @@ function loadStudents() {
                             clazz = sc["clazzByClazzId"];
                             if (!recs.includes(clazz["className"])) {
                                 recs.push(clazz["className"]);
-                                datalist.append('<option value="' + clazz["className"]+ '">' + clazz["className"] + '</option>');
+                                datalist.append('<option value="' + clazz["className"] + '">' + clazz["className"] + '</option>');
                             }
                         }
                     });

@@ -70,7 +70,8 @@
                            role="tab"
                            aria-controls="nav-contact" aria-selected="false">Nhân viên</a>
 
-                        <a class="nav-item nav-link show active" id="students-tab" data-toggle="tab" href="#nav-students"
+                        <a class="nav-item nav-link show active" id="students-tab" data-toggle="tab"
+                           href="#nav-students"
                            role="tab"
                            aria-controls="nav-contact" aria-selected="false">Sinh viên</a>
                     </div>
@@ -85,10 +86,13 @@
                     <div class="tab-pane fade" id="nav-lecturers" role="tabpanel"
                          aria-labelledby="nav-lecturers-tab">
                         <!--filter bar-->
-                        <div class="form-group col-sm-2" id="filterLecturerMajor"></div>
-                        <div class="form-group col-sm-2" id="filterLecturerCourse"></div>
-                        <div class="form-group col-sm-2" id="filterLecturerDepartment"></div>
-                        <div class="form-group col-sm-2" id="filterLecturerRole"></div>
+                        <div class="form-row">
+                            <div class="form-group col-sm-2"></div>
+                            <div class="form-group col-sm-2" id="filterLecturerMajor"></div>
+                            <div class="form-group col-sm-2" id="filterLecturerCourse"></div>
+                            <!--<div class="form-group col-sm-2" id="filterLecturerDepartment"></div>-->
+                            <div class="form-group col-sm-2" id="filterLecturerRole"></div>
+                        </div>
                         <!--table lecturers-->
                         <div class="row">
                             <div class="table-responsive">
@@ -99,7 +103,7 @@
                                         <th>Họ & tên</th>
                                         <th>Mã</th>
                                         <th>Ngành</th>
-                                        <th>Phòng ban</th>
+                                        <!--<th>Phòng ban</th>-->
                                         <th>Chức vụ</th>
                                         <th>Môn đảm nhiệm</th>
                                     </tr>
@@ -110,7 +114,7 @@
                                         <th>Họ & tên</th>
                                         <th>Mã</th>
                                         <th>Ngành</th>
-                                        <th>Phòng ban</th>
+                                        <!--<th>Phòng ban</th>-->
                                         <th>Chức vụ</th>
                                         <th>Môn đảm nhiệm</th>
                                     </tr>
@@ -127,8 +131,11 @@
                     <div class="tab-pane fade" id="nav-staffs" role="tabpanel"
                          aria-labelledby="nav-lecturers-tab">
                         <!--filter bar-->
-                        <div class="form-group col-sm-2" id="filterStaffDepartment"></div>
-                        <div class="form-group col-sm-2" id="filterStaffRole"></div>
+                        <div class="form-row">
+                            <div class="form-group col-sm-2"></div>
+                            <div class="form-group col-sm-2" id="filterStaffDepartment"></div>
+                            <div class="form-group col-sm-2" id="filterStaffRole"></div>
+                        </div>
                         <!--table staffs-->
                         <div class="row">
                             <div class="table-responsive">
@@ -167,12 +174,12 @@
                             <!--major-->
                             <div class="form-group col-sm-2" id="filterStudentMajor">
                                 <!--<select class="form-control">-->
-                                    <!--<option selected>&#45;&#45;Ngành&#45;&#45;</option>-->
-                                    <!--<option>An toàn thông tin</option>-->
-                                    <!--<option>Kỹ thuật phần mềm</option>-->
-                                    <!--<option>Thiết kế - đồ họa</option>-->
-                                    <!--<option>Quản trị kinh doanh</option>-->
-                                    <!--<option>Ngôn ngữ Nhật</option>-->
+                                <!--<option selected>&#45;&#45;Ngành&#45;&#45;</option>-->
+                                <!--<option>An toàn thông tin</option>-->
+                                <!--<option>Kỹ thuật phần mềm</option>-->
+                                <!--<option>Thiết kế - đồ họa</option>-->
+                                <!--<option>Quản trị kinh doanh</option>-->
+                                <!--<option>Ngôn ngữ Nhật</option>-->
                                 <!--</select>-->
                             </div>
                             <!--&lt;!&ndash;end major&ndash;&gt;-->
@@ -180,40 +187,40 @@
                             <!--SubMajor-->
                             <div class="form-group col-sm-2" id="filterStudentCourse">
                                 <!--<select class="form-control">-->
-                                    <!--<option selected>&#45;&#45;Chuyên ngành&#45;&#45;</option>-->
-                                    <!--<option>Computing Fundamentals</option>-->
-                                    <!--<option>Software Engineering</option>-->
-                                    <!--<option>Japanese</option>-->
+                                <!--<option selected>&#45;&#45;Chuyên ngành&#45;&#45;</option>-->
+                                <!--<option>Computing Fundamentals</option>-->
+                                <!--<option>Software Engineering</option>-->
+                                <!--<option>Japanese</option>-->
                                 <!--</select>-->
                             </div>
                             <!--Semester-->
                             <div class="form-group col-sm-2" id="filterStudentSemester">
                                 <!--<select class="form-control">-->
-                                    <!--<option selected>&#45;&#45;Học kỳ&#45;&#45;</option>-->
-                                    <!--<option>Fall 2018</option>-->
-                                    <!--<option>Summer 2018</option>-->
-                                    <!--<option>Spring 2018</option>-->
-                                    <!--<option>Fall 2017</option>-->
-                                    <!--<option>Summer 2017</option>-->
-                                    <!--<option>Spring 2017</option>-->
-                                    <!--<option>Fall 2016</option>-->
-                                    <!--<option>Summer 2016</option>-->
-                                    <!--<option>Spring 2016</option>-->
+                                <!--<option selected>&#45;&#45;Học kỳ&#45;&#45;</option>-->
+                                <!--<option>Fall 2018</option>-->
+                                <!--<option>Summer 2018</option>-->
+                                <!--<option>Spring 2018</option>-->
+                                <!--<option>Fall 2017</option>-->
+                                <!--<option>Summer 2017</option>-->
+                                <!--<option>Spring 2017</option>-->
+                                <!--<option>Fall 2016</option>-->
+                                <!--<option>Summer 2016</option>-->
+                                <!--<option>Spring 2016</option>-->
                                 <!--</select>-->
                             </div>
                             <!--Subject-->
                             <!--Lecturer-->
                             <div class="form-group col-sm-2" id="filterStudentLecturer">
                                 <!--<select class="form-control">-->
-                                    <!--<option selected>&#45;&#45;Giảng viên&#45;&#45;</option>-->
-                                    <!--<option>Nguyễn Huy Hùng - HungNH</option>-->
-                                    <!--<option>Kiều Trọng Khánh - KhanhKT</option>-->
-                                    <!--<option>Thân Văn Sử - SuTV</option>-->
-                                    <!--<option>Lâm Hữu Khánh Phương - PhuongLHK</option>-->
-                                    <!--<option>Nguyễn Trọng Tài - TaiNT</option>-->
-                                    <!--<option>Ngô Đặng Hà An - AnNDH</option>-->
-                                    <!--<option>Dương Thiên Tứ - TuDT</option>-->
-                                    <!--<option>Lại Đức Hùng - HungLD</option>-->
+                                <!--<option selected>&#45;&#45;Giảng viên&#45;&#45;</option>-->
+                                <!--<option>Nguyễn Huy Hùng - HungNH</option>-->
+                                <!--<option>Kiều Trọng Khánh - KhanhKT</option>-->
+                                <!--<option>Thân Văn Sử - SuTV</option>-->
+                                <!--<option>Lâm Hữu Khánh Phương - PhuongLHK</option>-->
+                                <!--<option>Nguyễn Trọng Tài - TaiNT</option>-->
+                                <!--<option>Ngô Đặng Hà An - AnNDH</option>-->
+                                <!--<option>Dương Thiên Tứ - TuDT</option>-->
+                                <!--<option>Lại Đức Hùng - HungLD</option>-->
                                 <!--</select>-->
                             </div>
                             <div class="form-group col-sm-2" id="filterStudentClazz">
