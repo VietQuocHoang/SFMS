@@ -893,6 +893,7 @@ function getQuestions() {
 
     //Lấy hết các div chứa question
     let allQuestions = $("div[class='question-container']");
+    console.log(allQuestions);
 
     for (var i = 0; i < allQuestions.length; ++i) {
         //Lấy id của div để biết thuộc loại question nào

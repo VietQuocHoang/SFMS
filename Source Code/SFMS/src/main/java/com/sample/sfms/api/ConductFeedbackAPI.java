@@ -56,7 +56,7 @@ public class ConductFeedbackAPI {
     @PostMapping(value = "/mobile/save-mobile", consumes = "application/json", produces = "application/json")
     private ResponseEntity saveConductedFeedbackMobile(@RequestHeader("username") String username,
                                                        @RequestBody ConductAnswerWrapper conductAnswerWrapper) {
-        return conductFeedbackService.saveAnswerMobile(conductAnswerWrapper);
+        return conductFeedbackService.saveAnswerMobile(username, conductAnswerWrapper);
     }
 
 }

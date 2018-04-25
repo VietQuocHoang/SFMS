@@ -19,7 +19,7 @@ public interface FeedbackService {
 
     ResponseEntity getNotConductedFeedbacksByUserId();
 
-    ResponseEntity getNotConductedFeedbacksByUserIdMobile();
+    ResponseEntity getNotConductedFeedbacksByUserIdMobile(String username);
 
     ResponseEntity getNotificationData();
 
@@ -27,7 +27,7 @@ public interface FeedbackService {
 
     Feedback findFeedbackToConduct(int id);
 
-    Feedback findFeedbackToConductMobile(int id);
+    Feedback findFeedbackToConductMobile(String username, int id);
 
     Feedback findFeedbackToPreview(int feedbackId);
 

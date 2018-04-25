@@ -131,8 +131,9 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public ResponseEntity getNotConductedFeedbacksByUserIdMobile() {
-        List<UserFeedback> listUserFeedback = userFeedbackRepository.findNotConductedFeedbacksByUserId(9);
+    public ResponseEntity getNotConductedFeedbacksByUserIdMobile(String username) {
+        User user = userRepository.findByUsername(username);
+        List<UserFeedback> listUserFeedback = userFeedbackRepository.findNotConductedFeedbacksByUserId(user.getId());
         System.out.println("getNotConductedFeedbacksByUserId");
         if (null == listUserFeedback || listUserFeedback.isEmpty()) {
             return new ResponseEntity(HttpStatus.NO_CONTENT);
@@ -194,8 +195,9 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public Feedback findFeedbackToConductMobile(int feedbackId) {
-        UserFeedback userFeedback = userFeedbackRepository.findUserFeedbackByUserAndFeedback(9, feedbackId);
+    public Feedback findFeedbackToConductMobile(String username, int feedbackId) {
+        User user = userRepository.findByUsername(username);
+        UserFeedback userFeedback = userFeedbackRepository.findUserFeedbackByUserAndFeedback(user.getId(), feedbackId);
         //if user doesn't have the right to to do this feedback or this feedback is conducted
         if (userFeedback == null || !userFeedback.isConductor() || userFeedback.isConducted()) {
             return null;

@@ -202,7 +202,7 @@ public class FeedbackAPI {
     @GetMapping("/mobile/conduct-mobile")
     public ResponseEntity getListFeedbackOfAuthorizedUserMobile(@RequestHeader("username") String username) {
         System.out.println("getListFeedbackOfAuthorizedUser");
-        return feedbackService.getNotConductedFeedbacksByUserIdMobile();
+        return feedbackService.getNotConductedFeedbacksByUserIdMobile(username);
     }
 
     @JsonView(FeedbackView.conductFeedbackView.class)
@@ -214,7 +214,7 @@ public class FeedbackAPI {
     @JsonView(FeedbackView.conductFeedbackView.class)
     @GetMapping("/mobile/conduct-mobile/{id}")
     public Feedback conductFeedbackMobile(@RequestHeader("username") String username, @PathVariable("id") int id) {
-        return feedbackService.findFeedbackToConductMobile(id);
+        return feedbackService.findFeedbackToConductMobile(username, id);
     }
 
 
