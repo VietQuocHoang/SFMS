@@ -145,19 +145,19 @@ var selected_department_to_button = function (data, type, full, meta) {
 var course_to_major = function (data, type, full, meta) {
     let major = data;
     console.log(data);
-    if (major["code"] != null && major["name"] != null)return major["code"] + ' - ' + major["name"];
+    if (major["code"] != null && major["name"] != null)return major["code"] + ' _ ' + major["name"];
     if (major["name"] != null)return major["name"];
     return major["code"]
 }
 
 var course_to_nameandcode = function (data, type, full, meta) {
-    if (data["code"] != null && data["name"] != null)return data["code"] + ' - ' + data["name"];
+    if (data["code"] != null && data["name"] != null)return data["code"] + ' _ ' + data["name"];
     if (data["name"] != null)return data["name"];
     return data["code"]
 }
 
 var lecturer_to_nameandcode = function (data, type, full, meta) {
-    if (data["code"] != null && data["fullname"] != null)return data["code"] + ' - ' + data["fullname"];
+    if (data["code"] != null && data["fullname"] != null)return data["code"] + ' _ ' + data["fullname"];
     if (data["fullname"] != null)return data["fullname"];
     return data["code"]
 }
@@ -342,7 +342,7 @@ function loadCourseTable() {
                         if (!recs.includes(d["name"])) {
                             recs.push(d["name"]);
                             let major = d;
-                            if (major["code"] != null && major["name"] != null) datalist.append('<option value="' + major["code"] + ' - ' + major["name"] + '">' + major["code"] + ' - ' + major["name"] + '</option>');
+                            if (major["code"] != null && major["name"] != null) datalist.append('<option value="' + major["code"] + ' _ ' + major["name"] + '">' + major["code"] + ' _ ' + major["name"] + '</option>');
                             else datalist.append('<option value="' + major["name"] + '">' + major["name"] + '</option>');
                         }
                     });
@@ -470,7 +470,7 @@ function loadClazzTable() {
                         if (!recs.includes(d["name"])) {
                             recs.push(d["name"]);
                             let major = d;
-                            if (major["code"] != null && major["name"] != null) datalist.append('<option value="' + major["code"] + ' - ' + major["name"] + '">' + major["code"] + ' - ' + major["name"] + '</option>');
+                            if (major["code"] != null && major["name"] != null) datalist.append('<option value="' + major["code"] + ' _ ' + major["name"] + '">' + major["code"] + ' _ ' + major["name"] + '</option>');
                             else datalist.append('<option value="' + major["name"] + '">' + major["name"] + '</option>');
                         }
                     });
@@ -507,7 +507,7 @@ function loadClazzTable() {
                         if (!recs.includes(d["name"])) {
                             recs.push(d["name"]);
                             if (d["code"] != null && d["name"] != null)
-                                datalist.append('<option value="' + d["code"] + ' - ' + d["name"] + '">' + d["code"] + ' - ' + d["name"] + '</option>');
+                                datalist.append('<option value="' + d["code"] + ' _ ' + d["name"] + '">' + d["code"] + ' _ ' + d["name"] + '</option>');
                             else
                                 datalist.append('<option value="' + d["name"] + '">' + d["name"] + '</option>');
                         }
@@ -580,7 +580,7 @@ function loadClazzTable() {
                         if (!recs.includes(d["fullname"])) {
                             recs.push(d["fullname"]);
                             let data = d;
-                            if (data["code"] != null && data["fullname"] != null) datalist.append('<option value="' + data["code"] + ' - ' + data["fullname"] + '">' + data["code"] + ' - ' + data["fullname"] + '</option>'); else
+                            if (data["code"] != null && data["fullname"] != null) datalist.append('<option value="' + data["code"] + ' _ ' + data["fullname"] + '">' + data["code"] + ' _ ' + data["fullname"] + '</option>'); else
                                 datalist.append('<option value="' + data["fullname"] + '">' + data["fullname"] + '</option>');
                         }
                     });
