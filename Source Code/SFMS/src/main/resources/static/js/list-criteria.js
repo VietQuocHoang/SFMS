@@ -89,7 +89,7 @@ function activeCriteria(el) {
             }
         },
         error: function () {
-            alert("fuck")
+            // alert("fuck")
         }
     })
 }
@@ -109,7 +109,7 @@ function deactiveCriteria(el) {
             }
         },
         error: function () {
-            alert("fuck")
+            // alert("fuck")
         }
     })
 }
@@ -148,7 +148,7 @@ $("#btnSave").click(function () {
             }
         },
         error: function () {
-            alert("somethin went wrong, go fuck yoself")
+            // alert("somethin went wrong, go fuck yoself")
         }
     })
 })

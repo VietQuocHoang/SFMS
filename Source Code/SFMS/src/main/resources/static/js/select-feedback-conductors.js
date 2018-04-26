@@ -160,7 +160,7 @@ function loadConductors() {
 
             },
             error: function (xhr) {
-                alert(xhr.message);
+                // alert(xhr.message);
             }
         }
     )
@@ -206,7 +206,7 @@ function removeConductor(el) {
             }
         },
         error: function () {
-            alert("fuck")
+            // alert("fuck")
         }
     })
 }
