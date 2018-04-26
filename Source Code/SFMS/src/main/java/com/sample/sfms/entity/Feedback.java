@@ -17,7 +17,7 @@ public class Feedback {
     private Integer point;
     @JsonView({FeedbackView.overview.class, FeedbackView.conductFeedbackView.class})
     private boolean isTemplate;
-    private boolean isRemoved;
+    private boolean removed;
     private Date createDate;
     @JsonView({FeedbackView.overview.class, FeedbackView.conductFeedbackView.class})
     private Date startDate;
@@ -83,12 +83,12 @@ public class Feedback {
 
     @Basic
     @Column(name = "is_removed", nullable = false)
-    public boolean getIsRemoved() {
-        return isRemoved;
+    public boolean getRemoved() {
+        return removed;
     }
 
-    public void setIsRemoved(boolean isRemoved) {
-        this.isRemoved = isRemoved;
+    public void setRemoved(boolean removed) {
+        this.removed = removed;
     }
 
     @Basic
@@ -372,7 +372,7 @@ public class Feedback {
         this.clazzByClazzId = clazzByClazzId;
         this.typeByTypeId = typeByTypeId;
         this.feedbackByReferenceId = feedbackByReferenceId;
-        this.isRemoved = isRemoved;
+        this.removed = isRemoved;
         this.isPublished = isPublished;
     }
 
@@ -382,7 +382,7 @@ public class Feedback {
         this.majorByMajorId = majorByMajorId;
         this.clazzByClazzId = clazzByClazzId;
         this.typeByTypeId = typeByTypeId;
-        this.isRemoved = isRemoved;
+        this.removed = isRemoved;
         this.isPublished = isPublished;
     }
 
@@ -390,14 +390,14 @@ public class Feedback {
         this.feedbackDes = feedbackDes;
         this.feedbackName = feedbackName;
         this.typeByTypeId = type;
-        this.isRemoved = isRemoved;
+        this.removed = isRemoved;
         this.isPublished = isPublished;
     }
 
     public Feedback(String feedbackDes, String feedbackName, boolean isRemoved, boolean isPublished) {
         this.feedbackDes = feedbackDes;
         this.feedbackName = feedbackName;
-        this.isRemoved = isRemoved;
+        this.removed = isRemoved;
         this.isPublished = isPublished;
 //        this.typeByTypeId = type;
     }
@@ -408,12 +408,12 @@ public class Feedback {
         this.departmentByDepartmentId = departmentByDepartmentId;
         this.typeByTypeId = typeByTypeId;
         this.semesterBySemesterId = semesterBySemesterId;
-        this.isRemoved = isRemoved;
+        this.removed = isRemoved;
         this.isPublished = isPublished;
     }
 
     public Feedback(boolean isRemoved, boolean isPublished) {
-        this.isRemoved = isRemoved;
+        this.removed = isRemoved;
         this.isPublished = isPublished;
     }
 

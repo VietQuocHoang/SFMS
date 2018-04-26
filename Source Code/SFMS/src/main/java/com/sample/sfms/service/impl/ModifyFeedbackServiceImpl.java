@@ -94,7 +94,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                     target = clone(template, target);
                     target.setIsPublished(true);
                     target.setIsTemplate(false);
-                    target.setIsRemoved(false);
+                    target.setRemoved(false);
                     affected.add(feedbackRepo.save(target));
                 }
             }
@@ -118,7 +118,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                     deleteFeedback(target);
                 }
             }
-            template.setIsRemoved(false);
+            template.setRemoved(false);
             template.setIsTemplate(true);
             template.setIsPublished(false);
             template = feedbackRepo.save(template);
@@ -165,7 +165,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
             template.setEndDate(null);
             template.setIsTemplate(true);
             template.setIsPublished(false);
-            target.setIsRemoved(false);
+            target.setRemoved(false);
             template.setSemesterBySemesterId(null);
             template = feedbackRepo.save(template);
             Question question = new Question();

@@ -12,7 +12,7 @@ import java.util.List;
 @org.springframework.stereotype.Repository
 public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
 
-    @Query("select f from Feedback f where f.isTemplate = :isTemplate")
+    @Query("select f from Feedback f where f.isTemplate = :isTemplate and f.removed = false")
     List<Feedback> findByIsTemplate(@Param("isTemplate")boolean isTemplate);
 
     Feedback findById(int id);
@@ -87,7 +87,7 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
     int countFinishedFeedbackForDepartment(@Param("depId") int depId, @Param("currDate") Date currDate);
 
     @Query("select f from Feedback f, Clazz c where " +
-            "f.isTemplate = false AND f.clazzByClazzId.id = c.id AND "+
+            "f.isTemplate = false and f.removed = false AND f.clazzByClazzId.id = c.id AND "+
             "(f.typeByTypeId.id = :type OR :type = -1) AND "+
             "c.courseByCourseId.id = :courseId AND c.userByLecturerId.id = :userId and f.semesterBySemesterId.id = :semId")
     List<Feedback> findByUserCourse(@Param("courseId")int courseId,
@@ -116,7 +116,7 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
     List<Feedback> findAllFeedbackNotTemplate();
     
     @Query("select f from Feedback f where " +
-            "f.isTemplate = false AND f.departmentByDepartmentId.id = :depId AND "+
+            "f.isTemplate = false and f.removed = false AND f.departmentByDepartmentId.id = :depId AND "+
             "(f.typeByTypeId.id = :type OR :type = -1) AND "+
             "f.semesterBySemesterId.id = :semId")
     List<Feedback> findByDepartment(@Param("depId")int depId,
@@ -124,7 +124,7 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
                                     @Param("semId") int semId);
 
     @Query("select f from Feedback f where " +
-            "f.isTemplate = false AND f.majorByMajorId.id = :majorId AND "+
+            "f.isTemplate = false and f.removed = false AND f.majorByMajorId.id = :majorId AND "+
             "(f.typeByTypeId.id = :type OR :type = -1) AND "+
             "f.semesterBySemesterId.id = :semId")
     List<Feedback> findByMajor(@Param("majorId")int majorId,
@@ -132,7 +132,7 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
                                     @Param("semId") int semId);
 
     @Query("select f from Feedback f where " +
-            "f.isTemplate = false AND f.courseByCourseId.id = :courseId AND "+
+            "f.isTemplate = false and f.removed = false AND f.courseByCourseId.id = :courseId AND "+
             "(f.typeByTypeId.id = :type OR :type = -1) AND "+
             "f.semesterBySemesterId.id = :semId")
     List<Feedback> findByCourse(@Param("courseId")int courseId,
