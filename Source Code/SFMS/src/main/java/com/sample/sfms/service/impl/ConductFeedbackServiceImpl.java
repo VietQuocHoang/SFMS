@@ -101,8 +101,9 @@ public class ConductFeedbackServiceImpl implements ConductFeedbackService {
     }
 
     @Override
-    public ResponseEntity saveAnswerMobile(ConductAnswerWrapper conductAnswerWrapper) {
-        answerRepository.removeAllAnswerByUserAndFeedback(9, conductAnswerWrapper.getFeedbackId());
+    public ResponseEntity saveAnswerMobile(String username, ConductAnswerWrapper conductAnswerWrapper) {
+        User user = userRepository.findByUsername(username);
+        answerRepository.removeAllAnswerByUserAndFeedback(user.getId(), conductAnswerWrapper.getFeedbackId());
         Timestamp currDate = new Timestamp(System.currentTimeMillis());
         if (conductAnswerWrapper.getAnswers() != null) {
             Optionn optionn = null;
@@ -112,13 +113,13 @@ public class ConductFeedbackServiceImpl implements ConductFeedbackService {
                 answer = new Answer();
                 answer.setCreateDate(currDate);
                 answer.setOptionnByOptionnId(optionn);
-                answer.setUserByUserId(userRepository.findOne(9));
+                answer.setUserByUserId(userRepository.findOne(user.getId()));
                 answer.setAnswerContent(conductAnswer.getAnswerContent());
                 answerRepository.save(answer);
             }
             if (null != optionn) {
                 int feedbackId = optionn.getQuestionByQuestionId().getFeedbackByFeedbackId().getId();
-                UserFeedback userFeedback = userFeedbackRepository.findUserFeedbackByUserAndFeedback(9, feedbackId);
+                UserFeedback userFeedback = userFeedbackRepository.findUserFeedbackByUserAndFeedback(user.getId(), feedbackId);
                 userFeedback.setConducted(true);
                 userFeedbackRepository.save(userFeedback);
             }
