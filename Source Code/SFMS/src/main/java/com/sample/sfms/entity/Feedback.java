@@ -87,8 +87,8 @@ public class Feedback {
         return isRemoved;
     }
 
-    public void setRemoved(boolean isRemoved) {
-        this.isTemplate = isTemplate;
+    public void setRemoved(boolean removed) {
+        isRemoved = removed;
     }
 
     @Basic

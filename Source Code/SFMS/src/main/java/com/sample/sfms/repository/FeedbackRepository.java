@@ -48,31 +48,31 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
             "f.clazzByClazzId.id = c.id AND f.semesterBySemesterId.id = s.id")
     List<Feedback> getListClassFeedback();
 
-    @Query("select f from Feedback f where f.semesterBySemesterId.id=:semId and f.departmentByDepartmentId.id=:depId and f.isTemplate=false and (f.typeByTypeId.id = :typeId OR :typeId = -1)")
+    @Query("select f from Feedback f where f.semesterBySemesterId.id=:semId and f.departmentByDepartmentId.id=:depId and f.isTemplate=false and f.removed = false and (f.typeByTypeId.id = :typeId OR :typeId = -1)")
     List<Feedback> getListFeedbackBySemIdAndDepId(@Param("semId") int semId, @Param("depId") int depId, @Param("typeId") int typeId);
 
-    @Query("select f from Feedback f where f.semesterBySemesterId.id=:semId and f.majorByMajorId.id=:majorId and f.isTemplate=false and (f.typeByTypeId.id = :typeId OR :typeId = -1)")
+    @Query("select f from Feedback f where f.semesterBySemesterId.id=:semId and f.majorByMajorId.id=:majorId and f.isTemplate=false and f.removed = false and (f.typeByTypeId.id = :typeId OR :typeId = -1)")
     List<Feedback> getListFeedbackBySemIdAndMajorId(@Param("semId") int semId, @Param("majorId") int majorId, @Param("typeId") int typeId);
 
-    @Query("select f from Feedback f where f.semesterBySemesterId.id=:semId and f.clazzByClazzId.id=:classId and f.isTemplate=false and (f.typeByTypeId.id = :typeId OR :typeId = -1)")
+    @Query("select f from Feedback f where f.semesterBySemesterId.id=:semId and f.clazzByClazzId.id=:classId and f.isTemplate=false and f.removed = false and (f.typeByTypeId.id = :typeId OR :typeId = -1)")
     List<Feedback> getListFeedbackBySemIdAndClassId(@Param("semId") int semId, @Param("classId") int classId, @Param("typeId") int typeId);
 
-    @Query("select f from Feedback f where f.semesterBySemesterId.id=:semId and f.courseByCourseId.id=:courseId and f.isTemplate=false and (f.typeByTypeId.id = :typeId OR :typeId = -1)")
+    @Query("select f from Feedback f where f.semesterBySemesterId.id=:semId and f.courseByCourseId.id=:courseId and f.isTemplate=false and f.removed = false and (f.typeByTypeId.id = :typeId OR :typeId = -1)")
     List<Feedback> getListFeedbackBySemIdAndCourseId(@Param("semId") int semId, @Param("courseId") int courseId, @Param("typeId") int typeId);
 
-    @Query("select f from Feedback f where f.startDate < :date and f.endDate > :date and isPublished=1")
+    @Query("select f from Feedback f where f.startDate < :date and f.endDate > :date and f.isPublished=1 and f.removed=false")
     List<Feedback> getListOnGoingFeedbackByDate(@Param("date") Date date);
 
-    @Query("select count(f) from Feedback f where f.startDate < :date and f.endDate > :date and isPublished=1")
+    @Query("select count(f) from Feedback f where f.startDate < :date and f.endDate > :date and isPublished=1 and f.removed=false")
     int countOnGoingFeedbackByDate(@Param("date") Date date);
 
     @Query(value = "select count(f) from Feedback f where f.clazzByClazzId in (select c.id from Clazz c where c.userByLecturerId.id=:lecturerId)")
     int countFeedbackBeingConductedOnLecturer(@Param("lecturerId") int lecturerId);
 
-    @Query(value = "select count(f) from Feedback f where f.clazzByClazzId in (select c.id from Clazz c where c.userByLecturerId.id=:lecturerId) and f.startDate < :currDate and f.endDate > :currDate")
+    @Query(value = "select count(f) from Feedback f where f.clazzByClazzId in (select c.id from Clazz c where c.userByLecturerId.id=:lecturerId) and f.startDate < :currDate and f.endDate > :currDate and f.removed=false")
     int countOnGoingFeedbackBeingConductedOnLecturer(@Param("lecturerId") int lecturerId, @Param("currDate") Date currDate);
 
-    @Query(value = "select count(f) from Feedback f where f.clazzByClazzId in (select c.id from Clazz c where c.userByLecturerId.id=:lecturerId) and f.endDate < :currDate")
+    @Query(value = "select count(f) from Feedback f where f.clazzByClazzId in (select c.id from Clazz c where c.userByLecturerId.id=:lecturerId) and f.endDate < :currDate and f.removed=false")
     int countFinishedFeedbackBeingConductedOnLecturer(@Param("lecturerId") int lecturerId, @Param("currDate") Date currDate);
 
     @Query(value = "select count(f) from Feedback f")
@@ -80,10 +80,10 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
 
     int countAllByTypeByTypeIdId(int typeId);
 
-    @Query(value = "select count(f) from Feedback f where f.departmentByDepartmentId.id=:depId and f.startDate < :currDate and f.endDate > :currDate")
+    @Query(value = "select count(f) from Feedback f where f.departmentByDepartmentId.id=:depId and f.startDate < :currDate and f.endDate > :currDate and f.removed=false")
     int countOnGoingFeedbackForDepartment(@Param("depId") int depId, @Param("currDate") Date currDate);
 
-    @Query(value = "select count(f) from Feedback f where f.departmentByDepartmentId.id=:depId and f.endDate < :currDate")
+    @Query(value = "select count(f) from Feedback f where f.departmentByDepartmentId.id=:depId and f.endDate < :currDate and f.removed=false")
     int countFinishedFeedbackForDepartment(@Param("depId") int depId, @Param("currDate") Date currDate);
 
     @Query("select f from Feedback f, Clazz c where " +
@@ -108,11 +108,11 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
     int deactiveTemplate(int templateId);
 
 
-    @Query("select f from Feedback f where f.isPublished=true and f.startDate < :currDate and f.endDate > :currDate and f.id=:id")
+    @Query("select f from Feedback f where f.isPublished=true and f.startDate < :currDate and f.endDate > :currDate and f.id=:id and f.removed=false")
     Feedback findFeedbackToConduct(@Param("id") int id, @Param("currDate") Date currDate);
 
 
-    @Query("Select f from Feedback f where f.isTemplate = 0")
+    @Query("Select f from Feedback f where f.isTemplate = 0 and f.removed = false")
     List<Feedback> findAllFeedbackNotTemplate();
     
     @Query("select f from Feedback f where " +
