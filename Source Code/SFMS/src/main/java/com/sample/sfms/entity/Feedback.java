@@ -17,6 +17,7 @@ public class Feedback {
     private Integer point;
     @JsonView({FeedbackView.overview.class, FeedbackView.conductFeedbackView.class})
     private boolean isTemplate;
+    private boolean isRemoved;
     private Date createDate;
     @JsonView({FeedbackView.overview.class, FeedbackView.conductFeedbackView.class})
     private Date startDate;
@@ -77,6 +78,16 @@ public class Feedback {
     }
 
     public void setIsTemplate(boolean isTemplate) {
+        this.isTemplate = isTemplate;
+    }
+
+    @Basic
+    @Column(name = "is_removed", nullable = true)
+    public boolean isRemoved() {
+        return isRemoved;
+    }
+
+    public void setRemoved(boolean isRemoved) {
         this.isTemplate = isTemplate;
     }
 

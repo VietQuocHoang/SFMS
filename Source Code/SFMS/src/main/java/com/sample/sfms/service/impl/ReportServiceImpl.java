@@ -320,7 +320,7 @@ public class ReportServiceImpl implements ReportService {
                                         }
                                         ynQuestionReportModel.getYnAnswerReportModelList().add(ynAnswerReportModel);
                                     }
-                                    questionAvgPoint = totalPoint / totalSelected;
+                                    questionAvgPoint = roundOneDecimal(totalPoint / totalSelected);
                                     ynQuestionReportModel.setQuestionAvgPoint(questionAvgPoint);
                                     CriteriaReportModel tmp = findCriteriaReportModelByCriteriaId(
                                             criteriaReportModels, q.getCriteriaByCriteriaId().getId());
@@ -376,6 +376,10 @@ public class ReportServiceImpl implements ReportService {
         return clazzList;
     }
 
+    private double roundOneDecimal (double num) {
+        return Math.round(num * 10.0) / 10.0;
+    }
+
     private void calculateCriteriaAvg(List<CriteriaReportModel> criteriaReportModels) {
         for (CriteriaReportModel c : criteriaReportModels) {
             double totalQuestionPoint = 0;
@@ -388,7 +392,7 @@ public class ReportServiceImpl implements ReportService {
                 if(numOfYNQuestion == 0){
                     c.setAverageCriteriaPoint(0);
                 } else{
-                    c.setAverageCriteriaPoint(totalQuestionPoint / numOfYNQuestion);
+                    c.setAverageCriteriaPoint(roundOneDecimal(totalQuestionPoint / numOfYNQuestion));
                 }
             }
         }
@@ -403,7 +407,7 @@ public class ReportServiceImpl implements ReportService {
         if(null == reportSemesterModel.getCriteriaReportModelList() || reportSemesterModel.getCriteriaReportModelList().isEmpty()){
             semAvgPoint = 0;
         } else {
-            semAvgPoint = totalCriteriaPoint / reportSemesterModel.getCriteriaReportModelList().size();
+            semAvgPoint = roundOneDecimal(totalCriteriaPoint / reportSemesterModel.getCriteriaReportModelList().size());
         }
         reportSemesterModel.setAverageSemPoint(semAvgPoint);
     }
