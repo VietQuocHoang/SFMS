@@ -15,16 +15,16 @@
     flex-wrap: wrap;
     display: flex;
     flex-direction: row;
+    align-content: center;
 }
 
 .pie-card {
     background: #fff;
     border-radius: 2px;
-    flex-shrink: 1;
-    flex-grow: 0;
-    flex-basis: fit-content;
+    flex-shrink: 0;
+    flex-grow: 1;
+    flex-basis: 20%;
     margin: 1rem;
-    position: relative;
     border: 1px solid rgba(0, 0, 0, .125);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
