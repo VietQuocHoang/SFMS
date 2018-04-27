@@ -17,7 +17,7 @@ public class Feedback {
     private Integer point;
     @JsonView({FeedbackView.overview.class, FeedbackView.conductFeedbackView.class})
     private boolean isTemplate;
-    private boolean isRemoved;
+    private boolean removed;
     private Date createDate;
     @JsonView({FeedbackView.overview.class, FeedbackView.conductFeedbackView.class})
     private Date startDate;
@@ -82,13 +82,13 @@ public class Feedback {
     }
 
     @Basic
-    @Column(name = "is_removed", nullable = true)
-    public boolean isRemoved() {
-        return isRemoved;
+    @Column(name = "is_removed", nullable = false)
+    public boolean getRemoved() {
+        return removed;
     }
 
     public void setRemoved(boolean removed) {
-        isRemoved = removed;
+        this.removed = removed;
     }
 
     @Basic
@@ -192,7 +192,7 @@ public class Feedback {
             return false;
         if (templateName != null ? !templateName.equals(feedback.templateName) : feedback.templateName != null)
             return false;
-        if (isPublished !=feedback.isPublished) return false;
+        if (isPublished != feedback.isPublished) return false;
 
         return true;
     }
@@ -361,11 +361,66 @@ public class Feedback {
         this.semesterBySemesterId = semesterBySemesterId;
     }
 
-    public Feedback() {
-
+    public Feedback(String feedbackDes, String feedbackName, String templateDes, String templateName, Department departmentByDepartmentId, Course courseByCourseId, Major majorByMajorId, Clazz clazzByClazzId, Type typeByTypeId, Feedback feedbackByReferenceId, boolean isRemoved, boolean isPublished) {
+        this.feedbackDes = feedbackDes;
+        this.feedbackName = feedbackName;
+        this.templateDes = templateDes;
+        this.templateName = templateName;
+        this.departmentByDepartmentId = departmentByDepartmentId;
+        this.courseByCourseId = courseByCourseId;
+        this.majorByMajorId = majorByMajorId;
+        this.clazzByClazzId = clazzByClazzId;
+        this.typeByTypeId = typeByTypeId;
+        this.feedbackByReferenceId = feedbackByReferenceId;
+        this.removed = isRemoved;
+        this.isPublished = isPublished;
     }
 
-    public boolean hasTarget(){
-        return this.getDepartmentByDepartmentId()!=null||this.getClazzByClazzId()!=null||this.getCourseByCourseId()!=null||this.getMajorByMajorId()!=null;
+    public Feedback(Department departmentByDepartmentId, Course courseByCourseId, Major majorByMajorId, Clazz clazzByClazzId, Type typeByTypeId, boolean isRemoved, boolean isPublished) {
+        this.departmentByDepartmentId = departmentByDepartmentId;
+        this.courseByCourseId = courseByCourseId;
+        this.majorByMajorId = majorByMajorId;
+        this.clazzByClazzId = clazzByClazzId;
+        this.typeByTypeId = typeByTypeId;
+        this.removed = isRemoved;
+        this.isPublished = isPublished;
+    }
+
+    public Feedback(String feedbackDes, String feedbackName, Type type, boolean isRemoved, boolean isPublished) {
+        this.feedbackDes = feedbackDes;
+        this.feedbackName = feedbackName;
+        this.typeByTypeId = type;
+        this.removed = isRemoved;
+        this.isPublished = isPublished;
+    }
+
+    public Feedback(String feedbackDes, String feedbackName, boolean isRemoved, boolean isPublished) {
+        this.feedbackDes = feedbackDes;
+        this.feedbackName = feedbackName;
+        this.removed = isRemoved;
+        this.isPublished = isPublished;
+//        this.typeByTypeId = type;
+    }
+
+    public Feedback(String feedbackDes, String feedbackName, Department departmentByDepartmentId, Type typeByTypeId, Semester semesterBySemesterId, boolean isRemoved, boolean isPublished) {
+        this.feedbackDes = feedbackDes;
+        this.feedbackName = feedbackName;
+        this.departmentByDepartmentId = departmentByDepartmentId;
+        this.typeByTypeId = typeByTypeId;
+        this.semesterBySemesterId = semesterBySemesterId;
+        this.removed = isRemoved;
+        this.isPublished = isPublished;
+    }
+
+    public Feedback(boolean isRemoved, boolean isPublished) {
+        this.removed = isRemoved;
+        this.isPublished = isPublished;
+    }
+
+    public Feedback() {
+    }
+
+    public boolean hasTarget() {
+        return this.getDepartmentByDepartmentId() != null || this.getClazzByClazzId() != null || this.getCourseByCourseId() != null || this.getMajorByMajorId() != null;
     }
 }

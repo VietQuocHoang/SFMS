@@ -94,6 +94,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                     target = clone(template, target);
                     target.setIsPublished(true);
                     target.setIsTemplate(false);
+                    target.setRemoved(false);
                     affected.add(feedbackRepo.save(target));
                 }
             }
@@ -117,6 +118,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                     deleteFeedback(target);
                 }
             }
+            template.setRemoved(false);
             template.setIsTemplate(true);
             template.setIsPublished(false);
             template = feedbackRepo.save(template);
@@ -163,6 +165,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
             template.setEndDate(null);
             template.setIsTemplate(true);
             template.setIsPublished(false);
+            target.setRemoved(false);
             template.setSemesterBySemesterId(null);
             template = feedbackRepo.save(template);
             Question question = new Question();
@@ -224,7 +227,8 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                     template.getMajorByMajorId(),
                     template.getClazzByClazzId(),
                     template.getTypeByTypeId(),
-                    template//selected template
+                    template,//selected template
+                    true, false
             )), HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
@@ -235,7 +239,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
     @Override
     public ResponseEntity<Feedback> createEmptyFeedback(String title, String description) {
         try {
-            return new ResponseEntity<Feedback>(feedbackRepo.save(new Feedback(description, title, typeRepo.findByDescription("Lớp"))), HttpStatus.OK);
+            return new ResponseEntity<Feedback>(feedbackRepo.save(new Feedback(description, title, typeRepo.findByDescription("Lớp"), true, false)), HttpStatus.OK);
         } catch (UnexpectedRollbackException e) {
             logger.log(Level.FINE, e.toString());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
