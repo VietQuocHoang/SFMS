@@ -16,7 +16,7 @@ var linkDeleteDepartment = "<a href='#' onclick='removeDepartmentTarget(this)'><
 var showedTargetTab;
 var showedTable;
 var _ctx = $("meta[name='ctx']").attr("content");
-
+var tod = new Date();
 $(document).ready(function () {
     loadMajorTable();
     // loadCourseTable();
@@ -56,7 +56,7 @@ $(document).ready(function () {
     }
     $("#details_form").validate(
         {
-            messages:{
+            messages: {
                 title: "Vui lòng điền tiêu đề",
                 descr: "Vui lòng điền mô tả",
                 typeId: "Vui lòng chọn loại đối tượng",
@@ -502,11 +502,17 @@ function changeStart() {
             data: JSON.stringify(feedbackData),
             success: function (data, status, xhr) {
                 if (data.startDate != null) {
-                    $("#enddate").attr(
-                        {
-                            "min": $.datepicker.formatDate('yy-mm-dd', new Date(parseInt(data.startDate))),
-                        }
-                    );
+                    let startd = new Date(parseInt(data.startDate))
+                    if (startd > tod) {
+                        $("#enddate").attr(
+                            {
+                                "min": $.datepicker.formatDate('yy-mm-dd', startd),
+                                // "max": $.datepicker.formatDate('yy-mm-dd', endd)
+                            }
+                        );
+                    } else {
+                        $("#enddate").attr({"min": $.datepicker.formatDate('yy-mm-dd', tod)});
+                    }
                     $("#enddate").val($.datepicker.formatDate('yy-mm-dd', new Date(parseInt(data.endDate))))
                 }
             },
@@ -547,25 +553,28 @@ function setStartEndConstraint() {
             // contentType: 'application/json',
             // data: JSON.stringify(semesterData),
             success: function (data, status, xhr) {
-                if (data.semesterBySemesterId != null) {
-                    let startd = new Date(parseInt(data.semesterBySemesterId.startDate));
-                    let endd = new Date(parseInt(data.semesterBySemesterId.endDate));
-                    $("#startdate").attr(
-                        {
-                            "min": $.datepicker.formatDate('yy-mm-dd', startd),
-                            "max": $.datepicker.formatDate('yy-mm-dd', endd)
-                        }
-                    );
-                    if (data.startDate != null) {
-                        let startd = new Date(parseInt(data.startDate))
-                    }
+                // if (data.semesterBySemesterId != null) {
+                //     let startd = new Date(parseInt(data.semesterBySemesterId.startDate));
+                //     let endd = new Date(parseInt(data.semesterBySemesterId.endDate));
+                //     $("#startdate").attr(
+                //         {
+                //             "min": $.datepicker.formatDate('yy-mm-dd', startd),
+                //             "max": $.datepicker.formatDate('yy-mm-dd', endd)
+                //         }
+                //     );
+                if (data.startDate != null) {
+                    let startd = new Date(parseInt(data.startDate))
+                }
+                $("#enddate").attr({"min": $.datepicker.formatDate('yy-mm-dd', tod)});
+                if (startd > tod) {
                     $("#enddate").attr(
                         {
                             "min": $.datepicker.formatDate('yy-mm-dd', startd),
-                            "max": $.datepicker.formatDate('yy-mm-dd', endd)
+                            // "max": $.datepicker.formatDate('yy-mm-dd', endd)
                         }
                     );
                 }
+                // }
             },
             error: function (result) {
                 // alert("fuck");
@@ -577,23 +586,24 @@ function setStartEndConstraint() {
 $("#btnSave").click(function () {
     var opt = $('input[name="save-option"]:checked', '#save-opt').val();
     // alert(opt);
- //   var form = $("#details_form");
-    if($("#details_form").valid()){
-    $.ajax({
-        url: '/sfms/api/modify-feedback/save/option/' + opt,
-        type: 'PUT',
-        dataType: 'json',
-        contentType: 'application/json',
-        success: function (data, status, xhr) {
-            if (xhr.status === 200) {
-                window.location.href = "/sfms/conduct-feedback/list";
+    //   var form = $("#details_form");
+    if ($("#details_form").valid()) {
+        $.ajax({
+            url: '/sfms/api/modify-feedback/save/option/' + opt,
+            type: 'PUT',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (data, status, xhr) {
+                if (xhr.status === 200) {
+                    window.location.href = "/sfms/conduct-feedback/list";
+                }
+            },
+            error: function () {
+                // alert("fuck")
             }
-        },
-        error: function () {
-            // alert("fuck")
-        }
-    });}else{
-        alert( "Vui lòng hoàn tất các thông tin cần thiết");
+        });
+    } else {
+        alert("Vui lòng hoàn tất các thông tin cần thiết");
     }
 })
 
