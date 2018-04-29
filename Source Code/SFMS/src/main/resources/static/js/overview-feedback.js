@@ -562,8 +562,9 @@ function setStartEndConstraint() {
                 //             "max": $.datepicker.formatDate('yy-mm-dd', endd)
                 //         }
                 //     );
+                var startd;
                 if (data.startDate != null) {
-                    let startd = new Date(parseInt(data.startDate))
+                    startd = new Date(parseInt(data.startDate))
                 }
                 $("#enddate").attr({"min": $.datepicker.formatDate('yy-mm-dd', tod)});
                 if (startd > tod) {
