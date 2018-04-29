@@ -286,7 +286,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                                     return new ResponseEntity<>(targetIds, HttpStatus.ALREADY_REPORTED);
                         }
                     }
-                    response = feedbackRepo.save(new Feedback(null, null, majorRepo.findOne(targetId), null, t));
+                    response = feedbackRepo.save(new Feedback(null, null, majorRepo.findOne(targetId), null, t, true, false));
                     targetIds.add(response.getId());
                     break;
                 case "Môn học":
@@ -297,7 +297,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                                 return new ResponseEntity<>(targetIds, HttpStatus.ALREADY_REPORTED);
                         }
                     }
-                    response = feedbackRepo.save(new Feedback(null, courseRepo.findOne(targetId), null, null, t));
+                    response = feedbackRepo.save(new Feedback(null, courseRepo.findOne(targetId), null, null, t, true, false));
                     targetIds.add(response.getId());
                     break;
                 case "Lớp":
@@ -308,7 +308,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                                 return new ResponseEntity<>(targetIds, HttpStatus.ALREADY_REPORTED);
                         }
                     }
-                    response = feedbackRepo.save(new Feedback(null, null, null, clazzRepo.findOne(targetId), t));
+                    response = feedbackRepo.save(new Feedback(null, null, null, clazzRepo.findOne(targetId), t, true, false));
                     targetIds.add(response.getId());
                     break;
                 case "Phòng ban":
@@ -317,7 +317,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
                         if (response.getDepartmentByDepartmentId().getId() == targetId)
                             return new ResponseEntity<>(targetIds, HttpStatus.ALREADY_REPORTED);
                     }
-                    response = feedbackRepo.save(new Feedback(departmentRepo.findOne(targetId), null, null, null, t));
+                    response = feedbackRepo.save(new Feedback(departmentRepo.findOne(targetId), null, null, null, t, true, false));
                     targetIds.add(response.getId());
                     break;
                 default:
