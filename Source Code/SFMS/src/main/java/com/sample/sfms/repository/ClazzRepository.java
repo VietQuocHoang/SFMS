@@ -47,7 +47,7 @@ public interface ClazzRepository extends JpaRepository<Clazz, Integer> {
 
     List<Clazz> findByCourseByCourseId(Course course);
 
-    @Query(value = "Select u.id as userId,u.fullname, co.id as courseId, co.name " +
+    @Query(value = "Select u.id as userId,u.fullname, co.id as courseId, co.name, co.code " +
             "from " +
             "(SELECT u.* " +
             "FROM capstone.user u, capstone.role r " +
@@ -61,5 +61,14 @@ public interface ClazzRepository extends JpaRepository<Clazz, Integer> {
             "(f.typeByTypeId.id = :type OR :type = -1) AND "+
             "c.courseByCourseId.id = :courseId AND c.userByLecturerId.id = :userId and c.semesterBySemesterId.id = :semId")
     List<Clazz> findListClassByCourseLecturerSemester( @Param("type")int type, @Param("userId") int userId, @Param("courseId") int courseId, @Param("semId") int semesterId);
+
+    @Query(value = "Select u.id as userId,u.fullname, co.id as courseId, co.name, co.code " +
+            "from " +
+            "(SELECT u.* " +
+            "FROM capstone.user u, capstone.role r " +
+            "where r.id = u.role_id and r.id=1) u, capstone.clazz cl, capstone.course co " +
+            "where u.id = cl.lecturer_id and cl.course_id = co.id and u.id = :lecturerId " +
+            "group by co.id", nativeQuery = true)
+    List<Object[]> findAllCourseCorrespondingToLecturer(@Param("lecturerId") int lecturerId);
 
 }

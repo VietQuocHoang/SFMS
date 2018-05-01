@@ -55,7 +55,7 @@ public class ReportController {
                 mav.setViewName("view-report");
                 mav.addObject("feedbackTarget", reportService.loadListFeedbackTargetWrapper());
             } else if (p.getPrivilege().getName().equals(SEE_SELF_REPORT)) {
-                mav.addObject("clazzes", user.getClazzesById());
+                mav.addObject("courses", reportService.findAllCourseCorrespondingToCurrentLecturer());
                 mav.setViewName("view-my-report");
             } else if (p.getPrivilege().getName().equals(SEE_DEPARTMENT_REPORT)) {
                 mav.addObject("department", user.getDepartmentByDepartmentId());
