@@ -1,23 +1,23 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org" lang="en">-->
 
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <meta name="ctx" th:content="${#httpServletRequest.getContextPath()}"/>
-    <title>Làm feedback</title>
-    <div th:replace="fragments/core-css"></div>
+<!--<head>-->
+    <!--<meta charset="UTF-8"/>-->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0"/>-->
+    <!--<meta http-equiv="X-UA-Compatible" content="ie=edge"/>-->
+    <!--<meta name="ctx" th:content="${#httpServletRequest.getContextPath()}"/>-->
+    <!--<title>Làm feedback</title>-->
+    <!--<div th:replace="fragments/core-css"></div>-->
     <!-- custom style -->
     <link th:href="@{/css/conduct-feedback.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/css/custom-style.css}" rel="stylesheet" type="text/css"/>
-    <div th:replace="fragments/core-script"></div>
-    <!-- custom script -->
-    <!--<script th:src="@{/js/conduct-feedback.js}"></script>-->
-</head>
+    <!--<div th:replace="fragments/core-script"></div>-->
+    <!--&lt;!&ndash; custom script &ndash;&gt;-->
+    <!--&lt;!&ndash;<script th:src="@{/js/conduct-feedback.js}"></script>&ndash;&gt;-->
+<!--</head>-->
 
-<body>
-<div class="container" id="conduct-feedback-container">
+<!--<body>-->
+<!--<div class="container" id="conduct-feedback-container">-->
     <div class="row justify-content-center">
         <div class="feedback-title-wrapper">
             <h3 class="feedback-title" th:text="${feedback.feedbackName}"></h3>
@@ -286,7 +286,7 @@
         </div>
     </div> -->
     <!-- end div progress bar && submit -->
-</div>
+<!--</div>-->
 <!-- end div container -->
 
 <!--<div class="modal fade" id="confirmModal">
@@ -313,6 +313,6 @@
         </div>
     </div>
 </div>-->
-</body>
+<!--</body>-->
 
-</html>
+<!--</html>-->

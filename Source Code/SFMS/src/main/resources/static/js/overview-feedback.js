@@ -267,11 +267,6 @@ function loadClazzTable() {
                     "data": "id",
                     "render": modifyconductorlink
                 },
-                {//column for modifyviewer
-                    "data": "id",
-                    "render": modifyviewerlink,
-                    "visible": false,
-                },
                 {//column for view detail-update-delete
                     "data": null,
                     "defaultContent": linkShow + '  ' + linkDeleteClazz
