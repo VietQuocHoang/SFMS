@@ -118,7 +118,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="card-outer" th:if="${(index+1)<feedback.questionsById.size()-1}">
+                                            <div class="card-outer" th:if="${(index+1)<(feedback.questionsById.size()-1)}">
                                                 <div class="card-header-outer" th:attr="id=${feedback.questionsById.get(index+1).id}">
                                                     Câu hỏi <p th:text="${index+2}" th:remove="tag"></p>
                                                 </div>
@@ -144,7 +144,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="card-outer" th:if="${(index+2)<feedback.questionsById.size()-1}">
+                                            <div class="card-outer" th:if="${(index+2)<(feedback.questionsById.size()-1)}">
                                                 <div class="card-header-outer" th:attr="id=${feedback.questionsById.get(index+2).id}">
                                                     Câu hỏi <p th:text="${index+3}" th:remove="tag"></p>
                                                 </div>

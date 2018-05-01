@@ -918,7 +918,7 @@ function getQuestions() {
             for (var j = 0; j < optionDivs.length; ++j) {
                 options.push(new Option(optionDivs[j].value, weightDivs[j].value));
             }
-
+            console.log(title + "-" + criteriaId);
             feedback.questions.push(new Question(title, options, "Radio", required, criteriaId, requireOther.checked));
         }
         else if (id.indexOf("checkbox-question") >= 0) {
@@ -930,15 +930,19 @@ function getQuestions() {
             for (var j = 0; j < optionDivs.length; ++j) {
                 options.push(new Option(optionDivs[j].value, weightDivs[j].value));
             }
+            console.log(title + "-" + criteriaId);
             feedback.questions.push(new Question(title, options, "CheckBox", required, criteriaId, requireOther.checked));
         }
         else if (id.indexOf("textfield-question") >= 0) {
+            console.log(title + "-" + criteriaId);
             feedback.questions.push(new Question(title, null, "Text", required, criteriaId, false));
         }
         else if (id.indexOf("textarea-question") >= 0) {
+            console.log(title + "-" + criteriaId);
             feedback.questions.push(new Question(title, null, "TextArea", required, criteriaId, false));
         }
         else if (id.indexOf("star-question") >= 0) {
+            console.log(title + "-" + criteriaId);
             feedback.questions.push(new Question(title, null, "Star", required, criteriaId, false));
         }
     }

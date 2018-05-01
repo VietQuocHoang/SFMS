@@ -251,6 +251,11 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public List<Question> findByFeedbackIdASC(int feedbackId) {
+        return questionRepo.findByFeedbackIdASC(feedbackId);
+    }
+
+    @Override
     public Question findByQuestionID(int questionID) {
         return questionRepo.findByQuestionId(questionID);
     }

@@ -29,6 +29,8 @@ public interface QuestionService {
 
     List<Question> findByFeedbackId(int feedbackId);
 
+    List<Question> findByFeedbackIdASC(int feedbackId);
+
     Question findByQuestionID (int questionID);
 
     void modifySuggestion(String suggestion, int questionId) throws Exception;

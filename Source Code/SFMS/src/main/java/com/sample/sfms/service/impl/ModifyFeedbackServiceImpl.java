@@ -171,15 +171,17 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
             Question question = new Question();
             Optionn optionn = new Optionn();
             for (Question q : feedback.getQuestionsById()) {
-                question = new Question(q.getType(), q.getSuggestion(), q.getIsRequied(), q.getQuestionContent(),
-                        q.getCriteriaByCriteriaId(), template);
-                question = questionRepo.save(question);
-                for (Optionn o : q.getOptionsById()) {
-                    optionn = new Optionn(o.getOptionnContent(), o.getPoint(), question);
-                    optionn = optionRepo.save(optionn);
-                }
+//                question = new Question(q.getType(), q.getSuggestion(), q.getIsRequied(), q.getQuestionContent(),
+//                        q.getCriteriaByCriteriaId(), template);
+//                question = questionRepo.save(question);
+//                for (Optionn o : q.getOptionsById()) {
+//                    optionn = new Optionn(o.getOptionnContent(), o.getPoint(), question);
+//                    optionn = optionRepo.save(optionn);
+//                }
+                q.setFeedbackByFeedbackId(template);
+                questionRepo.save(q);
             }
-            deleteFeedback(feedbackRepo.findOne(feedbackId));
+//            deleteFeedback(feedbackRepo.findOne(feedbackId));
 //            Feedback response = feedbackRepo.save(feedback);
 //            deleteFeedback(feedbackRepo.findOne(deletedid));
             return new ResponseEntity<>(template, HttpStatus.OK);
@@ -201,7 +203,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
         target.setSemesterBySemesterId(template.getSemesterBySemesterId());
         Question question = new Question();
         Optionn optionn = new Optionn();
-        for (Question q : template.getQuestionsById()) {
+        for (Question q : questionRepo.findByFeedbackIdASC(template.getId())) {
             question = new Question(q.getType(), q.getSuggestion(), q.getIsRequied(), q.getQuestionContent(),
                     q.getCriteriaByCriteriaId(), target);
             question = questionRepo.save(question);
@@ -355,72 +357,74 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
         Type t;
         int removedId = 0;
         try {
-            for (int targetId : targetIds) {
-                response = feedbackRepo.findOne(targetId);
-                t = response.getTypeByTypeId();
-                switch (t.getDescription()) {
-                    case "Chuyên ngành":
-                        if (response.getMajorByMajorId().getId() == id) {
-                            userFeedbackRepo.delete(response.getUserFeedbacksById());
-                            feedbackRepo.delete(response.getFeedbacksById());
-                            for (Question q : response.getQuestionsById()) {
-                                for (Optionn opt : q.getOptionsById()) {
-                                    answerRepo.delete(opt.getAnswersById());
+            if (targetIds != null) {
+                for (int targetId : targetIds) {
+                    response = feedbackRepo.findOne(targetId);
+                    t = response.getTypeByTypeId();
+                    switch (t.getDescription()) {
+                        case "Chuyên ngành":
+                            if (response.getMajorByMajorId().getId() == id) {
+                                userFeedbackRepo.delete(response.getUserFeedbacksById());
+                                feedbackRepo.delete(response.getFeedbacksById());
+                                for (Question q : response.getQuestionsById()) {
+                                    for (Optionn opt : q.getOptionsById()) {
+                                        answerRepo.delete(opt.getAnswersById());
+                                    }
+                                    optionRepo.delete(q.getOptionsById());
                                 }
-                                optionRepo.delete(q.getOptionsById());
+                                questionRepo.delete(response.getQuestionsById());
+                                removedId = response.getId();
+                                feedbackRepo.delete(response);
                             }
-                            questionRepo.delete(response.getQuestionsById());
-                            removedId = response.getId();
-                            feedbackRepo.delete(response);
-                        }
-                        break;
-                    case "Môn học":
-                        if (response.getCourseByCourseId().getId() == id) {
-                            userFeedbackRepo.delete(response.getUserFeedbacksById());
-                            feedbackRepo.delete(response.getFeedbacksById());
-                            for (Question q : response.getQuestionsById()) {
-                                for (Optionn opt : q.getOptionsById()) {
-                                    answerRepo.delete(opt.getAnswersById());
+                            break;
+                        case "Môn học":
+                            if (response.getCourseByCourseId().getId() == id) {
+                                userFeedbackRepo.delete(response.getUserFeedbacksById());
+                                feedbackRepo.delete(response.getFeedbacksById());
+                                for (Question q : response.getQuestionsById()) {
+                                    for (Optionn opt : q.getOptionsById()) {
+                                        answerRepo.delete(opt.getAnswersById());
+                                    }
+                                    optionRepo.delete(q.getOptionsById());
                                 }
-                                optionRepo.delete(q.getOptionsById());
+                                questionRepo.delete(response.getQuestionsById());
+                                removedId = response.getId();
+                                feedbackRepo.delete(response);
                             }
-                            questionRepo.delete(response.getQuestionsById());
-                            removedId = response.getId();
-                            feedbackRepo.delete(response);
-                        }
-                        break;
-                    case "Lớp":
-                        if (response.getClazzByClazzId().getId() == id) {
-                            userFeedbackRepo.delete(response.getUserFeedbacksById());
-                            feedbackRepo.delete(response.getFeedbacksById());
-                            for (Question q : response.getQuestionsById()) {
-                                for (Optionn opt : q.getOptionsById()) {
-                                    answerRepo.delete(opt.getAnswersById());
+                            break;
+                        case "Lớp":
+                            if (response.getClazzByClazzId().getId() == id) {
+                                userFeedbackRepo.delete(response.getUserFeedbacksById());
+                                feedbackRepo.delete(response.getFeedbacksById());
+                                for (Question q : response.getQuestionsById()) {
+                                    for (Optionn opt : q.getOptionsById()) {
+                                        answerRepo.delete(opt.getAnswersById());
+                                    }
+                                    optionRepo.delete(q.getOptionsById());
                                 }
-                                optionRepo.delete(q.getOptionsById());
+                                questionRepo.delete(response.getQuestionsById());
+                                removedId = response.getId();
+                                feedbackRepo.delete(response);
                             }
-                            questionRepo.delete(response.getQuestionsById());
-                            removedId = response.getId();
-                            feedbackRepo.delete(response);
-                        }
-                        break;
-                    case "Phòng ban":
-                        if (response.getDepartmentByDepartmentId().getId() == id) {
-                            userFeedbackRepo.delete(response.getUserFeedbacksById());
-                            feedbackRepo.delete(response.getFeedbacksById());
-                            for (Question q : response.getQuestionsById()) {
-                                for (Optionn opt : q.getOptionsById()) {
-                                    answerRepo.delete(opt.getAnswersById());
+                            break;
+                        case "Phòng ban":
+                            if (response.getDepartmentByDepartmentId().getId() == id) {
+                                userFeedbackRepo.delete(response.getUserFeedbacksById());
+                                feedbackRepo.delete(response.getFeedbacksById());
+                                for (Question q : response.getQuestionsById()) {
+                                    for (Optionn opt : q.getOptionsById()) {
+                                        answerRepo.delete(opt.getAnswersById());
+                                    }
+                                    optionRepo.delete(q.getOptionsById());
                                 }
-                                optionRepo.delete(q.getOptionsById());
+                                questionRepo.delete(response.getQuestionsById());
+                                removedId = response.getId();
+                                feedbackRepo.delete(response);
                             }
-                            questionRepo.delete(response.getQuestionsById());
-                            removedId = response.getId();
-                            feedbackRepo.delete(response);
-                        }
-                        break;
-                    default:
-                        return new ResponseEntity<>(targetIds, HttpStatus.BAD_REQUEST);
+                            break;
+                        default:
+                            return new ResponseEntity<>(targetIds, HttpStatus.BAD_REQUEST);
+                    }
                 }
             }
             if (removedId == 0) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -944,7 +948,7 @@ public class ModifyFeedbackServiceImpl implements ModifyFeedbackService {
             List<Clazz> results = new ArrayList<>();
             Clazz c;
             for (int id : ids) {
-                    c = feedbackRepo.findOne(id).getClazzByClazzId();
+                c = feedbackRepo.findOne(id).getClazzByClazzId();
                 if (c != null) results.add(c);
             }
             return new ResponseEntity<>(results, HttpStatus.OK);

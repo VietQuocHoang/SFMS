@@ -5,6 +5,7 @@ import com.sample.sfms.entity.Optionn;
 import com.sample.sfms.entity.Question;
 import com.sample.sfms.service.interf.CriteriaService;
 import com.sample.sfms.service.interf.FeedbackService;
+import com.sample.sfms.service.interf.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+
 
 /**
  * Created by Binh Nguyen on 10-Mar-18.
@@ -26,6 +27,9 @@ public class FeedbackContentController {
 
     @Autowired
     private FeedbackService feedbackService;
+
+    @Autowired
+    private QuestionService questionService;
 
     @Autowired
     CriteriaService critService;
@@ -44,6 +48,9 @@ public class FeedbackContentController {
             }
             isOther.add(other);
         }
+        List<Question> questions = questionService.findByFeedbackIdASC(feedbackId);
+        feedback.setQuestionsById(null);
+        feedback.setQuestionsById(questions);
         mv.addObject("others", isOther);
         mv.addObject("feedback", feedback);
         mv.addObject("criterias", critService.getAllCriterias());
@@ -101,6 +108,17 @@ public class FeedbackContentController {
     private ModelAndView previewFeedback(@PathVariable("id") int feedbackId) {
         ModelAndView mav = new ModelAndView();
         Feedback feedback = feedbackService.findFeedbackToPreview(feedbackId);
+        List<Question> questions = questionService.findByFeedbackIdASC(feedbackId);
+        /*Collection<Question> questions = feedback.getQuestionsById();
+        Comparator<Question> comparator = new Comparator<Question>() {
+            @Override
+            public int compare(Question left, Question right) {
+                return left.getId() - right.getId(); // use your logic
+            }
+        };
+        Collections.sort(questions.stream().collect(Collectors.toList()), comparator);*/
+        feedback.setQuestionsById(null);
+        feedback.setQuestionsById(questions);
         if (feedback == null) {
             mav.setViewName("forbidden");
         } else {
@@ -108,5 +126,17 @@ public class FeedbackContentController {
             mav.addObject("feedback", feedback);
         }
         return mav;
+    }
+
+    private int compare(Question q1, Question q2) {
+        int value = 0;
+        if (q1.getId() > q2.getId())
+            value = 1;
+        else if (q1.getId() < q2.getId())
+            value = -1;
+        else if (q1.getId() == q2.getId())
+            value = 0;
+
+        return value;
     }
 }
