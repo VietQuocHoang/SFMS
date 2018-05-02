@@ -40,9 +40,9 @@ public class ConductFeedbackController {
     private ModelAndView conductFeedback(@PathVariable("id") int feedbackId) {
         ModelAndView mav = new ModelAndView();
         Feedback feedback = feedbackService.findFeedbackToConduct(feedbackId);
-       // List<Question> questions = questionService.findByFeedbackIdASC(feedbackId);
-        //feedback.setQuestionsById(null);
-       // feedback.setQuestionsById(questions);
+        List<Question> questions = questionService.findByFeedbackIdASC(feedbackId);
+        feedback.setQuestionsById(null);
+        feedback.setQuestionsById(questions);
         if (feedback == null) {
             mav.setViewName("forbidden");
         } else {

@@ -61,13 +61,16 @@ public class FeedbackContentController {
     private ModelAndView editFeedbackSuggestion (HttpSession session){
         int feedbackId = (int)session.getAttribute("id");
         Feedback feedback = feedbackService.findFeedbackById(feedbackId);
+        List<Question> questions = questionService.findByFeedbackIdASC(feedbackId);
+        feedback.setQuestionsById(null);
+        feedback.setQuestionsById(questions);
         Collection<Question> questionList = feedback.getQuestionsById();
-        if (questionList.size() <= 0) {
+        if (questionList.size() <= 0) { //Khong co cau hoi nao trong list
             ModelAndView mv = new ModelAndView("edit-feedback-suggested-improvement");
             mv.addObject("feedback", null);
             mv.addObject("template", null);
             return mv;
-        } else {
+        } else { //Co cau hoi trong list
             boolean flag = false;
             for (Question question : questionList) {
                 if (question.getSuggestion() != null) {

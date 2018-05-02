@@ -61,9 +61,16 @@ public class FeedbackAPI {
             try {
                 //int feedbackId = feedbackService.save(model);
                 int feedbackId = model.getId();
-
+                Feedback feedback = feedbackService.findFeedbackById(feedbackId);
                 for (AddQuestionModel question :
                         model.getQuestions()) {
+                    if (feedback.getFeedbackByReferenceId() != null) {
+                        for (Question questionTemplate : feedback.getFeedbackByReferenceId().getQuestionsById()) {
+                            if (questionTemplate.getQuestionContent().equalsIgnoreCase(question.getQuestionContent())) {
+                                question.setSuggestion(questionTemplate.getSuggestion());
+                            }
+                        }
+                    }
                     question.setFeedbackId(feedbackId);
                     questionService.addQuestion(question);
                 }

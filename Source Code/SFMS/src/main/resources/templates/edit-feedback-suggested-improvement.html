@@ -106,19 +106,32 @@
                                                     </div>-->
                                                     <div class="card-block">
                                                         <div class="form-group-suggest">
-                                                            <th:block th:if="${template == null}">
-                                                                <input type="text" class="form-control suggestion-input" th:attr="value=${feedback.questionsById.get(index).suggestion}">
-                                                            </th:block>
-                                                            <th:block th:if="${template != null}">
-                                                                <input type="text" class="form-control suggestion-input" th:attr="value=${template.questionsById.get(index).suggestion}">
-                                                            </th:block>
+                                                            <input type="text" class="form-control suggestion-input" th:attr="value=${feedback.questionsById.get(index).suggestion}">
+
+                                                            <!--  <th:block th:if="${template == null}">
+                                                                  <input type="text" class="form-control suggestion-input" th:attr="value=${feedback.questionsById.get(index).suggestion}">
+                                                              </th:block>
+                                                              <th:block th:if="${template != null}">
+                                                                  <span th:with="component ='false'" th:remove="tag">
+                                                                      <th:block th:each="index2:${#numbers.sequence(0,(template.questionsById.size()-1))}">
+                                                                          <th:block th:if="${template.questionsById.get(index2).questionContent == feedback.questionsById.get(index).questionContent}">
+                                                                              <input type="text" class="form-control suggestion-input" th:attr="value=${template.questionsById.get(index2).suggestion}">
+                                                                              <p th:with="component ='true'" th:remove="tag"></p>
+                                                                          </th:block>
+                                                                      </th:block>
+                                                                      <span th:text="${component}"></span>
+                                                                      <th:block th:if="${component == 'false'}">
+                                                                          <input type="text" class="form-control suggestion-input">
+                                                                      </th:block>
+                                                                  </span>
+                                                              </th:block>-->
                                                           <!--  <textarea class="" name="suggest-1" rows="4" cols="200%"><p th:text="${feedback.questionsById.get(index).suggestion}" th:remove="tag"></p></textarea>-->
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div class="card-outer" th:if="${(index+1)<(feedback.questionsById.size()-1)}">
+                                            <div class="card-outer" th:if="${(index+1)<(feedback.questionsById.size())}">
                                                 <div class="card-header-outer" th:attr="id=${feedback.questionsById.get(index+1).id}">
                                                     Câu hỏi <p th:text="${index+2}" th:remove="tag"></p>
                                                 </div>
@@ -132,19 +145,31 @@
                                                     </div>-->
                                                     <div class="card-block">
                                                         <div class="form-group-suggest">
-                                                            <th:block th:if="${template == null}">
+                                                            <input type="text" class="form-control suggestion-input" th:attr="value=${feedback.questionsById.get(index+1).suggestion}">
+
+                                                         <!--   <th:block th:if="${template == null}">
                                                                 <input type="text" class="form-control suggestion-input" th:attr="value=${feedback.questionsById.get(index+1).suggestion}">
                                                             </th:block>
                                                             <th:block th:if="${template != null}">
-                                                                <input type="text" class="form-control suggestion-input" th:attr="value=${template.questionsById.get(index+1).suggestion}">
-                                                            </th:block>
+                                                                <p th:with="component =${'false'}" th:remove="tag"></p>
+                                                                <th:block th:each="index2:${#numbers.sequence(0,(template.questionsById.size()-1))}">
+                                                                    <th:block th:if="${template.questionsById.get(index2).questionContent == feedback.questionsById.get(index+1).questionContent}">
+                                                                        <input type="text" class="form-control suggestion-input" th:attr="value=${template.questionsById.get(index2).suggestion}">
+                                                                        <p th:with="component =${'true'}" th:remove="tag"></p>
+                                                                    </th:block>
+                                                                </th:block>
+                                                                <th:block th:if="${component == 'false'}">
+                                                                    <input type="text" class="form-control suggestion-input">
+                                                                </th:block>
+                                                            </th:block>-->
+
                                                            <!-- <textarea class="" name="suggest-1" rows="4" cols="200%"><p th:text="${feedback.questionsById.get(index+1).suggestion}" th:remove="tag"></p></textarea>-->
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div class="card-outer" th:if="${(index+2)<(feedback.questionsById.size()-1)}">
+                                            <div class="card-outer" th:if="${(index+2)<(feedback.questionsById.size())}">
                                                 <div class="card-header-outer" th:attr="id=${feedback.questionsById.get(index+2).id}">
                                                     Câu hỏi <p th:text="${index+3}" th:remove="tag"></p>
                                                 </div>
@@ -158,12 +183,23 @@
                                                     </div>-->
                                                     <div class="card-block">
                                                         <div class="form-group-suggest">
-                                                            <th:block th:if="${template == null}">
-                                                                <input type="text" class="form-control suggestion-input" th:attr="value=${feedback.questionsById.get(index+2).suggestion}">
-                                                            </th:block>
-                                                            <th:block th:if="${template != null}">
-                                                                <input type="text" class="form-control suggestion-input" th:attr="value=${template.questionsById.get(index+2).suggestion}">
-                                                            </th:block>
+                                                            <input type="text" class="form-control suggestion-input" th:attr="value=${feedback.questionsById.get(index+2).suggestion}">
+
+                                                            <!--     <th:block th:if="${template == null}">
+                                                                     <input type="text" class="form-control suggestion-input" th:attr="value=${feedback.questionsById.get(index+2).suggestion}">
+                                                                 </th:block>
+                                                                 <th:block th:if="${template != null}">
+                                                                     <p th:with="component =${'false'}" th:remove="tag"></p>
+                                                                     <th:block th:each="index2:${#numbers.sequence(0,(template.questionsById.size()-1))}">
+                                                                         <th:block th:if="${template.questionsById.get(index2).questionContent == feedback.questionsById.get(index+2).questionContent}">
+                                                                             <input type="text" class="form-control suggestion-input" th:attr="value=${template.questionsById.get(index2).suggestion}">
+                                                                             <p th:with="component =${'true'}" th:remove="tag"></p>
+                                                                         </th:block>
+                                                                     </th:block>
+                                                                     <th:block th:if="${component == 'false'}">
+                                                                         <input type="text" class="form-control suggestion-input">
+                                                                     </th:block>
+                                                                 </th:block>-->
                                                            <!-- <textarea class="" name="suggest-1" rows="4" cols="200%"><p th:text="${feedback.questionsById.get(index+2).suggestion}" th:remove="tag"></p></textarea>-->
                                                         </div>
                                                     </div>
