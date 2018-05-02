@@ -21,7 +21,7 @@ public interface UserFeedbackRepository extends JpaRepository<UserFeedback, User
     List<UserFeedback> findByUserByUserId_Id(int id);
 
     @Modifying
-    @Query("Select u from UserFeedback u where u.userByUserId.id=:userId and u.conducted=false and u.feedbackByFeedbackId.removed = false")
+    @Query("Select u from UserFeedback u where u.userByUserId.id=:userId and u.conducted=false and u.feedbackByFeedbackId.removed = false and u.feedbackByFeedbackId.isTemplate = false")
     List<UserFeedback> findNotConductedFeedbacksByUserId(@Param("userId") int id);
 
     @Modifying
@@ -36,7 +36,7 @@ public interface UserFeedbackRepository extends JpaRepository<UserFeedback, User
             "and u.feedbackByFeedbackId.removed = false")
     List<UserFeedback> findNotConductedFeedbacksByUserIdAndCurrDate(@Param("userId") int id, @Param("currDate") Date currDate);
     @Modifying
-    @Query("Select u from UserFeedback u where u.userByUserId.id=:userId and u.feedbackByFeedbackId.removed=false")
+    @Query("Select u from UserFeedback u where u.userByUserId.id=:userId and u.feedbackByFeedbackId.removed=false and u.feedbackByFeedbackId.isTemplate = false")
     List<UserFeedback> findFeedbacksByUserId(@Param("userId") int id);
 
 
@@ -48,10 +48,10 @@ public interface UserFeedbackRepository extends JpaRepository<UserFeedback, User
             "and u.feedbackByFeedbackId.isTemplate = false")
     UserFeedback findUserFeedbackByUserAndFeedback(@Param("userId") int userId, @Param("feedbackId") int feedbackId);
 
-    @Query("Select count(u) from UserFeedback u where u.userByUserId.id=:userId and u.conducted=true and u.feedbackByFeedbackId.removed=false")
+    @Query("Select count(u) from UserFeedback u where u.userByUserId.id=:userId and u.conducted=true and u.feedbackByFeedbackId.isTemplate = false and u.feedbackByFeedbackId.removed=false")
     int countNumberOfConductedFeedbackForUser(@Param("userId") int userId);
 
-    @Query("Select count(u) from UserFeedback u where u.userByUserId.id=:userId and u.conducted=false and u.feedbackByFeedbackId.removed=false")
+    @Query("Select count(u) from UserFeedback u where u.userByUserId.id=:userId and u.conducted=false and u.feedbackByFeedbackId.isTemplate = false and u.feedbackByFeedbackId.removed=false")
     int countNumberOfNotConductedFeedbackForUser(@Param("userId") int userId);
 
     @Query("select u " +
