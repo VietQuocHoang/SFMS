@@ -1,6 +1,8 @@
 
 /* profile picture for side menu */
 .navbar-sidenav>li.nav-profile{
+    white-space: nowrap;
+    word-wrap: break-word;
     padding: 20px;
     color:#fff;
     background: #111;
@@ -23,6 +25,7 @@
 
 /*Profile text*/
 .navbar-sidenav>li.nav-profile> .info{
+    max-width: 163px;
     float: left;
     font-size:18px;
 }
