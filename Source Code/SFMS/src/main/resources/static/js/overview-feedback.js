@@ -71,6 +71,7 @@ $(document).ready(function () {
     $("#feedback-description").attr('required', true);
     setRequired();
     setStartEndConstraint();
+    changeSemester();
     // changeStart();
 });
 function setRequired() {
@@ -447,34 +448,34 @@ function changeSemester() {
             contentType: 'application/json',
             data: JSON.stringify(semesterData),
             success: function (data, status, xhr) {
-                if (data.startDate != null) {
-                    let startd = new Date(parseInt(data.startDate));
-                    $("#startdate").attr(
-                        {
-                            "min": $.datepicker.formatDate('yy-mm-dd', startd),
-                        }
-                    );
-                    $("#enddate").attr(
-                        {
-                            "min": $.datepicker.formatDate('yy-mm-dd', startd),
-                        }
-                    );
-                }
-                if (data.endDate != null) {
-                    let endd = new Date(parseInt(data.endDate));
-                    $("#startdate").attr(
-                        {
-                            "max": $.datepicker.formatDate('yy-mm-dd', endd)
-                        }
-                    );
-                    $("#enddate").attr(
-                        {
-                            "max": $.datepicker.formatDate('yy-mm-dd', endd)
-                        }
-                    );
-                }
-                $("#startdate").val('');
-                $("#enddate").val('');
+                // if (data.startDate != null) {
+                //     let startd = new Date(parseInt(data.startDate));
+                //     $("#startdate").attr(
+                //         {
+                //             "min": $.datepicker.formatDate('yy-mm-dd', startd),
+                //         }
+                //     );
+                //     $("#enddate").attr(
+                //         {
+                //             "min": $.datepicker.formatDate('yy-mm-dd', startd),
+                //         }
+                //     );
+                // }
+                // if (data.endDate != null) {
+                //     let endd = new Date(parseInt(data.endDate));
+                //     $("#startdate").attr(
+                //         {
+                //             "max": $.datepicker.formatDate('yy-mm-dd', endd)
+                //         }
+                //     );
+                //     $("#enddate").attr(
+                //         {
+                //             "max": $.datepicker.formatDate('yy-mm-dd', endd)
+                //         }
+                //     );
+                // }
+                // $("#startdate").val('');
+                // $("#enddate").val('');
             },
             error: function (result) {
                 //alert("fuck");

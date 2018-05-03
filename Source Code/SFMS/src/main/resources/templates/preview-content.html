@@ -43,7 +43,7 @@
                     <div class="card"
                          th:classappend="${'question-' + feedback.questionsById.get(index).id} + (${feedback.questionsById.get(index).isRequied}?' required': '')">
                         <div class="card-header">
-                            Câu hỏi <p th:text="${index+1}" th:remove="tag"></p>
+                            Câu hỏi <p th:text="${index+1}" th:remove="tag"></p> - <p th:text="${feedback.questionsById.get(index).id}" th:remove="tag"></p>
                             <span th:class="${feedback.questionsById.get(index).isRequied}?'required-question active':'required-question'">*</span>
                             <!--TODO sửa lại cái này -->
                         </div>

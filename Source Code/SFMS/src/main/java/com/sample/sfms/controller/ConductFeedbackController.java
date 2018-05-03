@@ -1,10 +1,12 @@
 package com.sample.sfms.controller;
 
 import com.sample.sfms.entity.Feedback;
+import com.sample.sfms.entity.Question;
 import com.sample.sfms.entity.UserFeedback;
 import com.sample.sfms.model.answer.ConductAnswerWrapper;
 import com.sample.sfms.service.interf.ConductFeedbackService;
 import com.sample.sfms.service.interf.FeedbackService;
+import com.sample.sfms.service.interf.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,9 @@ public class ConductFeedbackController {
     @Autowired
     private FeedbackService feedbackService;
 
+    @Autowired
+    private QuestionService questionService;
+
     @GetMapping(value = "/list")
     private ModelAndView getListConductFeedback() {
         ModelAndView mav = new ModelAndView("view-list-conduct-feedback");
@@ -35,6 +40,9 @@ public class ConductFeedbackController {
     private ModelAndView conductFeedback(@PathVariable("id") int feedbackId) {
         ModelAndView mav = new ModelAndView();
         Feedback feedback = feedbackService.findFeedbackToConduct(feedbackId);
+        List<Question> questions = questionService.findByFeedbackIdASC(feedbackId);
+        feedback.setQuestionsById(null);
+        feedback.setQuestionsById(questions);
         if (feedback == null) {
             mav.setViewName("forbidden");
         } else {

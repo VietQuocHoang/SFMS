@@ -20,6 +20,10 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
     List<Question> findByFeedbackId(@Param("feedbackID")int feedbackID);
 
     @Query("select q from Question q where " +
+            "q.feedbackByFeedbackId.id = :feedbackID order by q.id ASC")
+    List<Question> findByFeedbackIdASC(@Param("feedbackID")int feedbackID);
+
+    @Query("select q from Question q where " +
             "q.id = :questionID")
     Question findByQuestionId(@Param("questionID")int questionID);
 

@@ -155,7 +155,7 @@ public class QuestionServiceImpl implements QuestionService {
             List<Optionn> listExistedOption = optionnService.findByQuestionId(model.getQuestionId());
             question.setIsRequied(model.isRequired());
             question.setQuestionContent(model.getQuestionContent());
-            question.setSuggestion(model.getSuggestion());
+            //question.setSuggestion(model.getSuggestion());
             question.setType(model.getType());
             question.setCriteriaByCriteriaId(criteriaRepository.findById(model.getCriteriaId()));
             if (model.isRequireOther()) {
@@ -248,6 +248,11 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public List<Question> findByFeedbackId(int feedbackId) {
         return questionRepo.findByFeedbackId(feedbackId);
+    }
+
+    @Override
+    public List<Question> findByFeedbackIdASC(int feedbackId) {
+        return questionRepo.findByFeedbackIdASC(feedbackId);
     }
 
     @Override
